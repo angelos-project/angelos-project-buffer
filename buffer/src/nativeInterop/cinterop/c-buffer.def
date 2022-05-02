@@ -1,0 +1,3 @@
+headers = endianness.h
+staticLibraries = libc-buffer.a
+package = cbuffer
