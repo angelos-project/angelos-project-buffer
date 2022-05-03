@@ -30,7 +30,7 @@ class MutableNativeByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractMutableNativeByteBuffer(size, limit, position, endianness), MutableNativeBuffer {
     private val _array = ByteArray(size)
     private val _view = _array.asUByteArray()

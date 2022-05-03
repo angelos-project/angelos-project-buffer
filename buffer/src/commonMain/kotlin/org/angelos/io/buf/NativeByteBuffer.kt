@@ -30,7 +30,7 @@ class NativeByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractNativeByteBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
     private val _array = ByteArray(size)
     private val _view = _array.asUByteArray()

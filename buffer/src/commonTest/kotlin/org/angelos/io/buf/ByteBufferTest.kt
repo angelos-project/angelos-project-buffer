@@ -21,7 +21,7 @@ import kotlin.test.Test
  *
  * @constructor Create empty Byte buffer test
  */
-class ByteBufferTest: BufferTest() {
+class ByteBufferTest : BufferTest() {
 
     /**
      * Running tests on the ByteBuffer.

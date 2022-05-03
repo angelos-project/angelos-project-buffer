@@ -21,7 +21,7 @@ import kotlin.test.Test
  *
  * @constructor Create empty Native byte buffer test
  */
-class MutableNativeByteBufferTest: BufferTest() {
+class MutableNativeByteBufferTest : BufferTest() {
 
     /**
      * Running tests on the MutableNativeByteBuffer.

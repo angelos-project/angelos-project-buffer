@@ -19,7 +19,7 @@ package org.angelos.io.buf
  *
  * @constructor Create empty Heap buffer
  */
-interface HeapBuffer: Buffer {
+interface HeapBuffer : Buffer {
 
     /**
      * Exposing the underlying ByteArray of the buffer.

@@ -32,8 +32,8 @@ abstract class AbstractBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
-): Buffer {
+    endianness: Endianness,
+) : Buffer {
     override val size: Int = size.absoluteValue
 
     private var _limit: Int

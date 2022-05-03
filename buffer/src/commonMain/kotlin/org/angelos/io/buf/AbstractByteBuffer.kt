@@ -28,7 +28,7 @@ abstract class AbstractByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractBuffer(size, limit, position, endianness) {
 
     override fun getNextByte(): Byte {

@@ -47,7 +47,7 @@ open class AbstractEndianTest {
     }
 
     /**
-     * Runing a test for toString().
+     * Running a test for toString().
      *
      */
     @Test

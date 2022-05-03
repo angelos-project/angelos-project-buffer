@@ -23,7 +23,7 @@ package org.angelos.io.buf
  */
 fun byteBufferOf(
     array: ByteArray,
-    endian: Endianness = Buffer.nativeEndianness
+    endian: Endianness = Buffer.nativeEndianness,
 ): ImmutableHeapBuffer = ByteBuffer(array, array.size, array.size, 0, endian)
 
 /**
@@ -37,7 +37,7 @@ fun byteBufferOf(
 fun mutableByteBufferOf(
     array: ByteArray,
     limit: Int = array.size,
-    endian: Endianness = Buffer.nativeEndianness
+    endian: Endianness = Buffer.nativeEndianness,
 ): MutableHeapBuffer = MutableByteBuffer(array, array.size, limit, 0, endian)
 
 /**
@@ -51,7 +51,7 @@ fun mutableByteBufferOf(
 fun mutableByteBufferOf(
     size: Int,
     limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness
+    endian: Endianness = Buffer.nativeEndianness,
 ): MutableHeapBuffer = MutableByteBuffer(ByteArray(size), size, limit, 0, endian)
 
 /**
@@ -63,7 +63,7 @@ fun mutableByteBufferOf(
  */
 fun nativeByteBufferOf(
     size: Int,
-    endian: Endianness = Buffer.nativeEndianness
+    endian: Endianness = Buffer.nativeEndianness,
 ): ImmutableNativeBuffer = NativeByteBuffer(size, size, 0, endian)
 
 /**
@@ -80,8 +80,10 @@ fun wrapIntoNativeByteBufferOf(
     pointer: Long,
     size: Int,
     limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness
-): ImmutableNativeBuffer { throw UnsupportedOperationException() }
+    endian: Endianness = Buffer.nativeEndianness,
+): ImmutableNativeBuffer {
+    throw UnsupportedOperationException()
+}
 
 /**
  * Create MutableNativeBuffer with an underlying blank ByteBuffer of certain size.
@@ -94,7 +96,7 @@ fun wrapIntoNativeByteBufferOf(
 fun mutableNativeByteBufferOf(
     size: Int,
     limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness
+    endian: Endianness = Buffer.nativeEndianness,
 ): MutableNativeBuffer = MutableNativeByteBuffer(size, limit, 0, endian)
 
 /**
@@ -111,8 +113,10 @@ fun wrapIntoMutableNativeByteBufferOf(
     pointer: Long,
     size: Int,
     limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness
-): MutableNativeBuffer { throw UnsupportedOperationException() }
+    endian: Endianness = Buffer.nativeEndianness,
+): MutableNativeBuffer {
+    throw UnsupportedOperationException()
+}
 
 /**
  * To mutable heap byte buffer.

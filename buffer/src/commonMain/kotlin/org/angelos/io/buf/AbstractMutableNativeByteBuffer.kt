@@ -28,5 +28,5 @@ abstract class AbstractMutableNativeByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractMutableByteBuffer(size, limit, position, endianness)

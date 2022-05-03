@@ -22,7 +22,7 @@ import kotlin.test.Test
  *
  * @constructor Create empty Native byte buffer test
  */
-class NativeByteBufferTest: BufferTest() {
+class NativeByteBufferTest : BufferTest() {
 
     /**
      * Running tests on the NativeByteBuffer.

@@ -19,7 +19,7 @@ package org.angelos.io.buf
  *
  * @constructor Create empty Buffer
  */
-interface Buffer: Gettable {
+interface Buffer : Gettable {
 
     /**
      * Total size of the buffer.
@@ -156,7 +156,7 @@ interface Buffer: Gettable {
 
         internal inline fun copyNonOptimized(
             src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int
+            dst: MutableBuffer, dstOffset: Int, length: Int,
         ) {
             for (index in 0 until length)
                 dst.saveByte(dstOffset + index, src.loadByte(srcOffset + index))
@@ -164,12 +164,12 @@ interface Buffer: Gettable {
 
         internal inline fun copySemiOptimized(
             src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int
+            dst: MutableBuffer, dstOffset: Int, length: Int,
         ) = copyFullyOptimized(src, srcOffset, dst, dstOffset, length)
 
         internal inline fun copyFullyOptimized(
             src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int
+            dst: MutableBuffer, dstOffset: Int, length: Int,
         ) {
             val breakPoint = length - length % LONG_SIZE
             for (index in 0 until breakPoint step LONG_SIZE)

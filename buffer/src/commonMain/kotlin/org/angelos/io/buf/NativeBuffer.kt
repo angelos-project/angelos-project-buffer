@@ -19,7 +19,7 @@ package org.angelos.io.buf
  *
  * @constructor Create empty Native buffer
  */
-interface NativeBuffer: Buffer {
+interface NativeBuffer : Buffer {
 
     /**
      * Memory allocated externally outside the buffer.

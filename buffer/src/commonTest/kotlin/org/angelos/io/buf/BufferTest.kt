@@ -87,7 +87,7 @@ open class BufferTest {
         assertEquals(buf.getNextUInt(), refUInt)
         assertEquals(buf.getNextLong(), refLong)
         assertEquals(buf.getNextULong(), refULong)
-        for(idx in buf.position until size){
+        for (idx in buf.position until size) {
             val data = buf.getNextByte()
             assertEquals(data, refRead[idx])
         }
@@ -108,7 +108,7 @@ open class BufferTest {
         buf.setNextUInt(refUInt)
         buf.setNextLong(refLong)
         buf.setNextULong(refULong)
-        for(idx in buf.position until size)
+        for (idx in buf.position until size)
             buf.setNextByte(refWrite[idx])
     }
 }

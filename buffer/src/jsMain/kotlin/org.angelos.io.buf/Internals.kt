@@ -21,12 +21,12 @@ import org.khronos.webgl.set
 import kotlin.experimental.and
 
 internal actual class Internals {
-    actual companion object{
+    actual companion object {
         actual fun getEndian(): Int {
             val array = Uint8Array(4)
             val view = Uint32Array(array.buffer)
             view[0] = 1
-            return when((view[0].toShort() and array[0].toShort()).countOneBits()) {
+            return when ((view[0].toShort() and array[0].toShort()).countOneBits()) {
                 0 -> 1
                 1 -> 2
                 else -> 0

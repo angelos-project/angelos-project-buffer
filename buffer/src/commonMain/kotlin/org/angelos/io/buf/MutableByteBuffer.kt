@@ -32,7 +32,7 @@ class MutableByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractMutableByteBuffer(size, limit, position, endianness), MutableHeapBuffer {
     private val _array = array
     private val _view = _array.asUByteArray()

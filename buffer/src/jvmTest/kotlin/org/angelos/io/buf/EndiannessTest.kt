@@ -18,6 +18,11 @@ import java.nio.ByteOrder
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+/**
+ * Running tests for Endianness.
+ *
+ * @constructor Create empty Endianness test
+ */
 actual class EndiannessTest : AbstractEndianTest() {
 
     /**
@@ -25,7 +30,7 @@ actual class EndiannessTest : AbstractEndianTest() {
      */
     @Test
     actual fun nativeOrder() {
-        when(Endianness.nativeOrder()) {
+        when (Endianness.nativeOrder()) {
             Endianness.BIG_ENDIAN -> assertEquals(ByteOrder.nativeOrder(), ByteOrder.BIG_ENDIAN)
             Endianness.LITTLE_ENDIAN -> assertEquals(ByteOrder.nativeOrder(), ByteOrder.LITTLE_ENDIAN)
         }

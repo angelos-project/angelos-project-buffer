@@ -38,7 +38,7 @@ class MutableByteBufferTest : BufferTest() {
         readAny(mnbuf)
 
         val buf2 = mutableByteBufferOf(size)
-        for(idx in buf2.position until buf2.size) {
+        for (idx in buf2.position until buf2.size) {
             buf2.setNextByte(idx.toByte())
         }
         buf2.rewind()

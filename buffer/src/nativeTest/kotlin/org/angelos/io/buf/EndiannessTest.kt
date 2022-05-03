@@ -18,6 +18,11 @@ import kotlin.native.Platform.isLittleEndian
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+/**
+ * Running tests for Endianness.
+ *
+ * @constructor Create empty Endianness test
+ */
 actual class EndiannessTest : AbstractEndianTest() {
 
     /**

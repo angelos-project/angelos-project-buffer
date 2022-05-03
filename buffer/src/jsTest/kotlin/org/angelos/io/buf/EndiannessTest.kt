@@ -17,6 +17,11 @@ package org.angelos.io.buf
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
+/**
+ * Running tests for Endianness.
+ *
+ * @constructor Create empty Endianness test
+ */
 actual class EndiannessTest : AbstractEndianTest() {
 
     /**
