@@ -15,7 +15,7 @@
 
 object Project {
     const val name = "angelos-project-buffer"
-    const val version = "1.0a"
+    const val version = "1.0a1"
 }
 
 object Versions {

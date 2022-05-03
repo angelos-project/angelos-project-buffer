@@ -175,4 +175,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/kotlin_js_store
+kotlin-js-store/

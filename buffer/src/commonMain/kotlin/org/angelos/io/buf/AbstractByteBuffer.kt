@@ -14,60 +14,12 @@
  */
 package org.angelos.io.buf
 
-import kotlin.math.absoluteValue
-import kotlin.math.min
-
 abstract class AbstractByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness
-) : Buffer {
-    override val size: Int = size.absoluteValue
-
-    private var _limit: Int
-    override val limit: Int
-        get() = _limit
-
-    internal var _position: Int
-    override val position: Int
-        get() = _position
-
-    private var _reverse: Boolean
-    override val reverse: Boolean
-        get() = _reverse
-
-    private var _endian: Endianness
-    override var endian: Endianness
-        get() = _endian
-        set(value) {
-            _endian = value
-            _reverse = _endian != Buffer.nativeEndianness
-        }
-
-    override val optimized
-        get() = false
-
-    init {
-        _limit = min(size.absoluteValue, limit.absoluteValue)
-        _position = min(limit.absoluteValue, position.absoluteValue)
-        _endian = endianness
-        _reverse = _endian != Buffer.nativeEndianness
-    }
-
-    override fun clear() {
-        _limit = size
-        _position = 0
-    }
-
-    override fun flip() {
-        _limit = _position
-        _position = 0
-    }
-
-    override fun rewind() {
-        _position = 0
-    }
+) : AbstractBuffer(size, limit, position, endianness) {
 
     override fun getNextByte(): Byte {
         Buffer.hasRemaining(this, Buffer.BYTE_SIZE)
