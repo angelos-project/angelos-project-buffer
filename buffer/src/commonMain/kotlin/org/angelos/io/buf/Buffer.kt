@@ -85,6 +85,14 @@ interface Buffer: Gettable {
      */
     fun hasRemaining(size: Int) = hasRemaining(this, size)
 
+    /**
+     * Copy into a mutable buffer.
+     *
+     * @param destination destination mutable buffer to copy into
+     * @param destinationOffset offset where to start inside mutable buffer
+     * @param startIndex where to start copy from in source buffer
+     * @param endIndex when to stop copying from the source buffer
+     */
     fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = size) {
         if (destination == this)
             throw IllegalArgumentException("It's not allowed for a buffer to copy into itself.")

@@ -14,6 +14,16 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Native byte buffer implemented outside save memory environment as immutable.
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 @Suppress("OVERRIDE_BY_INLINE")
 @OptIn(ExperimentalUnsignedTypes::class)
 class NativeByteBuffer internal constructor(

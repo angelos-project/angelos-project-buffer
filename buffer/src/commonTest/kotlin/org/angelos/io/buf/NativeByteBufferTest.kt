@@ -17,8 +17,16 @@ package org.angelos.io.buf
 import kotlin.test.Ignore
 import kotlin.test.Test
 
+/**
+ * Testing the NativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
 class NativeByteBufferTest: BufferTest() {
 
+    /**
+     * Running tests on the NativeByteBuffer.
+     */
     @Ignore // There is no implemented way to enter data in an immutable native buffer.
     @Test
     fun nativeByteBuffer() {

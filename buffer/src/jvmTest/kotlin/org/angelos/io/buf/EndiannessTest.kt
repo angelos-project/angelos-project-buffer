@@ -19,6 +19,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 actual class EndiannessTest : AbstractEndianTest() {
+
+    /**
+     * Running tests for nativeOrder on JVM checks against java.nio.ByteOrder for correctness.
+     */
     @Test
     actual fun nativeOrder() {
         when(Endianness.nativeOrder()) {

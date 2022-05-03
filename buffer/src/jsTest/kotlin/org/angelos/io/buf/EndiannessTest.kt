@@ -18,6 +18,11 @@ import kotlin.test.Test
 import kotlin.test.assertNotNull
 
 actual class EndiannessTest : AbstractEndianTest() {
+
+    /**
+     * Running tests for nativeOrder on JS never reaches the underlying system.
+     *
+     */
     @Test
     actual fun nativeOrder() {
         val endianness = Endianness.nativeOrder()

@@ -14,6 +14,11 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Settable interface to write data to a stream or buffer.
+ *
+ * @constructor Create empty Settable
+ */
 interface Settable {
     /**
      * Set next byte.

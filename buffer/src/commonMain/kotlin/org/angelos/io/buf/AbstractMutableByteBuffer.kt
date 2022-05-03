@@ -14,6 +14,16 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Abstract mutable byte buffer implements the logic for write operations.
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 abstract class AbstractMutableByteBuffer internal constructor(
     size: Int,
     limit: Int,

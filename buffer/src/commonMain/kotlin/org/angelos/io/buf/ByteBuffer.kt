@@ -14,6 +14,17 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Byte buffer implemented on the heap, as immutable.
+ *
+ * @constructor
+ *
+ * @param array ByteArray to wrap into a buffer
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 @Suppress("OVERRIDE_BY_INLINE")
 @OptIn(ExperimentalUnsignedTypes::class)
 class ByteBuffer internal constructor(

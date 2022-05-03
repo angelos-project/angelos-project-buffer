@@ -14,6 +14,17 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Mutable byte buffer implemented on the heap, as mutable.
+ *
+ * @constructor
+ *
+ * @param array
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 @Suppress("OVERRIDE_BY_INLINE")
 @OptIn(ExperimentalUnsignedTypes::class)
 class MutableByteBuffer internal constructor(

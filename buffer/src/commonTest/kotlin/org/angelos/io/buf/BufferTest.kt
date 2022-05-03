@@ -16,6 +16,11 @@ package org.angelos.io.buf
 
 import kotlin.test.assertEquals
 
+/**
+ * Containing tests for asserting and running all getNext*() and setNext*() methods in buffer implementations.
+ *
+ * @constructor Create empty Buffer test
+ */
 open class BufferTest {
     val refRead = byteArrayOf(
         0B1010101, 0B10101010u.toByte(),
@@ -68,6 +73,11 @@ open class BufferTest {
 
     val size: Int = refWrite.size
 
+    /**
+     * Read any buffer and make asserts on all getNext*() methods.
+     *
+     * @param buf
+     */
     fun readAny(buf: Buffer) {
         assertEquals(buf.getNextByte(), refByte)
         assertEquals(buf.getNextUByte(), refUByte)
@@ -83,6 +93,12 @@ open class BufferTest {
         }
     }
 
+    /**
+     * Write any buffer with data using all setNext*() methods.
+     * Verify by running the same buffer through readAny().
+     *
+     * @param buf
+     */
     fun writeAny(buf: MutableBuffer) {
         buf.setNextByte(refByte)
         buf.setNextUByte(refUByte)

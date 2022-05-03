@@ -19,19 +19,37 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
+/**
+ * Containing common tests for Endianness.
+ *
+ * @constructor Create empty Abstract endian test
+ */
 open class AbstractEndianTest {
+
+    /**
+     * Running a test for isBig().
+     *
+     */
     @Test
     fun isBig() {
         val endianness = Endianness.BIG_ENDIAN
         assertTrue(endianness.isBig())
     }
 
+    /**
+     * Running a test for isLittle().
+     *
+     */
     @Test
     fun isLittle() {
         val endianness = Endianness.LITTLE_ENDIAN
         assertTrue(endianness.isLittle())
     }
 
+    /**
+     * Runing a test for toString().
+     *
+     */
     @Test
     fun testToString() {
         val endianness = Endianness.nativeOrder()
@@ -39,7 +57,16 @@ open class AbstractEndianTest {
     }
 }
 
+/**
+ * Running tests for Endianness.
+ *
+ * @constructor Create empty Endianness test
+ */
 expect class EndiannessTest : AbstractEndianTest {
+
+    /**
+     * Testing the native order compared to the real running environment.
+     */
     @Test
     fun nativeOrder()
 }

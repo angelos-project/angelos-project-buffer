@@ -14,6 +14,16 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Abstract byte buffer implements the read and endianness logic directly for use.
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 abstract class AbstractByteBuffer internal constructor(
     size: Int,
     limit: Int,

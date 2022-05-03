@@ -16,8 +16,16 @@ package org.angelos.io.buf
 
 import kotlin.test.Test
 
+/**
+ * Testing the MutableNativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
 class MutableNativeByteBufferTest: BufferTest() {
 
+    /**
+     * Running tests on the MutableNativeByteBuffer.
+     */
     @Test
     fun mutableNativeByteBuffer() {
         val buf = mutableNativeByteBufferOf(size)

@@ -14,6 +14,16 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Abstract native byte buffer.
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
 abstract class AbstractNativeByteBuffer internal constructor(
     size: Int,
     limit: Int,

@@ -16,8 +16,16 @@ package org.angelos.io.buf
 
 import kotlin.test.Test
 
+/**
+ * Testing the ByteBuffer
+ *
+ * @constructor Create empty Byte buffer test
+ */
 class ByteBufferTest: BufferTest() {
 
+    /**
+     * Running tests on the ByteBuffer.
+     */
     @Test
     fun byteBuffer() {
         val buf = byteBufferOf(refRead.copyOf())

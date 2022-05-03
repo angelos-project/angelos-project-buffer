@@ -19,6 +19,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 actual class EndiannessTest : AbstractEndianTest() {
+
+    /**
+     * Running tests for nativeOrder on Native checks against kotlin.native.Platform.isLittleEndian for correctness.
+     */
     @Test
     actual fun nativeOrder() {
         val endianness = Endianness.nativeOrder()

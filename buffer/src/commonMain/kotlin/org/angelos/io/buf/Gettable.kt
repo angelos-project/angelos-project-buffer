@@ -14,6 +14,11 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Gettable interface to read data from a stream or buffer.
+ *
+ * @constructor Create empty Gettable
+ */
 interface Gettable {
     /**
      * Get next byte.
