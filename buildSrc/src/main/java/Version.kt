@@ -15,7 +15,7 @@
 
 object Project {
     const val name = "angelos-project-buffer"
-    const val version = "1.0a1"
+    const val version = "1.0.0-alpha.1" // Use semantic versioning, apply: https://semver.org
 }
 
 object Versions {

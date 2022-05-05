@@ -21,19 +21,4 @@ package org.angelos.io.buf
  */
 interface MutableBuffer : Buffer, Settable {
 
-    /**
-     * save one byte to underlying memory.
-     *
-     * @param index index in memory
-     * @param value byte to save
-     */
-    fun saveByte(index: Int, value: Byte)
-
-    /**
-     * save long to underlying memory.
-     *
-     * @param index index in memory
-     * @param value long to save
-     */
-    fun saveLong(index: Int, value: Long)
 }

@@ -76,59 +76,14 @@ interface Buffer : Gettable {
      *
      * @return number of bytes remaining
      */
-    fun remaining(): Int = remaining(this)
+    fun remaining(): Int
 
     /**
      * Has enough remaining bytes left or throws BufferException.
      *
      * @param size needed space
      */
-    fun hasRemaining(size: Int) = hasRemaining(this, size)
-
-    /**
-     * Copy into a mutable buffer.
-     *
-     * @param destination destination mutable buffer to copy into
-     * @param destinationOffset offset where to start inside mutable buffer
-     * @param startIndex where to start copy from in source buffer
-     * @param endIndex when to stop copying from the source buffer
-     */
-    fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = size) {
-        if (destination == this)
-            throw IllegalArgumentException("It's not allowed for a buffer to copy into itself.")
-        if (0 > startIndex || startIndex > endIndex)
-            throw IllegalArgumentException("Start index can not be negative or larger than the end index.")
-        if (endIndex > this.size || endIndex - startIndex + destinationOffset > destination.size)
-            throw BufferException("Cannot copy a range that is out of bounds.")
-
-        when {
-            !this.optimized and !destination.optimized -> copyNonOptimized(
-                this, startIndex, destination, destinationOffset, endIndex - startIndex
-            )
-            this.optimized and destination.optimized -> copyFullyOptimized(
-                this, startIndex, destination, destinationOffset, endIndex - startIndex
-            )
-            this.optimized or destination.optimized -> copySemiOptimized(
-                this, startIndex, destination, destinationOffset, endIndex - startIndex
-            )
-        }
-    }
-
-    /**
-     * Load one byte from underlying memory.
-     *
-     * @param index index in memory
-     * @return a byte from memory
-     */
-    fun loadByte(index: Int): Byte
-
-    /**
-     * Load one long from underlying memory.
-     *
-     * @param index index in memory
-     * @return a long from memory
-     */
-    fun loadLong(index: Int): Long
+    fun hasRemaining(size: Int)
 
     companion object {
         const val BYTE_SIZE = Byte.SIZE_BYTES
@@ -144,38 +99,5 @@ interface Buffer : Gettable {
         const val DOUBLE_SIZE = Double.SIZE_BYTES
 
         val nativeEndianness = Endianness.nativeOrder()
-
-        internal inline fun remaining(buf: Buffer): Int {
-            return buf.limit - buf.position + 1
-        }
-
-        internal inline fun hasRemaining(buf: Buffer, size: Int) {
-            if (remaining(buf) <= size)
-                throw BufferException("Not enough space left over in buffer, needs $size bytes")
-        }
-
-        internal inline fun copyNonOptimized(
-            src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int,
-        ) {
-            for (index in 0 until length)
-                dst.saveByte(dstOffset + index, src.loadByte(srcOffset + index))
-        }
-
-        internal inline fun copySemiOptimized(
-            src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int,
-        ) = copyFullyOptimized(src, srcOffset, dst, dstOffset, length)
-
-        internal inline fun copyFullyOptimized(
-            src: Buffer, srcOffset: Int,
-            dst: MutableBuffer, dstOffset: Int, length: Int,
-        ) {
-            val breakPoint = length - length % LONG_SIZE
-            for (index in 0 until breakPoint step LONG_SIZE)
-                dst.saveLong(dstOffset + index, src.loadLong(srcOffset + index))
-            for (index in breakPoint until length)
-                dst.saveByte(dstOffset + index, src.loadByte(srcOffset + index))
-        }
     }
 }
