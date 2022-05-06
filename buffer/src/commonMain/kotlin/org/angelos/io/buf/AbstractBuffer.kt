@@ -179,15 +179,7 @@ abstract class AbstractBuffer internal constructor(
      */
     internal abstract fun loadLong(index: Int): Long
 
-    /**
-     * Copy into a mutable buffer.
-     *
-     * @param destination destination mutable buffer to copy into
-     * @param destinationOffset offset where to start inside mutable buffer
-     * @param startIndex where to start copy from in source buffer
-     * @param endIndex when to stop copying from the source buffer
-     */
-    fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = size) {
+    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         if (destination == this)
             throw IllegalArgumentException("It's not allowed for a buffer to copy into itself.")
         if (0 > startIndex || startIndex > endIndex)
@@ -237,7 +229,7 @@ abstract class AbstractBuffer internal constructor(
 
         internal inline fun hasRemaining(buf: Buffer, size: Int) {
             if (remaining(buf) <= size)
-                throw BufferException("Not enough space left over in buffer, needs $size bytes")
+                throw ByteBufferOverflowWarning()
         }
 
         internal inline fun forwardPosition(buf: AbstractBuffer,length: Int) {

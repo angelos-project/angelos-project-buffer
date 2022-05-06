@@ -31,12 +31,65 @@ class NativeByteBuffer internal constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractNativeByteBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
+) : AbstractBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
     private val _array = ByteArray(size)
     private val _view = _array.asUByteArray()
 
     override inline fun load(index: Int): UByte {
         return _view[index]
+    }
+
+    override fun loadByte(index: Int): Byte = load(index).toByte()
+
+    override inline fun loadLong(index: Int): Long = loadReadLong(this, position)
+
+    override inline fun readByte(): Byte = load(position + 0).toByte()
+
+    override inline fun readUByte(): UByte = load(position + 0)
+
+    override inline fun readChar(): Char = when (reverse) {
+        true -> loadReadReverseShort(this, position)
+        false -> loadReadShort(this, position)
+    }.toChar()
+
+    override inline fun readShort(): Short = when (reverse) {
+        true -> loadReadReverseShort(this, position)
+        false -> loadReadShort(this, position)
+    }.toShort()
+
+    override inline fun readUShort(): UShort = when (reverse) {
+        true -> loadReadReverseShort(this, position)
+        false -> loadReadShort(this, position)
+    }.toUShort()
+
+    override inline fun readInt(): Int = when (reverse) {
+        true -> loadReadReverseInt(this, position)
+        false -> loadReadInt(this, position)
+    }
+
+    override inline fun readUInt(): UInt = when (reverse) {
+        true -> loadReadReverseUInt(this, position)
+        false -> loadReadUInt(this, position)
+    }
+
+    override inline fun readLong(): Long = when (reverse) {
+        true -> loadReadReverseLong(this, position)
+        false -> loadReadLong(this, position)
+    }
+
+    override inline fun readULong(): ULong = when (reverse) {
+        true -> loadReadReverseULong(this, position)
+        false -> loadReadULong(this, position)
+    }
+
+    override inline fun readFloat(): Int = when (reverse) {
+        true -> loadReadReverseInt(this, position)
+        false -> loadReadInt(this, position)
+    }
+
+    override inline fun readDouble(): Long = when (reverse) {
+        true -> loadReadReverseLong(this, position)
+        false -> loadReadLong(this, position)
     }
 
     override val allocated: Boolean
@@ -46,6 +99,5 @@ class NativeByteBuffer internal constructor(
         throw UnsupportedOperationException()
     }
 
-    // Leave empty but implemented if operation is unsupported
     override fun dispose() {}
 }

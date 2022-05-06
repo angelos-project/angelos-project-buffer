@@ -85,6 +85,16 @@ interface Buffer : Gettable {
      */
     fun hasRemaining(size: Int)
 
+    /**
+     * Copy into a mutable buffer.
+     *
+     * @param destination destination mutable buffer to copy into
+     * @param destinationOffset offset where to start inside mutable buffer
+     * @param startIndex where to start copy from in source buffer
+     * @param endIndex when to stop copying from the source buffer
+     */
+    fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = size)
+
     companion object {
         const val BYTE_SIZE = Byte.SIZE_BYTES
         const val UBYTE_SIZE = UByte.SIZE_BYTES

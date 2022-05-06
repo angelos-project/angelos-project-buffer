@@ -15,7 +15,8 @@
 package org.angelos.io.buf
 
 /**
- * Mutable byte buffer implemented on the heap, as mutable.
+ * Reference implementation of a MutableByteBuffer that works on all targets.
+ * It may be slow but can be optimized. The Idea is to use this for benchmarking against.
  *
  * @constructor
  *
@@ -27,13 +28,13 @@ package org.angelos.io.buf
  */
 @Suppress("OVERRIDE_BY_INLINE")
 @OptIn(ExperimentalUnsignedTypes::class)
-class MutableByteBuffer internal constructor(
+class ReferenceMutableBuffer internal constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
+): AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
     private val _array = array
     private val _view = _array.asUByteArray()
 
@@ -153,4 +154,18 @@ class MutableByteBuffer internal constructor(
         true -> saveWriteReverseLong(this, position, value)
         false -> saveWriteLong(this, position, value)
     }
+}
+
+
+/**
+ * Buffer benchmark is a test setup for the sole purpose of benchmarking different data swapping
+ * operations for the sake of optimization, and offers an internal standard to compare buffer
+ * data speeds. It is important to know which implementation of data copying that is the fastest
+ * for each target and of type: native or heap memory.
+ *
+ * The sake of these tests are not general unit testing, but should be generally ignored by measuring setups.
+ *
+ * @constructor Create empty Buffer benchmark
+ */
+class BufferBenchmarker {
 }

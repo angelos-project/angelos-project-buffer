@@ -125,7 +125,7 @@ fun wrapIntoMutableNativeByteBufferOf(
  */
 fun ImmutableHeapBuffer.toMutableByteBuffer(): MutableHeapBuffer {
     val buf = mutableByteBufferOf(ByteArray(size), limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
 
@@ -136,7 +136,7 @@ fun ImmutableHeapBuffer.toMutableByteBuffer(): MutableHeapBuffer {
  */
 fun ImmutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
 
@@ -147,7 +147,7 @@ fun ImmutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  */
 fun ImmutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
     val buf = mutableByteBufferOf(size, limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
 
@@ -158,7 +158,7 @@ fun ImmutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
  */
 fun ImmutableNativeBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
 
@@ -169,7 +169,7 @@ fun ImmutableNativeBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  */
 fun MutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
 
@@ -180,6 +180,6 @@ fun MutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  */
 fun MutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
     val buf = mutableByteBufferOf(size, limit, endian)
-    copyInto(buf)
+    copyInto(buf as AbstractMutableBuffer)
     return buf
 }
