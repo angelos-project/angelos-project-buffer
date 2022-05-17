@@ -21,29 +21,24 @@ import kotlin.test.Test
  *
  * @constructor Create empty Mutable byte buffer test
  */
-class MutableByteBufferTest : BufferTest() {
+class MutableByteBufferTest : MutableBufferTest() {
 
     /**
      * Running tests on the MutableByteBuffer.
      */
     @Test
     fun mutableByteBuffer() {
-        val buf = mutableByteBufferOf(refWrite.copyOf())
-        writeAny(buf)
-        buf.rewind()
-        readAny(buf)
+        testReferenceMutableBufferRead(mutableByteBufferOf(populateArray(createArray())))
+        testReferenceMutableBufferWrite(mutableByteBufferOf(populateArray(createArray())))
+        testReferenceMutableBufferWriteReverse(mutableByteBufferOf(populateArray(createArray())))
 
-        val mnbuf = buf.toMutableNativeByteBuffer()
-        mnbuf.rewind()
-        readAny(mnbuf)
 
-        val buf2 = mutableByteBufferOf(size)
-        for (idx in buf2.position until buf2.size) {
-            buf2.setNextByte(idx.toByte())
-        }
-        buf2.rewind()
-        writeAny(buf2)
-        buf2.rewind()
-        readAny(buf2)
+        testReferenceMutableBufferRead(mutableByteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+        testReferenceMutableBufferWrite(mutableByteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+        testReferenceMutableBufferWriteReverse(mutableByteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+
+        testReferenceMutableBufferRead(populateMutableBuffer(mutableByteBufferOf(refSize)))
+        testReferenceMutableBufferWrite(populateMutableBuffer(mutableByteBufferOf(refSize)))
+        testReferenceMutableBufferWriteReverse(populateMutableBuffer(mutableByteBufferOf(refSize)))
     }
 }

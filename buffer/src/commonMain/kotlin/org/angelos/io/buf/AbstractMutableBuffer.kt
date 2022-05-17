@@ -77,23 +77,15 @@ abstract class AbstractMutableBuffer internal constructor(
 
     override fun setNextFloat(value: Float) {
         hasRemaining(this, Buffer.FLOAT_SIZE)
-        writeFloat(value.toRawBits())
+        writeFloat(value)
         forwardPosition(this, Buffer.FLOAT_SIZE)
     }
 
     override fun setNextDouble(value: Double) {
         hasRemaining(this, Buffer.DOUBLE_SIZE)
-        writeDouble(value.toRawBits())
+        writeDouble(value)
         forwardPosition(this, Buffer.DOUBLE_SIZE)
     }
-
-    /**
-     * Save a specific byte in a certain position.
-     *
-     * @param value byte to save
-     * @param index offset where to save
-     */
-    internal abstract fun save(value: UByte, index: Int)
 
     /**
      * save one byte to underlying memory.
@@ -129,91 +121,7 @@ abstract class AbstractMutableBuffer internal constructor(
 
     internal abstract fun writeULong(value: ULong)
 
-    internal abstract fun writeFloat(value: Int)
+    internal abstract fun writeFloat(value: Float)
 
-    internal abstract fun writeDouble(value: Long)
-
-    companion object {
-        internal inline fun saveWriteReverseShort(buf: AbstractMutableBuffer, pos: Int, value: Int) {
-            buf.save((value and 0xFF).toUByte(), pos + 0)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 1)
-        }
-
-        internal inline fun saveWriteShort(buf: AbstractMutableBuffer, pos: Int, value: Int) {
-            buf.save((value and 0xFF).toUByte(), pos + 1)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 0)
-        }
-
-        internal inline fun saveWriteReverseInt(buf: AbstractMutableBuffer, pos: Int, value: Int) {
-            buf.save((value and 0xFF).toUByte(), pos + 0)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value ushr 16) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value ushr 24) and 0xFF).toUByte(), pos + 3)
-        }
-
-        internal inline fun saveWriteInt(buf: AbstractMutableBuffer, pos: Int, value: Int) {
-            buf.save((value and 0xFF).toUByte(), pos + 3)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value ushr 16) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value ushr 24) and 0xFF).toUByte(), pos + 0)
-        }
-
-        internal inline fun saveWriteReverseUInt(buf: AbstractMutableBuffer, pos: Int, value: UInt) {
-            buf.save((value.toInt() and 0xFF).toUByte(), pos + 0)
-            buf.save(((value.toInt() ushr 8) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value.toInt() ushr 16) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value.toInt() ushr 24) and 0xFF).toUByte(), pos + 3)
-        }
-
-        internal inline fun saveWriteUInt(buf: AbstractMutableBuffer, pos: Int, value: UInt) {
-            buf.save((value.toInt() and 0xFF).toUByte(), pos + 3)
-            buf.save(((value.toInt() ushr 8) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value.toInt() ushr 16) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value.toInt() ushr 24) and 0xFF).toUByte(), pos + 0)
-        }
-
-        internal inline fun saveWriteReverseLong(buf: AbstractMutableBuffer, pos: Int, value: Long) {
-            buf.save((value and 0xFF).toUByte(), pos + 0)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value ushr 16) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value ushr 24) and 0xFF).toUByte(), pos + 3)
-            buf.save(((value ushr 32) and 0xFF).toUByte(), pos + 4)
-            buf.save(((value ushr 40) and 0xFF).toUByte(), pos + 5)
-            buf.save(((value ushr 48) and 0xFF).toUByte(), pos + 6)
-            buf.save(((value ushr 56) and 0xFF).toUByte(), pos + 7)
-        }
-
-        internal inline fun saveWriteLong(buf: AbstractMutableBuffer, pos: Int, value: Long) {
-            buf.save((value and 0xFF).toUByte(), pos + 7)
-            buf.save(((value ushr 8) and 0xFF).toUByte(), pos + 6)
-            buf.save(((value ushr 16) and 0xFF).toUByte(), pos + 5)
-            buf.save(((value ushr 24) and 0xFF).toUByte(), pos + 4)
-            buf.save(((value ushr 32) and 0xFF).toUByte(), pos + 3)
-            buf.save(((value ushr 40) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value ushr 48) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value ushr 56) and 0xFF).toUByte(), pos + 0)
-        }
-
-        internal inline fun saveWriteReverseULong(buf: AbstractMutableBuffer, pos: Int, value: ULong) {
-            buf.save((value.toLong() and 0xFF).toUByte(), pos + 0)
-            buf.save(((value.toLong() ushr 8) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value.toLong() ushr 16) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value.toLong() ushr 24) and 0xFF).toUByte(), pos + 3)
-            buf.save(((value.toLong() ushr 32) and 0xFF).toUByte(), pos + 4)
-            buf.save(((value.toLong() ushr 40) and 0xFF).toUByte(), pos + 5)
-            buf.save(((value.toLong() ushr 48) and 0xFF).toUByte(), pos + 6)
-            buf.save(((value.toLong() ushr 56) and 0xFF).toUByte(), pos + 7)
-        }
-
-        internal inline fun saveWriteULong(buf: AbstractMutableBuffer, pos: Int, value: ULong) {
-            buf.save((value.toLong() and 0xFF).toUByte(), pos + 7)
-            buf.save(((value.toLong() ushr 8) and 0xFF).toUByte(), pos + 6)
-            buf.save(((value.toLong() ushr 16) and 0xFF).toUByte(), pos + 5)
-            buf.save(((value.toLong() ushr 24) and 0xFF).toUByte(), pos + 4)
-            buf.save(((value.toLong() ushr 32) and 0xFF).toUByte(), pos + 3)
-            buf.save(((value.toLong() ushr 40) and 0xFF).toUByte(), pos + 2)
-            buf.save(((value.toLong() ushr 48) and 0xFF).toUByte(), pos + 1)
-            buf.save(((value.toLong() ushr 56) and 0xFF).toUByte(), pos + 0)
-        }
-    }
+    internal abstract fun writeDouble(value: Double)
 }

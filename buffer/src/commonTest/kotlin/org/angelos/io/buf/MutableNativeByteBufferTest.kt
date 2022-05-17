@@ -21,20 +21,19 @@ import kotlin.test.Test
  *
  * @constructor Create empty Native byte buffer test
  */
-class MutableNativeByteBufferTest : BufferTest() {
+class MutableNativeByteBufferTest : MutableBufferTest() {
 
     /**
      * Running tests on the MutableNativeByteBuffer.
      */
     @Test
     fun mutableNativeByteBuffer() {
-        val buf = mutableNativeByteBufferOf(size)
-        writeAny(buf)
-        buf.rewind()
-        readAny(buf)
+        testReferenceMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
+        testReferenceMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
+        testReferenceMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
 
-        val mbuf = buf.toMutableByteBuffer()
-        mbuf.rewind()
-        readAny(mbuf)
+        testReferenceMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testReferenceMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testReferenceMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
     }
 }

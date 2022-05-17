@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -14,9 +14,7 @@
  */
 package org.angelos.io.buf
 
-/**
- * Immutable buffer interface inheriting from Buffer.
- *
- * @constructor Create empty mutable buffer
- */
-interface ImmutableBuffer : Buffer, Gettable
+actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+    error("Virtually impossible to fill a 'native' buffer in JS.")
+    return buf
+}

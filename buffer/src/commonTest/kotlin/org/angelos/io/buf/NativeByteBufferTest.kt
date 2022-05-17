@@ -22,7 +22,7 @@ import kotlin.test.Test
  *
  * @constructor Create empty Native byte buffer test
  */
-class NativeByteBufferTest : BufferTest() {
+class NativeByteBufferTest : MutableBufferTest() {
 
     /**
      * Running tests on the NativeByteBuffer.
@@ -30,15 +30,16 @@ class NativeByteBufferTest : BufferTest() {
     @Ignore // There is no implemented way to enter data in an immutable native buffer.
     @Test
     fun nativeByteBuffer() {
-        val buf = nativeByteBufferOf(size)
-        readAny(buf)
+        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)))
 
-        val mbuf = buf.toMutableByteBuffer()
-        mbuf.rewind()
-        readAny(mbuf)
+        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testReferenceMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testReferenceMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
 
-        val mnbuf = buf.toMutableNativeByteBuffer()
-        mnbuf.rewind()
-        readAny(mnbuf)
+        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
+        testReferenceMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
+        testReferenceMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
     }
 }
+
+expect fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B

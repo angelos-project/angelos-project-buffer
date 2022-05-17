@@ -12,6 +12,7 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
+#include <stdint.h>
 
 #ifndef SRC_ENDIANNESS_H
 #define SRC_ENDIANNESS_H
@@ -21,6 +22,19 @@
 #define _PDP_ENDIAN    0x42414443UL
 #define ENDIAN_ORDER  ('ABCD')
 
+/**
+ * Find out the native endianness.
+ * @return enum int for the endian
+ */
 extern int endian();
+
+/**
+ * Copy between memory locations using max size integer per iteration.
+ * @param dest pointer of destination memory location
+ * @param src pointer of source memory location
+ * @param n amount of bytes to copy
+ * @return
+ */
+extern void speedmemcpy(void *dest, const void * src, uint32_t n);
 
 #endif //SRC_ENDIANNESS_H

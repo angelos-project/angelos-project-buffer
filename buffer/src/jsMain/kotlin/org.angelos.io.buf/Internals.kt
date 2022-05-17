@@ -32,5 +32,17 @@ internal actual class Internals {
                 else -> 0
             }
         }
+
+        actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> {
+            throw UnsupportedOperationException()
+        }
+
+        actual fun copyInto(
+            destination: TypePointer<Byte>,
+            source: TypePointer<Byte>,
+            length: Int
+        ) {
+            throw UnsupportedOperationException()
+        }
     }
 }

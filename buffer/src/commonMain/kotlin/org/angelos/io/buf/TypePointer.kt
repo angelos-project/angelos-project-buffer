@@ -15,8 +15,6 @@
 package org.angelos.io.buf
 
 /**
- * Immutable buffer interface inheriting from Buffer.
- *
- * @constructor Create empty mutable buffer
+ * TypePointer holds a native memory raw pointer while adding type assertion.
  */
-interface ImmutableBuffer : Buffer, Gettable
+typealias TypePointer<@Suppress("UNUSED_TYPEALIAS_PARAMETER") T> = Long

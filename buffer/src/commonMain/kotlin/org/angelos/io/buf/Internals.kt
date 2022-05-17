@@ -17,5 +17,30 @@ package org.angelos.io.buf
 internal expect class Internals {
     companion object {
         fun getEndian(): Int
+
+        fun nativeArrayAddress(array: ByteArray): TypePointer<Byte>
+
+        fun copyInto(
+            destination: TypePointer<Byte>,
+            source: TypePointer<Byte>,
+            length: Int
+        )
     }
 }
+
+inline fun reverseShort(value: Short): Short = (
+        (value.toInt() shl 8 and 0xFF00) or (value.toInt() shr 8 and 0xFF)).toShort()
+
+inline fun reverseInt(value: Int): Int = (value shl 24 and -0x1000000) or
+        (value shl 8 and 0xFF0000) or
+        (value shr 8 and 0xFF00) or
+        (value shr 24 and 0xFF)
+
+inline fun reverseLong(value: Long): Long = (value shl 56 and -0x1000000_00000000) or
+        (value shl 40 and 0xFF0000_00000000) or
+        (value shl 24 and 0xFF00_00000000) or
+        (value shl 8 and 0xFF_00000000) or
+        (value shr 8 and 0xFF000000) or
+        (value shr 24 and 0xFF0000) or
+        (value shr 40 and 0xFF00) or
+        (value shr 56 and 0xFF)

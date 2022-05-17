@@ -14,19 +14,11 @@
  */
 package org.angelos.io.buf
 
-/**
- * Native byte buffer implemented outside save memory environment as immutable.
- *
- * @constructor
- *
- * @param size
- * @param limit
- * @param position
- * @param endianness
- */
-expect class NativeByteBuffer internal constructor(
-    size: Int,
-    limit: Int,
-    position: Int,
-    endianness: Endianness,
-) : AbstractBuffer, ImmutableNativeBuffer
+actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+    val ptr = buf.getPointer()
+    val arr =  populateArray(refArray.copyOf())
+    for(idx in arr.indices step 8){
+        Internals.unsafe.putLong(ptr + idx, Internals.unsafe.getLong(arr, Internals.byteArrayOffset + idx))
+    }
+    return buf
+}

@@ -19,7 +19,7 @@ package org.angelos.io.buf
  *
  * @constructor Create empty Buffer
  */
-interface Buffer : Gettable {
+interface Buffer: Gettable {
 
     /**
      * Total size of the buffer.
@@ -45,12 +45,6 @@ interface Buffer : Gettable {
      * Whether reversed byte order of the buffer compared to native endianness.
      */
     val reverse: Boolean
-
-    /**
-     * Whether the current implementation of the class is optimized.
-     * Used internally to make the most efficient decisions when copying data between buffers.
-     */
-    val optimized: Boolean
 
     /**
      * Clears the buffer by setting position to beginning and limit to capacity, for performing
@@ -93,7 +87,7 @@ interface Buffer : Gettable {
      * @param startIndex where to start copy from in source buffer
      * @param endIndex when to stop copying from the source buffer
      */
-    fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = size)
+    fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit)
 
     companion object {
         const val BYTE_SIZE = Byte.SIZE_BYTES
@@ -108,6 +102,29 @@ interface Buffer : Gettable {
         const val FLOAT_SIZE = Float.SIZE_BYTES
         const val DOUBLE_SIZE = Double.SIZE_BYTES
 
+        /**
+         * Endianness native to the platform.
+         */
         val nativeEndianness = Endianness.nativeOrder()
+
+        /**
+         * Verifies the contracted requirements for Buffer.copyInto().
+         *
+         * @param destination destination buffer
+         * @param destinationOffset offset in destination
+         * @param source source buffer to copy from
+         * @param startIndex start index to copy from at source
+         * @param endIndex end index copy to copy from at source
+         */
+        inline fun copyIntoContract(
+            destination: MutableBuffer, destinationOffset: Int,
+            source: Buffer, startIndex: Int, endIndex: Int
+        ) {
+            require(destinationOffset >= 0)
+            require(startIndex >= 0)
+            require(endIndex >= startIndex)
+            require(destination.limit >= endIndex - startIndex + destinationOffset)
+            require(source.limit >= endIndex)
+        }
     }
 }

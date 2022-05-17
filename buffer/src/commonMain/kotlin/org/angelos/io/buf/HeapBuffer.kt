@@ -20,11 +20,11 @@ package org.angelos.io.buf
  * @constructor Create empty Heap buffer
  */
 interface HeapBuffer : Buffer {
-
     /**
-     * Exposing the underlying ByteArray of the buffer.
+     * Get underlying array of buffer.
+     * May throw UnsupportedOperationException if native.
      *
-     * @return underlying array
+     * @return array of bytes
      */
     fun getArray(): ByteArray
 }

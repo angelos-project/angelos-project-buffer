@@ -19,6 +19,4 @@ package org.angelos.io.buf
  *
  * @constructor Create empty mutable buffer
  */
-interface MutableBuffer : Buffer, Settable {
-
-}
+interface MutableBuffer : Buffer, Gettable, Settable

@@ -32,8 +32,18 @@ static jint get_endian(JNIEnv * env, jclass thisClass){
     return endian();
 }
 
+/*
+ * Class:     org_angelos_io_buf_Internals
+ * Method:    get_endian
+ * Signature: (JJI)V
+ */
+static void do_speedmemcpy(JNIEnv * env, jclass thisClass, jlong dest, jlong source, jint n){
+    speedmemcpy((void *) dest, (void *) source, n);
+}
+
 static JNINativeMethod funcs[] = {
-	{ "endian", "()I", (void *)&get_endian }
+	{ "endian", "()I", (void *)&get_endian },
+	{ "speedmemcpy", "(JJI)V", (void *)&do_speedmemcpy }
 };
 
 #define CURRENT_JNI JNI_VERSION_1_6

@@ -15,9 +15,25 @@
 package org.angelos.io.buf
 
 import cbuffer.endian
+import cbuffer.speedmemcpy
+import kotlinx.cinterop.*
 
 internal actual class Internals {
     actual companion object {
         actual fun getEndian(): Int = endian()
+
+        actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> = array.usePinned { it.addressOf(0).toLong() }
+
+        actual fun copyInto(
+            destination: TypePointer<Byte>,
+            source: TypePointer<Byte>,
+            length: Int
+        ) {
+            speedmemcpy(
+                destination.toCPointer<Nothing>(),
+                source.toCPointer<Nothing>(),
+                length.toUInt()
+            )
+        }
     }
 }

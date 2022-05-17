@@ -20,21 +20,17 @@ package org.angelos.io.buf
  * @constructor Create empty Native buffer
  */
 interface NativeBuffer : Buffer {
-
     /**
-     * Memory allocated externally outside the buffer.
-     */
-    val allocated: Boolean
-
-    /**
-     * Get native pointer to underlying ByteArray
+     * Get pointer to native or heap memory.
+     * Throws UnsupportedOperationException if unavailable.
      *
-     * @return native pointer
+     * @return pointer to first element
      */
-    fun getPointer(): Long
+    fun getPointer(): TypePointer<Byte>
 
     /**
-     * Dispose manually of externally allocated memory.
+     * Dispose manually of allocated memory.
+     *
      */
     fun dispose()
 }
