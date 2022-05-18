@@ -1,5 +1,6 @@
 package org.angelos.io.buf
 
+import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
 import platform.posix.free
 
@@ -20,13 +21,12 @@ actual class MutableNativeByteBuffer internal actual constructor(
     position: Int,
     endianness: Endianness,
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableNativeBuffer {
-    private val _pointer = memScoped { allocArray<ByteVar>(size).toLong() }
+    private val _array = memScoped { nativeHeap.allocArray<ByteVar>(size) }
+    private val _pointer = getPointer()
 
-    override fun saveByte(index: Int, value: Byte) { _pointer.toCPointer<ByteVar>()!!.set(index, value) }
-    //(_pointer + index).toCPointer<ByteVar>()!!.pointed.value = value
+    override fun saveByte(index: Int, value: Byte) { throw UnsupportedOperationException() }
 
-    override fun saveLong(index: Int, value: Long) { _pointer.toCPointer<LongVar>()!!.set(index, value) }
-    // (_pointer + index).toCPointer<LongVar>()!!.pointed.value = value
+    override fun saveLong(index: Int, value: Long)  { throw UnsupportedOperationException() }
 
     override inline fun writeByte(value: Byte) { (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value = value }
 
@@ -77,9 +77,9 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value = value
     }
 
-    override fun loadByte(index: Int): Byte = (_pointer + index).toCPointer<ByteVar>()!!.pointed.value
+    override fun loadByte(index: Int): Byte = throw UnsupportedOperationException()
 
-    override fun loadLong(index: Int): Long = (_pointer + index).toCPointer<LongVar>()!!.pointed.value
+    override fun loadLong(index: Int): Long = throw UnsupportedOperationException()
 
     override inline fun readByte(): Byte = (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value
 
@@ -131,11 +131,27 @@ actual class MutableNativeByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
+        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
         else -> error("Only handles AbstractMutableBuffer.")
     }
 
-    override fun getPointer(): TypePointer<Byte> =_pointer
+    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+        Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
-    override fun dispose() { memScoped { free(_pointer.toCPointer<ByteVar>()!!.pointed.ptr) } }
+        _array.usePinned {
+            val src = (_pointer + startIndex).toCPointer<ByteVar>()
+            when (destination) {
+                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
+                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+            }
+        }
+    }
+
+    override fun getPointer(): TypePointer<Byte> = _array.pointed.ptr.toLong()
+
+    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
+        _array.usePinned { native(getPointer()) }
+    }
+
+    override fun dispose() { memScoped { free(_array) } }
 }

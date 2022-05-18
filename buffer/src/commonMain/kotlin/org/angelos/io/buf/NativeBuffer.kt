@@ -29,6 +29,14 @@ interface NativeBuffer : Buffer {
     fun getPointer(): TypePointer<Byte>
 
     /**
+     * Pins the underlying memory if necessary and executes the lambda.
+     *
+     * @param native lambda to be executed in pinned mode
+     * @receiver
+     */
+    fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit)
+
+    /**
      * Dispose manually of allocated memory.
      *
      */

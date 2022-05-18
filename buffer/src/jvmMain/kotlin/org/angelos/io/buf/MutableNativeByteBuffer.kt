@@ -144,6 +144,9 @@ actual class MutableNativeByteBuffer internal actual constructor(
     }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
+    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
+        native(getPointer())
+    }
 
     override fun dispose() {
         Internals.unsafe.freeMemory(_pointer)

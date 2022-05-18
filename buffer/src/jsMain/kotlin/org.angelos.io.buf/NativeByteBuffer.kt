@@ -94,5 +94,9 @@ actual class NativeByteBuffer internal actual constructor(
         throw UnsupportedOperationException()
     }
 
+    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
+        native(getPointer())
+    }
+
     override fun dispose() {}
 }

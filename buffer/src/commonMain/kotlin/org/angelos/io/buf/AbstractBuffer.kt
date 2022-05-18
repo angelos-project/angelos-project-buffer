@@ -170,7 +170,7 @@ abstract class AbstractBuffer internal constructor(
      */
     internal abstract fun loadLong(index: Int): Long
 
-    fun <B: AbstractMutableBuffer> copyInto(destination: B, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+    open fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
         val length = endIndex - startIndex

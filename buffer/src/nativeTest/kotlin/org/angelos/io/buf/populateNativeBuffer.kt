@@ -14,17 +14,15 @@
  */
 package org.angelos.io.buf
 
+import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
 
 actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
-    error("Crashes, probably due to memory leak, not confirmed.")
     val ptr = buf.getPointer()
     val arr =  populateArray(refArray.copyOf())
     memScoped {
-        ptr.usePinned {
-            for(idx in 0 until arr.size-1 step 8){
-                (it.get() + idx).toCPointer<LongVar>()!!.pointed.value = arr.getLongAt(idx)
-            }
+        arr.usePinned {
+            speedmemcpy(ptr.toCPointer<ByteVar>(), arr.refTo(0), arr.size.toUInt())
         }
     }
     return buf

@@ -16,7 +16,6 @@ package org.angelos.io.buf
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 /**
  * Native reference test for the ReferenceMutableBuffer.

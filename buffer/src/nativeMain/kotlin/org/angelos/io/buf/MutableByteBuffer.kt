@@ -14,7 +14,8 @@
  */
 package org.angelos.io.buf
 
-import kotlinx.cinterop.memScoped
+import cbuffer.speedmemcpy
+import kotlinx.cinterop.*
 
 /**
  * Mutable byte buffer implemented on the heap, as mutable.
@@ -145,8 +146,20 @@ actual class MutableByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
+        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
         else -> error("Only handles AbstractMutableBuffer.")
+    }
+
+    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+        Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
+
+        _array.usePinned {
+            val src = _array.refTo(startIndex)
+            when (destination) {
+                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
+                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+            }
+        }
     }
 
     override fun getArray(): ByteArray = _array
