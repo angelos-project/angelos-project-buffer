@@ -174,6 +174,7 @@ abstract class AbstractBuffer internal constructor(
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
         val length = endIndex - startIndex
+
         val l = length.floorDiv(Buffer.LONG_SIZE) * Buffer.LONG_SIZE
 
         for (idx in 0 until l step Buffer.LONG_SIZE) {

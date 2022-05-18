@@ -14,7 +14,6 @@
  */
 package org.angelos.io.buf
 
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -40,31 +39,31 @@ open class MutableBufferTest {
         120, 121, 122, 123, 124, 125, 126, -127
     )
 
-    private val refByte: Byte = 0B1010101
-    private val refUByte: UByte = 0B10101010u
+    val refByte: Byte = 0B1010101
+    val refUByte: UByte = 0B10101010u
 
-    private val refChar: Char = 'Ö'
+    val refChar: Char = 'Ö'
 
-    private val refShort: Short = 0B1010101_10101010
-    private val refUShort: UShort = 0B10101010_10101010u
+    val refShort: Short = 0B1010101_10101010
+    val refUShort: UShort = 0B10101010_10101010u
 
-    private val refInt: Int = 0B1010101_10101010_10101010_10101010
-    private val refUInt: UInt = 0B10101010_10101010_10101010_10101010u
+    val refInt: Int = 0B1010101_10101010_10101010_10101010
+    val refUInt: UInt = 0B10101010_10101010_10101010_10101010u
 
-    private val refLong: Long = 0B1010101_10101010_10101010_10101010_10101010_10101010_10101010_10101010L
-    private val refULong: ULong = 0B10101010_10101010_10101010_10101010_10101010_10101010_10101010_10101010u
+    val refLong: Long = 0B1010101_10101010_10101010_10101010_10101010_10101010_10101010_10101010L
+    val refULong: ULong = 0B10101010_10101010_10101010_10101010_10101010_10101010_10101010_10101010u
 
-    private val refFloat: Float = 23.43585F
-    private val refDouble: Double = -0.892384774029876
+    val refFloat: Float = 23.43585F
+    val refDouble: Double = -0.892384774029876
 
-    protected val refSize = refArray.size
+    val refSize = refArray.size
 
     /**
      * Reverses endianness on byffer.
      *
      * @param buf
      */
-    fun reverseEndianness(buf: Buffer) = when {
+    private fun reverseEndianness(buf: Buffer) = when {
         buf.endian.isBig() -> Endianness.LITTLE_ENDIAN
         buf.endian.isLittle() -> Endianness.BIG_ENDIAN
         else -> error("Only big or little endian will do")
@@ -152,7 +151,7 @@ open class MutableBufferTest {
      * This test certifies that the buffer getNext*() methods read values consistently
      * compared to KN ByteArray by utilizing the populateArray method.
      */
-    fun testReferenceMutableBufferRead(buf: Buffer) {
+    fun testMutableBufferRead(buf: Buffer) {
         assertEquals(buf.getNextByte(), refByte)
         assertEquals(buf.getNextUByte(), refUByte)
         assertEquals(buf.getNextChar(), refChar)
@@ -203,7 +202,7 @@ open class MutableBufferTest {
      * This test certifies that the buffer writes and reads values consistently.
      *
      */
-    fun testReferenceMutableBufferWrite(buf: MutableBuffer) {
+    fun testMutableBufferWrite(buf: MutableBuffer) {
         buf.setNextByte(refByte)
         buf.setNextUByte(refUByte)
         buf.setNextChar(refChar)
@@ -236,7 +235,7 @@ open class MutableBufferTest {
      * This test certifies that the buffer writes and reads values consistently.
      *
      */
-    fun testReferenceMutableBufferWriteReverse(buf: MutableBuffer) {
+    fun testMutableBufferWriteReverse(buf: MutableBuffer) {
         buf.endian = reverseEndianness(buf)
 
         buf.setNextByte(refByte)
@@ -264,22 +263,5 @@ open class MutableBufferTest {
         assertEquals(buf.getNextULong(), refULong)
         assertEquals(buf.getNextFloat().toDouble(), refFloat.toDouble(), 1.00000)
         assertEquals(buf.getNextDouble(), refDouble)
-    }
-
-    /**
-     * Test Buffer.reverse*() in double on all types.
-     * This test certifies that all public domain *.reverseBytes() methods reverses properly.
-     */
-    @Test
-    fun testReverse() {
-        assertEquals(refShort.swapEndian(), refShort.swapEndian())
-        assertEquals(refUShort.swapEndian(), refUShort.swapEndian())
-        assertEquals(refChar.swapEndian(), refChar.swapEndian())
-        assertEquals(refInt.swapEndian(), refInt.swapEndian())
-        assertEquals(refUInt.swapEndian(), refUInt.swapEndian())
-        assertEquals(refLong.swapEndian(), refLong.swapEndian())
-        assertEquals(refULong.swapEndian(), refULong.swapEndian())
-        assertEquals(refFloat.swapEndian(), refFloat.swapEndian())
-        assertEquals(refDouble.swapEndian(), refDouble.swapEndian())
     }
 }

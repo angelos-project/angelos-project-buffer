@@ -28,14 +28,14 @@ class ByteBufferTest : MutableBufferTest() {
      */
     @Test
     fun byteBuffer() {
-        testReferenceMutableBufferRead(byteBufferOf(populateArray(createArray())))
+        testMutableBufferRead(byteBufferOf(populateArray(createArray())))
 
-        testReferenceMutableBufferRead(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
-        testReferenceMutableBufferWrite(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
-        testReferenceMutableBufferWriteReverse(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
+        testMutableBufferRead(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
+        testMutableBufferWrite(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
+        testMutableBufferWriteReverse(byteBufferOf(populateArray(createArray())).toMutableByteBuffer())
 
-        testReferenceMutableBufferRead(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
-        testReferenceMutableBufferWrite(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
-        testReferenceMutableBufferWriteReverse(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+        testMutableBufferRead(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+        testMutableBufferWrite(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
+        testMutableBufferWriteReverse(byteBufferOf(populateArray(createArray())).toMutableNativeByteBuffer())
     }
 }

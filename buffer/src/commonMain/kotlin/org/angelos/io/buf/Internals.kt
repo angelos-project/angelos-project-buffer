@@ -28,14 +28,32 @@ internal expect class Internals {
     }
 }
 
+/**
+ * Reverse byte order of Short.
+ *
+ * @param value
+ * @return
+ */
 inline fun reverseShort(value: Short): Short = (
         (value.toInt() shl 8 and 0xFF00) or (value.toInt() shr 8 and 0xFF)).toShort()
 
+/**
+ * Reverse byte order of Int.
+ *
+ * @param value
+ * @return
+ */
 inline fun reverseInt(value: Int): Int = (value shl 24 and -0x1000000) or
         (value shl 8 and 0xFF0000) or
         (value shr 8 and 0xFF00) or
         (value shr 24 and 0xFF)
 
+/**
+ * Reverse byte order of Long.
+ *
+ * @param value
+ * @return
+ */
 inline fun reverseLong(value: Long): Long = (value shl 56 and -0x1000000_00000000) or
         (value shl 40 and 0xFF0000_00000000) or
         (value shl 24 and 0xFF00_00000000) or

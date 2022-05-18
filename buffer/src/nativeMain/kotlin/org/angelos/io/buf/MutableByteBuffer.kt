@@ -14,6 +14,8 @@
  */
 package org.angelos.io.buf
 
+import kotlinx.cinterop.memScoped
+
 /**
  * Mutable byte buffer implemented on the heap, as mutable.
  *
@@ -36,9 +38,9 @@ actual class MutableByteBuffer internal actual constructor(
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
     private val _array = array
 
-    override inline fun saveByte(index: Int, value: Byte) { _array[index] = value }
+    override fun saveByte(index: Int, value: Byte) { _array[index] = value }
 
-    override inline fun saveLong(index: Int, value: Long) = _array.setLongAt(index, value)
+    override fun saveLong(index: Int, value: Long) = _array.setLongAt(index, value)
 
     override inline fun writeByte(value: Byte) { _array[_position] = value }
 
@@ -89,9 +91,9 @@ actual class MutableByteBuffer internal actual constructor(
         false -> _array.setDoubleAt(_position, value)
     }
 
-    override inline fun loadByte(index: Int): Byte = _array[index]
+    override fun loadByte(index: Int): Byte = _array[index]
 
-    override inline fun loadLong(index: Int): Long = _array.getLongAt(index)
+    override fun loadLong(index: Int): Long = _array.getLongAt(index)
 
     override inline fun readByte(): Byte = _array[_position]
 
@@ -143,7 +145,7 @@ actual class MutableByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
         else -> error("Only handles AbstractMutableBuffer.")
     }
 

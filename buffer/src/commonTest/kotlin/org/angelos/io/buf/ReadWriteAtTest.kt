@@ -17,6 +17,11 @@ package org.angelos.io.buf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+/**
+ * Test of read and write functions.
+ *
+ * @constructor Create empty Read write at test
+ */
 class ReadWriteAtTest {
 
     private val refChar: Char = 'Ö'
@@ -33,6 +38,10 @@ class ReadWriteAtTest {
     private val refFloat: Float = 23.43585F
     private val refDouble: Double = -0.892384774029876
 
+    /**
+     * Writing and reading of Short to/from ByteArray.
+     *
+     */
     @Test
     fun short() {
         val array = ByteArray(8)
@@ -40,6 +49,10 @@ class ReadWriteAtTest {
         assertEquals(array.readShortAt(0), refShort)
     }
 
+    /**
+     * Writing and reading of UShort to/from ByteArray.
+     *
+     */
     @Test
     fun ushort() {
         val array = ByteArray(8)
@@ -47,6 +60,10 @@ class ReadWriteAtTest {
         assertEquals(array.readUShortAt(0), refUShort)
     }
 
+    /**
+     * Writing and reading of Char to/from ByteArray.
+     *
+     */
     @Test
     fun char() {
         val array = ByteArray(8)
@@ -54,6 +71,10 @@ class ReadWriteAtTest {
         assertEquals(array.readCharAt(0), refChar)
     }
 
+    /**
+     * Writing and reading of Int to/from ByteArray.
+     *
+     */
     @Test
     fun int() {
         val array = ByteArray(8)
@@ -61,6 +82,10 @@ class ReadWriteAtTest {
         assertEquals(array.readIntAt(0), refInt)
     }
 
+    /**
+     * Writing and reading of UInt to/from ByteArray.
+     *
+     */
     @Test
     fun uint() {
         val array = ByteArray(8)
@@ -68,6 +93,10 @@ class ReadWriteAtTest {
         assertEquals(array.readUIntAt(0), refUInt)
     }
 
+    /**
+     * Writing and reading of Long to/from ByteArray.
+     *
+     */
     @Test
     fun long() {
         val array = ByteArray(8)
@@ -75,6 +104,10 @@ class ReadWriteAtTest {
         assertEquals(array.readLongAt(0), refLong)
     }
 
+    /**
+     * Writing and reading of ULong to/from ByteArray.
+     *
+     */
     @Test
     fun ulong() {
         val array = ByteArray(8)
@@ -82,6 +115,10 @@ class ReadWriteAtTest {
         assertEquals(array.readULongAt(0), refULong)
     }
 
+    /**
+     * Writing and reading of Float to/from ByteArray.
+     *
+     */
     @Test
     fun float() {
         val array = ByteArray(8)
@@ -89,6 +126,10 @@ class ReadWriteAtTest {
         assertEquals(array.readFloatAt(0), refFloat)
     }
 
+    /**
+     * Writing and reading of Double to/from ByteArray.
+     *
+     */
     @Test
     fun double() {
         val array = ByteArray(8)

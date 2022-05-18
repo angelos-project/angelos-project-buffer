@@ -14,6 +14,8 @@
  */
 package org.angelos.io.buf
 
+import kotlinx.cinterop.memScoped
+
 /**
  * Byte buffer implemented on the heap, as immutable.
  *
@@ -36,9 +38,9 @@ actual class ByteBuffer internal actual constructor(
 ) : AbstractBuffer(size, limit, position, endianness), ImmutableHeapBuffer {
     private val _array = array
 
-    override inline fun loadByte(index: Int): Byte = _array[index]
+    override fun loadByte(index: Int): Byte = _array[index]
 
-    override inline fun loadLong(index: Int): Long = _array.getLongAt(index)
+    override fun loadLong(index: Int): Long = _array.getLongAt(index)
 
     override inline fun readByte(): Byte = _array[_position]
 
@@ -90,7 +92,7 @@ actual class ByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
         else -> error("Only handles AbstractMutableBuffer.")
     }
 

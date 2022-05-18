@@ -27,19 +27,26 @@ class NativeByteBufferTest : MutableBufferTest() {
     /**
      * Running tests on the NativeByteBuffer.
      */
-    @Ignore // There is no implemented way to enter data in an immutable native buffer.
+    //@Ignore // There is no implemented way to enter data in an immutable native buffer.
     @Test
     fun nativeByteBuffer() {
-        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)))
+        testMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)))
 
-        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
-        testReferenceMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
-        testReferenceMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
 
-        testReferenceMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
-        testReferenceMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
-        testReferenceMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
+        testMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
+        testMutableBufferWrite(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
+        testMutableBufferWriteReverse(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableNativeByteBuffer())
     }
 }
 
+/**
+ * Populate native buffer by using pointer arithmetic. Only for testing purposes if applicable or functional.
+ *
+ * @param B
+ * @param buf
+ * @return
+ */
 expect fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B

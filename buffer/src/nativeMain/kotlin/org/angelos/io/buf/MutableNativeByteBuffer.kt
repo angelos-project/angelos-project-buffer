@@ -22,9 +22,11 @@ actual class MutableNativeByteBuffer internal actual constructor(
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableNativeBuffer {
     private val _pointer = memScoped { allocArray<ByteVar>(size).toLong() }
 
-    override inline fun saveByte(index: Int, value: Byte) { (_pointer + index).toCPointer<ByteVar>()!!.pointed.value = value }
+    override fun saveByte(index: Int, value: Byte) { _pointer.toCPointer<ByteVar>()!!.set(index, value) }
+    //(_pointer + index).toCPointer<ByteVar>()!!.pointed.value = value
 
-    override inline fun saveLong(index: Int, value: Long) { (_pointer + index).toCPointer<LongVar>()!!.pointed.value = value }
+    override fun saveLong(index: Int, value: Long) { _pointer.toCPointer<LongVar>()!!.set(index, value) }
+    // (_pointer + index).toCPointer<LongVar>()!!.pointed.value = value
 
     override inline fun writeByte(value: Byte) { (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value = value }
 
@@ -75,9 +77,9 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value = value
     }
 
-    override inline fun loadByte(index: Int): Byte = (_pointer + index).toCPointer<ByteVar>()!!.pointed.value
+    override fun loadByte(index: Int): Byte = (_pointer + index).toCPointer<ByteVar>()!!.pointed.value
 
-    override inline fun loadLong(index: Int): Long = (_pointer + index).toCPointer<LongVar>()!!.pointed.value
+    override fun loadLong(index: Int): Long = (_pointer + index).toCPointer<LongVar>()!!.pointed.value
 
     override inline fun readByte(): Byte = (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value
 
@@ -129,7 +131,7 @@ actual class MutableNativeByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
         else -> error("Only handles AbstractMutableBuffer.")
     }
 

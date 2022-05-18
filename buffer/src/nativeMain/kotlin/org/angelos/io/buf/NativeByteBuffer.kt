@@ -36,9 +36,9 @@ actual class NativeByteBuffer internal actual constructor(
 ) : AbstractBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
     private val _pointer = memScoped { allocArray<ByteVar>(size).toLong() }
 
-    override inline fun loadByte(index: Int): Byte = (_pointer + index).toCPointer<ByteVar>()!!.pointed.value
+    override fun loadByte(index: Int): Byte = (_pointer + index).toCPointer<ByteVar>()!!.pointed.value
 
-    override inline fun loadLong(index: Int): Long = (_pointer + index).toCPointer<LongVar>()!!.pointed.value
+    override fun loadLong(index: Int): Long = (_pointer + index).toCPointer<LongVar>()!!.pointed.value
 
     override inline fun readByte(): Byte = (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value
 
@@ -90,7 +90,7 @@ actual class NativeByteBuffer internal actual constructor(
     }
 
     override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+        is AbstractMutableBuffer -> memScoped { copyInto(destination, destinationOffset, startIndex, endIndex) }
         else -> error("Only handles AbstractMutableBuffer.")
     }
 

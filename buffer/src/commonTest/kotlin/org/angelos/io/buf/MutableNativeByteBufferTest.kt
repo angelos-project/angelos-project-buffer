@@ -28,12 +28,12 @@ class MutableNativeByteBufferTest : MutableBufferTest() {
      */
     @Test
     fun mutableNativeByteBuffer() {
-        testReferenceMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
-        testReferenceMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
-        testReferenceMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
+        testMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
+        testMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
+        testMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)))
 
-        testReferenceMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
-        testReferenceMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
-        testReferenceMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferRead(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferWrite(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
+        testMutableBufferWriteReverse(populateMutableBuffer(mutableNativeByteBufferOf(refSize)).toMutableByteBuffer())
     }
 }

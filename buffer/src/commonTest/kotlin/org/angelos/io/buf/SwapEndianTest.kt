@@ -18,7 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * Swap endian test
+ * Testing .swapEndian() on most variable types.
  *
  * @constructor Create empty Swap endian test
  */
@@ -38,6 +38,10 @@ class SwapEndianTest {
     private val refFloat: Float = 23.43585F
     private val refDouble: Double = -0.892384774029876
 
+    /**
+     * Testing .swapEndian() on Short.
+     *
+     */
     @Test
     fun shortSwapEndian() {
         assertEquals(refShort.swapEndian().swapEndian(), refShort)
@@ -45,6 +49,10 @@ class SwapEndianTest {
         assertEquals(Short.MAX_VALUE.swapEndian().swapEndian(), Short.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on UShort.
+     *
+     */
     @Test
     fun ushortSwapEndian() {
         assertEquals(refUShort.swapEndian().swapEndian(), refUShort)
@@ -52,6 +60,10 @@ class SwapEndianTest {
         assertEquals(UShort.MAX_VALUE.swapEndian().swapEndian(), UShort.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on Char.
+     *
+     */
     @Test
     fun charSwapEndian() {
         assertEquals(refChar.swapEndian().swapEndian(), refChar)
@@ -59,6 +71,10 @@ class SwapEndianTest {
         assertEquals(Char.MAX_VALUE.swapEndian().swapEndian(), Char.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on Int.
+     *
+     */
     @Test
     fun intSwapEndian() {
         assertEquals(refInt.swapEndian().swapEndian(), refInt)
@@ -66,6 +82,10 @@ class SwapEndianTest {
         assertEquals(Int.MAX_VALUE.swapEndian().swapEndian(), Int.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on UInt.
+     *
+     */
     @Test
     fun uintSwapEndian() {
         assertEquals(refUInt.swapEndian().swapEndian(), refUInt)
@@ -73,6 +93,10 @@ class SwapEndianTest {
         assertEquals(UInt.MAX_VALUE.swapEndian().swapEndian(), UInt.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on Long.
+     *
+     */
     @Test
     fun longSwapEndian() {
         assertEquals(refLong.swapEndian().swapEndian(), refLong)
@@ -80,6 +104,10 @@ class SwapEndianTest {
         assertEquals(Long.MAX_VALUE.swapEndian().swapEndian(), Long.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on ULong.
+     *
+     */
     @Test
     fun ulongSwapEndian() {
         assertEquals(refULong.swapEndian().swapEndian(), refULong)
@@ -87,6 +115,10 @@ class SwapEndianTest {
         assertEquals(ULong.MAX_VALUE.swapEndian().swapEndian(), ULong.MAX_VALUE)*/
     }
 
+    /**
+     * Testing .swapEndian() on Float.
+     *
+     */
     @Test
     fun floatSwapEndian() {
         assertEquals(refFloat.swapEndian().swapEndian(), refFloat)
@@ -94,6 +126,10 @@ class SwapEndianTest {
         assertEquals((Float.MAX_VALUE).swapEndian().swapEndian(), (Float.MAX_VALUE)) // <-- Fix KN/JVM*/
     }
 
+    /**
+     * Testing .swapEndian() on Double.
+     *
+     */
     @Test
     fun doubleSwapEndian() {
         assertEquals(refDouble.swapEndian().swapEndian(), refDouble)
