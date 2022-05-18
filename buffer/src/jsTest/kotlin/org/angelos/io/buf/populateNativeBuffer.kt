@@ -14,7 +14,14 @@
  */
 package org.angelos.io.buf
 
-actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+/**
+ * Populate native buffer, not possible in JS.
+ *
+ * @param B
+ * @param buf
+ * @return
+ */
+actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
     error("Virtually impossible to fill a 'native' buffer in JS.")
     return buf
 }

@@ -40,7 +40,7 @@ internal actual class Internals {
         actual fun copyInto(
             destination: TypePointer<Byte>,
             source: TypePointer<Byte>,
-            length: Int
+            length: Int,
         ) {
             throw UnsupportedOperationException()
         }

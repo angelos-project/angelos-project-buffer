@@ -30,7 +30,7 @@ actual class ByteBuffer internal actual constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractBuffer(size, limit, position, endianness), ImmutableHeapBuffer {
     private val _array = array
 
@@ -87,10 +87,11 @@ actual class ByteBuffer internal actual constructor(
         false -> Internals.unsafe.getDouble(_array, Internals.byteArrayOffset + _position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun getArray(): ByteArray = _array
 }

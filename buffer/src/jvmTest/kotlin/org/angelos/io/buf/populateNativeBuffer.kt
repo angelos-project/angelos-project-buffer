@@ -14,10 +14,17 @@
  */
 package org.angelos.io.buf
 
-actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+/**
+ * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in JVM.
+ *
+ * @param B
+ * @param buf
+ * @return
+ */
+actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
     val ptr = buf.getPointer()
-    val arr =  populateArray(refArray.copyOf())
-    for(idx in arr.indices step 8){
+    val arr = populateArray(refArray.copyOf())
+    for (idx in arr.indices step 8) {
         Internals.unsafe.putLong(ptr + idx, Internals.unsafe.getLong(arr, Internals.byteArrayOffset + idx))
     }
     return buf

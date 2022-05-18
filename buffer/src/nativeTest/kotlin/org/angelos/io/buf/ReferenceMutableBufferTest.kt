@@ -23,14 +23,8 @@ import kotlin.test.assertEquals
  * @constructor Create empty Reference mutable buffer test
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-class ReferenceMutableBufferTest: MutableBufferTest() {
+class ReferenceMutableBufferTest : MutableBufferTest() {
 
-    /**
-     * Populate a ByteArray using the native set*At() methods as a reference against ReferenceMutableBuffer.
-     *
-     * @param array
-     * @return
-     */
     private fun populateNativeByteArray(array: ByteArray): ByteArray {
         array[0] = refByte
         array[1] = refUByte.toByte()

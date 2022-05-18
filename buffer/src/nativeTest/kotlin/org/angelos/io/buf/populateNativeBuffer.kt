@@ -17,9 +17,16 @@ package org.angelos.io.buf
 import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
 
-actual fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+/**
+ * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in Native.
+ *
+ * @param B
+ * @param buf
+ * @return
+ */
+actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
     val ptr = buf.getPointer()
-    val arr =  populateArray(refArray.copyOf())
+    val arr = populateArray(refArray.copyOf())
     memScoped {
         arr.usePinned {
             speedmemcpy(ptr.toCPointer<ByteVar>(), arr.refTo(0), arr.size.toUInt())

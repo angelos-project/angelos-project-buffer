@@ -85,10 +85,11 @@ actual class NativeByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun getPointer(): TypePointer<Byte> {
         throw UnsupportedOperationException()

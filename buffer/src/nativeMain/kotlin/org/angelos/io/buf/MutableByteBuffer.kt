@@ -15,7 +15,10 @@
 package org.angelos.io.buf
 
 import cbuffer.speedmemcpy
-import kotlinx.cinterop.*
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.refTo
+import kotlinx.cinterop.toCPointer
+import kotlinx.cinterop.usePinned
 
 /**
  * Mutable byte buffer implemented on the heap, as mutable.
@@ -39,13 +42,19 @@ actual class MutableByteBuffer internal actual constructor(
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
     private val _array = array
 
-    override fun saveByte(index: Int, value: Byte) { _array[index] = value }
+    override fun saveByte(index: Int, value: Byte) {
+        _array[index] = value
+    }
 
     override fun saveLong(index: Int, value: Long) = _array.setLongAt(index, value)
 
-    override inline fun writeByte(value: Byte) { _array[_position] = value }
+    override inline fun writeByte(value: Byte) {
+        _array[_position] = value
+    }
 
-    override inline fun writeUByte(value: UByte) { _array[_position] = value.toByte() }
+    override inline fun writeUByte(value: UByte) {
+        _array[_position] = value.toByte()
+    }
 
     override inline fun writeChar(value: Char) = when (reverse) {
         true -> _array.setCharAt(_position, value.swapEndian())
@@ -145,10 +154,11 @@ actual class MutableByteBuffer internal actual constructor(
         false -> _array.getDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
@@ -156,8 +166,16 @@ actual class MutableByteBuffer internal actual constructor(
         _array.usePinned {
             val src = _array.refTo(startIndex)
             when (destination) {
-                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
-                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+                is HeapBuffer -> speedmemcpy(
+                    destination.getArray().refTo(destinationOffset),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
+                is NativeBuffer -> speedmemcpy(
+                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
             }
         }
     }

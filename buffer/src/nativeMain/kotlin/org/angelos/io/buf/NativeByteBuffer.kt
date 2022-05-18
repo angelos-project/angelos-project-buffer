@@ -16,7 +16,7 @@ package org.angelos.io.buf
 
 import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
-import platform.posix.*
+import platform.posix.free
 
 /**
  * Native byte buffer implemented outside save memory environment as immutable.
@@ -91,10 +91,11 @@ actual class NativeByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
@@ -102,8 +103,16 @@ actual class NativeByteBuffer internal actual constructor(
         _array.usePinned {
             val src = (_pointer + startIndex).toCPointer<ByteVar>()
             when (destination) {
-                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
-                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+                is HeapBuffer -> speedmemcpy(
+                    destination.getArray().refTo(destinationOffset),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
+                is NativeBuffer -> speedmemcpy(
+                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
             }
         }
     }
@@ -114,5 +123,7 @@ actual class NativeByteBuffer internal actual constructor(
         _array.usePinned { native(getPointer()) }
     }
 
-    override fun dispose() { memScoped { free(_array) } }
+    override fun dispose() {
+        memScoped { free(_array) }
+    }
 }

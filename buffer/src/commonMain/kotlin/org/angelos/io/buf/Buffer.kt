@@ -19,7 +19,7 @@ package org.angelos.io.buf
  *
  * @constructor Create empty Buffer
  */
-interface Buffer: Gettable {
+interface Buffer : Gettable {
 
     /**
      * Total size of the buffer.
@@ -118,7 +118,7 @@ interface Buffer: Gettable {
          */
         inline fun copyIntoContract(
             destination: MutableBuffer, destinationOffset: Int,
-            source: Buffer, startIndex: Int, endIndex: Int
+            source: Buffer, startIndex: Int, endIndex: Int,
         ) {
             require(destinationOffset >= 0)
             require(startIndex >= 0)

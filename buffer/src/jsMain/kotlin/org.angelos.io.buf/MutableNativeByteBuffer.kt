@@ -32,13 +32,21 @@ actual class MutableNativeByteBuffer internal actual constructor(
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableNativeBuffer {
     private val _array = ByteArray(size)
 
-    override fun saveByte(index: Int, value: Byte) { _array[index] = value }
+    override fun saveByte(index: Int, value: Byte) {
+        _array[index] = value
+    }
 
-    override fun saveLong(index: Int, value: Long) { _array.writeLongAt(index, value) }
+    override fun saveLong(index: Int, value: Long) {
+        _array.writeLongAt(index, value)
+    }
 
-    override fun writeByte(value: Byte) { _array[_position] = value }
+    override fun writeByte(value: Byte) {
+        _array[_position] = value
+    }
 
-    override fun writeUByte(value: UByte) { _array[_position] = value.toByte() }
+    override fun writeUByte(value: UByte) {
+        _array[_position] = value.toByte()
+    }
 
     override fun writeChar(value: Char) = when (reverse) {
         true -> _array.writeCharAt(_position, value.swapEndian())
@@ -138,10 +146,11 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun getPointer(): TypePointer<Byte> {
         throw UnsupportedOperationException()
@@ -151,5 +160,5 @@ actual class MutableNativeByteBuffer internal actual constructor(
         native(getPointer())
     }
 
-    override fun dispose() { }
+    override fun dispose() {}
 }

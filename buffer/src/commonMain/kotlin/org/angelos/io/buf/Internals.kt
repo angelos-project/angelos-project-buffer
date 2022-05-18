@@ -23,7 +23,7 @@ internal expect class Internals {
         fun copyInto(
             destination: TypePointer<Byte>,
             source: TypePointer<Byte>,
-            length: Int
+            length: Int,
         )
     }
 }

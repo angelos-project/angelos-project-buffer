@@ -16,7 +16,6 @@ package org.angelos.io.buf
 
 import kotlin.test.Test
 import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**

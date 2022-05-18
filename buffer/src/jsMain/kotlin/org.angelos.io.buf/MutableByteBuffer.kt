@@ -34,13 +34,21 @@ actual class MutableByteBuffer internal actual constructor(
 ) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
     private val _array = array
 
-    override fun saveByte(index: Int, value: Byte) { _array[index] = value }
+    override fun saveByte(index: Int, value: Byte) {
+        _array[index] = value
+    }
 
-    override fun saveLong(index: Int, value: Long) { _array.writeLongAt(index, value) }
+    override fun saveLong(index: Int, value: Long) {
+        _array.writeLongAt(index, value)
+    }
 
-    override fun writeByte(value: Byte) { _array[_position] = value }
+    override fun writeByte(value: Byte) {
+        _array[_position] = value
+    }
 
-    override fun writeUByte(value: UByte) { _array[_position] = value.toByte() }
+    override fun writeUByte(value: UByte) {
+        _array[_position] = value.toByte()
+    }
 
     override fun writeChar(value: Char) = when (reverse) {
         true -> _array.writeCharAt(_position, value.swapEndian())
@@ -140,10 +148,11 @@ actual class MutableByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun getArray(): ByteArray = _array
 }

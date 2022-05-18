@@ -43,7 +43,7 @@ internal actual class Internals {
         actual fun copyInto(
             destination: TypePointer<Byte>,
             source: TypePointer<Byte>,
-            length: Int
+            length: Int,
         ) {
             speedmemcpy(destination, source, length)
         }
@@ -57,20 +57,18 @@ internal actual class Internals {
          */
         actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> {
             theArrays[0] = array
-            return when(unsafe.addressSize()) {
-                4 -> normalize(unsafe.getInt(array, unsafe.arrayBaseOffset(theArrays.javaClass).toLong()) + byteArrayOffset.toInt())
+            return when (unsafe.addressSize()) {
+                4 -> normalize(
+                    unsafe.getInt(
+                        array,
+                        unsafe.arrayBaseOffset(theArrays.javaClass).toLong()
+                    ) + byteArrayOffset.toInt()
+                )
                 8 -> unsafe.getLong(theArrays, unsafe.arrayBaseOffset(theArrays.javaClass).toLong()) + byteArrayOffset
                 else -> error("Invalid address size")
             }
         }
 
-        /**
-         * Normalize as from http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe/
-         * Only for 32-bit systems.
-         *
-         * @param value
-         * @return
-         */
         private fun normalize(value: Int): Long {
             return if (value >= 0) value.toLong() else 0L.inv() ushr 32 and value.toLong()
         }

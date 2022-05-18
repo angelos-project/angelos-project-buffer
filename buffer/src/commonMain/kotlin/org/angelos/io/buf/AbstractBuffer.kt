@@ -170,6 +170,15 @@ abstract class AbstractBuffer internal constructor(
      */
     internal abstract fun loadLong(index: Int): Long
 
+    /**
+     * Copy into for buffers implemented in this package.
+     * Targets may override this implementation by a specialized one.
+     *
+     * @param destination
+     * @param destinationOffset
+     * @param startIndex
+     * @param endIndex
+     */
     open fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
@@ -218,7 +227,7 @@ abstract class AbstractBuffer internal constructor(
                 throw ByteBufferOverflowWarning()
         }
 
-        internal inline fun forwardPosition(buf: AbstractBuffer,length: Int) {
+        internal inline fun forwardPosition(buf: AbstractBuffer, length: Int) {
             buf._position += length
         }
     }

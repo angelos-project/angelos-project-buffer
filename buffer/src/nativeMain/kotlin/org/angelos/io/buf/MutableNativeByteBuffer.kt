@@ -24,13 +24,21 @@ actual class MutableNativeByteBuffer internal actual constructor(
     private val _array = memScoped { nativeHeap.allocArray<ByteVar>(size) }
     private val _pointer = getPointer()
 
-    override fun saveByte(index: Int, value: Byte) { throw UnsupportedOperationException() }
+    override fun saveByte(index: Int, value: Byte) {
+        throw UnsupportedOperationException()
+    }
 
-    override fun saveLong(index: Int, value: Long)  { throw UnsupportedOperationException() }
+    override fun saveLong(index: Int, value: Long) {
+        throw UnsupportedOperationException()
+    }
 
-    override inline fun writeByte(value: Byte) { (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value = value }
+    override inline fun writeByte(value: Byte) {
+        (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value = value
+    }
 
-    override inline fun writeUByte(value: UByte) { (_pointer + _position).toCPointer<UByteVar>()!!.pointed.value = value }
+    override inline fun writeUByte(value: UByte) {
+        (_pointer + _position).toCPointer<UByteVar>()!!.pointed.value = value
+    }
 
     override inline fun writeChar(value: Char) = when (reverse) {
         true -> (_pointer + _position).toCPointer<ShortVar>()!!.pointed.value = value.swapEndian().code.toShort()
@@ -130,10 +138,11 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
@@ -141,8 +150,16 @@ actual class MutableNativeByteBuffer internal actual constructor(
         _array.usePinned {
             val src = (_pointer + startIndex).toCPointer<ByteVar>()
             when (destination) {
-                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
-                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+                is HeapBuffer -> speedmemcpy(
+                    destination.getArray().refTo(destinationOffset),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
+                is NativeBuffer -> speedmemcpy(
+                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
             }
         }
     }
@@ -153,5 +170,7 @@ actual class MutableNativeByteBuffer internal actual constructor(
         _array.usePinned { native(getPointer()) }
     }
 
-    override fun dispose() { memScoped { free(_array) } }
+    override fun dispose() {
+        memScoped { free(_array) }
+    }
 }

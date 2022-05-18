@@ -14,6 +14,16 @@
  */
 package org.angelos.io.buf
 
+/**
+ * Abstract mutable buffer that implements mutability on top of AbstractBuffer.
+ *
+ * @constructor
+ *
+ * @param size max size of the buffer
+ * @param limit initial limit if partial data already exists
+ * @param position initial position in an already existing data stream
+ * @param endianness endian of the buffered data
+ */
 abstract class AbstractMutableBuffer internal constructor(
     size: Int,
     limit: Int,

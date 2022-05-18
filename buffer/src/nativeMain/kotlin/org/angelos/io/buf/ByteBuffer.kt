@@ -15,7 +15,10 @@
 package org.angelos.io.buf
 
 import cbuffer.speedmemcpy
-import kotlinx.cinterop.*
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.refTo
+import kotlinx.cinterop.toCPointer
+import kotlinx.cinterop.usePinned
 
 /**
  * Byte buffer implemented on the heap, as immutable.
@@ -35,7 +38,7 @@ actual class ByteBuffer internal actual constructor(
     size: Int,
     limit: Int,
     position: Int,
-    endianness: Endianness
+    endianness: Endianness,
 ) : AbstractBuffer(size, limit, position, endianness), ImmutableHeapBuffer {
     private val _array = array
 
@@ -92,10 +95,11 @@ actual class ByteBuffer internal actual constructor(
         false -> _array.getDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
@@ -103,8 +107,16 @@ actual class ByteBuffer internal actual constructor(
         _array.usePinned {
             val src = _array.refTo(startIndex)
             when (destination) {
-                is HeapBuffer -> speedmemcpy(destination.getArray().refTo(destinationOffset), src, (endIndex - startIndex).toUInt())
-                is NativeBuffer -> speedmemcpy((destination.getPointer() + destinationOffset).toCPointer<ByteVar>(), src, (endIndex - startIndex).toUInt())
+                is HeapBuffer -> speedmemcpy(
+                    destination.getArray().refTo(destinationOffset),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
+                is NativeBuffer -> speedmemcpy(
+                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
+                    src,
+                    (endIndex - startIndex).toUInt()
+                )
             }
         }
     }

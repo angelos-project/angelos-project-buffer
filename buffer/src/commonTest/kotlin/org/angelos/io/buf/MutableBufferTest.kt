@@ -17,6 +17,11 @@ package org.angelos.io.buf
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
+/**
+ * Implements total reference testing support for mutable buffers.
+ *
+ * @constructor Create empty Mutable buffer test
+ */
 open class MutableBufferTest {
 
     /**
@@ -58,11 +63,6 @@ open class MutableBufferTest {
 
     val refSize = refArray.size
 
-    /**
-     * Reverses endianness on byffer.
-     *
-     * @param buf
-     */
     private fun reverseEndianness(buf: Buffer) = when {
         buf.endian.isBig() -> Endianness.LITTLE_ENDIAN
         buf.endian.isLittle() -> Endianness.BIG_ENDIAN
@@ -100,7 +100,7 @@ open class MutableBufferTest {
      *
      * @param buf
      */
-    fun <B: MutableBuffer>populateMutableBuffer(buf: B): B {
+    fun <B : MutableBuffer> populateMutableBuffer(buf: B): B {
         buf.setNextByte(refByte)
         buf.setNextUByte(refUByte)
         buf.setNextChar(refChar)
@@ -113,7 +113,7 @@ open class MutableBufferTest {
         buf.setNextFloat(refFloat)
         buf.setNextDouble(refDouble)
 
-        for (idx in buf.position until buf.limit){
+        for (idx in buf.position until buf.limit) {
             buf.setNextByte(refArray[idx])
         }
         buf.clear()
@@ -143,7 +143,7 @@ open class MutableBufferTest {
         assertEquals(array.readFloatAt(32), refFloat)
         assertEquals(array.readDoubleAt(36), refDouble)
 
-        assertEquals(array[refSize-1], -127)
+        assertEquals(array[refSize - 1], -127)
     }
 
     /**
@@ -165,7 +165,7 @@ open class MutableBufferTest {
         assertEquals(buf.getNextDouble(), refDouble)
 
         assertEquals(buf.position, 44)
-        for (idx in buf.position until buf.limit){
+        for (idx in buf.position until buf.limit) {
             assertEquals(refArray[buf.position], buf.getNextByte())
         }
         assertEquals(buf.position, refSize)
@@ -181,7 +181,7 @@ open class MutableBufferTest {
         assertFailsWith<ByteBufferOverflowWarning> { buf.getNextFloat() }
         assertFailsWith<ByteBufferOverflowWarning> { buf.getNextDouble() }
 
-        if(buf is MutableBuffer) {
+        if (buf is MutableBuffer) {
             assertFailsWith<ByteBufferOverflowWarning> { buf.setNextByte(refByte) }
             assertFailsWith<ByteBufferOverflowWarning> { buf.setNextUByte(refUByte) }
             assertFailsWith<ByteBufferOverflowWarning> { buf.setNextChar(refChar) }

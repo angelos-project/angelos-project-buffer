@@ -14,7 +14,6 @@
  */
 package org.angelos.io.buf
 
-import kotlin.test.Ignore
 import kotlin.test.Test
 
 /**
@@ -49,4 +48,4 @@ class NativeByteBufferTest : MutableBufferTest() {
  * @param buf
  * @return
  */
-expect fun <B: NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B
+expect fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B

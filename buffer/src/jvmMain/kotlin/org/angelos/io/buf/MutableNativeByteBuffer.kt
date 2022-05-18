@@ -138,10 +138,11 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> Internals.unsafe.getDouble(_pointer + _position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) = when(destination) {
-        is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-        else -> error("Only handles AbstractMutableBuffer.")
-    }
+    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+        when (destination) {
+            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            else -> error("Only handles AbstractMutableBuffer.")
+        }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
     override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
