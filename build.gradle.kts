@@ -18,7 +18,7 @@ version = Project.version
 
 plugins {
     id("org.jetbrains.dokka") version Versions.dokka
-    jacoco
+    id("org.jetbrains.kotlinx.kover") version "0.5.0"
 }
 
 allprojects {
