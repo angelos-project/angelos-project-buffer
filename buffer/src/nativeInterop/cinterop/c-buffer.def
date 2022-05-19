@@ -1,3 +1,5 @@
 headers = endianness.h
-staticLibraries = libc-buffer.a
+staticLibraries.osx = libc-buffer.a
+staticLibraries.linux = libc-buffer.a
+staticLibraries.mingw = c-buffer.lib
 package = cbuffer
