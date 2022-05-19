@@ -16,19 +16,15 @@ package org.angelos.io.buf
 
 import kotlin.test.Test
 
-/**
- * Testing the NativeByteBuffer.
- *
- * @constructor Create empty Native byte buffer test
- */
-class NativeByteBufferTest : MutableBufferTest() {
+abstract class AbstractNativeByteBufferTest : MutableBufferTest()  {
 
     /**
      * Running tests on the NativeByteBuffer.
      */
-    //@Ignore // There is no implemented way to enter data in an immutable native buffer.
     @Test
-    fun nativeByteBuffer() {
+    abstract fun nativeByteBuffer()
+
+    fun doNativeByteBuffer() {
         testMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)))
 
         testMutableBufferRead(populateNativeBuffer(nativeByteBufferOf(refSize)).toMutableByteBuffer())
@@ -42,10 +38,20 @@ class NativeByteBufferTest : MutableBufferTest() {
 }
 
 /**
+ * Testing the NativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
+expect class NativeByteBufferTest : AbstractNativeByteBufferTest {
+    @Test
+    override fun nativeByteBuffer()
+}
+
+/**
  * Populate native buffer by using pointer arithmetic. Only for testing purposes if applicable or functional.
  *
  * @param B
  * @param buf
  * @return
  */
-expect fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B
+expect fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B

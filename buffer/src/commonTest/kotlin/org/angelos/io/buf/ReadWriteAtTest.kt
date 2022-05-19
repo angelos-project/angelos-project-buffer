@@ -123,7 +123,7 @@ class ReadWriteAtTest {
     fun float() {
         val array = ByteArray(8)
         array.writeFloatAt(0, refFloat)
-        assertEquals(array.readFloatAt(0), refFloat)
+        assertEquals(array.readFloatAt(0).toRawBits(), refFloat.toRawBits())
     }
 
     /**

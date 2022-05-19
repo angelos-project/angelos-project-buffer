@@ -161,7 +161,7 @@ open class MutableBufferTest {
         assertEquals(buf.getNextUInt(), refUInt)
         assertEquals(buf.getNextLong(), refLong)
         assertEquals(buf.getNextULong(), refULong)
-        assertEquals(buf.getNextFloat().toDouble(), refFloat.toDouble(), 1.00000)
+        assertEquals(buf.getNextFloat().toRawBits(), refFloat.toRawBits())
         assertEquals(buf.getNextDouble(), refDouble)
 
         assertEquals(buf.position, 44)
@@ -226,7 +226,7 @@ open class MutableBufferTest {
         assertEquals(buf.getNextUInt(), refUInt)
         assertEquals(buf.getNextLong(), refLong)
         assertEquals(buf.getNextULong(), refULong)
-        assertEquals(buf.getNextFloat().toDouble(), refFloat.toDouble(), 1.00000)
+        assertEquals(buf.getNextFloat().toRawBits(), refFloat.toRawBits())
         assertEquals(buf.getNextDouble(), refDouble)
     }
 
@@ -261,7 +261,7 @@ open class MutableBufferTest {
         assertEquals(buf.getNextUInt(), refUInt)
         assertEquals(buf.getNextLong(), refLong)
         assertEquals(buf.getNextULong(), refULong)
-        assertEquals(buf.getNextFloat().toDouble(), refFloat.toDouble(), 1.00000)
+        assertEquals(buf.getNextFloat().toRawBits(), refFloat.toRawBits())
         assertEquals(buf.getNextDouble(), refDouble)
     }
 }

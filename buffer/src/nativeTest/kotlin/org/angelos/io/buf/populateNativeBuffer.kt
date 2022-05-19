@@ -24,7 +24,7 @@ import kotlinx.cinterop.*
  * @param buf
  * @return
  */
-actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B {
     val ptr = buf.getPointer()
     val arr = populateArray(refArray.copyOf())
     memScoped {
@@ -33,4 +33,16 @@ actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B):
         }
     }
     return buf
+}
+
+/**
+ * Testing the NativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
+actual class NativeByteBufferTest : AbstractNativeByteBufferTest() {
+    actual override fun nativeByteBuffer() {
+        doNativeByteBuffer()
+    }
+
 }

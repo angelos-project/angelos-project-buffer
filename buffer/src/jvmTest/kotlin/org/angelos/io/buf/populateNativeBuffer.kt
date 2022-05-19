@@ -21,11 +21,23 @@ package org.angelos.io.buf
  * @param buf
  * @return
  */
-actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B {
     val ptr = buf.getPointer()
     val arr = populateArray(refArray.copyOf())
     for (idx in arr.indices step 8) {
         Internals.unsafe.putLong(ptr + idx, Internals.unsafe.getLong(arr, Internals.byteArrayOffset + idx))
     }
     return buf
+}
+
+/**
+ * Testing the NativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
+actual class NativeByteBufferTest : AbstractNativeByteBufferTest() {
+
+    actual override fun nativeByteBuffer() {
+        doNativeByteBuffer()
+    }
 }

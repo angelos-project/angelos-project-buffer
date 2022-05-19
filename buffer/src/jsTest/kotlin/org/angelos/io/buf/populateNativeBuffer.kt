@@ -21,7 +21,17 @@ package org.angelos.io.buf
  * @param buf
  * @return
  */
-actual fun <B : NativeBuffer> NativeByteBufferTest.populateNativeBuffer(buf: B): B {
+actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B {
     error("Virtually impossible to fill a 'native' buffer in JS.")
     return buf
+}
+
+/**
+ * Testing the NativeByteBuffer.
+ *
+ * @constructor Create empty Native byte buffer test
+ */
+actual class NativeByteBufferTest : AbstractNativeByteBufferTest() {
+    actual override fun nativeByteBuffer() {
+    }
 }

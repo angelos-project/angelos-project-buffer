@@ -121,9 +121,9 @@ class SwapEndianTest {
      */
     @Test
     fun floatSwapEndian() {
-        assertEquals(refFloat.swapEndian().swapEndian(), refFloat)
-        /*assertEquals((Float.MIN_VALUE).swapEndian().swapEndian(), (Float.MIN_VALUE)) // <-- Fix KN
-        assertEquals((Float.MAX_VALUE).swapEndian().swapEndian(), (Float.MAX_VALUE)) // <-- Fix KN/JVM*/
+        assertEquals(refFloat.swapEndian().swapEndian().toRawBits(), refFloat.toRawBits())
+        /*assertEquals((Float.MIN_VALUE).swapEndian().swapEndian().toRawBits(), Float.MIN_VALUE.toRawBits()) // <-- Fix KN
+        assertEquals((Float.MAX_VALUE).swapEndian().swapEndian().toRawBits(), Float.MAX_VALUE.toRawBits()) // <-- Fix KN/JVM */
     }
 
     /**
@@ -134,6 +134,6 @@ class SwapEndianTest {
     fun doubleSwapEndian() {
         assertEquals(refDouble.swapEndian().swapEndian(), refDouble)
         /*assertEquals(Double.MIN_VALUE.swapEndian().swapEndian(), Double.MIN_VALUE)
-        //assertEquals(Double.MAX_VALUE.swapEndian().swapEndian(), Double.MAX_VALUE) // <-- Fix KN/JVM*/
+        assertEquals(Double.MAX_VALUE.swapEndian().swapEndian().toRawBits(), Double.MAX_VALUE.toRawBits()) // <-- Fix KN/JVM */
     }
 }

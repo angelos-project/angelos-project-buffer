@@ -98,3 +98,9 @@ tasks.dokkaHtml.configure {
         }
     }
 }
+
+tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHugo") {
+    dependencies {
+        plugins("de.cotech:dokka-hugo-plugin:2.0")
+    }
+}
