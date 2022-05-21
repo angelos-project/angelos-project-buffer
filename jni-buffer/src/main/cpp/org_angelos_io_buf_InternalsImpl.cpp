@@ -15,16 +15,16 @@
 #include <jni.h>
 #include "endianness.h"
 
-#ifndef _Included_org_angelos_io_buf_Internals
-#define _Included_org_angelos_io_buf_Internals
+#ifndef _Included_org_angproj_io_buf_Internals
+#define _Included_org_angproj_io_buf_Internals
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-static const char *JNIT_CLASS = "org/angelos/io/buf/Internals";
+static const char *JNIT_CLASS = "org/angproj/io/buf/Internals";
 
 /*
- * Class:     org_angelos_io_buf_Internals
+ * Class:     org_angproj_io_buf_Internals
  * Method:    get_endian
  * Signature: ()I
  */
@@ -33,7 +33,7 @@ static jint get_endian(JNIEnv * env, jclass thisClass){
 }
 
 /*
- * Class:     org_angelos_io_buf_Internals
+ * Class:     org_angproj_io_buf_Internals
  * Method:    get_endian
  * Signature: (JJI)V
  */
@@ -91,4 +91,4 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved)
 #ifdef __cplusplus
 }
 #endif
-#endif // _Included_org_angelos_io_buf_Internals
+#endif // _Included_org_angproj_io_buf_Internals

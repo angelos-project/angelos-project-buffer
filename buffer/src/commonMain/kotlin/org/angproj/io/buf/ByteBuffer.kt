@@ -12,15 +12,23 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
+package org.angproj.io.buf
 
-object Project {
-    const val name = "angelos-project-buffer"
-    const val group = "org.angproj.io.buf"
-    const val version = "1.0.0-alpha.1" // Use semantic versioning, apply: https://semver.org
-}
-
-object Versions {
-    const val kotlin = "1.6.10"
-    const val dokka = "1.6.10"
-    const val  kover = "0.5.0"
-}
+/**
+ * Byte buffer implemented on the heap, as immutable.
+ *
+ * @constructor
+ *
+ * @param array ByteArray to wrap into a buffer
+ * @param size
+ * @param limit
+ * @param position
+ * @param endianness
+ */
+expect class ByteBuffer internal constructor(
+    array: ByteArray,
+    size: Int,
+    limit: Int,
+    position: Int,
+    endianness: Endianness,
+) : AbstractBuffer, ImmutableHeapBuffer

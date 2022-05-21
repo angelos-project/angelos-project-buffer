@@ -12,15 +12,12 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
+package org.angproj.io.buf
 
-object Project {
-    const val name = "angelos-project-buffer"
-    const val group = "org.angproj.io.buf"
-    const val version = "1.0.0-alpha.1" // Use semantic versioning, apply: https://semver.org
-}
-
-object Versions {
-    const val kotlin = "1.6.10"
-    const val dokka = "1.6.10"
-    const val  kover = "0.5.0"
-}
+/**
+ * Byte-buffer overflow warning is not an exception telling the byte-buffer overflowed,
+ * but rather a warning beforehand, to take action and deal with the situation.
+ *
+ * @constructor Create empty Byte buffer overflow warning
+ */
+class ByteBufferOverflowWarning : RuntimeException()

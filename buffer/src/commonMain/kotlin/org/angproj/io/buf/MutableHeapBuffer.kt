@@ -12,15 +12,11 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
+package org.angproj.io.buf
 
-object Project {
-    const val name = "angelos-project-buffer"
-    const val group = "org.angproj.io.buf"
-    const val version = "1.0.0-alpha.1" // Use semantic versioning, apply: https://semver.org
-}
-
-object Versions {
-    const val kotlin = "1.6.10"
-    const val dokka = "1.6.10"
-    const val  kover = "0.5.0"
-}
+/**
+ * Mutable heap buffer.
+ *
+ * @constructor Create empty Mutable heap buffer
+ */
+interface MutableHeapBuffer : MutableBuffer, HeapBuffer

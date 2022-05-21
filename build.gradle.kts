@@ -13,12 +13,12 @@
  *      Kristoffer Paulsson - initial implementation
  */
 
-group = Project.name
+group = Project.group
 version = Project.version
 
 plugins {
     id("org.jetbrains.dokka") version Versions.dokka
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.jetbrains.kotlinx.kover") version Versions.kover
 }
 
 allprojects {
