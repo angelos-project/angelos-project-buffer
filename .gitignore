@@ -176,3 +176,5 @@ dist
 .pnp.*
 
 kotlin-js-store/
+
+local.properties
