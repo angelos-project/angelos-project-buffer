@@ -15,6 +15,7 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
+    id("convention-publication")
 }
 
 repositories {
@@ -42,9 +43,9 @@ kotlin {
             )
         }
     }
-    js(BOTH) {
-        nodejs {
-        }
+    js(IR) {
+        moduleName = Project.name
+        nodejs()
     }
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")

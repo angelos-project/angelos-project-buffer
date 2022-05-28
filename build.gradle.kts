@@ -14,11 +14,12 @@
  */
 
 group = Project.group
-version = Project.version
+version = Project.version + "-SNAPSHOT"
 
 plugins {
     id("org.jetbrains.dokka") version Versions.dokka
     id("org.jetbrains.kotlinx.kover") version Versions.kover
+    `maven-publish`
 }
 
 allprojects {
