@@ -178,3 +178,4 @@ dist
 kotlin-js-store/
 
 local.properties
+*.gpg

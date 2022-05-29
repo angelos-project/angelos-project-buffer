@@ -90,9 +90,6 @@ object MetaProject {
     const val kotlinVersion = "1.6.21"
     const val kotlinLibrary = "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 
-    const val nexusVersion = "1.1.0"
-    const val nexusLibrary = "io.github.gradle-nexus:publish-plugin:${nexusVersion}"
-
     /**
      * Using the Dokka library of said version.
      */

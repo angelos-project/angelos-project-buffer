@@ -15,10 +15,7 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
-    //id("publish-module")
-
-    `maven-publish`
-    signing
+    id("module-publish-setup")
 }
 
 repositories {
@@ -107,73 +104,4 @@ tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHugo") {
     dependencies {
         plugins("de.cotech:dokka-hugo-plugin:2.0")
     }
-}
-
-fun getExtraString(name: String): String? {
-    return project.findProperty(name) as? String ?: System.getenv(name)
-}
-
-afterEvaluate {
-    publishing {
-        repositories {
-            maven {
-                name = "sonatype"
-                credentials {
-                    username = rootProject.ext["ossrhUsername"].toString()
-                    password = rootProject.ext["ossrhPassword"].toString()
-                }
-            }
-        }
-        publications {
-            create<MavenPublication>("maven") {
-                val javadocJar by project.tasks.creating(org.gradle.jvm.tasks.Jar::class) {
-                    archiveClassifier.set("javadoc")
-                }
-                groupId = MetaProject.group
-                artifactId = MetaProject.artifact
-                version = MetaProject.version
-                artifact(javadocJar)
-            }
-        }
-
-        publications.withType(MavenPublication::class) {
-            pom {
-                if (!name.isPresent) {
-                    name.set(artifactId)
-                }
-                description.set(MetaProject.mavenDescription)
-                url.set(MetaProject.homeRepo)
-                licenses {
-                    license {
-                        name.set(MetaProject.licenceName)
-                        url.set(MetaProject.licenceUrl)
-                        distribution.set("repo")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set(MetaDevelopers.devID)
-                        name.set(MetaDevelopers.devName)
-                        email.set(MetaDevelopers.devEmail)
-                    }
-                    organization {
-                        name.set(MetaDevelopers.devOrg)
-                        url.set(MetaDevelopers.devOrgUrl)
-                    }
-                }
-                scm {
-                    url.set(MetaProject.mavenScmUrl)
-                    connection.set(MetaProject.mavenScmConnection)
-                    developerConnection.set(MetaProject.mavenScmDeveloperConnection)
-                }
-                issueManagement {
-                    url.set(MetaProject.issueManagement)
-                }
-            }
-        }
-    }
-}
-
-signing {
-    sign(publishing.publications)
 }
