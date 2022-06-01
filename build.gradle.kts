@@ -42,3 +42,7 @@ buildscript {
 tasks.dokkaHtmlMultiModule.configure {
     outputDirectory.set(buildDir.resolve("dokkaCustomMultiModuleOutput"))
 }
+
+coveralls {
+    jacocoReportPath = "build/reports/kover/report.xml"
+}
