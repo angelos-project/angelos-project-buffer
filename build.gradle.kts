@@ -46,6 +46,7 @@ tasks.dokkaHtmlMultiModule.configure {
 coveralls {
     jacocoReportPath = "build/reports/kover/report.xml"
     sendToCoveralls = true
+    sourceDirs = listOf("buffer/src/kotlin/")
 }
 
 tasks.coveralls {
