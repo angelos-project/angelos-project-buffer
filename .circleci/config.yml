@@ -2,8 +2,8 @@
 # See: https://circleci.com/docs/2.0/language-java/
 version: 2.1
 
-orbs:
-  coveralls: coveralls/coveralls@1.0.6
+#orbs:
+#  coveralls: coveralls/coveralls@1.0.6
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -48,5 +48,5 @@ jobs:
       # run tests!
       # - run: gradle build check koverXmlReport
       - run: gradle check koverXmlReport coveralls
-      - coveralls/upload
+#      - coveralls/upload
           # path_to_lcov: build/reports/kover/report.xml
