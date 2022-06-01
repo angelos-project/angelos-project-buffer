@@ -19,6 +19,7 @@ version = MetaProject.version
 plugins {
     id("org.jetbrains.dokka") version MetaProject.dokkaVersion
     id("org.jetbrains.kotlinx.kover") version MetaProject.koverVersion
+    id("com.github.nbaztec.coveralls-jacoco") version MetaProject.coverallsVersion
     id("project-publish-setup")
 }
 
@@ -40,4 +41,15 @@ buildscript {
 
 tasks.dokkaHtmlMultiModule.configure {
     outputDirectory.set(buildDir.resolve("dokkaCustomMultiModuleOutput"))
+}
+
+coverallsJacoco {
+    reportPath = "$projectDir/build/reports/kover/report.xml"
+
+    reportSourceSets = listOf(
+        File("$projectDir/buffer/src/commonMain/kotlin/"),
+        File("$projectDir/buffer/src/jvmMain/kotlin/"),
+        File("$projectDir/buffer/src/jsMain/kotlin/"),
+        File("$projectDir/buffer/src/nativeMain/kotlin/"),
+    )
 }
