@@ -16,7 +16,6 @@ plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
     id("module-publish-setup")
-    jacoco
 }
 
 repositories {

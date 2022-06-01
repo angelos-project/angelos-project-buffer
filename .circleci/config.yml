@@ -47,6 +47,6 @@ jobs:
 
       # run tests!
       # - run: gradle build check koverXmlReport
-      - run: gradle test jacocoTestReport
+      - run: gradle check koverXmlReport coveralls
       - coveralls/upload
           # path_to_lcov: build/reports/kover/report.xml

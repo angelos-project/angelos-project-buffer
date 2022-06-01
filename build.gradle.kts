@@ -19,7 +19,7 @@ version = MetaProject.version
 plugins {
     id("org.jetbrains.dokka") version MetaProject.dokkaVersion
     id("org.jetbrains.kotlinx.kover") version MetaProject.koverVersion
-    id("com.github.nbaztec.coveralls-jacoco") version "1.2.14"
+    id("com.github.kt3k.coveralls") version "2.12.0"
     id("project-publish-setup")
 }
 
