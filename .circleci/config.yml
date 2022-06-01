@@ -46,7 +46,4 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run tests!
-      # - run: gradle build check koverXmlReport
       - run: gradle check koverXmlReport coveralls
-#      - coveralls/upload
-          # path_to_lcov: build/reports/kover/report.xml
