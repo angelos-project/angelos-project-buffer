@@ -3,8 +3,7 @@
 version: 2.1
 
 orbs:
-  # coveralls: coveralls/coveralls@1.0.6
-  coveralls: solven/coveralls@0.0.1
+  coveralls: coveralls/coveralls@1.0.6
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -48,5 +47,4 @@ jobs:
 
       # run tests!
       - run: gradle build check koverXmlReport
-      - coveralls/upload:
-          path_to_lcov: ./build/reports/kover/
+      - coveralls/upload
