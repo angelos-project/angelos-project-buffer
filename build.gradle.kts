@@ -46,3 +46,7 @@ tasks.dokkaHtmlMultiModule.configure {
 coveralls {
     jacocoReportPath = "build/reports/kover/report.xml"
 }
+
+tasks.coveralls {
+    dependsOn(":check")
+}
