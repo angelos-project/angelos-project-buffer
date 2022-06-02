@@ -101,6 +101,9 @@ object MetaProject {
      */
     const val koverVersion = "0.5.0"
     const val koverLibrary = "org.jetbrains.kotlinx:kover:${koverVersion}"
+
+    const val coverallsVersion = "1.2.14"
+    const val coverallsLibrary = "com.github.nbaztec.coveralls-jacoco::${coverallsVersion}"
 }
 
 object MetaDevelopers {
