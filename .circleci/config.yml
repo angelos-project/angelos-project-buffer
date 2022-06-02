@@ -46,4 +46,5 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
       # run tests!
-      - run: gradle check koverXmlReport coverallsJacoco
+      - run: gradle build test koverXmlReport
+      - run: gradle coverallsJacoco
