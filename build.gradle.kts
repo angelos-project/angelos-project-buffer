@@ -56,13 +56,13 @@ tasks.dokkaHtmlMultiModule.configure {
 }*/
 
 coverallsJacoco {
-    reportPath = "$buildDir/reports/kover/report.xml"
+    reportPath = "$projectDir/build/reports/kover/report.xml"
 
     reportSourceSets = listOf(
-        File("$buildDir/buffer/src/commonMain/kotlin/"),
-        File("$buildDir/buffer/src/jvmMain/kotlin/"),
-        File("$buildDir/buffer/src/jsMain/kotlin/"),
-        File("$buildDir/buffer/src/nativeMain/kotlin/"),
+        File("$projectDir/buffer/src/commonMain/kotlin/"),
+        File("$projectDir/buffer/src/jvmMain/kotlin/"),
+        File("$projectDir/buffer/src/jsMain/kotlin/"),
+        File("$projectDir/buffer/src/nativeMain/kotlin/"),
     )
     //apiEndpoint = "" // default: https://coveralls.io/api/v1/jobs
 
