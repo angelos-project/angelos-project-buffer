@@ -46,9 +46,10 @@ tasks.dokkaHtmlMultiModule.configure {
 coveralls {
     jacocoReportPath = "buffer/build/reports/kover/project-xml/report.xml"
     sendToCoveralls = true
-    sourceDirs = listOf("buffer/src/")
-}
-
-tasks.coveralls {
-    dependsOn(":check")
+    sourceDirs = listOf(
+        "$buildDir/buffer/src/commonMain/kotlin/",
+        "$buildDir/buffer/src/jvmMain/kotlin/",
+        "$buildDir/buffer/src/jsMain/kotlin/",
+        "$buildDir/buffer/src/nativeMain/kotlin/",
+    )
 }
