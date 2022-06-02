@@ -44,12 +44,12 @@ tasks.dokkaHtmlMultiModule.configure {
 }
 
 coverallsJacoco {
-    reportPath = "$projectDir/build/reports/kover/report.xml"
+    reportPath = "build/reports/kover/report.xml"
 
     reportSourceSets = listOf(
-        File("$projectDir/buffer/src/commonMain/kotlin/"),
-        File("$projectDir/buffer/src/jvmMain/kotlin/"),
-        File("$projectDir/buffer/src/jsMain/kotlin/"),
-        File("$projectDir/buffer/src/nativeMain/kotlin/"),
+        File("buffer/src/commonMain/kotlin/"),
+        File("buffer/src/jvmMain/kotlin/"),
+        File("buffer/src/jsMain/kotlin/"),
+        File("buffer/src/nativeMain/kotlin/"),
     )
 }
