@@ -12,8 +12,6 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-import org.gradle.kotlin.dsl.version
-
 plugins {
     id("io.github.gradle-nexus.publish-plugin")
 }
@@ -32,25 +30,30 @@ if (secretPropsFile.exists()) {
             load(it)
         }
     }.onEach { (name, value) ->
-        extra[name.toString()] = value
+        extra[name.toString()] = value.toString()
     }
 } else {
-    extra["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
-    extra["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
+    extra["ossrh.username"] = System.getenv("OSSRH_USERNAME")
+    extra["ossrh.password"] = System.getenv("OSSRH_PASSWORD")
     extra["sonatypeStagingProfileId"] = System.getenv("SONATYPE_STAGING_PROFILE_ID")
-    extra["signingKeyId"] = System.getenv("SIGNING_KEY_ID")
-    extra["signingPassword"] = System.getenv("SIGNING_PASSWORD")
-    extra["signingSecretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+    extra["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    extra["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    extra["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
 }
 
 nexusPublishing {
     repositories {
         sonatype {
             stagingProfileId.set(extra["sonatypeStagingProfileId"].toString())
-            username.set(extra["ossrhUsername"].toString())
-            password.set(extra["ossrhPassword"].toString())
+            username.set(extra["ossrh.username"].toString())
+            password.set(extra["ossrh.password"].toString())
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            if (MetaProject.version.endsWith("-SNAPSHOT"))
+                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            else
+                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"))
         }
     }
 }
+// ./gradlew clean build dokkaHtmlMultiModule
+// ./gradlew build test publishAllPublicationsToSonatypeRepository

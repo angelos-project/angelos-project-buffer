@@ -22,6 +22,18 @@ repositories {
     mavenCentral()
 }
 
+tasks {
+    dokkaHtml {
+        dokkaSourceSets {}
+        outputDirectory.set(buildDir.resolve("dokka"))
+    }
+    create<Jar>("javadocJar") {
+        dependsOn(dokkaHtml)
+        archiveClassifier.set("javadoc")
+        from(dokkaHtml.get().outputDirectory.get())
+    }
+}
+
 kotlin {
     jvm {
         val main by compilations.getting
@@ -90,18 +102,4 @@ kotlin {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.CInteropProcess::class) {
     dependsOn(":c-buffer:assemble")
-}
-
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("dokka"))
-    dokkaSourceSets {
-        configureEach {
-        }
-    }
-}
-
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHugo") {
-    dependencies {
-        plugins("de.cotech:dokka-hugo-plugin:2.0")
-    }
 }

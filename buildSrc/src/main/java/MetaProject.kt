@@ -87,13 +87,13 @@ object MetaProject {
     /**
      * Project wide Kotlin version.
      */
-    const val kotlinVersion = "1.6.21"
+    const val kotlinVersion = "1.7.0" // "1.6.21"
     const val kotlinLibrary = "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 
     /**
      * Using the Dokka library of said version.
      */
-    const val dokkaVersion = "1.6.21"
+    const val dokkaVersion = "1.7.0" // "1.6.21"
     const val dokkaLibrary = "org.jetbrains.dokka:dokka-gradle-plugin:${dokkaVersion}"
 
     /**

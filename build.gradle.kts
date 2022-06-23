@@ -17,7 +17,6 @@ group = MetaProject.group
 version = MetaProject.version
 
 plugins {
-    id("org.jetbrains.dokka") version MetaProject.dokkaVersion
     id("org.jetbrains.kotlinx.kover") version MetaProject.koverVersion
     id("com.github.nbaztec.coveralls-jacoco") version MetaProject.coverallsVersion
     id("project-publish-setup")
@@ -39,9 +38,10 @@ buildscript {
     }
 }
 
-tasks.dokkaHtmlMultiModule.configure {
+// Must be executed globally separate before publishing.
+/*tasks.dokkaHtmlMultiModule.configure {
     outputDirectory.set(buildDir.resolve("dokkaCustomMultiModuleOutput"))
-}
+}*/
 
 coverallsJacoco {
     reportPath = "$projectDir/build/reports/kover/report.xml"

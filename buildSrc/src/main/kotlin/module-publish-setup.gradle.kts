@@ -29,20 +29,17 @@ afterEvaluate {
         repositories {
             maven {
                 credentials {
-                    username = rootProject.ext["ossrhUsername"].toString()
-                    password = rootProject.ext["ossrhPassword"].toString()
+                    username = rootProject.ext["ossrh.username"].toString()
+                    password = rootProject.ext["ossrh.password"].toString()
                 }
             }
         }
         publications {
             create<MavenPublication>("maven") {
-                val javadocJar by project.tasks.creating(org.gradle.jvm.tasks.Jar::class) {
-                    archiveClassifier.set("javadoc")
-                }
                 groupId = MetaProject.group
                 artifactId = MetaProject.artifact
                 version = MetaProject.version
-                artifact(javadocJar)
+                artifact(tasks["javadocJar"])
             }
         }
 
