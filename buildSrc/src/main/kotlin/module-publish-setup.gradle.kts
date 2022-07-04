@@ -34,47 +34,55 @@ afterEvaluate {
                 }
             }
         }
+
         publications {
-            create<MavenPublication>("maven") {
-                groupId = MetaProject.group
+            getByName<MavenPublication>("kotlinMultiplatform") {
                 artifactId = MetaProject.artifact
                 version = MetaProject.version
+            }
+
+            getByName<MavenPublication>("jvm") {
                 artifact(tasks["javadocJar"])
             }
-        }
 
-        publications.withType(MavenPublication::class) {
-            pom {
-                if (!name.isPresent) {
-                    name.set(artifactId)
-                }
-                description.set(MetaProject.mavenDescription)
-                url.set(MetaProject.homeRepo)
-                licenses {
-                    license {
-                        name.set(MetaProject.licenceName)
-                        url.set(MetaProject.licenceUrl)
-                        distribution.set("repo")
+            all {
+                (this as? MavenPublication)?.let {
+                    groupId = MetaProject.group
+                    pom {
+                        name.set(MetaProject.artifact)
+                        description.set(MetaProject.mavenDescription)
+                        url.set(MetaProject.homeRepo)
+
+                        licenses {
+                            license {
+                                name.set(MetaProject.licenceName)
+                                url.set(MetaProject.licenceUrl)
+                                distribution.set("repo")
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id.set(MetaDevelopers.devID)
+                                name.set(MetaDevelopers.devName)
+                                email.set(MetaDevelopers.devEmail)
+                            }
+                            organization {
+                                name.set(MetaDevelopers.devOrg)
+                                url.set(MetaDevelopers.devOrgUrl)
+                            }
+                        }
+
+                        scm {
+                            url.set(MetaProject.mavenScmUrl)
+                            connection.set(MetaProject.mavenScmConnection)
+                            developerConnection.set(MetaProject.mavenScmDeveloperConnection)
+                        }
+
+                        issueManagement {
+                            url.set(MetaProject.issueManagement)
+                        }
                     }
-                }
-                developers {
-                    developer {
-                        id.set(MetaDevelopers.devID)
-                        name.set(MetaDevelopers.devName)
-                        email.set(MetaDevelopers.devEmail)
-                    }
-                    organization {
-                        name.set(MetaDevelopers.devOrg)
-                        url.set(MetaDevelopers.devOrgUrl)
-                    }
-                }
-                scm {
-                    url.set(MetaProject.mavenScmUrl)
-                    connection.set(MetaProject.mavenScmConnection)
-                    developerConnection.set(MetaProject.mavenScmDeveloperConnection)
-                }
-                issueManagement {
-                    url.set(MetaProject.issueManagement)
                 }
             }
         }

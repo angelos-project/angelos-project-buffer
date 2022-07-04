@@ -17,7 +17,7 @@ object MetaProject {
     /**
      * Artifact ID for MavenCentral or similar.
      */
-    const val artifact = "angelos-projcet-buffer"
+    const val artifact = "angelos-project-buffer"
 
     /**
      * Group ID for MavenCentral or similar.
