@@ -36,9 +36,12 @@ afterEvaluate {
         }
 
         publications {
+            /**
+             * Because this plugin is meant to publish from a Gradle multiproject,
+             * this plugin must adjust for differences between the main project and a subproject.
+             */
             getByName<MavenPublication>("kotlinMultiplatform") {
                 artifactId = MetaProject.artifact
-                version = MetaProject.version
             }
 
             getByName<MavenPublication>("jvm") {
@@ -47,7 +50,11 @@ afterEvaluate {
 
             all {
                 (this as? MavenPublication)?.let {
+                    version = MetaProject.version
                     groupId = MetaProject.group
+                    if (artifactId != MetaProject.artifact) // Replacing subproject name with artifact name.
+                        artifactId = artifactId.replace(project.name, MetaProject.artifact)
+
                     pom {
                         name.set(MetaProject.artifact)
                         description.set(MetaProject.mavenDescription)
