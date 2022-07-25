@@ -12,11 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Readable
 
 /**
- * Immutable heap buffer.
+ * Immutable buffer interface inheriting from Buffer.
  *
- * @constructor Create empty Immutable heap buffer
+ * @constructor Create empty mutable buffer
  */
-interface ImmutableHeapBuffer : ImmutableBuffer, HeapBuffer
+interface ImmutableStreamBuffer : StreamBuffer, Readable

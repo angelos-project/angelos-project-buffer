@@ -14,6 +14,10 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.stream.AbstractMutableStreamBuffer
+import org.angproj.io.buf.stream.MutableHeapStreamBuffer
+import org.angproj.io.buf.stream.MutableStreamBuffer
+
 /**
  * Reference implementation of a MutableByteBuffer that works on all targets.
  * It may be slow but can be optimized. The Idea is to use this to benchmark against.
@@ -32,7 +36,7 @@ class ReferenceMutableBuffer internal constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
+) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableHeapStreamBuffer {
     private val _array = array
 
     override fun saveByte(index: Int, value: Byte) {
@@ -149,9 +153,9 @@ class ReferenceMutableBuffer internal constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Unknown MutableBuffer interface implementation.")
         }
 
@@ -164,6 +168,6 @@ class ReferenceMutableBuffer internal constructor(
  * @param data ByteBuffer of data of presumably reference size
  * @return a newly created reference buffer
  */
-fun refMutableBufferOf(data: ByteArray): MutableHeapBuffer {
+fun refMutableBufferOf(data: ByteArray): MutableHeapStreamBuffer {
     return ReferenceMutableBuffer(data, data.size, data.size, 0, Buffer.nativeEndianness)
 }

@@ -12,7 +12,9 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Endianness
 
 /**
  * Mutable native byte buffer implemented outside save memory environment as mutable.
@@ -24,9 +26,9 @@ package org.angproj.io.buf
  * @param position
  * @param endianness
  */
-expect class MutableNativeByteBuffer internal constructor(
+expect class MutableNativeStreamByteBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractMutableBuffer, MutableNativeBuffer
+) : AbstractMutableStreamBuffer, MutableNativeStreamBuffer

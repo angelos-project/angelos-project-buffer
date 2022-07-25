@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,7 +12,11 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Endianness
+import org.angproj.io.buf.Internals
+import org.angproj.io.buf.swapEndian
 
 /**
  * Byte buffer implemented on the heap, as immutable.
@@ -25,13 +29,13 @@ package org.angproj.io.buf
  * @param position
  * @param endianness
  */
-actual class ByteBuffer internal actual constructor(
+actual class StreamByteBuffer internal actual constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), ImmutableHeapBuffer {
+) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
     private val _array = array
 
     override fun loadByte(index: Int): Byte = _array[index]
@@ -87,9 +91,9 @@ actual class ByteBuffer internal actual constructor(
         false -> Internals.unsafe.getDouble(_array, Internals.byteArrayOffset + _position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 

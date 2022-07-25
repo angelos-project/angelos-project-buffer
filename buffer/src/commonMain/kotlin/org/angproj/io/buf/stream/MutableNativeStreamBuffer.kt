@@ -12,11 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.NativeBuffer
 
 /**
- * Mutable heap buffer.
+ * Mutable native buffer.
  *
- * @constructor Create empty Mutable heap buffer
+ * @constructor Create empty Mutable native buffer
  */
-interface MutableHeapBuffer : MutableBuffer, HeapBuffer
+interface MutableNativeStreamBuffer : MutableStreamBuffer, NativeBuffer

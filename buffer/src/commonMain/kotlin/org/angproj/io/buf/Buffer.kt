@@ -14,12 +14,14 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.stream.MutableStreamBuffer
+
 /**
  * Buffer interface in the Angelos system.
  *
  * @constructor Create empty Buffer
  */
-interface Buffer : Gettable {
+interface Buffer {
 
     /**
      * Total size of the buffer.
@@ -32,11 +34,6 @@ interface Buffer : Gettable {
     val limit: Int
 
     /**
-     * Current position for operations in the buffer. Must never exceed the limit.
-     */
-    val position: Int
-
-    /**
      * Endianness of the buffer.
      */
     var endian: Endianness
@@ -47,39 +44,6 @@ interface Buffer : Gettable {
     val reverse: Boolean
 
     /**
-     * Clears the buffer by setting position to beginning and limit to capacity, for performing
-     * a reuse of the buffer for operations from scratch.
-     */
-    fun clear()
-
-    /**
-     * Flips the buffer by setting limit to the current position, and then setting the position
-     * to the beginning, for performing getting operations after setting values.
-     *
-     */
-    fun flip()
-
-    /**
-     * Rewinds the buffer by setting position to the beginning without touching the limit, for
-     * rereading operations on the buffer.
-     */
-    fun rewind()
-
-    /**
-     * Remaining space between the current position and limit.
-     *
-     * @return number of bytes remaining
-     */
-    fun remaining(): Int
-
-    /**
-     * Has enough remaining bytes left or throws BufferException.
-     *
-     * @param size needed space
-     */
-    fun hasRemaining(size: Int)
-
-    /**
      * Copy into a mutable buffer.
      *
      * @param destination destination mutable buffer to copy into
@@ -87,7 +51,7 @@ interface Buffer : Gettable {
      * @param startIndex where to start copy from in source buffer
      * @param endIndex when to stop copying from the source buffer
      */
-    fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit)
+    fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit)
 
     companion object {
         const val BYTE_SIZE = Byte.SIZE_BYTES
@@ -117,7 +81,7 @@ interface Buffer : Gettable {
          * @param endIndex end index copy to copy from at source
          */
         inline fun copyIntoContract(
-            destination: MutableBuffer, destinationOffset: Int,
+            destination: MutableStreamBuffer, destinationOffset: Int,
             source: Buffer, startIndex: Int, endIndex: Int,
         ) {
             require(destinationOffset >= 0)

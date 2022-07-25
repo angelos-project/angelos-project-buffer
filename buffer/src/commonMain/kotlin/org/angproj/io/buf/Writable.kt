@@ -15,85 +15,85 @@
 package org.angproj.io.buf
 
 /**
- * Settable interface to write data to a stream or buffer.
+ * Writable interface to write data to a buffer.
  *
- * @constructor Create empty Settable
+ * @constructor Create empty Writable
  */
-interface Settable {
+interface Writable {
     /**
-     * Set next byte.
+     * Write next byte.
      *
      * @param value a byte of data
      */
-    fun setNextByte(value: Byte)
+    fun setWriteByte(value: Byte)
 
     /**
-     * Set next unsigned byte.
+     * Write next unsigned byte.
      *
      * @param value an unsigned byte of data
      */
-    fun setNextUByte(value: UByte)
+    fun setWriteUByte(value: UByte)
 
     /**
-     * Set next character.
+     * Write next character.
      *
      * @param value a character of data
      */
-    fun setNextChar(value: Char)
+    fun setWriteChar(value: Char)
 
     /**
-     * Set next short integer.
+     * Write next short integer.
      *
      * @param value a short integer of data.
      */
-    fun setNextShort(value: Short)
+    fun setWriteShort(value: Short)
 
     /**
-     * Set next unsigned short integer.
+     * Write next unsigned short integer.
      *
      * @param value an unsigned short integer of data.
      */
-    fun setNextUShort(value: UShort)
+    fun setWriteUShort(value: UShort)
 
     /**
-     * Set next integer.
+     * Write next integer.
      *
      * @param value an integer of data
      */
-    fun setNextInt(value: Int)
+    fun setWriteInt(value: Int)
 
     /**
-     * Set next unsigned integer.
+     * Write next unsigned integer.
      *
      * @param value an unsigned integer of data
      */
-    fun setNextUInt(value: UInt)
+    fun setWriteUInt(value: UInt)
 
     /**
-     * Set next long integer.
+     * Write next long integer.
      *
      * @param value a long integer of data
      */
-    fun setNextLong(value: Long)
+    fun setWriteLong(value: Long)
 
     /**
-     * Set next unsigned long integer.
+     * Write next unsigned long integer.
      *
      * @param value an unsigned long integer of data
      */
-    fun setNextULong(value: ULong)
+    fun setWriteULong(value: ULong)
 
     /**
-     * Set next float.
+     * Write next float.
      *
      * @param value a float of data
      */
-    fun setNextFloat(value: Float)
+    fun setWriteFloat(value: Float)
 
     /**
-     * Set next double.
+     * Write next double.
      *
      * @param value a double of data
      */
-    fun setNextDouble(value: Double)
+    fun setWriteDouble(value: Double)
 }

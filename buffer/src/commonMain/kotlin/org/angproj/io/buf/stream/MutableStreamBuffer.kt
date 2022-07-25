@@ -12,11 +12,14 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Readable
+import org.angproj.io.buf.Writable
 
 /**
- * Immutable native buffer.
+ * Mutable buffer interface inheriting from Buffer.
  *
- * @constructor Create empty Immutable native buffer
+ * @constructor Create empty mutable buffer
  */
-interface ImmutableNativeBuffer : ImmutableBuffer, NativeBuffer
+interface MutableStreamBuffer : StreamBuffer, Readable, Writable

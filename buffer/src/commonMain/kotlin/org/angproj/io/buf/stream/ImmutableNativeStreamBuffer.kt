@@ -12,12 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.NativeBuffer
 
 /**
- * Byte-buffer overflow warning is not an exception telling the byte-buffer overflowed,
- * but rather a warning beforehand, to take action and deal with the situation.
+ * Immutable native buffer.
  *
- * @constructor Create empty Byte buffer overflow warning
+ * @constructor Create empty Immutable native buffer
  */
-class ByteBufferOverflowWarning : RuntimeException()
+interface ImmutableNativeStreamBuffer : ImmutableStreamBuffer, NativeBuffer

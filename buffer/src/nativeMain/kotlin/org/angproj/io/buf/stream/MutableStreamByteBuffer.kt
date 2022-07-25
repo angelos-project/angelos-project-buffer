@@ -12,13 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
 
-import cbuffer.speedmemcpy
 import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.refTo
 import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.usePinned
+import org.angproj.io.buf.*
 
 /**
  * Mutable byte buffer implemented on the heap, as mutable.
@@ -33,13 +33,13 @@ import kotlinx.cinterop.usePinned
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 @Suppress("OVERRIDE_BY_INLINE")
-actual class MutableByteBuffer internal actual constructor(
+actual class MutableStreamByteBuffer internal actual constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractMutableBuffer(size, limit, position, endianness), MutableHeapBuffer {
+) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableHeapStreamBuffer {
     private val _array = array
 
     override fun saveByte(index: Int, value: Byte) {
@@ -154,13 +154,13 @@ actual class MutableByteBuffer internal actual constructor(
         false -> _array.getDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 
-    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+    override fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
         _array.usePinned {

@@ -12,21 +12,25 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Endianness
 
 /**
- * Native byte buffer implemented outside save memory environment as immutable.
+ * Mutable byte buffer implemented on the heap, as mutable.
  *
  * @constructor
  *
+ * @param array
  * @param size
  * @param limit
  * @param position
  * @param endianness
  */
-expect class NativeByteBuffer internal constructor(
+expect class MutableStreamByteBuffer internal constructor(
+    array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer, ImmutableNativeBuffer
+) : AbstractMutableStreamBuffer, MutableHeapStreamBuffer

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,10 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.*
+import org.angproj.io.buf.Internals
 
 /**
- * Native byte buffer implemented outside save memory environment as immutable.
+ * Mutable native byte buffer implemented outside save memory environment as mutable.
  *
  * @constructor
  *
@@ -24,13 +27,66 @@ package org.angproj.io.buf
  * @param position
  * @param endianness
  */
-actual class NativeByteBuffer internal actual constructor(
+actual class MutableNativeStreamByteBuffer internal actual constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
+) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableNativeStreamBuffer {
     private val _pointer = Internals.unsafe.allocateMemory(size.toLong())
+
+    override fun saveByte(index: Int, value: Byte) = Internals.unsafe.putByte(_pointer + index, value)
+
+    override fun saveLong(index: Int, value: Long) = Internals.unsafe.putLong(_pointer + index, value)
+
+    override fun writeByte(value: Byte) = Internals.unsafe.putByte(_pointer + _position, value)
+
+    override fun writeUByte(value: UByte) = Internals.unsafe.putByte(_pointer + _position, value.toByte())
+
+    override fun writeChar(value: Char) = when (reverse) {
+        true -> Internals.unsafe.putChar(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putChar(_pointer + _position, value)
+    }
+
+    override fun writeShort(value: Short) = when (reverse) {
+        true -> Internals.unsafe.putShort(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putShort(_pointer + _position, value)
+    }
+
+    override fun writeUShort(value: UShort) = when (reverse) {
+        true -> Internals.unsafe.putShort(_pointer + _position, value.swapEndian().toShort())
+        false -> Internals.unsafe.putShort(_pointer + _position, value.toShort())
+    }
+
+    override fun writeInt(value: Int) = when (reverse) {
+        true -> Internals.unsafe.putInt(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putInt(_pointer + _position, value)
+    }
+
+    override fun writeUInt(value: UInt) = when (reverse) {
+        true -> Internals.unsafe.putInt(_pointer + _position, value.swapEndian().toInt())
+        false -> Internals.unsafe.putInt(_pointer + _position, value.toInt())
+    }
+
+    override fun writeLong(value: Long) = when (reverse) {
+        true -> Internals.unsafe.putLong(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putLong(_pointer + _position, value)
+    }
+
+    override fun writeULong(value: ULong) = when (reverse) {
+        true -> Internals.unsafe.putLong(_pointer + _position, value.swapEndian().toLong())
+        false -> Internals.unsafe.putLong(_pointer + _position, value.toLong())
+    }
+
+    override fun writeFloat(value: Float) = when (reverse) {
+        true -> Internals.unsafe.putFloat(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putFloat(_pointer + _position, value)
+    }
+
+    override fun writeDouble(value: Double) = when (reverse) {
+        true -> Internals.unsafe.putDouble(_pointer + _position, value.swapEndian())
+        false -> Internals.unsafe.putDouble(_pointer + _position, value)
+    }
 
     override fun loadByte(index: Int): Byte = Internals.unsafe.getByte(_pointer + index)
 
@@ -85,9 +141,9 @@ actual class NativeByteBuffer internal actual constructor(
         false -> Internals.unsafe.getDouble(_pointer + _position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 

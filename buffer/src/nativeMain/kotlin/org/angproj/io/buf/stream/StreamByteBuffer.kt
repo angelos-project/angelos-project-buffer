@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,13 +12,13 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
 
-import cbuffer.speedmemcpy
 import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.refTo
 import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.usePinned
+import org.angproj.io.buf.*
 
 /**
  * Byte buffer implemented on the heap, as immutable.
@@ -33,13 +33,13 @@ import kotlinx.cinterop.usePinned
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 @Suppress("OVERRIDE_BY_INLINE")
-actual class ByteBuffer internal actual constructor(
+actual class StreamByteBuffer internal actual constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), ImmutableHeapBuffer {
+) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
     private val _array = array
 
     override fun loadByte(index: Int): Byte = _array[index]
@@ -95,13 +95,13 @@ actual class ByteBuffer internal actual constructor(
         false -> _array.getDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 
-    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+    override fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
         _array.usePinned {

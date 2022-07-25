@@ -15,8 +15,9 @@
 package org.angproj.io.buf
 
 /**
- * Immutable buffer interface inheriting from Buffer.
+ * Byte-buffer overflow warning is not an exception telling the byte-buffer overflowed,
+ * but rather a warning beforehand, to take action and deal with the situation.
  *
- * @constructor Create empty mutable buffer
+ * @constructor Create empty Byte buffer overflow warning
  */
-interface ImmutableBuffer : Buffer, Gettable
+class BufferOverflowWarning : RuntimeException()

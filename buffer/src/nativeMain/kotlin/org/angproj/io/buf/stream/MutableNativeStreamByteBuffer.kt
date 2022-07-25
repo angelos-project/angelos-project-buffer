@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,14 +12,14 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
 
-import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
+import org.angproj.io.buf.*
 import platform.posix.free
 
 /**
- * Native byte buffer implemented outside save memory environment as immutable.
+ * Mutable native byte buffer implemented outside save memory environment as mutable.
  *
  * @constructor
  *
@@ -29,14 +29,75 @@ import platform.posix.free
  * @param endianness
  */
 @Suppress("OVERRIDE_BY_INLINE")
-actual class NativeByteBuffer internal actual constructor(
+actual class MutableNativeStreamByteBuffer internal actual constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
+) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableNativeStreamBuffer {
     private val _array = memScoped { nativeHeap.allocArray<ByteVar>(size) }
     private val _pointer = getPointer()
+
+    override fun saveByte(index: Int, value: Byte) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun saveLong(index: Int, value: Long) {
+        throw UnsupportedOperationException()
+    }
+
+    override inline fun writeByte(value: Byte) {
+        (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeUByte(value: UByte) {
+        (_pointer + _position).toCPointer<UByteVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeChar(value: Char) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<ShortVar>()!!.pointed.value = value.swapEndian().code.toShort()
+        false -> (_pointer + _position).toCPointer<ShortVar>()!!.pointed.value = value.code.toShort()
+    }
+
+    override inline fun writeShort(value: Short) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<ShortVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<ShortVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeUShort(value: UShort) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<UShortVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<UShortVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeInt(value: Int) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<IntVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<IntVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeUInt(value: UInt) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<UIntVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<UIntVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeLong(value: Long) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<LongVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<LongVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeULong(value: ULong) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<ULongVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<ULongVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeFloat(value: Float) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<FloatVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<FloatVar>()!!.pointed.value = value
+    }
+
+    override inline fun writeDouble(value: Double) = when (reverse) {
+        true -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value = value.swapEndian()
+        false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value = value
+    }
 
     override fun loadByte(index: Int): Byte = throw UnsupportedOperationException()
 
@@ -91,13 +152,13 @@ actual class NativeByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 
-    override fun copyInto(destination: AbstractMutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
+    override fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
         Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
 
         _array.usePinned {

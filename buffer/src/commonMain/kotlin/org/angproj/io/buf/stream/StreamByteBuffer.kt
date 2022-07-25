@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,7 +12,9 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Endianness
 
 /**
  * Byte buffer implemented on the heap, as immutable.
@@ -25,10 +27,10 @@ package org.angproj.io.buf
  * @param position
  * @param endianness
  */
-expect class ByteBuffer internal constructor(
+expect class StreamByteBuffer internal constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer, ImmutableHeapBuffer
+) : AbstractStreamBuffer, ImmutableHeapStreamBuffer

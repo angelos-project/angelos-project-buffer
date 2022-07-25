@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,7 +12,9 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.*
 
 /**
  * Mutable native byte buffer implemented outside save memory environment as mutable.
@@ -24,12 +26,12 @@ package org.angproj.io.buf
  * @param position
  * @param endianness
  */
-actual class MutableNativeByteBuffer internal actual constructor(
+actual class MutableNativeStreamByteBuffer internal actual constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractMutableBuffer(size, limit, position, endianness), MutableNativeBuffer {
+) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableNativeStreamBuffer {
     private val _array = ByteArray(size)
 
     override fun saveByte(index: Int, value: Byte) {
@@ -146,9 +148,9 @@ actual class MutableNativeByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 

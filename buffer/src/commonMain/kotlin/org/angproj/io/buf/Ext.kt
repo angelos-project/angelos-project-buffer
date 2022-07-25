@@ -14,6 +14,178 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.stream.*
+import kotlin.experimental.and
+import kotlin.experimental.or
+
+/**
+ * Setting bit 0.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag0(): Byte = this or 0B00000001
+
+/**
+ * Setting bit 1.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag1(): Byte = this or 0B00000010
+
+/**
+ * Setting bit 2.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag2(): Byte = this or 0B00000100
+
+/**
+ * Setting bit 3.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag3(): Byte = this or 0B00001000
+
+/**
+ * Setting bit 4.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag4(): Byte = this or 0B00010000
+
+/**
+ * Setting bit 5.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag5(): Byte = this or 0B00100000
+
+/**
+ * Setting bit 6.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag6(): Byte = this or 0B01000000
+
+/**
+ * Setting bit 7.
+ *
+ * @return
+ */
+inline fun Byte.flipOnFlag7(): Byte = this or -0B10000000
+
+/**
+ * Clearing bit 0.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag0(): Byte = this and 0B11111110.toByte()
+
+/**
+ * Clearing bit 1.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag1(): Byte = this and 0B11111101.toByte()
+
+/**
+ * Clearing bit 2.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag2(): Byte = this and 0B11111011.toByte()
+
+/**
+ * Clearing bit 3.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag3(): Byte = this and 0B11110111.toByte()
+
+/**
+ * Clearing bit 4.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag4(): Byte = this and 0B11101111.toByte()
+
+/**
+ * Clearing bit 5.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag5(): Byte = this and 0B11011111.toByte()
+
+/**
+ * Clearing bit 6.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag6(): Byte = this and 0B10111111.toByte()
+
+/**
+ * Clearing bit 7.
+ *
+ * @return
+ */
+inline fun Byte.flipOffFlag7(): Byte = this and 0B01111111.toByte()
+
+/**
+ * Verify state of bit 0.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag0(): Boolean = (this and 0B00000001).toInt() == 1
+
+/**
+ * Verify state of bit 1.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag1(): Boolean = (this and 0B00000010).toInt() == 2
+
+/**
+ * Verify state of bit 2.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag2(): Boolean = (this and 0B00000100).toInt() == 4
+
+/**
+ * Verify state of bit 3.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag3(): Boolean = (this and 0B00001000).toInt() == 8
+
+/**
+ * Verify state of bit 4.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag4(): Boolean = (this and 0B00010000).toInt() == 16
+
+/**
+ * Verify state of bit 5.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag5(): Boolean = (this and 0B00100000).toInt() == 32
+
+/**
+ * Verify state of bit 6.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag6(): Boolean = (this and 0B01000000).toInt() == 64
+
+/**
+ * Verify state of bit 7.
+ *
+ * @return
+ */
+inline fun Byte.checkFlag7(): Boolean = (this and -0B10000000).toInt() == -128
+
 /**
  * Swap endian on Short.
  *
@@ -260,7 +432,7 @@ inline fun ByteArray.writeDoubleAt(offset: Int, value: Double) = writeLongAt(off
 fun byteBufferOf(
     array: ByteArray,
     endian: Endianness = Buffer.nativeEndianness,
-): ImmutableHeapBuffer = ByteBuffer(array, array.size, array.size, 0, endian)
+): ImmutableHeapStreamBuffer = StreamByteBuffer(array, array.size, array.size, 0, endian)
 
 /**
  * Init MutableHeapBuffer from a ByteArray.
@@ -274,7 +446,7 @@ fun mutableByteBufferOf(
     array: ByteArray,
     limit: Int = array.size,
     endian: Endianness = Buffer.nativeEndianness,
-): MutableHeapBuffer = MutableByteBuffer(array, array.size, limit, 0, endian)
+): MutableHeapStreamBuffer = MutableStreamByteBuffer(array, array.size, limit, 0, endian)
 
 /**
  * Create a MutableHeapBuffer with an underlying blank ByteBuffer of certain size.
@@ -288,7 +460,7 @@ fun mutableByteBufferOf(
     size: Int,
     limit: Int = size,
     endian: Endianness = Buffer.nativeEndianness,
-): MutableHeapBuffer = MutableByteBuffer(ByteArray(size), size, limit, 0, endian)
+): MutableHeapStreamBuffer = MutableStreamByteBuffer(ByteArray(size), size, limit, 0, endian)
 
 /**
  * Create an ImmutableNativeBuffer with an underlying blank ByteBuffer of certain size.
@@ -300,26 +472,7 @@ fun mutableByteBufferOf(
 fun nativeByteBufferOf(
     size: Int,
     endian: Endianness = Buffer.nativeEndianness,
-): ImmutableNativeBuffer = NativeByteBuffer(size, size, 0, endian)
-
-/**
- * Wrap a native piece of allocated memory into a NativeByteBuffer using pointer.
- * To be supported on all platforms except JS in the future.
- *
- * @param pointer native pointer to allocated memory
- * @param size size in bytes of allocated memory
- * @param limit an initial limit
- * @param endian endianness
- * @return Immutable native based buffer
- */
-fun wrapIntoNativeByteBufferOf(
-    pointer: Long,
-    size: Int,
-    limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness,
-): ImmutableNativeBuffer {
-    throw UnsupportedOperationException()
-}
+): ImmutableNativeStreamBuffer = NativeStreamByteBuffer(size, size, 0, endian)
 
 /**
  * Create MutableNativeBuffer with an underlying blank ByteBuffer of certain size.
@@ -333,35 +486,16 @@ fun mutableNativeByteBufferOf(
     size: Int,
     limit: Int = size,
     endian: Endianness = Buffer.nativeEndianness,
-): MutableNativeBuffer = MutableNativeByteBuffer(size, limit, 0, endian)
-
-/**
- * Wrap a native piece of allocated memory into a MutableNativeByteBuffer using pointer.
- * To be supported on all platforms except JS in the future.
- *
- * @param pointer native pointer to allocated memory
- * @param size size in bytes of allocated memory
- * @param limit an initial limit
- * @param endian endianness
- * @return Mutable native based buffer
- */
-fun wrapIntoMutableNativeByteBufferOf(
-    pointer: Long,
-    size: Int,
-    limit: Int = size,
-    endian: Endianness = Buffer.nativeEndianness,
-): MutableNativeBuffer {
-    throw UnsupportedOperationException()
-}
+): MutableNativeStreamBuffer = MutableNativeStreamByteBuffer(size, limit, 0, endian)
 
 /**
  * To mutable heap byte buffer.
  *
  * @return Mutable heap based copy of the current buffer
  */
-fun ImmutableHeapBuffer.toMutableByteBuffer(): MutableHeapBuffer {
+fun ImmutableHeapStreamBuffer.toMutableByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableByteBufferOf(ByteArray(size), limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }
 
@@ -370,9 +504,9 @@ fun ImmutableHeapBuffer.toMutableByteBuffer(): MutableHeapBuffer {
  *
  * @return Mutable native based copy of the current buffer
  */
-fun ImmutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
+fun ImmutableHeapStreamBuffer.toMutableNativeByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }
 
@@ -381,9 +515,9 @@ fun ImmutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  *
  * @return Mutable heap based copy of the current buffer
  */
-fun ImmutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
+fun ImmutableNativeStreamBuffer.toMutableByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableByteBufferOf(size, limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }
 
@@ -392,9 +526,9 @@ fun ImmutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
  *
  * @return Mutable native based copy of the current buffer
  */
-fun ImmutableNativeBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
+fun ImmutableNativeStreamBuffer.toMutableNativeByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }
 
@@ -403,9 +537,9 @@ fun ImmutableNativeBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  *
  * @return Mutable native based copy of the current buffer
  */
-fun MutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
+fun MutableHeapStreamBuffer.toMutableNativeByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeByteBufferOf(size, limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }
 
@@ -414,8 +548,8 @@ fun MutableHeapBuffer.toMutableNativeByteBuffer(): MutableNativeBuffer {
  *
  * @return Mutable heap based copy of the current buffer
  */
-fun MutableNativeBuffer.toMutableByteBuffer(): MutableHeapBuffer {
+fun MutableNativeStreamBuffer.toMutableByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableByteBufferOf(size, limit, endian)
-    copyInto(buf as AbstractMutableBuffer)
+    copyInto(buf as AbstractMutableStreamBuffer)
     return buf
 }

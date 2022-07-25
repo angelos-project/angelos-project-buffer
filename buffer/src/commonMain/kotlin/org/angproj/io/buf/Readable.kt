@@ -15,85 +15,85 @@
 package org.angproj.io.buf
 
 /**
- * Gettable interface to read data from a stream or buffer.
+ * Readable interface to read data from a buffer.
  *
- * @constructor Create empty Gettable
+ * @constructor Create empty Readable
  */
-interface Gettable {
+interface Readable {
     /**
-     * Get next byte.
+     * Read next byte.
      *
      * @return a byte of data
      */
-    fun getNextByte(): Byte
+    fun getReadByte(): Byte
 
     /**
-     * Get next unsigned byte.
+     * Read next unsigned byte.
      *
      * @return an unsigned byte of data
      */
-    fun getNextUByte(): UByte
+    fun getReadUByte(): UByte
 
     /**
-     * Get next character.
+     * Read next character.
      *
      * @return a character of data
      */
-    fun getNextChar(): Char
+    fun getReadChar(): Char
 
     /**
-     * Get next short integer.
+     * Read next short integer.
      *
      * @return a short integer of data
      */
-    fun getNextShort(): Short
+    fun getReadShort(): Short
 
     /**
-     * Get next unsigned short integer.
+     * Read next unsigned short integer.
      *
      * @return an unsigned short integer of data
      */
-    fun getNextUShort(): UShort
+    fun getReadUShort(): UShort
 
     /**
-     * Get next integer.
+     * Read next integer.
      *
      * @return an integer of data
      */
-    fun getNextInt(): Int
+    fun getReadInt(): Int
 
     /**
-     * Get next unsigned integer.
+     * Read next unsigned integer.
      *
      * @return an unsigned integer of data
      */
-    fun getNextUInt(): UInt
+    fun getReadUInt(): UInt
 
     /**
-     * Get next long integer.
+     * Read next long integer.
      *
      * @return a long integer of data.
      */
-    fun getNextLong(): Long
+    fun getReadLong(): Long
 
     /**
-     * Get next unsigned long integer.
+     * Read next unsigned long integer.
      *
      * @return an unsigned long integer of data
      */
-    fun getNextULong(): ULong
+    fun getReadULong(): ULong
 
     /**
-     * Get next float.
+     * Read next float.
      *
      * @return a float of data
      */
-    fun getNextFloat(): Float
+    fun getReadFloat(): Float
 
     /**
-     * Get next double.
+     * Read next double.
      *
      * @return a double of data
      */
-    fun getNextDouble(): Double
+    fun getReadDouble(): Double
 }

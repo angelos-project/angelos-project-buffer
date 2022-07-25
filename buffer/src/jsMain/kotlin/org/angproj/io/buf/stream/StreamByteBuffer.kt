@@ -12,25 +12,29 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.*
 
 /**
- * Native byte buffer implemented outside save memory environment as immutable.
+ * Byte buffer implemented on the heap, as immutable.
  *
  * @constructor
  *
+ * @param array ByteArray to wrap into a buffer
  * @param size
  * @param limit
  * @param position
  * @param endianness
  */
-actual class NativeByteBuffer internal actual constructor(
+actual class StreamByteBuffer internal actual constructor(
+    array: ByteArray,
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), ImmutableNativeBuffer {
-    private val _array = ByteArray(size)
+) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
+    private val _array = array
 
     override fun loadByte(index: Int): Byte = _array[index]
 
@@ -85,19 +89,11 @@ actual class NativeByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
+    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
         when (destination) {
-            is AbstractMutableBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
+            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
             else -> error("Only handles AbstractMutableBuffer.")
         }
 
-    override fun getPointer(): TypePointer<Byte> {
-        throw UnsupportedOperationException()
-    }
-
-    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
-        native(getPointer())
-    }
-
-    override fun dispose() {}
+    override fun getArray(): ByteArray = _array
 }

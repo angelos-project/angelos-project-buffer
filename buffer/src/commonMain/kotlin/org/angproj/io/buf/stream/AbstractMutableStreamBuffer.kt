@@ -12,7 +12,10 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.Buffer
+import org.angproj.io.buf.Endianness
 
 /**
  * Abstract mutable buffer that implements mutability on top of AbstractBuffer.
@@ -24,74 +27,74 @@ package org.angproj.io.buf
  * @param position initial position in an already existing data stream
  * @param endianness endian of the buffered data
  */
-abstract class AbstractMutableBuffer internal constructor(
+abstract class AbstractMutableStreamBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractBuffer(size, limit, position, endianness), MutableBuffer {
+) : AbstractStreamBuffer(size, limit, position, endianness), MutableStreamBuffer {
 
-    override fun setNextByte(value: Byte) {
+    override fun setWriteByte(value: Byte) {
         hasRemaining(this, Buffer.BYTE_SIZE)
         writeByte(value)
         forwardPosition(this, Buffer.BYTE_SIZE)
     }
 
-    override fun setNextUByte(value: UByte) {
+    override fun setWriteUByte(value: UByte) {
         hasRemaining(this, Buffer.UBYTE_SIZE)
         writeUByte(value)
         forwardPosition(this, Buffer.UBYTE_SIZE)
     }
 
-    override fun setNextChar(value: Char) {
+    override fun setWriteChar(value: Char) {
         hasRemaining(this, Buffer.CHAR_SIZE)
         writeChar(value)
         forwardPosition(this, Buffer.CHAR_SIZE)
     }
 
-    override fun setNextShort(value: Short) {
+    override fun setWriteShort(value: Short) {
         hasRemaining(this, Buffer.SHORT_SIZE)
         writeShort(value)
         forwardPosition(this, Buffer.SHORT_SIZE)
     }
 
-    override fun setNextUShort(value: UShort) {
+    override fun setWriteUShort(value: UShort) {
         hasRemaining(this, Buffer.USHORT_SIZE)
         writeUShort(value)
         forwardPosition(this, Buffer.USHORT_SIZE)
     }
 
-    override fun setNextInt(value: Int) {
+    override fun setWriteInt(value: Int) {
         hasRemaining(this, Buffer.INT_SIZE)
         writeInt(value)
         forwardPosition(this, Buffer.INT_SIZE)
     }
 
-    override fun setNextUInt(value: UInt) {
+    override fun setWriteUInt(value: UInt) {
         hasRemaining(this, Buffer.UINT_SIZE)
         writeUInt(value)
         forwardPosition(this, Buffer.UINT_SIZE)
     }
 
-    override fun setNextLong(value: Long) {
+    override fun setWriteLong(value: Long) {
         hasRemaining(this, Buffer.LONG_SIZE)
         writeLong(value)
         forwardPosition(this, Buffer.LONG_SIZE)
     }
 
-    override fun setNextULong(value: ULong) {
+    override fun setWriteULong(value: ULong) {
         hasRemaining(this, Buffer.ULONG_SIZE)
         writeULong(value)
         forwardPosition(this, Buffer.ULONG_SIZE)
     }
 
-    override fun setNextFloat(value: Float) {
+    override fun setWriteFloat(value: Float) {
         hasRemaining(this, Buffer.FLOAT_SIZE)
         writeFloat(value)
         forwardPosition(this, Buffer.FLOAT_SIZE)
     }
 
-    override fun setNextDouble(value: Double) {
+    override fun setWriteDouble(value: Double) {
         hasRemaining(this, Buffer.DOUBLE_SIZE)
         writeDouble(value)
         forwardPosition(this, Buffer.DOUBLE_SIZE)
