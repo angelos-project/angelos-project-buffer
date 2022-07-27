@@ -17,7 +17,7 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Readable
 
-interface StreamBuffer: Buffer, Readable {
+interface StreamBuffer : Buffer, Readable {
     /**
      * Current position for operations in the buffer. Must never exceed the limit.
      */

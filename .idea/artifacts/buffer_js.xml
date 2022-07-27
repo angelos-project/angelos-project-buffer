@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="buffer-js">
     <output-path>$PROJECT_DIR$/buffer/build/libs</output-path>
-    <root id="archive" name="buffer-js.jar">
-      <element id="module-output" name="angelos-project-buffer.buffer.jsMain" />
-    </root>
+    <root id="archive" name="buffer-js.jar" />
   </artifact>
 </component>

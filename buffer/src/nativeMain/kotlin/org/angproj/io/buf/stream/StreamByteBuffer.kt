@@ -14,11 +14,8 @@
  */
 package org.angproj.io.buf.stream
 
-import kotlinx.cinterop.ByteVar
-import kotlinx.cinterop.refTo
-import kotlinx.cinterop.toCPointer
-import kotlinx.cinterop.usePinned
-import org.angproj.io.buf.*
+import org.angproj.io.buf.Endianness
+import org.angproj.io.buf.swapEndian
 
 /**
  * Byte buffer implemented on the heap, as immutable.
@@ -41,10 +38,6 @@ actual class StreamByteBuffer internal actual constructor(
     endianness: Endianness,
 ) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
     private val _array = array
-
-    override fun loadByte(index: Int): Byte = _array[index]
-
-    override fun loadLong(index: Int): Long = _array.getLongAt(index)
 
     override inline fun readByte(): Byte = _array[_position]
 
@@ -93,32 +86,6 @@ actual class StreamByteBuffer internal actual constructor(
     override inline fun readDouble(): Double = when (reverse) {
         true -> _array.getDoubleAt(_position).swapEndian()
         false -> _array.getDoubleAt(_position)
-    }
-
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
-
-    override fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
-        Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
-
-        _array.usePinned {
-            val src = _array.refTo(startIndex)
-            when (destination) {
-                is HeapBuffer -> speedmemcpy(
-                    destination.getArray().refTo(destinationOffset),
-                    src,
-                    (endIndex - startIndex).toUInt()
-                )
-                is NativeBuffer -> speedmemcpy(
-                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
-                    src,
-                    (endIndex - startIndex).toUInt()
-                )
-            }
-        }
     }
 
     override fun getArray(): ByteArray = _array

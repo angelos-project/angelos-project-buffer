@@ -15,7 +15,9 @@
 package org.angproj.io.buf.stream
 
 import kotlinx.cinterop.*
-import org.angproj.io.buf.*
+import org.angproj.io.buf.Endianness
+import org.angproj.io.buf.TypePointer
+import org.angproj.io.buf.swapEndian
 import platform.posix.free
 
 /**
@@ -36,11 +38,7 @@ actual class NativeStreamByteBuffer internal actual constructor(
     endianness: Endianness,
 ) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
     private val _array = memScoped { nativeHeap.allocArray<ByteVar>(size) }
-    private val _pointer = getPointer()
-
-    override fun loadByte(index: Int): Byte = throw UnsupportedOperationException()
-
-    override fun loadLong(index: Int): Long = throw UnsupportedOperationException()
+    private val _pointer = _array.pointed.ptr.toLong()
 
     override inline fun readByte(): Byte = (_pointer + _position).toCPointer<ByteVar>()!!.pointed.value
 
@@ -91,33 +89,7 @@ actual class NativeStreamByteBuffer internal actual constructor(
         false -> (_pointer + _position).toCPointer<DoubleVar>()!!.pointed.value
     }
 
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
-
-    override fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
-        Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
-
-        _array.usePinned {
-            val src = (_pointer + startIndex).toCPointer<ByteVar>()
-            when (destination) {
-                is HeapBuffer -> speedmemcpy(
-                    destination.getArray().refTo(destinationOffset),
-                    src,
-                    (endIndex - startIndex).toUInt()
-                )
-                is NativeBuffer -> speedmemcpy(
-                    (destination.getPointer() + destinationOffset).toCPointer<ByteVar>(),
-                    src,
-                    (endIndex - startIndex).toUInt()
-                )
-            }
-        }
-    }
-
-    override fun getPointer(): TypePointer<Byte> = _array.pointed.ptr.toLong()
+    override fun getPointer(): TypePointer<Byte> = _pointer
 
     override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
         _array.usePinned { native(getPointer()) }

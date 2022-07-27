@@ -16,7 +16,7 @@ package org.angproj.io.buf
 
 import kotlin.test.Test
 
-abstract class AbstractNativeByteBufferTest : MutableBufferTest()  {
+abstract class AbstractNativeByteBufferTest : MutableBufferTest() {
 
     /**
      * Running tests on the NativeByteBuffer.

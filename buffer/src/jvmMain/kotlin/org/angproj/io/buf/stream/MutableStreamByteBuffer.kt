@@ -38,14 +38,6 @@ actual class MutableStreamByteBuffer internal actual constructor(
 ) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableHeapStreamBuffer {
     private val _array = array
 
-    override fun saveByte(index: Int, value: Byte) {
-        _array[index] = value
-    }
-
-    override fun saveLong(index: Int, value: Long) {
-        Internals.unsafe.putLong(_array, Internals.byteArrayOffset + index, value)
-    }
-
     override fun writeByte(value: Byte) {
         _array[_position] = value
     }
@@ -99,10 +91,6 @@ actual class MutableStreamByteBuffer internal actual constructor(
         false -> Internals.unsafe.putDouble(_array, Internals.byteArrayOffset + _position, value)
     }
 
-    override fun loadByte(index: Int): Byte = _array[index]
-
-    override fun loadLong(index: Int): Long = Internals.unsafe.getLong(_array, Internals.byteArrayOffset + index)
-
     override fun readByte(): Byte = _array[_position]
 
     override fun readUByte(): UByte = _array[_position].toUByte()
@@ -151,12 +139,6 @@ actual class MutableStreamByteBuffer internal actual constructor(
         true -> Internals.unsafe.getDouble(_array, Internals.byteArrayOffset + _position).swapEndian()
         false -> Internals.unsafe.getDouble(_array, Internals.byteArrayOffset + _position)
     }
-
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
 
     override fun getArray(): ByteArray = _array
 }

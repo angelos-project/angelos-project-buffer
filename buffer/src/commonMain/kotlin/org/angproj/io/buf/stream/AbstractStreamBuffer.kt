@@ -125,47 +125,6 @@ abstract class AbstractStreamBuffer(size: Int, limit: Int, position: Int, endian
         return value
     }
 
-    /**
-     * Load one byte from underlying memory.
-     *
-     * @param index index in memory
-     * @return a byte from memory
-     */
-    internal abstract fun loadByte(index: Int): Byte
-
-    /**
-     * Load one long from underlying memory.
-     *
-     * @param index index in memory
-     * @return a long from memory
-     */
-    internal abstract fun loadLong(index: Int): Long
-
-    /**
-     * Copy into for buffers implemented in this package.
-     * Targets may override this implementation by a specialized one.
-     *
-     * @param destination
-     * @param destinationOffset
-     * @param startIndex
-     * @param endIndex
-     */
-    open fun copyInto(destination: AbstractMutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
-        Buffer.copyIntoContract(destination, destinationOffset, this, startIndex, endIndex)
-
-        val length = endIndex - startIndex
-
-        val l = length.floorDiv(Buffer.LONG_SIZE) * Buffer.LONG_SIZE
-
-        for (idx in 0 until l step Buffer.LONG_SIZE) {
-            destination.saveLong(destinationOffset + idx, this.loadLong(startIndex + idx))
-        }
-
-        for (idx in l until length) {
-            destination.saveByte(destinationOffset + idx, this.loadByte(startIndex + idx))
-        }
-    }
-
     internal abstract fun readByte(): Byte
 
     internal abstract fun readUByte(): UByte

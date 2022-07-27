@@ -37,10 +37,6 @@ actual class NativeStreamByteBuffer internal actual constructor(
 ) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
     private val _pointer = Internals.unsafe.allocateMemory(size.toLong())
 
-    override fun loadByte(index: Int): Byte = Internals.unsafe.getByte(_pointer + index)
-
-    override fun loadLong(index: Int): Long = Internals.unsafe.getLong(_pointer + index)
-
     override fun readByte(): Byte = Internals.unsafe.getByte(_pointer + _position)
 
     override fun readUByte(): UByte = Internals.unsafe.getByte(_pointer + _position).toUByte()
@@ -89,12 +85,6 @@ actual class NativeStreamByteBuffer internal actual constructor(
         true -> Internals.unsafe.getDouble(_pointer + _position).swapEndian()
         false -> Internals.unsafe.getDouble(_pointer + _position)
     }
-
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
     override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {

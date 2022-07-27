@@ -16,28 +16,36 @@ package org.angproj.io.buf
 
 import cbuffer.endian
 import cbuffer.speedmemcpy
-import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.refTo
 import kotlinx.cinterop.toCPointer
-import kotlinx.cinterop.toLong
 import kotlinx.cinterop.usePinned
 
 internal actual class Internals {
     actual companion object {
+        private val theArray = ByteArray(0) // Dummy array to access some native memory functionality.
         actual fun getEndian(): Int = endian()
 
-        actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> =
-            array.usePinned { it.addressOf(0).toLong() }
-
         actual fun copyInto(
-            destination: TypePointer<Byte>,
-            source: TypePointer<Byte>,
-            length: Int,
+            destination: MutableBuffer,
+            destinationOffset: Int,
+            source: Buffer,
+            startIndex: Int,
+            endIndex: Int,
         ) {
-            speedmemcpy(
-                destination.toCPointer<Nothing>(),
-                source.toCPointer<Nothing>(),
-                length.toUInt()
-            )
+            Buffer.copyIntoContract(destination, destinationOffset, source, startIndex, endIndex)
+            theArray.usePinned {
+                val src = when (source) {
+                    is NativeBuffer -> (source.getPointer() + startIndex).toCPointer()!!
+                    is HeapBuffer -> source.getArray().refTo(startIndex)
+                    else -> error("Unknown buffer type, cannot copy!")
+                }
+                val dst = when (destination) {
+                    is NativeBuffer -> (destination.getPointer() + destinationOffset).toCPointer()!!
+                    is HeapBuffer -> destination.getArray().refTo(destinationOffset)
+                    else -> error("Unknown mutable buffer type, cannot copy!")
+                }
+                speedmemcpy(dst, src, (endIndex - startIndex).toUInt())
+            }
         }
     }
 }

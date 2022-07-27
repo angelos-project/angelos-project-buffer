@@ -12,19 +12,10 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.data
 
-/**
- * Heap buffer that is created in the heap memory.
- *
- * @constructor Create empty Heap buffer
- */
-interface HeapBuffer : Buffer {
-    /**
-     * Get underlying array of buffer.
-     * May throw UnsupportedOperationException if native.
-     *
-     * @return array of bytes
-     */
-    override fun getArray(): ByteArray
-}
+import org.angproj.io.buf.MutableBuffer
+import org.angproj.io.buf.Retrievable
+import org.angproj.io.buf.Storable
+
+interface MutableDataBuffer : DataBuffer, MutableBuffer, Retrievable, Storable

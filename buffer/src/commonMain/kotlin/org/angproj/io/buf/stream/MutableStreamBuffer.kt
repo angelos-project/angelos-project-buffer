@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf.stream
 
+import org.angproj.io.buf.MutableBuffer
 import org.angproj.io.buf.Readable
 import org.angproj.io.buf.Writable
 
@@ -22,4 +23,4 @@ import org.angproj.io.buf.Writable
  *
  * @constructor Create empty mutable buffer
  */
-interface MutableStreamBuffer : StreamBuffer, Readable, Writable
+interface MutableStreamBuffer : StreamBuffer, MutableBuffer, Readable, Writable

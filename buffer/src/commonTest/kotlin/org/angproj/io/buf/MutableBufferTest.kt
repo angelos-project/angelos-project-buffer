@@ -15,6 +15,7 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.stream.MutableStreamBuffer
+import org.angproj.io.buf.stream.StreamBuffer
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -152,7 +153,7 @@ open class MutableBufferTest {
      * This test certifies that the buffer getNext*() methods read values consistently
      * compared to KN ByteArray by utilizing the populateArray method.
      */
-    fun testMutableBufferRead(buf: Buffer) {
+    fun testMutableBufferRead(buf: StreamBuffer) {
         assertEquals(buf.getReadByte(), refByte)
         assertEquals(buf.getReadUByte(), refUByte)
         assertEquals(buf.getReadChar(), refChar)

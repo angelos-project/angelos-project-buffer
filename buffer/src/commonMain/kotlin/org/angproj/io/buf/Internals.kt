@@ -18,13 +18,7 @@ internal expect class Internals {
     companion object {
         fun getEndian(): Int
 
-        fun nativeArrayAddress(array: ByteArray): TypePointer<Byte>
-
-        fun copyInto(
-            destination: TypePointer<Byte>,
-            source: TypePointer<Byte>,
-            length: Int,
-        )
+        fun copyInto(destination: MutableBuffer, destinationOffset: Int, source: Buffer, startIndex: Int, endIndex: Int)
     }
 }
 

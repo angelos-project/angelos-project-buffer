@@ -16,9 +16,8 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Retrievable
-import org.angproj.io.buf.Storable
 
-interface DataBuffer: Buffer, Retrievable, Storable {
+interface DataBuffer : Buffer, Retrievable {
 
     /**
      * Resetting the buffer by relimiting and by default zeroing the data.
@@ -33,12 +32,12 @@ interface DataBuffer: Buffer, Retrievable, Storable {
      *
      * @return number of bytes remaining
      */
-    fun remaining(): Int
+    fun remaining(position: Int): Int
 
     /**
      * Has enough remaining bytes left or throws BufferException.
      *
      * @param size needed space
      */
-    fun hasRemaining(size: Int)
+    fun hasRemaining(position: Int, size: Int)
 }

@@ -14,8 +14,10 @@
  */
 package org.angproj.io.buf.stream
 
-import org.angproj.io.buf.*
+import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.Internals
+import org.angproj.io.buf.TypePointer
+import org.angproj.io.buf.swapEndian
 
 /**
  * Mutable native byte buffer implemented outside save memory environment as mutable.
@@ -34,10 +36,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
     endianness: Endianness,
 ) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableNativeStreamBuffer {
     private val _pointer = Internals.unsafe.allocateMemory(size.toLong())
-
-    override fun saveByte(index: Int, value: Byte) = Internals.unsafe.putByte(_pointer + index, value)
-
-    override fun saveLong(index: Int, value: Long) = Internals.unsafe.putLong(_pointer + index, value)
 
     override fun writeByte(value: Byte) = Internals.unsafe.putByte(_pointer + _position, value)
 
@@ -88,10 +86,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
         false -> Internals.unsafe.putDouble(_pointer + _position, value)
     }
 
-    override fun loadByte(index: Int): Byte = Internals.unsafe.getByte(_pointer + index)
-
-    override fun loadLong(index: Int): Long = Internals.unsafe.getLong(_pointer + index)
-
     override fun readByte(): Byte = Internals.unsafe.getByte(_pointer + _position)
 
     override fun readUByte(): UByte = Internals.unsafe.getByte(_pointer + _position).toUByte()
@@ -140,12 +134,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
         true -> Internals.unsafe.getDouble(_pointer + _position).swapEndian()
         false -> Internals.unsafe.getDouble(_pointer + _position)
     }
-
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
     override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {

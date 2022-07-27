@@ -41,4 +41,14 @@ interface NativeBuffer : Buffer {
      *
      */
     fun dispose()
+
+    /**
+     * Extra support for dummy implementations that actually only can use ByteArray due to
+     * runtime environment restrictions.
+     *
+     * @return
+     */
+    override fun getArray(): ByteArray {
+        throw UnsupportedOperationException("Unimplemented necessary implementations to be overridden in emergencies.")
+    }
 }

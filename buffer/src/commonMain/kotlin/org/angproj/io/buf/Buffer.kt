@@ -14,8 +14,6 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.stream.MutableStreamBuffer
-
 /**
  * Buffer interface in the Angelos system.
  *
@@ -51,7 +49,11 @@ interface Buffer {
      * @param startIndex where to start copy from in source buffer
      * @param endIndex when to stop copying from the source buffer
      */
-    fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit)
+    fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit) {
+        Internals.copyInto(destination, destinationOffset, this, startIndex, endIndex)
+    }
+
+    fun getArray(): ByteArray
 
     companion object {
         const val BYTE_SIZE = Byte.SIZE_BYTES
@@ -81,7 +83,7 @@ interface Buffer {
          * @param endIndex end index copy to copy from at source
          */
         inline fun copyIntoContract(
-            destination: MutableStreamBuffer, destinationOffset: Int,
+            destination: MutableBuffer, destinationOffset: Int,
             source: Buffer, startIndex: Int, endIndex: Int,
         ) {
             require(destinationOffset >= 0)

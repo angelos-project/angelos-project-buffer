@@ -34,14 +34,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
 ) : AbstractMutableStreamBuffer(size, limit, position, endianness), MutableNativeStreamBuffer {
     private val _array = ByteArray(size)
 
-    override fun saveByte(index: Int, value: Byte) {
-        _array[index] = value
-    }
-
-    override fun saveLong(index: Int, value: Long) {
-        _array.writeLongAt(index, value)
-    }
-
     override fun writeByte(value: Byte) {
         _array[_position] = value
     }
@@ -95,10 +87,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
         false -> _array.writeDoubleAt(_position, value)
     }
 
-    override fun loadByte(index: Int): Byte = _array[index]
-
-    override fun loadLong(index: Int): Long = _array.readLongAt(index)
-
     override fun readByte(): Byte = _array[_position]
 
     override fun readUByte(): UByte = _array[_position].toUByte()
@@ -148,12 +136,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
         false -> _array.readDoubleAt(_position)
     }
 
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) =
-        when (destination) {
-            is AbstractMutableStreamBuffer -> copyInto(destination, destinationOffset, startIndex, endIndex)
-            else -> error("Only handles AbstractMutableBuffer.")
-        }
-
     override fun getPointer(): TypePointer<Byte> {
         throw UnsupportedOperationException()
     }
@@ -163,4 +145,6 @@ actual class MutableNativeStreamByteBuffer internal actual constructor(
     }
 
     override fun dispose() {}
+
+    override fun getArray(): ByteArray = _array
 }

@@ -14,179 +14,100 @@
  */
 package org.angproj.io.buf.data
 
-import org.angproj.io.buf.*
-import org.angproj.io.buf.stream.MutableStreamBuffer
+import org.angproj.io.buf.AbstractBuffer
+import org.angproj.io.buf.Buffer
+import org.angproj.io.buf.BufferOverflowWarning
+import org.angproj.io.buf.Endianness
 
 abstract class AbstractDataBuffer internal constructor(
     size: Int,
     limit: Int,
     endianness: Endianness,
-): AbstractBuffer(size, limit, endianness), DataBuffer {
+) : AbstractBuffer(size, limit, endianness), DataBuffer {
     override fun reset(limit: Int, zeroing: Boolean) {
         TODO("Not yet implemented")
     }
 
-    fun remaining(position: Int): Int = AbstractDataBuffer.remaining(this, position)
+    override fun remaining(position: Int): Int = remaining(this, position)
 
-    fun hasRemaining(position: Int, size: Int) = AbstractDataBuffer.hasRemaining(this, position, size)
-
-    override fun copyInto(destination: MutableStreamBuffer, destinationOffset: Int, startIndex: Int, endIndex: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun hasRemaining(position: Int, size: Int) = hasRemaining(this, position, size)
 
     override fun getRetrieveByte(position: Int): Byte {
         hasRemaining(this, position, Buffer.BYTE_SIZE)
-        return readByte()
+        return readByte(position)
     }
 
     override fun getRetrieveUByte(position: Int): UByte {
         hasRemaining(this, position, Buffer.UBYTE_SIZE)
-        return readUByte()
+        return readUByte(position)
     }
 
     override fun getRetrieveChar(position: Int): Char {
         hasRemaining(this, position, Buffer.CHAR_SIZE)
-        return readChar()
+        return readChar(position)
     }
 
     override fun getRetrieveShort(position: Int): Short {
         hasRemaining(this, position, Buffer.SHORT_SIZE)
-        return readShort()
+        return readShort(position)
     }
 
     override fun getRetrieveUShort(position: Int): UShort {
         hasRemaining(this, position, Buffer.USHORT_SIZE)
-        return readUShort()
+        return readUShort(position)
     }
 
     override fun getRetrieveInt(position: Int): Int {
         hasRemaining(this, position, Buffer.INT_SIZE)
-        return readInt()
+        return readInt(position)
     }
 
     override fun getRetrieveUInt(position: Int): UInt {
         hasRemaining(this, position, Buffer.UINT_SIZE)
-        return readUInt()
+        return readUInt(position)
     }
 
     override fun getRetrieveLong(position: Int): Long {
         hasRemaining(this, position, Buffer.LONG_SIZE)
-        return readLong()
+        return readLong(position)
     }
 
     override fun getRetrieveULong(position: Int): ULong {
         hasRemaining(this, position, Buffer.ULONG_SIZE)
-        return readULong()
+        return readULong(position)
     }
 
     override fun getRetrieveFloat(position: Int): Float {
         hasRemaining(this, position, Buffer.FLOAT_SIZE)
-        return readFloat()
+        return readFloat(position)
     }
 
     override fun getRetrieveDouble(position: Int): Double {
         hasRemaining(this, position, Buffer.DOUBLE_SIZE)
-        return readDouble()
+        return readDouble(position)
     }
 
-    override fun setStoreByte(position: Int, value: Byte) {
-        hasRemaining(this, position, Buffer.BYTE_SIZE)
-        writeByte(value)
-    }
+    internal abstract fun readByte(position: Int): Byte
 
-    override fun setStoreUByte(position: Int, value: UByte) {
-        hasRemaining(this, position, Buffer.UBYTE_SIZE)
-        writeUByte(value)
-    }
+    internal abstract fun readUByte(position: Int): UByte
 
-    override fun setStoreChar(position: Int, value: Char) {
-        hasRemaining(this, position, Buffer.CHAR_SIZE)
-        writeChar(value)
-    }
+    internal abstract fun readChar(position: Int): Char
 
-    override fun setStoreShort(position: Int, value: Short) {
-        hasRemaining(this, position, Buffer.SHORT_SIZE)
-        writeShort(value)
-    }
+    internal abstract fun readShort(position: Int): Short
 
-    override fun setStoreUShort(position: Int, value: UShort) {
-        hasRemaining(this, position, Buffer.USHORT_SIZE)
-        writeUShort(value)
-    }
+    internal abstract fun readUShort(position: Int): UShort
 
-    override fun setStoreInt(position: Int, value: Int) {
-        hasRemaining(this, position, Buffer.INT_SIZE)
-        writeInt(value)
-    }
+    internal abstract fun readInt(position: Int): Int
 
-    override fun setStoreUInt(position: Int, value: UInt) {
-        hasRemaining(this, position, Buffer.UINT_SIZE)
-        writeUInt(value)
-    }
+    internal abstract fun readUInt(position: Int): UInt
 
-    override fun setStoreLong(position: Int, value: Long) {
-        hasRemaining(this, position, Buffer.LONG_SIZE)
-        writeLong(value)
-    }
+    internal abstract fun readLong(position: Int): Long
 
-    override fun setStoreULong(position: Int, value: ULong) {
-        hasRemaining(this, position, Buffer.ULONG_SIZE)
-        writeULong(value)
-    }
+    internal abstract fun readULong(position: Int): ULong
 
-    override fun setStoreFloat(position: Int, value: Float) {
-        hasRemaining(this, position, Buffer.FLOAT_SIZE)
-        writeFloat(value)
-    }
+    internal abstract fun readFloat(position: Int): Float
 
-    override fun setStoreDouble(position: Int, value: Double) {
-        hasRemaining(this, position, Buffer.DOUBLE_SIZE)
-        writeDouble(value)
-    }
-
-    internal abstract fun readByte(): Byte
-
-    internal abstract fun readUByte(): UByte
-
-    internal abstract fun readChar(): Char
-
-    internal abstract fun readShort(): Short
-
-    internal abstract fun readUShort(): UShort
-
-    internal abstract fun readInt(): Int
-
-    internal abstract fun readUInt(): UInt
-
-    internal abstract fun readLong(): Long
-
-    internal abstract fun readULong(): ULong
-
-    internal abstract fun readFloat(): Float
-
-    internal abstract fun readDouble(): Double
-
-    internal abstract fun writeByte(value: Byte)
-
-    internal abstract fun writeUByte(value: UByte)
-
-    internal abstract fun writeChar(value: Char)
-
-    internal abstract fun writeShort(value: Short)
-
-    internal abstract fun writeUShort(value: UShort)
-
-    internal abstract fun writeInt(value: Int)
-
-    internal abstract fun writeUInt(value: UInt)
-
-    internal abstract fun writeLong(value: Long)
-
-    internal abstract fun writeULong(value: ULong)
-
-    internal abstract fun writeFloat(value: Float)
-
-    internal abstract fun writeDouble(value: Double)
+    internal abstract fun readDouble(position: Int): Double
 
     companion object {
         internal inline fun remaining(buf: DataBuffer, position: Int): Int {

@@ -33,16 +33,15 @@ internal actual class Internals {
             }
         }
 
-        actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> {
-            throw UnsupportedOperationException()
-        }
-
         actual fun copyInto(
-            destination: TypePointer<Byte>,
-            source: TypePointer<Byte>,
-            length: Int,
+            destination: MutableBuffer,
+            destinationOffset: Int,
+            source: Buffer,
+            startIndex: Int,
+            endIndex: Int,
         ) {
-            throw UnsupportedOperationException()
+            Buffer.copyIntoContract(destination, destinationOffset, source, startIndex, endIndex)
+            source.getArray().copyInto(destination.getArray(), startIndex, endIndex)
         }
     }
 }

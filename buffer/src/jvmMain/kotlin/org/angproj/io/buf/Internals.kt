@@ -21,7 +21,6 @@ internal actual class Internals {
     actual companion object {
         internal val unsafe: Unsafe
         internal val byteArrayOffset: Long
-        private val theArrays = arrayOf(ByteArray(0))
 
         init {
             val f: Field = Unsafe::class.java.getDeclaredField("theUnsafe")
@@ -40,37 +39,66 @@ internal actual class Internals {
 
         actual fun getEndian(): Int = endian()
 
+        fun speedMemCpy(dest: Long, src: Long, n: Int) {
+            speedmemcpy(dest, src, n)
+        }
+
         actual fun copyInto(
-            destination: TypePointer<Byte>,
-            source: TypePointer<Byte>,
-            length: Int,
+            destination: MutableBuffer,
+            destinationOffset: Int,
+            source: Buffer,
+            startIndex: Int,
+            endIndex: Int,
         ) {
-            speedmemcpy(destination, source, length)
-        }
+            Buffer.copyIntoContract(destination, destinationOffset, source, startIndex, endIndex)
 
-        /**
-         * Native address of first element of an ByteArray.
-         * adapted from toAddress() in http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe/
-         *
-         * @param array
-         * @return native pointer
-         */
-        actual fun nativeArrayAddress(array: ByteArray): TypePointer<Byte> {
-            theArrays[0] = array
-            return when (unsafe.addressSize()) {
-                4 -> normalize(
-                    unsafe.getInt(
-                        array,
-                        unsafe.arrayBaseOffset(theArrays.javaClass).toLong()
-                    ) + byteArrayOffset.toInt()
-                )
-                8 -> unsafe.getLong(theArrays, unsafe.arrayBaseOffset(theArrays.javaClass).toLong()) + byteArrayOffset
-                else -> error("Invalid address size")
+            val length = endIndex - startIndex
+            val l = length.floorDiv(Buffer.LONG_SIZE) * Buffer.LONG_SIZE
+
+            when (destination) {
+                is NativeBuffer -> when (source) {
+                    is NativeBuffer -> speedmemcpy(
+                        destination.getPointer() + destinationOffset,
+                        source.getPointer() + startIndex,
+                        length
+                    )
+
+                    is HeapBuffer -> {
+                        val dest = destination.getPointer()
+                        val src = source.getArray()
+                        for (index in 0 until l step Buffer.LONG_SIZE) {
+                            unsafe.putLong(dest + index, unsafe.getLong(src, byteArrayOffset + index))
+                        }
+                        for (index in l until length) {
+                            unsafe.putByte(dest + index, src[index])
+                        }
+                    }
+                }
+
+                is HeapBuffer -> when (source) {
+                    is NativeBuffer -> {
+                        val dest = destination.getArray()
+                        val src = source.getPointer()
+                        for (index in 0 until l step Buffer.LONG_SIZE) {
+                            unsafe.putLong(dest, byteArrayOffset + index, unsafe.getLong(src + index))
+                        }
+                        for (index in l until length) {
+                            dest[index] = unsafe.getByte(src + index)
+                        }
+                    }
+
+                    is HeapBuffer -> {
+                        val dest = destination.getArray()
+                        val src = source.getArray()
+                        for (index in 0 until l step Buffer.LONG_SIZE) {
+                            unsafe.putLong(dest, byteArrayOffset + index, unsafe.getLong(src, byteArrayOffset + index))
+                        }
+                        for (index in l until length) {
+                            dest[index] = src[index]
+                        }
+                    }
+                }
             }
-        }
-
-        private fun normalize(value: Int): Long {
-            return if (value >= 0) value.toLong() else 0L.inv() ushr 32 and value.toLong()
         }
     }
 }

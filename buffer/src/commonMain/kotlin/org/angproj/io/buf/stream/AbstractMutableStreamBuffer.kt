@@ -100,22 +100,6 @@ abstract class AbstractMutableStreamBuffer internal constructor(
         forwardPosition(this, Buffer.DOUBLE_SIZE)
     }
 
-    /**
-     * save one byte to underlying memory.
-     *
-     * @param index index in memory
-     * @param value byte to save
-     */
-    internal abstract fun saveByte(index: Int, value: Byte)
-
-    /**
-     * save long to underlying memory.
-     *
-     * @param index index in memory
-     * @param value long to save
-     */
-    internal abstract fun saveLong(index: Int, value: Long)
-
     internal abstract fun writeByte(value: Byte)
 
     internal abstract fun writeUByte(value: UByte)
