@@ -12,8 +12,9 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
 
+import org.angproj.io.buf.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +24,7 @@ import kotlin.test.assertEquals
  * @constructor Create empty Reference mutable buffer test
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-class ReferenceMutableBufferTest : MutableBufferTest() {
+class ReferenceMutableBufferTest : MutableStreamBufferTest() {
 
     private fun populateNativeByteArray(array: ByteArray): ByteArray {
         array[0] = refByte
@@ -46,10 +47,9 @@ class ReferenceMutableBufferTest : MutableBufferTest() {
      */
     @Test
     fun testReferenceMutableBuffer() {
-        testMutableBufferRead(refMutableBufferOf(populateNativeByteArray(createArray())))
-        testMutableBufferWrite(refMutableBufferOf(createArray()))
-        testMutableBufferWriteReverse(refMutableBufferOf(createArray()))
-
+        testMutableStreamBufferRead(refMutableBufferOf(populateNativeByteArray(createArray())))
+        testMutableStreamBufferWrite(refMutableBufferOf(createArray()))
+        testMutableStreamBufferWriteReverse(refMutableBufferOf(createArray()))
     }
 
     /**

@@ -12,13 +12,12 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.data
 
-import org.angproj.io.buf.stream.AbstractMutableStreamBuffer
-import org.angproj.io.buf.stream.MutableHeapStreamBuffer
+import org.angproj.io.buf.*
 
 /**
- * Reference implementation of a MutableByteBuffer that works on all targets.
+ * Reference implementation of a MutableStreamByteBuffer that works on all targets.
  * It may be slow but can be optimized. The Idea is to use this to benchmark against.
  *
  * @constructor
@@ -29,7 +28,7 @@ import org.angproj.io.buf.stream.MutableHeapStreamBuffer
  * @param position
  * @param endianness
  */
-class ReferenceMutableBuffer internal constructor(
+class ReferenceMutableStreamBuffer internal constructor(
     array: ByteArray,
     size: Int,
     limit: Int,
@@ -150,5 +149,5 @@ class ReferenceMutableBuffer internal constructor(
  * @return a newly created reference buffer
  */
 fun refMutableBufferOf(data: ByteArray): MutableHeapStreamBuffer {
-    return ReferenceMutableBuffer(data, data.size, data.size, 0, Buffer.nativeEndianness)
+    return ReferenceMutableStreamBuffer(data, data.size, data.size, 0, Buffer.nativeEndianness)
 }

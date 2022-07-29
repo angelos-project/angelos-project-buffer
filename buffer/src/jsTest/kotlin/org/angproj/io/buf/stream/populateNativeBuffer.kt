@@ -12,22 +12,19 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import org.angproj.io.buf.NativeBuffer
 
 /**
- * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in JVM.
+ * Populate native buffer, not possible in JS.
  *
  * @param B
  * @param buf
  * @return
  */
-actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B {
-    val ptr = buf.getPointer()
-    val arr = populateArray(refArray.copyOf())
-    for (idx in arr.indices step 8) {
-        Internals.unsafe.putLong(ptr + idx, Internals.unsafe.getLong(arr, Internals.byteArrayOffset + idx))
-    }
-    return buf
+actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeBuffer(buf: B): B {
+    error("Virtually impossible to fill a 'native' buffer in JS.")
 }
 
 /**
@@ -35,9 +32,7 @@ actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(
  *
  * @constructor Create empty Native byte buffer test
  */
-actual class NativeByteBufferTest : AbstractNativeByteBufferTest() {
-
+actual class NativeStreamByteBufferTest : AbstractNativeStreamByteBufferTest() {
     actual override fun nativeByteBuffer() {
-        doNativeByteBuffer()
     }
 }

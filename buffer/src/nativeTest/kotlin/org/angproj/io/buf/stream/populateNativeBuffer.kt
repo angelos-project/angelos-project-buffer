@@ -12,17 +12,27 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.stream
+
+import cbuffer.speedmemcpy
+import kotlinx.cinterop.*
+import org.angproj.io.buf.NativeBuffer
 
 /**
- * Populate native buffer, not possible in JS.
+ * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in Native.
  *
  * @param B
  * @param buf
  * @return
  */
-actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(buf: B): B {
-    error("Virtually impossible to fill a 'native' buffer in JS.")
+actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeBuffer(buf: B): B {
+    val ptr = buf.getPointer()
+    val arr = populateArray(refArray.copyOf())
+    memScoped {
+        arr.usePinned {
+            speedmemcpy(ptr.toCPointer<ByteVar>(), arr.refTo(0), arr.size.toUInt())
+        }
+    }
     return buf
 }
 
@@ -31,7 +41,9 @@ actual fun <B : NativeBuffer> AbstractNativeByteBufferTest.populateNativeBuffer(
  *
  * @constructor Create empty Native byte buffer test
  */
-actual class NativeByteBufferTest : AbstractNativeByteBufferTest() {
+actual class NativeStreamByteBufferTest : AbstractNativeStreamByteBufferTest() {
     actual override fun nativeByteBuffer() {
+        doNativeByteBuffer()
     }
+
 }

@@ -87,7 +87,7 @@ object MetaProject {
     /**
      * Project wide Kotlin version.
      */
-    const val kotlinVersion = "1.7.0" // "1.6.21"
+    const val kotlinVersion = "1.7.10" // "1.6.21"
     const val kotlinLibrary = "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 
     /**
