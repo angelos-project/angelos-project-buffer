@@ -14,18 +14,16 @@
  */
 package org.angproj.io.buf.data
 
-import org.angproj.io.buf.AbstractBuffer
-import org.angproj.io.buf.Buffer
-import org.angproj.io.buf.BufferOverflowWarning
-import org.angproj.io.buf.Endianness
+import org.angproj.io.buf.*
 
 abstract class AbstractDataBuffer internal constructor(
     size: Int,
     limit: Int,
     endianness: Endianness,
 ) : AbstractBuffer(size, limit, endianness), DataBuffer {
-    override fun reset(limit: Int, zeroing: Boolean) {
-        TODO("Not yet implemented")
+    override fun limit(l: Int) {
+        check(size >= limit)
+        _limit = limit
     }
 
     override fun remaining(position: Int): Int = remaining(this, position)

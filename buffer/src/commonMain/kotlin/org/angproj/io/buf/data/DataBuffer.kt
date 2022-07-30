@@ -20,12 +20,11 @@ import org.angproj.io.buf.Retrievable
 interface DataBuffer : Buffer, Retrievable {
 
     /**
-     * Resetting the buffer by relimiting and by default zeroing the data.
+     * Limits the size of the buffer
      *
-     * @param limit new inner limit of data to be stored
-     * @param zeroing resetting fo the actual memory reserved as storage
+     * @param l must be equal or less to size.
      */
-    fun reset(limit: Int = size, zeroing: Boolean = true)
+    fun limit(l: Int)
 
     /**
      * Remaining space between the current position and limit.

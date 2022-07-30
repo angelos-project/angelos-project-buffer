@@ -37,11 +37,10 @@ internal actual class Internals {
         @JvmStatic
         private external fun speedmemcpy(dest: Long, src: Long, n: Int)
 
-        actual fun getEndian(): Int = endian()
+        @JvmStatic
+        private external fun speedbzero(s: Long, n: Int)
 
-        fun speedMemCpy(dest: Long, src: Long, n: Int) {
-            speedmemcpy(dest, src, n)
-        }
+        actual fun getEndian(): Int = endian()
 
         actual fun copyInto(
             destination: MutableBuffer,
@@ -96,6 +95,27 @@ internal actual class Internals {
                         for (index in l until length) {
                             dest[index] = src[index]
                         }
+                    }
+                }
+            }
+        }
+
+        actual fun reset(destination: MutableBuffer) {
+            val l = destination.size.floorDiv(Buffer.LONG_SIZE) * Buffer.LONG_SIZE
+
+            when (destination) {
+                is NativeBuffer -> speedbzero(
+                    destination.getPointer(),
+                    destination.size
+                )
+
+                is HeapBuffer -> {
+                    val dest = destination.getArray()
+                    for (index in 0 until l step Buffer.LONG_SIZE) {
+                        unsafe.putLong(dest, byteArrayOffset + index, Long.MIN_VALUE)
+                    }
+                    for (index in l until destination.size) {
+                        dest[index] = Byte.MIN_VALUE
                     }
                 }
             }

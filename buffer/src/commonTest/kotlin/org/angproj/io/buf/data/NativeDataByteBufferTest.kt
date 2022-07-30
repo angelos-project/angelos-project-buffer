@@ -26,15 +26,15 @@ abstract class AbstractNativeDataByteBufferTest : MutableDataBufferTest() {
     abstract fun nativeByteBuffer()
 
     fun doNativeByteBuffer() {
-        testMutableDataBufferRead(populateNativeBuffer(nativeStreamByteBufferOf(refSize)))
+        testMutableDataBufferRead(populateNativeBuffer(nativeDataByteBufferOf(refSize)))
 
-        testMutableDataBufferRead(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableStreamByteBuffer())
-        testMutableDataBufferWrite(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableStreamByteBuffer())
-        testMutableDataBufferWriteReverse(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableStreamByteBuffer())
+        testMutableDataBufferRead(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableDataByteBuffer())
+        testMutableDataBufferWrite(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableDataByteBuffer())
+        testMutableDataBufferWriteReverse(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableDataByteBuffer())
 
-        testMutableDataBufferRead(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWrite(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWriteReverse(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableNativeStreamByteBuffer())
+        testMutableDataBufferRead(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWrite(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWriteReverse(populateNativeBuffer(nativeDataByteBufferOf(refSize)).toMutableNativeDataByteBuffer())
     }
 }
 
@@ -43,7 +43,7 @@ abstract class AbstractNativeDataByteBufferTest : MutableDataBufferTest() {
  *
  * @constructor Create empty Native byte buffer test
  */
-expect class NativeStreamByteBufferTest : AbstractNativeDataByteBufferTest {
+expect class NativeDataByteBufferTest : AbstractNativeDataByteBufferTest {
     @Test
     override fun nativeByteBuffer()
 }

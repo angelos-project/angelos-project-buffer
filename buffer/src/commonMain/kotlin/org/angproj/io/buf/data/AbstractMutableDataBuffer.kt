@@ -16,12 +16,17 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Endianness
+import org.angproj.io.buf.Internals
 
 abstract class AbstractMutableDataBuffer(size: Int, limit: Int, endianness: Endianness) : AbstractDataBuffer(
     size,
     limit,
     endianness
 ), MutableDataBuffer {
+    override fun reset() {
+        _limit = size
+        Internals.reset(this)
+    }
     override fun setStoreByte(position: Int, value: Byte) {
         hasRemaining(this, position, Buffer.BYTE_SIZE)
         writeByte(position, value)

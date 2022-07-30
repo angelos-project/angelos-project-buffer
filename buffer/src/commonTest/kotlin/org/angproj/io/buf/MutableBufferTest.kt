@@ -14,10 +14,9 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.stream.MutableStreamBuffer
-import org.angproj.io.buf.stream.StreamBuffer
+import org.angproj.io.buf.data.*
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 /**
  * Implements total reference testing support for mutable buffers.
@@ -102,6 +101,7 @@ open class MutableBufferTest {
      * This test certifies that set*At() and get*At() methods of the ByteArray works properly.
      *
      */
+    @Test
     fun testByteArrayRead() {
         val array = createArray()
         populateArray(array)
@@ -117,7 +117,7 @@ open class MutableBufferTest {
         assertEquals(array.readUIntAt(12), refUInt)
         assertEquals(array.readLongAt(16), refLong)
         assertEquals(array.readULongAt(24), refULong)
-        assertEquals(array.readFloatAt(32), refFloat)
+        assertEquals(array.readFloatAt(32).toBits(), refFloat.toBits())
         assertEquals(array.readDoubleAt(36), refDouble)
 
         assertEquals(array[refSize - 1], -127)

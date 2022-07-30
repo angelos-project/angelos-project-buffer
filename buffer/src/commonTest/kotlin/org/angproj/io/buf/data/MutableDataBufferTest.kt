@@ -26,22 +26,21 @@ open class MutableDataBufferTest : MutableBufferTest() {
      * @param buf
      */
     fun <B : MutableDataBuffer> populateMutableDataBuffer(buf: B): B {
-        buf.setWriteByte(refByte)
-        buf.setWriteUByte(refUByte)
-        buf.setWriteChar(refChar)
-        buf.setWriteShort(refShort)
-        buf.setWriteUShort(refUShort)
-        buf.setWriteInt(refInt)
-        buf.setWriteUInt(refUInt)
-        buf.setWriteLong(refLong)
-        buf.setWriteULong(refULong)
-        buf.setWriteFloat(refFloat)
-        buf.setWriteDouble(refDouble)
+        buf.setStoreByte(0, refByte)
+        buf.setStoreUByte(1, refUByte)
+        buf.setStoreChar(2, refChar)
+        buf.setStoreShort(4, refShort)
+        buf.setStoreUShort(6, refUShort)
+        buf.setStoreInt(8, refInt)
+        buf.setStoreUInt(12, refUInt)
+        buf.setStoreLong(16, refLong)
+        buf.setStoreULong(24, refULong)
+        buf.setStoreFloat(32, refFloat)
+        buf.setStoreDouble(36, refDouble)
 
-        for (idx in buf.position until buf.limit) {
-            buf.setWriteByte(refArray[idx])
+        for (idx in 44 until buf.limit) {
+            buf.setStoreByte(idx, refArray[idx])
         }
-        buf.clear()
         return buf
     }
 
@@ -51,49 +50,47 @@ open class MutableDataBufferTest : MutableBufferTest() {
      * compared to KN ByteArray by utilizing the populateArray method.
      */
     fun testMutableDataBufferRead(buf: DataBuffer) {
-        assertEquals(buf.getReadByte(), refByte)
-        assertEquals(buf.getReadUByte(), refUByte)
-        assertEquals(buf.getReadChar(), refChar)
-        assertEquals(buf.getReadShort(), refShort)
-        assertEquals(buf.getReadUShort(), refUShort)
-        assertEquals(buf.getReadInt(), refInt)
-        assertEquals(buf.getReadUInt(), refUInt)
-        assertEquals(buf.getReadLong(), refLong)
-        assertEquals(buf.getReadULong(), refULong)
-        assertEquals(buf.getReadFloat().toRawBits(), refFloat.toRawBits())
-        assertEquals(buf.getReadDouble(), refDouble)
+        assertEquals(buf.getRetrieveByte(0), refByte)
+        assertEquals(buf.getRetrieveUByte(1), refUByte)
+        assertEquals(buf.getRetrieveChar(2), refChar)
+        assertEquals(buf.getRetrieveShort(4), refShort)
+        assertEquals(buf.getRetrieveUShort(6), refUShort)
+        assertEquals(buf.getRetrieveInt(8), refInt)
+        assertEquals(buf.getRetrieveUInt(12), refUInt)
+        assertEquals(buf.getRetrieveLong(16), refLong)
+        assertEquals(buf.getRetrieveULong(24), refULong)
+        assertEquals(buf.getRetrieveFloat(32).toRawBits(), refFloat.toRawBits())
+        assertEquals(buf.getRetrieveDouble(36), refDouble)
 
-        assertEquals(buf.position, 44)
-        for (idx in buf.position until buf.limit) {
-            assertEquals(refArray[buf.position], buf.getReadByte())
+        for (idx in 44 until buf.limit) {
+            assertEquals(refArray[idx], buf.getRetrieveByte(idx))
         }
-        assertEquals(buf.position, refSize)
-        assertFailsWith<BufferOverflowWarning> { buf.getReadByte() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadUByte() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadChar() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadShort() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadUShort() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadInt() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadUInt() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadLong() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadULong() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadFloat() }
-        assertFailsWith<BufferOverflowWarning> { buf.getReadDouble() }
+
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveByte(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveUByte(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveChar(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveShort(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveUShort(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveInt(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveUInt(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveLong(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveULong(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveFloat(refSize) }
+        assertFailsWith<BufferOverflowWarning> { buf.getRetrieveDouble(refSize) }
 
         if (buf is MutableDataBuffer) {
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteByte(refByte) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteUByte(refUByte) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteChar(refChar) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteShort(refShort) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteUShort(refUShort) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteInt(refInt) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteUInt(refUInt) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteLong(refLong) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteULong(refULong) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteFloat(refFloat) }
-            assertFailsWith<BufferOverflowWarning> { buf.setWriteDouble(refDouble) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreByte(refSize, refByte) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreUByte(refSize, refUByte) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreChar(refSize, refChar) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreShort(refSize, refShort) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreUShort(refSize, refUShort) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreInt(refSize, refInt) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreUInt(refSize, refUInt) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreLong(refSize, refLong) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreULong(refSize, refULong) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreFloat(refSize, refFloat) }
+            assertFailsWith<BufferOverflowWarning> { buf.setStoreDouble(refSize, refDouble) }
         }
-        assertEquals(buf.position, refSize)
     }
 
     /**
@@ -102,31 +99,31 @@ open class MutableDataBufferTest : MutableBufferTest() {
      *
      */
     fun testMutableDataBufferWrite(buf: MutableDataBuffer) {
-        buf.setWriteByte(refByte)
-        buf.setWriteUByte(refUByte)
-        buf.setWriteChar(refChar)
-        buf.setWriteShort(refShort)
-        buf.setWriteUShort(refUShort)
-        buf.setWriteInt(refInt)
-        buf.setWriteUInt(refUInt)
-        buf.setWriteLong(refLong)
-        buf.setWriteULong(refULong)
-        buf.setWriteFloat(refFloat)
-        buf.setWriteDouble(refDouble)
+        buf.setStoreByte(0, refByte)
+        buf.setStoreUByte(1, refUByte)
+        buf.setStoreChar(2, refChar)
+        buf.setStoreShort(4, refShort)
+        buf.setStoreUShort(6, refUShort)
+        buf.setStoreInt(8, refInt)
+        buf.setStoreUInt(12, refUInt)
+        buf.setStoreLong(16, refLong)
+        buf.setStoreULong(24, refULong)
+        buf.setStoreFloat(32, refFloat)
+        buf.setStoreDouble(36, refDouble)
 
-        buf.flip()
+        buf.limit(44)
 
-        assertEquals(buf.getReadByte(), refByte)
-        assertEquals(buf.getReadUByte(), refUByte)
-        assertEquals(buf.getReadChar(), refChar)
-        assertEquals(buf.getReadShort(), refShort)
-        assertEquals(buf.getReadUShort(), refUShort)
-        assertEquals(buf.getReadInt(), refInt)
-        assertEquals(buf.getReadUInt(), refUInt)
-        assertEquals(buf.getReadLong(), refLong)
-        assertEquals(buf.getReadULong(), refULong)
-        assertEquals(buf.getReadFloat().toRawBits(), refFloat.toRawBits())
-        assertEquals(buf.getReadDouble(), refDouble)
+        assertEquals(buf.getRetrieveByte(0), refByte)
+        assertEquals(buf.getRetrieveUByte(1), refUByte)
+        assertEquals(buf.getRetrieveChar(2), refChar)
+        assertEquals(buf.getRetrieveShort(4), refShort)
+        assertEquals(buf.getRetrieveUShort(6), refUShort)
+        assertEquals(buf.getRetrieveInt(8), refInt)
+        assertEquals(buf.getRetrieveUInt(12), refUInt)
+        assertEquals(buf.getRetrieveLong(16), refLong)
+        assertEquals(buf.getRetrieveULong(24), refULong)
+        assertEquals(buf.getRetrieveFloat(32).toRawBits(), refFloat.toRawBits())
+        assertEquals(buf.getRetrieveDouble(36), refDouble)
     }
 
     /**
@@ -135,32 +132,33 @@ open class MutableDataBufferTest : MutableBufferTest() {
      *
      */
     fun testMutableDataBufferWriteReverse(buf: MutableDataBuffer) {
+        println(buf::class.simpleName)
         buf.endian = reverseEndianness(buf)
 
-        buf.setWriteByte(refByte)
-        buf.setWriteUByte(refUByte)
-        buf.setWriteChar(refChar)
-        buf.setWriteShort(refShort)
-        buf.setWriteUShort(refUShort)
-        buf.setWriteInt(refInt)
-        buf.setWriteUInt(refUInt)
-        buf.setWriteLong(refLong)
-        buf.setWriteULong(refULong)
-        buf.setWriteFloat(refFloat)
-        buf.setWriteDouble(refDouble)
+        buf.setStoreByte(0, refByte)
+        buf.setStoreUByte(1, refUByte)
+        buf.setStoreChar(2, refChar)
+        buf.setStoreShort(3, refShort)
+        buf.setStoreUShort(6, refUShort)
+        buf.setStoreInt(8, refInt)
+        buf.setStoreUInt(12, refUInt)
+        buf.setStoreLong(16, refLong)
+        buf.setStoreULong(24, refULong)
+        buf.setStoreFloat(32, refFloat)
+        buf.setStoreDouble(36, refDouble)
 
-        buf.flip()
+        buf.limit(44)
 
-        assertEquals(buf.getReadByte(), refByte)
-        assertEquals(buf.getReadUByte(), refUByte)
-        assertEquals(buf.getReadChar(), refChar)
-        assertEquals(buf.getReadShort(), refShort)
-        assertEquals(buf.getReadUShort(), refUShort)
-        assertEquals(buf.getReadInt(), refInt)
-        assertEquals(buf.getReadUInt(), refUInt)
-        assertEquals(buf.getReadLong(), refLong)
-        assertEquals(buf.getReadULong(), refULong)
-        assertEquals(buf.getReadFloat().toRawBits(), refFloat.toRawBits())
-        assertEquals(buf.getReadDouble(), refDouble)
+        assertEquals(buf.getRetrieveByte(0), refByte)
+        assertEquals(buf.getRetrieveUByte(1), refUByte)
+        assertEquals(buf.getRetrieveChar(2), refChar)
+        assertEquals(buf.getRetrieveShort(4), refShort)
+        assertEquals(buf.getRetrieveUShort(6), refUShort)
+        assertEquals(buf.getRetrieveInt(8), refInt)
+        assertEquals(buf.getRetrieveUInt(12), refUInt)
+        assertEquals(buf.getRetrieveLong(16), refLong)
+        assertEquals(buf.getRetrieveULong(24), refULong)
+        assertEquals(buf.getRetrieveFloat(32).toRawBits(), refFloat.toRawBits())
+        assertEquals(buf.getRetrieveDouble(36), refDouble)
     }
 }

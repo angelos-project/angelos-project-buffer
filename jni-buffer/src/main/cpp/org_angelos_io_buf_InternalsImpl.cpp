@@ -34,16 +34,26 @@ static jint get_endian(JNIEnv * env, jclass thisClass){
 
 /*
  * Class:     org_angproj_io_buf_Internals
- * Method:    get_endian
+ * Method:    do_speedmemcpy
  * Signature: (JJI)V
  */
 static void do_speedmemcpy(JNIEnv * env, jclass thisClass, jlong dest, jlong source, jint n){
     speedmemcpy((void *) dest, (void *) source, n);
 }
 
+/*
+ * Class:     org_angproj_io_buf_Internals
+ * Method:    do_speedbzero
+ * Signature: (JI)V
+ */
+static void do_speedbzero(JNIEnv * env, jclass thisClass, jlong s, jint n){
+    speedbzero((void *) s, n);
+}
+
 static JNINativeMethod funcs[] = {
 	{ "endian", "()I", (void *)&get_endian },
-	{ "speedmemcpy", "(JJI)V", (void *)&do_speedmemcpy }
+	{ "speedmemcpy", "(JJI)V", (void *)&do_speedmemcpy },
+	{ "speedbzero", "(JI)V", (void *)&do_speedbzero },
 };
 
 #define CURRENT_JNI JNI_VERSION_1_6

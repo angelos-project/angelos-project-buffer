@@ -16,6 +16,7 @@ package org.angproj.io.buf
 
 import cbuffer.endian
 import cbuffer.speedmemcpy
+import cbuffer.speedbzero
 import kotlinx.cinterop.refTo
 import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.usePinned
@@ -33,19 +34,30 @@ internal actual class Internals {
             endIndex: Int,
         ) {
             Buffer.copyIntoContract(destination, destinationOffset, source, startIndex, endIndex)
-            theArray.usePinned {
+            //theArray.usePinned {
                 val src = when (source) {
                     is NativeBuffer -> (source.getPointer() + startIndex).toCPointer()!!
-                    is HeapBuffer -> source.getArray().refTo(startIndex)
+                    is HeapBuffer -> source.getArray().usePinned { it.get().refTo(startIndex) }
                     else -> error("Unknown buffer type, cannot copy!")
                 }
                 val dst = when (destination) {
                     is NativeBuffer -> (destination.getPointer() + destinationOffset).toCPointer()!!
-                    is HeapBuffer -> destination.getArray().refTo(destinationOffset)
+                    is HeapBuffer -> destination.getArray().usePinned { it.get().refTo(destinationOffset) }
                     else -> error("Unknown mutable buffer type, cannot copy!")
                 }
                 speedmemcpy(dst, src, (endIndex - startIndex).toUInt())
-            }
+            //}
+        }
+
+        actual fun reset(destination: MutableBuffer) {
+            //theArray.usePinned {
+                val dst = when (destination) {
+                    is NativeBuffer -> destination.getPointer().toCPointer()!!
+                    is HeapBuffer -> destination.getArray().usePinned { it.get().refTo(0) }
+                    else -> error("Unknown mutable buffer type, cannot reset!")
+                }
+                speedbzero(dst, destination.size.toUInt())
+            //}
         }
     }
 }

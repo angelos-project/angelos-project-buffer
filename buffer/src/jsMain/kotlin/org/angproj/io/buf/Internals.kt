@@ -41,7 +41,13 @@ internal actual class Internals {
             endIndex: Int,
         ) {
             Buffer.copyIntoContract(destination, destinationOffset, source, startIndex, endIndex)
-            source.getArray().copyInto(destination.getArray(), startIndex, endIndex)
+            source.getArray().copyInto(destination.getArray(), destinationOffset, startIndex, endIndex)
+        }
+
+        actual fun reset(destination: MutableBuffer) {
+            val dest = destination.getArray()
+            for (index in dest.indices)
+                dest[index] = Byte.MIN_VALUE
         }
     }
 }

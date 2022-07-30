@@ -28,17 +28,17 @@ class MutableDataByteBufferTest : MutableDataBufferTest() {
      */
     @Test
     fun mutableByteBuffer() {
-        testMutableDataBufferRead(mutableStreamByteBufferOf(populateArray(createArray())))
-        testMutableDataBufferWrite(mutableStreamByteBufferOf(populateArray(createArray())))
-        testMutableDataBufferWriteReverse(mutableStreamByteBufferOf(populateArray(createArray())))
+        testMutableDataBufferRead(mutableDataByteBufferOf(populateArray(createArray())))
+        testMutableDataBufferWrite(mutableDataByteBufferOf(populateArray(createArray())))
+        testMutableDataBufferWriteReverse(mutableDataByteBufferOf(populateArray(createArray())))
 
 
-        testMutableDataBufferRead(mutableStreamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWrite(mutableStreamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWriteReverse(mutableStreamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
+        testMutableDataBufferRead(mutableDataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWrite(mutableDataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWriteReverse(mutableDataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
 
-        testMutableDataBufferRead(populateMutableDataBuffer(mutableStreamByteBufferOf(refSize)))
-        testMutableDataBufferWrite(populateMutableDataBuffer(mutableStreamByteBufferOf(refSize)))
-        testMutableDataBufferWriteReverse(populateMutableDataBuffer(mutableStreamByteBufferOf(refSize)))
+        testMutableDataBufferRead(populateMutableDataBuffer(mutableDataByteBufferOf(refSize)))
+        testMutableDataBufferWrite(populateMutableDataBuffer(mutableDataByteBufferOf(refSize)))
+        testMutableDataBufferWriteReverse(populateMutableDataBuffer(mutableDataByteBufferOf(refSize)))
     }
 }

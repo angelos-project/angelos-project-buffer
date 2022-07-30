@@ -37,4 +37,13 @@ extern int endian();
  */
 extern void speedmemcpy(void *dest, const void * src, uint32_t n);
 
+
+/**
+ * Reset memory bank using max size integer per iteration.
+ * @param s pointer of memory location
+ * @param n amount of bytes to reset
+ * @return
+ */
+extern void speedbzero(void *s, uint32_t n);
+
 #endif //SRC_ENDIANNESS_H

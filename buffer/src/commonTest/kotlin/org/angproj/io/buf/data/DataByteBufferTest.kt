@@ -28,14 +28,14 @@ class DataByteBufferTest : MutableDataBufferTest() {
      */
     @Test
     fun byteBuffer() {
-        testMutableDataBufferRead(streamByteBufferOf(populateArray(createArray())))
+        testMutableDataBufferRead(dataByteBufferOf(populateArray(createArray())))
 
-        testMutableDataBufferRead(streamByteBufferOf(populateArray(createArray())).toMutableStreamByteBuffer())
-        testMutableDataBufferWrite(streamByteBufferOf(populateArray(createArray())).toMutableStreamByteBuffer())
-        testMutableDataBufferWriteReverse(streamByteBufferOf(populateArray(createArray())).toMutableStreamByteBuffer())
+        testMutableDataBufferRead(dataByteBufferOf(populateArray(createArray())).toMutableDataByteBuffer())
+        testMutableDataBufferWrite(dataByteBufferOf(populateArray(createArray())).toMutableDataByteBuffer())
+        testMutableDataBufferWriteReverse(dataByteBufferOf(populateArray(createArray())).toMutableDataByteBuffer())
 
-        testMutableDataBufferRead(streamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWrite(streamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
-        testMutableDataBufferWriteReverse(streamByteBufferOf(populateArray(createArray())).toMutableNativeStreamByteBuffer())
+        testMutableDataBufferRead(dataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWrite(dataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
+        testMutableDataBufferWriteReverse(dataByteBufferOf(populateArray(createArray())).toMutableNativeDataByteBuffer())
     }
 }

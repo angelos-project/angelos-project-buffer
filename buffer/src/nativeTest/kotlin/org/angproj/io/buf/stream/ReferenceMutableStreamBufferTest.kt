@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
  * @constructor Create empty Reference mutable buffer test
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-class ReferenceMutableBufferTest : MutableStreamBufferTest() {
+class ReferenceMutableStreamBufferTest : MutableStreamBufferTest() {
 
     private fun populateNativeByteArray(array: ByteArray): ByteArray {
         array[0] = refByte
@@ -47,9 +47,9 @@ class ReferenceMutableBufferTest : MutableStreamBufferTest() {
      */
     @Test
     fun testReferenceMutableBuffer() {
-        testMutableStreamBufferRead(refMutableBufferOf(populateNativeByteArray(createArray())))
-        testMutableStreamBufferWrite(refMutableBufferOf(createArray()))
-        testMutableStreamBufferWriteReverse(refMutableBufferOf(createArray()))
+        testMutableStreamBufferRead(refMutableStreamBufferOf(populateNativeByteArray(createArray())))
+        testMutableStreamBufferWrite(refMutableStreamBufferOf(createArray()))
+        testMutableStreamBufferWriteReverse(refMutableStreamBufferOf(createArray()))
     }
 
     /**

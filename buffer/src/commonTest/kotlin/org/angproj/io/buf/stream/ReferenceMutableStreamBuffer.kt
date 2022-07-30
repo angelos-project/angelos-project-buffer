@@ -148,6 +148,6 @@ class ReferenceMutableStreamBuffer internal constructor(
  * @param data ByteBuffer of data of presumably reference size
  * @return a newly created reference buffer
  */
-fun refMutableBufferOf(data: ByteArray): MutableHeapStreamBuffer {
+fun refMutableStreamBufferOf(data: ByteArray): MutableHeapStreamBuffer {
     return ReferenceMutableStreamBuffer(data, data.size, data.size, 0, Buffer.nativeEndianness)
 }

@@ -19,6 +19,8 @@ internal expect class Internals {
         fun getEndian(): Int
 
         fun copyInto(destination: MutableBuffer, destinationOffset: Int, source: Buffer, startIndex: Int, endIndex: Int)
+
+        fun reset(destination: MutableBuffer)
     }
 }
 
