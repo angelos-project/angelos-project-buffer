@@ -19,6 +19,15 @@ import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.BufferOverflowWarning
 import org.angproj.io.buf.Endianness
 
+/**
+ * Abstract data buffer base class.
+ *
+ * @constructor
+ *
+ * @param size Full size of buffer
+ * @param limit Limit lesser than size
+ * @param endianness Endianness
+ */
 abstract class AbstractDataBuffer internal constructor(
     size: Int,
     limit: Int,

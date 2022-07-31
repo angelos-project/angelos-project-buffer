@@ -15,7 +15,7 @@
 package org.angproj.io.buf
 
 /**
- * Buffer interface in the Angelos system.
+ * Buffer interface in Angelos™.
  *
  * @constructor Create empty Buffer
  */
@@ -53,6 +53,12 @@ interface Buffer {
         Internals.copyInto(destination, destinationOffset, this, startIndex, endIndex)
     }
 
+    /**
+     * Necessary utility function that is used for some advanced operations internally.
+     * Not stable for API use.
+     *
+     * @return
+     */
     fun getArray(): ByteArray
 
     companion object {

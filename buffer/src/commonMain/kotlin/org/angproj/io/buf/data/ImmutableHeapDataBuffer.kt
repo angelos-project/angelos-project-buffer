@@ -16,4 +16,9 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.HeapBuffer
 
+/**
+ * Immutable heap data buffer representing any immutable data-buffer implementation on the heap.
+ *
+ * @constructor Create empty Immutable heap data buffer
+ */
 interface ImmutableHeapDataBuffer : ImmutableDataBuffer, HeapBuffer

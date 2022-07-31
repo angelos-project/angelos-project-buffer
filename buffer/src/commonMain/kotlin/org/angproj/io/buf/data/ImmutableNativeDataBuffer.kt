@@ -16,4 +16,9 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.NativeBuffer
 
+/**
+ * Immutable native data buffer representing any immutable data-buffer implementation in the native.
+ *
+ * @constructor Create empty Immutable native data buffer
+ */
 interface ImmutableNativeDataBuffer : ImmutableDataBuffer, NativeBuffer

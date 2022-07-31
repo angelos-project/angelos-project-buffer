@@ -14,5 +14,10 @@
  */
 package org.angproj.io.buf
 
-interface MutableBuffer : Buffer {
-}
+/**
+ * Mutable buffer interface for sub-buffers that implements mutability.
+ * Used over the whole spectrum of buffer types.
+ *
+ * @constructor Create empty Mutable buffer
+ */
+interface MutableBuffer : Buffer

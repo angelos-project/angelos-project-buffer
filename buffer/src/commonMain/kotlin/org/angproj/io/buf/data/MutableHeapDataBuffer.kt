@@ -16,4 +16,9 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.HeapBuffer
 
+/**
+ * Mutable heap data buffer representing any mutable data-buffer implementation on the heap.
+ *
+ * @constructor Create empty Mutable heap data buffer
+ */
 interface MutableHeapDataBuffer : MutableDataBuffer, HeapBuffer

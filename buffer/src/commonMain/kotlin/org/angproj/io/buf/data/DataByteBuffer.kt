@@ -16,6 +16,16 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Endianness
 
+/**
+ * Data byte buffer.
+ *
+ * @constructor
+ *
+ * @param array Underlying byte array
+ * @param size Full size of the buffer
+ * @param limit Limit lesser than size
+ * @param endianness Endianness
+ */
 expect class DataByteBuffer internal constructor(
     array: ByteArray,
     size: Int,

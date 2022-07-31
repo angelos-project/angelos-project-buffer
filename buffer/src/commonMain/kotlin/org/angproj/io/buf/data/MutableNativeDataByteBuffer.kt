@@ -16,6 +16,15 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Endianness
 
+/**
+ * Mutable native data byte buffer.
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 expect class MutableNativeDataByteBuffer(
     size: Int,
     limit: Int,

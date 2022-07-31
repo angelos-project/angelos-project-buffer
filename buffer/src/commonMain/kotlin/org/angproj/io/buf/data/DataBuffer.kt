@@ -17,6 +17,11 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Retrievable
 
+/**
+ * Data-buffer interface implementing Retrievable interface.
+ *
+ * @constructor Create empty Data buffer
+ */
 interface DataBuffer : Buffer, Retrievable {
 
     /**

@@ -17,6 +17,11 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Readable
 
+/**
+ * Stream buffer interface implementing Buffer and Readable.
+ *
+ * @constructor Create empty Stream buffer
+ */
 interface StreamBuffer : Buffer, Readable {
     /**
      * Current position for operations in the buffer. Must never exceed the limit.

@@ -16,6 +16,15 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Endianness
 
+/**
+ * Native data byte buffer.
+ *
+ * @constructor
+ *
+ * @param size Full size of the buffer
+ * @param limit Limit lesser than size
+ * @param endianness Endianness
+ */
 expect class NativeDataByteBuffer internal constructor(
     size: Int,
     limit: Int,

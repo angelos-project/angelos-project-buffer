@@ -18,7 +18,7 @@ import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Endianness
 
 /**
- * Abstract mutable buffer that implements mutability on top of AbstractBuffer.
+ * Abstract mutable buffer that implements mutability on top of AbstractStreamBuffer.
  *
  * @constructor
  *

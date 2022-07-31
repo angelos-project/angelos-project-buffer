@@ -18,6 +18,15 @@ import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.Internals
 
+/**
+ * Represents an abstract mutable data-buffer for use without internal position cursor.
+ *
+ * @constructor
+ *
+ * @param size Full size of thebuffer
+ * @param limit Added limit lesser than size
+ * @param endianness Endianness
+ */
 abstract class AbstractMutableDataBuffer(size: Int, limit: Int, endianness: Endianness) : AbstractDataBuffer(
     size,
     limit,

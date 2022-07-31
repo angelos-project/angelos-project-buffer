@@ -16,6 +16,16 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Endianness
 
+/**
+ * Mutable data byte buffer implementation on the heap.
+ *
+ * @constructor
+ *
+ * @param array
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 expect class MutableDataByteBuffer internal constructor(
     array: ByteArray,
     size: Int,

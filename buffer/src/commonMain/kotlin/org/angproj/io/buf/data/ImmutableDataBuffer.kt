@@ -16,4 +16,9 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.Retrievable
 
+/**
+ * Immutable data buffer interface that represent any immutable data-buffer implementation.
+ *
+ * @constructor Create empty Immutable data buffer
+ */
 interface ImmutableDataBuffer : DataBuffer, Retrievable
