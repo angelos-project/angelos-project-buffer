@@ -15,8 +15,8 @@
 package org.angproj.io.buf
 
 import cbuffer.endian
-import cbuffer.speedmemcpy
 import cbuffer.speedbzero
+import cbuffer.speedmemcpy
 import kotlinx.cinterop.refTo
 import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.usePinned

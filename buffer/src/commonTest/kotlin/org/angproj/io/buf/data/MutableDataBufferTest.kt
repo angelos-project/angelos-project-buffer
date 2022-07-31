@@ -132,13 +132,12 @@ open class MutableDataBufferTest : MutableBufferTest() {
      *
      */
     fun testMutableDataBufferWriteReverse(buf: MutableDataBuffer) {
-        println(buf::class.simpleName)
         buf.endian = reverseEndianness(buf)
 
         buf.setStoreByte(0, refByte)
         buf.setStoreUByte(1, refUByte)
         buf.setStoreChar(2, refChar)
-        buf.setStoreShort(3, refShort)
+        buf.setStoreShort(4, refShort)
         buf.setStoreUShort(6, refUShort)
         buf.setStoreInt(8, refInt)
         buf.setStoreUInt(12, refUInt)

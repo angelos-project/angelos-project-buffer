@@ -20,7 +20,7 @@ import org.angproj.io.buf.Storable
 
 interface MutableDataBuffer : DataBuffer, MutableBuffer, Retrievable, Storable {
     /**
-     * Resetting the buffer by relimiting and by default zeroing the data.
+     * Resetting the buffer by zeroing the data.
      *
      */
     fun reset()
