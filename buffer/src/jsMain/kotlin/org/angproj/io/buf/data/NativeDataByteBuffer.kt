@@ -16,6 +16,15 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.*
 
+/**
+ * Native data byte buffer
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 actual class NativeDataByteBuffer internal actual constructor(
     size: Int,
     limit: Int,

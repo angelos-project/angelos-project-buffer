@@ -16,6 +16,16 @@ package org.angproj.io.buf.data
 
 import org.angproj.io.buf.*
 
+/**
+ * Data byte buffer
+ *
+ * @constructor
+ *
+ * @param array
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 actual class DataByteBuffer internal actual constructor(
     array: ByteArray,
     size: Int,

@@ -20,6 +20,15 @@ import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.swapEndian
 import platform.posix.free
 
+/**
+ * Mutable native data byte buffer
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 @Suppress("OVERRIDE_BY_INLINE")
 actual class MutableNativeDataByteBuffer actual constructor(
     size: Int,

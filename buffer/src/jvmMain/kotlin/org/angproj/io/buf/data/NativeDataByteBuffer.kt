@@ -19,6 +19,15 @@ import org.angproj.io.buf.Internals
 import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.swapEndian
 
+/**
+ * Native data byte buffer
+ *
+ * @constructor
+ *
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 actual class NativeDataByteBuffer internal actual constructor(
     size: Int,
     limit: Int,

@@ -18,6 +18,16 @@ import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.Internals
 import org.angproj.io.buf.swapEndian
 
+/**
+ * Data byte buffer
+ *
+ * @constructor
+ *
+ * @param array
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 actual class DataByteBuffer internal actual constructor(
     array: ByteArray,
     size: Int,

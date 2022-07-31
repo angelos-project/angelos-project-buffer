@@ -17,6 +17,16 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.swapEndian
 
+/**
+ * Data byte buffer
+ *
+ * @constructor
+ *
+ * @param array
+ * @param size
+ * @param limit
+ * @param endianness
+ */
 @OptIn(ExperimentalUnsignedTypes::class)
 @Suppress("OVERRIDE_BY_INLINE")
 actual class DataByteBuffer internal actual constructor(
