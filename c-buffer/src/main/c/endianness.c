@@ -67,7 +67,7 @@ void speedmemcpy(void *dest, const void * src, uint32_t n) {
     }
 }
 
-void speedbzero(void *s, uint32_t n) {
+void speedbzero(void *s, uint32_t n, uint8_t v) {
 #if INTPTR_MAX == INT64_MAX
     uint32_t big = n / sizeof(uint64_t);
     uint32_t small = n % sizeof(uint64_t);
@@ -86,7 +86,7 @@ void speedbzero(void *s, uint32_t n) {
     uint32_t *s_big = (uint32_t *) s;
 
     for (uint32_t i = 0; i < big; i++) {
-        s_big[i] = 0;
+        s_big[i] = v;
     }
 
     char *s_small = (char *) s + big * sizeof(uint32_t);
@@ -94,6 +94,6 @@ void speedbzero(void *s, uint32_t n) {
 #error "Environment must be 64-bit or 32-bit"
 #endif
     for (uint32_t j = 0; j < small; j++) {
-        s_small[j] = 0;
+        s_small[j] = v;
     }
 }

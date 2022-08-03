@@ -17,8 +17,9 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.HeapBuffer
 
 /**
- * Mutable heap buffer.
+ * Mutable heap stream-buffer represents a mutable stream-buffer allocated on the heap. Use this interface as types on
+ * method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Mutable heap buffer
+ * @constructor Create implementation of the MutableHeapStreamBuffer interface.
  */
 interface MutableHeapStreamBuffer : MutableStreamBuffer, HeapBuffer

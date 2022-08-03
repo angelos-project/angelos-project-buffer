@@ -16,5 +16,7 @@ package org.angproj.io.buf
 
 /**
  * TypePointer holds a native memory raw pointer while adding type assertion.
+ *
+ * DON'T MESS WITH RAW POINTERS!
  */
 typealias TypePointer<@Suppress("UNUSED_TYPEALIAS_PARAMETER") T> = Long

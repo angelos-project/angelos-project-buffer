@@ -47,7 +47,7 @@ static void do_speedmemcpy(JNIEnv * env, jclass thisClass, jlong dest, jlong sou
  * Signature: (JI)V
  */
 static void do_speedbzero(JNIEnv * env, jclass thisClass, jlong s, jint n){
-    speedbzero((void *) s, n);
+    speedbzero((void *) s, n, 0);
 }
 
 static JNINativeMethod funcs[] = {

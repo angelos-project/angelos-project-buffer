@@ -44,6 +44,6 @@ extern void speedmemcpy(void *dest, const void * src, uint32_t n);
  * @param n amount of bytes to reset
  * @return
  */
-extern void speedbzero(void *s, uint32_t n);
+extern void speedbzero(void *s, uint32_t n, uint8_t v);
 
 #endif //SRC_ENDIANNESS_H

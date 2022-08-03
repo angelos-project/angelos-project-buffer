@@ -47,7 +47,7 @@ internal actual class Internals {
         actual fun reset(destination: MutableBuffer) {
             val dest = destination.getArray()
             for (index in dest.indices)
-                dest[index] = Byte.MIN_VALUE
+                dest[index] = 0
         }
     }
 }

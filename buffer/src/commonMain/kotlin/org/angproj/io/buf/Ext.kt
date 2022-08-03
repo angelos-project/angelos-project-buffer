@@ -18,170 +18,170 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 /**
- * Setting bit 0.
+ * Setting bit 0 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag0(): Byte = this or 0B00000001
 
 /**
- * Setting bit 1.
+ * Setting bit 1 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag1(): Byte = this or 0B00000010
 
 /**
- * Setting bit 2.
+ * Setting bit 2 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag2(): Byte = this or 0B00000100
 
 /**
- * Setting bit 3.
+ * Setting bit 3 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag3(): Byte = this or 0B00001000
 
 /**
- * Setting bit 4.
+ * Setting bit 4 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag4(): Byte = this or 0B00010000
 
 /**
- * Setting bit 5.
+ * Setting bit 5 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag5(): Byte = this or 0B00100000
 
 /**
- * Setting bit 6.
+ * Setting bit 6 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag6(): Byte = this or 0B01000000
 
 /**
- * Setting bit 7.
+ * Setting bit 7 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOnFlag7(): Byte = this or -0B10000000
 
 /**
- * Clearing bit 0.
+ * Clearing bit 0 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag0(): Byte = this and 0B11111110.toByte()
 
 /**
- * Clearing bit 1.
+ * Clearing bit 1 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag1(): Byte = this and 0B11111101.toByte()
 
 /**
- * Clearing bit 2.
+ * Clearing bit 2 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag2(): Byte = this and 0B11111011.toByte()
 
 /**
- * Clearing bit 3.
+ * Clearing bit 3 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag3(): Byte = this and 0B11110111.toByte()
 
 /**
- * Clearing bit 4.
+ * Clearing bit 4 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag4(): Byte = this and 0B11101111.toByte()
 
 /**
- * Clearing bit 5.
+ * Clearing bit 5 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag5(): Byte = this and 0B11011111.toByte()
 
 /**
- * Clearing bit 6.
+ * Clearing bit 6 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag6(): Byte = this and 0B10111111.toByte()
 
 /**
- * Clearing bit 7.
+ * Clearing bit 7 in said Byte.
  *
- * @return
+ * @return The modified value.
  */
 inline fun Byte.flipOffFlag7(): Byte = this and 0B01111111.toByte()
 
 /**
- * Verify state of bit 0.
+ * Verify state of bit 0 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag0(): Boolean = (this and 0B00000001).toInt() == 1
 
 /**
- * Verify state of bit 1.
+ * Verify state of bit 1 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag1(): Boolean = (this and 0B00000010).toInt() == 2
 
 /**
- * Verify state of bit 2.
+ * Verify state of bit 2 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag2(): Boolean = (this and 0B00000100).toInt() == 4
 
 /**
- * Verify state of bit 3.
+ * Verify state of bit 3 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag3(): Boolean = (this and 0B00001000).toInt() == 8
 
 /**
- * Verify state of bit 4.
+ * Verify state of bit 4 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag4(): Boolean = (this and 0B00010000).toInt() == 16
 
 /**
- * Verify state of bit 5.
+ * Verify state of bit 5 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag5(): Boolean = (this and 0B00100000).toInt() == 32
 
 /**
- * Verify state of bit 6.
+ * Verify state of bit 6 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag6(): Boolean = (this and 0B01000000).toInt() == 64
 
 /**
- * Verify state of bit 7.
+ * Verify state of bit 7 in said Byte.
  *
- * @return
+ * @return Boolean result of check.
  */
 inline fun Byte.checkFlag7(): Boolean = (this and -0B10000000).toInt() == -128
 

@@ -17,8 +17,9 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.HeapBuffer
 
 /**
- * Immutable heap data buffer representing any immutable data-buffer implementation on the heap.
+ * Immutable heap data-buffer represents an immutable data-buffer allocated on the heap. Use this interface as types on
+ * method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Immutable heap data buffer
+ * @constructor Create implementation of the ImmutableHeapDataBuffer interface.
  */
 interface ImmutableHeapDataBuffer : ImmutableDataBuffer, HeapBuffer

@@ -17,8 +17,9 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.NativeBuffer
 
 /**
- * Immutable native data buffer representing any immutable data-buffer implementation in the native.
+ * Immutable heap data-buffer represents an immutable data-buffer allocated outside the heap. Use this interface as types on
+ * method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Immutable native data buffer
+ * @constructor Create implementation of the ImmutableNativeDataBuffer interface.
  */
 interface ImmutableNativeDataBuffer : ImmutableDataBuffer, NativeBuffer

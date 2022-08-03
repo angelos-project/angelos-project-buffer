@@ -15,85 +15,85 @@
 package org.angproj.io.buf
 
 /**
- * Readable interface to read data from a buffer.
+ * Readable interface for reading data from any type of readable interface including buffers.
  *
- * @constructor Create empty Readable
+ * @constructor Create Readable
  */
 interface Readable {
     /**
      * Read next byte.
      *
-     * @return a byte of data
+     * @return A byte of data.
      */
     fun getReadByte(): Byte
 
     /**
      * Read next unsigned byte.
      *
-     * @return an unsigned byte of data
+     * @return An unsigned byte of data.
      */
     fun getReadUByte(): UByte
 
     /**
      * Read next character.
      *
-     * @return a character of data
+     * @return A character of data.
      */
     fun getReadChar(): Char
 
     /**
      * Read next short integer.
      *
-     * @return a short integer of data
+     * @return A short integer of data.
      */
     fun getReadShort(): Short
 
     /**
      * Read next unsigned short integer.
      *
-     * @return an unsigned short integer of data
+     * @return An unsigned short integer of data.
      */
     fun getReadUShort(): UShort
 
     /**
      * Read next integer.
      *
-     * @return an integer of data
+     * @return An integer of data.
      */
     fun getReadInt(): Int
 
     /**
      * Read next unsigned integer.
      *
-     * @return an unsigned integer of data
+     * @return An unsigned integer of data.
      */
     fun getReadUInt(): UInt
 
     /**
      * Read next long integer.
      *
-     * @return a long integer of data.
+     * @return A long integer of data.
      */
     fun getReadLong(): Long
 
     /**
      * Read next unsigned long integer.
      *
-     * @return an unsigned long integer of data
+     * @return An unsigned long integer of data
      */
     fun getReadULong(): ULong
 
     /**
      * Read next float.
      *
-     * @return a float of data
+     * @return A float of data.
      */
     fun getReadFloat(): Float
 
     /**
      * Read next double.
      *
-     * @return a double of data
+     * @return A double of data.
      */
     fun getReadDouble(): Double
 }

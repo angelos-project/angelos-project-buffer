@@ -15,7 +15,7 @@
 package org.angproj.io.buf
 
 /**
- * Buffer interface in Angelos™.
+ * The buffer interface used for all buffers in Angelos™.
  *
  * @constructor Create empty Buffer
  */
@@ -27,37 +27,36 @@ interface Buffer {
     val size: Int
 
     /**
-     * Limitation of how far to operate into the buffer. Must never exceed the capacity.
+     * Limitation of how far to operate into the buffer. Must never exceed the size.
      */
     val limit: Int
 
     /**
-     * Endianness of the buffer.
+     * The current endianness of the buffer.
      */
     var endian: Endianness
 
     /**
-     * Whether reversed byte order of the buffer compared to native endianness.
+     * Whether the buffer endianness is reversed contrary to the platform native endianness of the operating system.
      */
     val reverse: Boolean
 
     /**
-     * Copy into a mutable buffer.
+     * Copy this buffer into another said mutable buffer.
      *
-     * @param destination destination mutable buffer to copy into
-     * @param destinationOffset offset where to start inside mutable buffer
-     * @param startIndex where to start copy from in source buffer
-     * @param endIndex when to stop copying from the source buffer
+     * @param destination The destination buffer to which copying takes place.
+     * @param destinationOffset The offset where the copying starts.
+     * @param startIndex Start copying from this index of current buffer.
+     * @param endIndex End copying at this index of current buffer.
      */
     fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit) {
         Internals.copyInto(destination, destinationOffset, this, startIndex, endIndex)
     }
 
     /**
-     * Necessary utility function that is used for some advanced operations internally.
-     * Not stable for API use.
+     * Not for external API usage, may throw UnsupportedOperationException.
      *
-     * @return
+     * @return the actual ByteBuffer if any.
      */
     fun getArray(): ByteArray
 

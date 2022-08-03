@@ -16,14 +16,13 @@ package org.angproj.io.buf
 
 /**
  * Abstract buffer from which all buffer implementations must inherit.
- * Implements the basic logic regarding size, position and limit of reading and writing space.
+ * Implements the basic logic regarding size, limit and endianness for reading and writing space.
  *
  * @constructor
  *
- * @param size max size of the buffer
- * @param limit initial limit if partial data already exists
- * @param position initial position in an already existing data stream
- * @param endianness endian of the buffered data
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param endianness The initial current endianness of the buffer.
  */
 abstract class AbstractBuffer internal constructor(
     size: Int,

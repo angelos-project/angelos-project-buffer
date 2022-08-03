@@ -18,14 +18,14 @@ import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Endianness
 
 /**
- * Abstract mutable buffer that implements mutability on top of AbstractStreamBuffer.
+ * Abstract base class for all mutable stream-buffers.
  *
  * @constructor
  *
- * @param size max size of the buffer
- * @param limit initial limit if partial data already exists
- * @param position initial position in an already existing data stream
- * @param endianness endian of the buffered data
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param position The initial position in the buffer.
+ * @param endianness The initial current endianness of the buffer.
  */
 abstract class AbstractMutableStreamBuffer internal constructor(
     size: Int,

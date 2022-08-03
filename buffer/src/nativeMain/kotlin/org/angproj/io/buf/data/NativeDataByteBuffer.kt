@@ -21,7 +21,8 @@ import org.angproj.io.buf.swapEndian
 import platform.posix.free
 
 /**
- * Native data byte buffer
+ * The Kotlin/Native implementation of the NativeDataByteBuffer class uses a ByteVar array to access the
+ * underlying memory using C pointer arithmetic. The memory is allocated and freed using kotlinx.cinterop.
  *
  * @constructor
  *
@@ -88,10 +89,6 @@ actual class NativeDataByteBuffer internal actual constructor(
     }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
-
-    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
-        _array.usePinned { native(getPointer()) }
-    }
 
     override fun dispose() {
         memScoped { free(_array) }

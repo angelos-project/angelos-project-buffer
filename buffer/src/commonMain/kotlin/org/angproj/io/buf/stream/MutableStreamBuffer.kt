@@ -19,8 +19,9 @@ import org.angproj.io.buf.Readable
 import org.angproj.io.buf.Writable
 
 /**
- * Mutable buffer interface inheriting from Buffer.
+ * Mutable stream-buffer represents a mutable stream-buffer. Use this interface as
+ * types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty mutable buffer
+ * @constructor Create implementation of the MutableStreamBuffer interface.
  */
 interface MutableStreamBuffer : StreamBuffer, MutableBuffer, Readable, Writable

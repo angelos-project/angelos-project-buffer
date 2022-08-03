@@ -21,7 +21,8 @@ import org.angproj.io.buf.swapEndian
 import platform.posix.free
 
 /**
- * Native byte buffer implemented outside save memory environment as immutable.
+ * The Kotlin/Native implementation of the NativeStreamByteBuffer class uses a ByteVar array to access the
+ * underlying memory using C pointer arithmetic. The memory is allocated and freed using kotlinx.cinterop.
  *
  * @constructor
  *
@@ -90,10 +91,6 @@ actual class NativeStreamByteBuffer internal actual constructor(
     }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
-
-    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
-        _array.usePinned { native(getPointer()) }
-    }
 
     override fun dispose() {
         memScoped { free(_array) }

@@ -112,10 +112,10 @@ internal actual class Internals {
                 is HeapBuffer -> {
                     val dest = destination.getArray()
                     for (index in 0 until l step Buffer.LONG_SIZE) {
-                        unsafe.putLong(dest, byteArrayOffset + index, Long.MIN_VALUE)
+                        unsafe.putLong(dest, byteArrayOffset + index, 0)
                     }
                     for (index in l until destination.size) {
-                        dest[index] = Byte.MIN_VALUE
+                        dest[index] = 0
                     }
                 }
             }

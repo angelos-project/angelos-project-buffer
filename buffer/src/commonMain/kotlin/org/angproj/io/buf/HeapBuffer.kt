@@ -15,16 +15,17 @@
 package org.angproj.io.buf
 
 /**
- * Heap buffer that is created in the heap memory.
+ * Every buffer that implements this interface must allocate buffer memory inside the heap of the runtime environment.
  *
- * @constructor Create empty Heap buffer
+ * @constructor Allocates implemented buffer on the heap region of memory.
  */
 interface HeapBuffer : Buffer {
     /**
      * Get underlying array of buffer.
-     * May throw UnsupportedOperationException if native.
+     * NOT safe for API external use.
+     * May throw UnsupportedOperationException.
      *
-     * @return array of bytes
+     * @return ByteArray representation of memory allocated region.
      */
     override fun getArray(): ByteArray
 }

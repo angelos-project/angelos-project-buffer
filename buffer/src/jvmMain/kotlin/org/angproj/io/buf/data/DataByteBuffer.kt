@@ -19,7 +19,8 @@ import org.angproj.io.buf.Internals
 import org.angproj.io.buf.swapEndian
 
 /**
- * Data byte buffer
+ * The Kotlin/JVM implementation of the DataByteBuffer class uses the sun.misc.Unsafe class to access the
+ * underlying ByteArray.
  *
  * @constructor
  *

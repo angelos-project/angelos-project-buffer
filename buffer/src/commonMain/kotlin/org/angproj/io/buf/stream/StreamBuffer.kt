@@ -18,46 +18,50 @@ import org.angproj.io.buf.Buffer
 import org.angproj.io.buf.Readable
 
 /**
- * Stream buffer interface implementing Buffer and Readable.
+ * Stream buffer interface setting the standard for a stream-buffer abstract base class.
  *
- * @constructor Create empty Stream buffer
+ * @constructor Create implementation of the StreamBuffer interface.
  */
 interface StreamBuffer : Buffer, Readable {
     /**
-     * Current position for operations in the buffer. Must never exceed the limit.
+     * The current position for operations within the allocated memory of the buffer. Must never exceed the limit.
      */
     val position: Int
 
     /**
-     * Clears the buffer by setting position to beginning and limit to capacity, for performing
-     * a reuse of the buffer for operations from scratch.
+     * Clears the buffer by setting position to 0 and limit to the value of size.
+     * This function should be executed if the buffer should be reused without allocating a new one.
+     * This is very practical in a high performance IO application.
      */
     fun clear()
 
     /**
-     * Flips the buffer by setting limit to the current position, and then setting the position
-     * to the beginning, for performing getting operations after setting values.
+     * Flips the buffer by setting limit to the value of position, and then setting the position
+     * to 0.
+     * This is used after the buffer has been written to, and is being prepared for reading from.
      *
      */
     fun flip()
 
     /**
-     * Rewinds the buffer by setting position to the beginning without touching the limit, for
-     * rereading operations on the buffer.
+     * Rewinds the buffer by setting position to 0 without touching the limit.
      */
     fun rewind()
 
     /**
-     * Remaining space between the current position and limit.
+     * Calculates the remaining space between the current position and limit.
+     * Use to find the space left until buffer overflow.
      *
-     * @return number of bytes remaining
+     * @return The number of bytes remaining.
      */
     fun remaining(): Int
 
     /**
-     * Has enough remaining bytes left or throws BufferException.
+     * Checks if the buffer has enough remaining bytes left.
+     * Throws BufferException if too little space left, that must be handled, otherwise the application crashes in order
+     * to avoid undefined behavior.
      *
-     * @param size needed space
+     * @param size The size of bytes requested.
      */
     fun hasRemaining(size: Int)
 }

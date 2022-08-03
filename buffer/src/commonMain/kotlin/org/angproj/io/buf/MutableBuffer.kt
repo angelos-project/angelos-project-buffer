@@ -15,9 +15,9 @@
 package org.angproj.io.buf
 
 /**
- * Mutable buffer interface for sub-buffers that implements mutability.
- * Used over the whole spectrum of buffer types.
+ * Mutable buffer. Use this interface as types on method parameters in order to allow third party implementations
+ * of buffers.
  *
- * @constructor Create empty Mutable buffer
+ * @constructor Create implementation of the MutableBuffer interface.
  */
 interface MutableBuffer : Buffer

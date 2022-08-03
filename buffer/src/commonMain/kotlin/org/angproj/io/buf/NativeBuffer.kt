@@ -15,29 +15,25 @@
 package org.angproj.io.buf
 
 /**
- * Native buffer that is created in the native memory.
+ * Every buffer that implements this interface must allocate buffer memory on the outside of the heap
+ * of the runtime environment.
  *
- * @constructor Create empty Native buffer
+ * @constructor Allocates implemented buffer outside the heap region of memory.
  */
 interface NativeBuffer : Buffer {
     /**
      * Get pointer to native or heap memory.
+     * NOT safe for external API use.
      * Throws UnsupportedOperationException if unavailable.
      *
-     * @return pointer to first element
+     * DO NOT PLAY AROUND WITH POINTER VALUES THANK YOU!!
+     *
+     * @return pointer representation of memory block.
      */
     fun getPointer(): TypePointer<Byte>
 
     /**
-     * Pins the underlying memory if necessary and executes the lambda.
-     *
-     * @param native lambda to be executed in pinned mode
-     * @receiver
-     */
-    fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit)
-
-    /**
-     * Dispose manually of allocated memory.
+     * Dispose manually of allocated memory. This is the responsibility of any library using native buffers.
      *
      */
     fun dispose()
@@ -49,6 +45,7 @@ interface NativeBuffer : Buffer {
      * @return
      */
     override fun getArray(): ByteArray {
-        throw UnsupportedOperationException("Unimplemented necessary implementations to be overridden in emergencies.")
+        throw UnsupportedOperationException(
+            "Unimplemented necessary implementations to be overridden in cases of emergency.")
     }
 }

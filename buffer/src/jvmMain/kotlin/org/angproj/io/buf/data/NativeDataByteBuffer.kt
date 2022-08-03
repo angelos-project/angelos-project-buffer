@@ -20,7 +20,8 @@ import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.swapEndian
 
 /**
- * Native data byte buffer
+ * The Kotlin/JVM implementation of the NativeDataByteBuffer class uses the sun.misc.Unsafe class to access the
+ * underlying memory using pointer arithmetic. The memory is allocated and finalized using sun.misc.Unsafe.
  *
  * @constructor
  *
@@ -85,10 +86,6 @@ actual class NativeDataByteBuffer internal actual constructor(
     }
 
     override fun getPointer(): TypePointer<Byte> = _pointer
-
-    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
-        native(getPointer())
-    }
 
     override fun dispose() {
         Internals.unsafe.freeMemory(_pointer)

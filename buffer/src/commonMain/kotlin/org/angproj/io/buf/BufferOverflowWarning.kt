@@ -15,9 +15,9 @@
 package org.angproj.io.buf
 
 /**
- * Byte-buffer overflow warning is not an exception telling the byte-buffer overflowed,
- * but rather a warning beforehand, to take action and deal with the situation.
+ * Buffer overflow warning is not an exception telling that the byte-buffer overflowed.
+ * But rather a warning beforehand to take action and deal with the coming buffer overflow.
  *
- * @constructor Create empty Byte buffer overflow warning
+ * @constructor Create an empty BufferOverflowWarning
  */
 class BufferOverflowWarning : RuntimeException()

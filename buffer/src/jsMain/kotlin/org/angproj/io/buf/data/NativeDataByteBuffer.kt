@@ -17,7 +17,9 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.*
 
 /**
- * Native data byte buffer
+ * The Kotlin/JS implementation of the NativeDataByteBuffer class uses the access functions implemented by this
+ * library to access the underlying ByteArray without using any pointer arithmetic. This is a simulation of native
+ * memory access due to the runtime environment restrictions.
  *
  * @constructor
  *
@@ -83,10 +85,6 @@ actual class NativeDataByteBuffer internal actual constructor(
 
     override fun getPointer(): TypePointer<Byte> {
         throw UnsupportedOperationException()
-    }
-
-    override fun usePinned(native: (ptr: TypePointer<Byte>) -> Unit) {
-        native(getPointer())
     }
 
     override fun dispose() {}

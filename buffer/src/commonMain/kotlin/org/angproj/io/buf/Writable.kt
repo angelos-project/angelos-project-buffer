@@ -15,85 +15,85 @@
 package org.angproj.io.buf
 
 /**
- * Writable interface to write data to a buffer.
+ * Writable interface for writing data to any type of writable interface including buffers.
  *
- * @constructor Create empty Writable
+ * @constructor Create Writable
  */
 interface Writable {
     /**
      * Write next byte.
      *
-     * @param value a byte of data
+     * @param value A byte of data.
      */
     fun setWriteByte(value: Byte)
 
     /**
      * Write next unsigned byte.
      *
-     * @param value an unsigned byte of data
+     * @param value An unsigned byte of data.
      */
     fun setWriteUByte(value: UByte)
 
     /**
      * Write next character.
      *
-     * @param value a character of data
+     * @param value A character of data.
      */
     fun setWriteChar(value: Char)
 
     /**
      * Write next short integer.
      *
-     * @param value a short integer of data.
+     * @param value A short integer of data.
      */
     fun setWriteShort(value: Short)
 
     /**
      * Write next unsigned short integer.
      *
-     * @param value an unsigned short integer of data.
+     * @param value An unsigned short integer of data.
      */
     fun setWriteUShort(value: UShort)
 
     /**
      * Write next integer.
      *
-     * @param value an integer of data
+     * @param value An integer of data.
      */
     fun setWriteInt(value: Int)
 
     /**
      * Write next unsigned integer.
      *
-     * @param value an unsigned integer of data
+     * @param value An unsigned integer of data.
      */
     fun setWriteUInt(value: UInt)
 
     /**
      * Write next long integer.
      *
-     * @param value a long integer of data
+     * @param value A long integer of data.
      */
     fun setWriteLong(value: Long)
 
     /**
      * Write next unsigned long integer.
      *
-     * @param value an unsigned long integer of data
+     * @param value An unsigned long integer of data.
      */
     fun setWriteULong(value: ULong)
 
     /**
      * Write next float.
      *
-     * @param value a float of data
+     * @param value A float of data.
      */
     fun setWriteFloat(value: Float)
 
     /**
      * Write next double.
      *
-     * @param value a double of data
+     * @param value A double of data.
      */
     fun setWriteDouble(value: Double)
 }

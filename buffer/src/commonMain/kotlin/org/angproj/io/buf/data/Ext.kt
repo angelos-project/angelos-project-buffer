@@ -20,9 +20,9 @@ import org.angproj.io.buf.Endianness
 /**
  * Init ImmutableHeapDataBuffer from a ByteArray.
  *
- * @param array array to wrap
- * @param endian endianness
- * @return Immutable heap based buffer
+ * @param array Array to wrap.
+ * @param endian Endian of buffer.
+ * @return Immutable heap based buffer.
  */
 fun dataByteBufferOf(
     array: ByteArray,
@@ -32,10 +32,10 @@ fun dataByteBufferOf(
 /**
  * Init MutableHeapDataBuffer from a ByteArray.
  *
- * @param array array to wrap
- * @param limit initial limit
- * @param endian endianness
- * @return Mutable heap based buffer
+ * @param array Array to wrap.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable heap based buffer.
  */
 fun mutableDataByteBufferOf(
     array: ByteArray,
@@ -46,10 +46,10 @@ fun mutableDataByteBufferOf(
 /**
  * Create a MutableHeapDataBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying array size
- * @param limit initial limit
- * @param endian endianness
- * @return Mutable heap based buffer
+ * @param size Size of underlying array.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable heap based buffer.
  */
 fun mutableDataByteBufferOf(
     size: Int,
@@ -60,9 +60,9 @@ fun mutableDataByteBufferOf(
 /**
  * Create an ImmutableNativeDataBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying native array size
- * @param endian endianness
- * @return
+ * @param size Size of underlying array.
+ * @param endian Endian of buffer.
+ * @return Immutable native based buffer.
  */
 fun nativeDataByteBufferOf(
     size: Int,
@@ -72,10 +72,10 @@ fun nativeDataByteBufferOf(
 /**
  * Create MutableNativeDataBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying native array size
- * @param limit initial limit
- * @param endian endianness
- * @return
+ * @param size Size of underlying array.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable native based buffer.
  */
 fun mutableNativeDataByteBufferOf(
     size: Int,
@@ -86,7 +86,7 @@ fun mutableNativeDataByteBufferOf(
 /**
  * To MutableHeapDataBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun ImmutableHeapDataBuffer.toMutableDataByteBuffer(): MutableHeapDataBuffer {
     val buf = mutableDataByteBufferOf(ByteArray(size), limit, endian)
@@ -97,7 +97,7 @@ fun ImmutableHeapDataBuffer.toMutableDataByteBuffer(): MutableHeapDataBuffer {
 /**
  * To MutableNativeDataBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun ImmutableHeapDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeDataBuffer {
     val buf = mutableNativeDataByteBufferOf(size, limit, endian)
@@ -108,7 +108,7 @@ fun ImmutableHeapDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeDataBu
 /**
  * To MutableHeapDataBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun ImmutableNativeDataBuffer.toMutableDataByteBuffer(): MutableHeapDataBuffer {
     val buf = mutableDataByteBufferOf(size, limit, endian)
@@ -119,7 +119,7 @@ fun ImmutableNativeDataBuffer.toMutableDataByteBuffer(): MutableHeapDataBuffer {
 /**
  * To MutableNativeDataBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun ImmutableNativeDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeDataBuffer {
     val buf = mutableNativeDataByteBufferOf(size, limit, endian)
@@ -130,7 +130,7 @@ fun ImmutableNativeDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeData
 /**
  * To MutableNativeDataBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun MutableHeapDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeDataBuffer {
     val buf = mutableNativeDataByteBufferOf(size, limit, endian)
@@ -141,7 +141,7 @@ fun MutableHeapDataBuffer.toMutableNativeDataByteBuffer(): MutableNativeDataBuff
 /**
  * To MutableHeapDataBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun MutableNativeDataBuffer.toMutableDataByteBuffer(): MutableHeapDataBuffer {
     val buf = mutableDataByteBufferOf(size, limit, endian)

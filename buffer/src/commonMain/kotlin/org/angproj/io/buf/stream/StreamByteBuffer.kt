@@ -17,15 +17,16 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.Endianness
 
 /**
- * Byte buffer implemented on the heap, as immutable.
+ * A common expect class for the non-mutable stream-buffer that is allocated on the heap.
+ * Implementation practices may vary depending on source target and platform abilities.
  *
  * @constructor
  *
- * @param array ByteArray to wrap into a buffer
- * @param size
- * @param limit
- * @param position
- * @param endianness
+ * @param array An underlying ByteArray that may already have been populated with data at a certain limit.
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param position The initial position in the buffer.
+ * @param endianness The initial current endianness of the buffer.
  */
 expect class StreamByteBuffer internal constructor(
     array: ByteArray,

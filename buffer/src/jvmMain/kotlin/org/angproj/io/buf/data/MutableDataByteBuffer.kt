@@ -19,7 +19,8 @@ import org.angproj.io.buf.Internals
 import org.angproj.io.buf.swapEndian
 
 /**
- * Mutable data byte buffer
+ * The Kotlin/JVM implementation of the MutableDataByteBuffer class uses the sun.misc.Unsafe class to access the
+ * underlying ByteArray.
  *
  * @constructor
  *

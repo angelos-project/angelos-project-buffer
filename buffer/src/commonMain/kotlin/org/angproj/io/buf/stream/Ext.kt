@@ -20,9 +20,9 @@ import org.angproj.io.buf.Endianness
 /**
  * Init ImmutableHeapStreamBuffer from a ByteArray.
  *
- * @param array array to wrap
- * @param endian endianness
- * @return Immutable heap based buffer
+ * @param array Array to wrap.
+ * @param endian Endian of buffer.
+ * @return Immutable heap based buffer.
  */
 fun streamByteBufferOf(
     array: ByteArray,
@@ -32,10 +32,10 @@ fun streamByteBufferOf(
 /**
  * Init MutableHeapStreamBuffer from a ByteArray.
  *
- * @param array array to wrap
- * @param limit initial limit
- * @param endian endianness
- * @return Mutable heap based buffer
+ * @param array Array to wrap.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable heap based buffer.
  */
 fun mutableStreamByteBufferOf(
     array: ByteArray,
@@ -46,10 +46,10 @@ fun mutableStreamByteBufferOf(
 /**
  * Create a MutableHeapStreamBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying array size
- * @param limit initial limit
- * @param endian endianness
- * @return Mutable heap based buffer
+ * @param size Size of underlying array.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable heap based buffer.
  */
 fun mutableStreamByteBufferOf(
     size: Int,
@@ -60,9 +60,9 @@ fun mutableStreamByteBufferOf(
 /**
  * Create an ImmutableNativeStreamBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying native array size
- * @param endian endianness
- * @return
+ * @param size Size of underlying array.
+ * @param endian Endian of buffer.
+ * @return Immutable native based buffer.
  */
 fun nativeStreamByteBufferOf(
     size: Int,
@@ -72,10 +72,10 @@ fun nativeStreamByteBufferOf(
 /**
  * Create MutableNativeStreamBuffer with an underlying blank ByteBuffer of certain size.
  *
- * @param size underlying native array size
- * @param limit initial limit
- * @param endian endianness
- * @return
+ * @param size Size of underlying array.
+ * @param limit Initial limit.
+ * @param endian Endian of buffer.
+ * @return Mutable native based buffer.
  */
 fun mutableNativeStreamByteBufferOf(
     size: Int,
@@ -84,9 +84,9 @@ fun mutableNativeStreamByteBufferOf(
 ): MutableNativeStreamBuffer = MutableNativeStreamByteBuffer(size, limit, 0, endian)
 
 /**
- * To mutable heap stream byte buffer.
+ * To MutableHeapStreamBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun ImmutableHeapStreamBuffer.toMutableStreamByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableStreamByteBufferOf(ByteArray(size), limit, endian)
@@ -95,9 +95,9 @@ fun ImmutableHeapStreamBuffer.toMutableStreamByteBuffer(): MutableHeapStreamBuff
 }
 
 /**
- * To mutable native stream byte buffer.
+ * To MutableNativeStreamBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun ImmutableHeapStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeStreamByteBufferOf(size, limit, endian)
@@ -106,9 +106,9 @@ fun ImmutableHeapStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNativeSt
 }
 
 /**
- * To mutable heap stream byte buffer.
+ * To MutableHeapStreamBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun ImmutableNativeStreamBuffer.toMutableStreamByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableStreamByteBufferOf(size, limit, endian)
@@ -117,9 +117,9 @@ fun ImmutableNativeStreamBuffer.toMutableStreamByteBuffer(): MutableHeapStreamBu
 }
 
 /**
- * To mutable native stream byte buffer.
+ * To MutableNativeStreamBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun ImmutableNativeStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeStreamByteBufferOf(size, limit, endian)
@@ -128,9 +128,9 @@ fun ImmutableNativeStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNative
 }
 
 /**
- * To mutable native stream byte buffer
+ * To MutableNativeStreamBuffer.
  *
- * @return Mutable native based copy of the current buffer
+ * @return Mutable native based copy of the current buffer.
  */
 fun MutableHeapStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNativeStreamBuffer {
     val buf = mutableNativeStreamByteBufferOf(size, limit, endian)
@@ -139,9 +139,9 @@ fun MutableHeapStreamBuffer.toMutableNativeStreamByteBuffer(): MutableNativeStre
 }
 
 /**
- * To mutable stream byte buffer
+ * To MutableHeapStreamBuffer.
  *
- * @return Mutable heap based copy of the current buffer
+ * @return Mutable heap based copy of the current buffer.
  */
 fun MutableNativeStreamBuffer.toMutableStreamByteBuffer(): MutableHeapStreamBuffer {
     val buf = mutableStreamByteBufferOf(size, limit, endian)

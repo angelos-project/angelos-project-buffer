@@ -17,7 +17,8 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.*
 
 /**
- * Mutable byte buffer implemented on the heap, as mutable.
+ * The Kotlin/JS implementation of the MutableStreamByteBuffer class uses the access functions implemented by this
+ * library to access the underlying ByteArray without using any pointer arithmetic.
  *
  * @constructor
  *

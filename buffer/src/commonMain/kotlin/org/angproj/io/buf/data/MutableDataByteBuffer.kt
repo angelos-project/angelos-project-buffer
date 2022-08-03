@@ -17,14 +17,15 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.Endianness
 
 /**
- * Mutable data byte buffer implementation on the heap.
+ * A common expect class for the mutable data-buffer that is allocated on the heap.
+ * Implementation practices may vary depending on source target and platform abilities.
  *
  * @constructor
  *
- * @param array
- * @param size
- * @param limit
- * @param endianness
+ * @param array An underlying ByteArray that may already have been populated with data at a certain limit.
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param endianness The initial current endianness of the buffer.
  */
 expect class MutableDataByteBuffer internal constructor(
     array: ByteArray,

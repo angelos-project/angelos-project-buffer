@@ -17,8 +17,9 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.NativeBuffer
 
 /**
- * Mutable native buffer.
+ * Mutable native stream-buffer represents a mutable stream-buffer allocated outside the heap. Use this interface as
+ * types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Mutable native buffer
+ * @constructor Create implementation of the MutableNativeStreamBuffer interface.
  */
 interface MutableNativeStreamBuffer : MutableStreamBuffer, NativeBuffer

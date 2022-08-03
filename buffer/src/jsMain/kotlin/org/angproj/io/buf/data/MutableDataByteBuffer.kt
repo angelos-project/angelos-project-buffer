@@ -17,7 +17,8 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.*
 
 /**
- * Mutable data byte buffer
+ * The Kotlin/JS implementation of the MutableDataByteBuffer class uses the access functions implemented by this
+ * library to access the underlying ByteArray without using any pointer arithmetic.
  *
  * @constructor
  *

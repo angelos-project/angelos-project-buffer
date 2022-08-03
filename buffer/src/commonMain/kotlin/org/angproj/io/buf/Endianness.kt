@@ -15,9 +15,9 @@
 package org.angproj.io.buf
 
 /**
- * Representing endianness in systems and data buffers or streams.
+ * Describing the endianness of something such as platform endianness or the endian of a buffer.
  *
- * @property endian
+ * @property endian The enumeration value of said endian.
  * @constructor Create empty Endianness
  */
 enum class Endianness(val endian: Boolean) {
@@ -37,25 +37,25 @@ enum class Endianness(val endian: Boolean) {
     LITTLE_ENDIAN(true);
 
     /**
-     * Checks if the endianness is big.
+     * Checks for big endian.
      *
-     * @return
+     * @return True if big endian.
      */
     fun isBig(): Boolean = endian == BIG_ENDIAN.endian
 
     /**
-     * Checks if the endianness is little.
+     * Checks for little endian.
      *
-     * @return
+     * @return True if little endian.
      */
     fun isLittle(): Boolean = endian == LITTLE_ENDIAN.endian
 
     companion object {
 
         /**
-         * Native order of the running environment.
+         * Gives the endian of current platform.
          *
-         * @return the endian
+         * @return the native endianness.
          */
         fun nativeOrder(): Endianness = when (Internals.getEndian()) {
             1 -> BIG_ENDIAN
@@ -65,9 +65,9 @@ enum class Endianness(val endian: Boolean) {
     }
 
     /**
-     * String representation of the endianness.
+     * Human-readable representation of endian as string.
      *
-     * @return human readable endianness
+     * @return Human-readable string.
      */
     override fun toString(): String = when (endian) {
         false -> "BIG_ENDIAN"

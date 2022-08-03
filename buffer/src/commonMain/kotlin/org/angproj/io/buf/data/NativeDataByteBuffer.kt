@@ -17,13 +17,14 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.Endianness
 
 /**
- * Native data byte buffer.
+ * A common expect class for the non-mutable data-buffer that is allocated in native memory on the outside of the heap.
+ * Implementation practices may vary depending on source target and platform abilities.
  *
  * @constructor
  *
- * @param size Full size of the buffer
- * @param limit Limit lesser than size
- * @param endianness Endianness
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param endianness The initial current endianness of the buffer.
  */
 expect class NativeDataByteBuffer internal constructor(
     size: Int,

@@ -19,7 +19,8 @@ import org.angproj.io.buf.Internals
 import org.angproj.io.buf.swapEndian
 
 /**
- * Byte buffer implemented on the heap, as immutable.
+ * The Kotlin/JVM implementation of the StreamByteBuffer class uses the sun.misc.Unsafe class to access the
+ * underlying ByteArray.
  *
  * @constructor
  *

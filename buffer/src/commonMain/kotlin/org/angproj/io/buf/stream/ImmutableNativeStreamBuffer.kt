@@ -17,8 +17,9 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.NativeBuffer
 
 /**
- * Immutable native buffer.
+ * Immutable native stream-buffer represents an immutable stream-buffer allocated outside the heap. Use this
+ * interface as types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Immutable native buffer
+ * @constructor Create implementation of the ImmutableNativeStreamBuffer interface.
  */
 interface ImmutableNativeStreamBuffer : ImmutableStreamBuffer, NativeBuffer

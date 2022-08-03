@@ -17,8 +17,9 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.NativeBuffer
 
 /**
- * Mutable native data buffer representing any mutable data-buffer implementation in the native.
+ * Mutable native data-buffer represents a mutable data-buffer allocated outside the heap. Use this interface as
+ * types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Mutable native data buffer
+ * @constructor Create implementation of the MutableNativeDataBuffer interface.
  */
 interface MutableNativeDataBuffer : MutableDataBuffer, NativeBuffer

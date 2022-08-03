@@ -18,11 +18,12 @@ import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.swapEndian
 
 /**
- * Byte buffer implemented on the heap, as immutable.
+ * The Kotlin/Native implementation of the StreamByteBuffer class uses the access functions implemented by this
+ * library to access the underlying ByteArray without using any pointer arithmetic.
  *
  * @constructor
  *
- * @param array ByteArray to wrap into a buffer
+ * @param array
  * @param size
  * @param limit
  * @param position

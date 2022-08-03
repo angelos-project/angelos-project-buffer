@@ -18,7 +18,8 @@ import org.angproj.io.buf.Endianness
 import org.angproj.io.buf.swapEndian
 
 /**
- * Mutable data byte buffer
+ * The Kotlin/Native implementation of the MutableDataByteBuffer class uses the access functions implemented by this
+ * library to access the underlying ByteArray without using any pointer arithmetic.
  *
  * @constructor
  *
@@ -139,5 +140,11 @@ actual class MutableDataByteBuffer internal actual constructor(
         false -> _array.getDoubleAt(position)
     }
 
+    /**
+     * Gets the underlying ByteArray used in this buffer.
+     * NOT for API usage. Internal use only.
+     *
+     * @return
+     */
     override fun getArray(): ByteArray = _array
 }

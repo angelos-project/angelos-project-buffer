@@ -19,13 +19,14 @@ import org.angproj.io.buf.Retrievable
 import org.angproj.io.buf.Storable
 
 /**
- * Mutable data buffer interface implementing both Retrievable and Storable.
+ * Mutable data-buffer represents a mutable data-buffer. Use this interface as
+ * types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Mutable data buffer
+ * @constructor Create implementation of the MutableDataBuffer interface.
  */
 interface MutableDataBuffer : DataBuffer, MutableBuffer, Retrievable, Storable {
     /**
-     * Resetting the buffer by zeroing the data.
+     * Resets the buffer by zeroing all allocated memory.
      *
      */
     fun reset()

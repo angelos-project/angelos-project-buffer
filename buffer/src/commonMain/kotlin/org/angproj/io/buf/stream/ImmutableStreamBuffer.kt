@@ -17,8 +17,9 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.Readable
 
 /**
- * Immutable buffer interface inheriting from Buffer.
+ * Immutable stream-buffer represents an immutable stream-buffer. Use this
+ * interface as types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty mutable buffer
+ * @constructor Create implementation of the ImmutableStreamBuffer interface.
  */
 interface ImmutableStreamBuffer : StreamBuffer, Readable

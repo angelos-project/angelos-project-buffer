@@ -17,8 +17,9 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.HeapBuffer
 
 /**
- * Immutable heap buffer.
+ * Immutable heap stream-buffer represents an immutable stream-buffer allocated on the heap. Use this interface as
+ * types on method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Immutable heap buffer
+ * @constructor Create implementation of the ImmutableHeapStreamBuffer interface.
  */
 interface ImmutableHeapStreamBuffer : ImmutableStreamBuffer, HeapBuffer

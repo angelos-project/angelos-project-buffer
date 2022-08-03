@@ -17,14 +17,16 @@ package org.angproj.io.buf.stream
 import org.angproj.io.buf.*
 
 /**
- * Abstract stream buffer that implements stream buffering on top of AbstractBuffer.
+ * Abstract base class for all stream-buffers. Different from the data-buffers are the use of an internal cursor
+ * for a current position. The current position inside the stream buffer are kept away from manual manipulation,
+ * and thereby protecting from unnecessary safety concerns.
  *
  * @constructor
  *
- * @param size max size of the buffer
- * @param limit initial limit if partial data already exists
- * @param position initial position in an already existing data stream
- * @param endianness endian of the buffered data
+ * @param size Total size of the buffer.
+ * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
+ * @param position The initial position in the buffer.
+ * @param endianness The initial current endianness of the buffer.
  */
 abstract class AbstractStreamBuffer(size: Int, limit: Int, position: Int, endianness: Endianness) : AbstractBuffer(
     size,

@@ -15,7 +15,7 @@
 package org.angproj.io.buf
 
 /**
- * Buffer exception, any error that happens inside buffer handling.
+ * BufferException is thrown when any error happens inside buffer handling, except when BufferOverflowWarning is thrown.
  *
  * @constructor
  *

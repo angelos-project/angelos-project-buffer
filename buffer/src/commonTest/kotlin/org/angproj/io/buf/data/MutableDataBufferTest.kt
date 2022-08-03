@@ -160,4 +160,11 @@ open class MutableDataBufferTest : MutableBufferTest() {
         assertEquals(buf.getRetrieveFloat(32).toRawBits(), refFloat.toRawBits())
         assertEquals(buf.getRetrieveDouble(36), refDouble)
     }
+
+    fun testReset(buf: MutableDataBuffer) {
+        buf.reset()
+        for(index in 0 until buf.limit) {
+            assertEquals(buf.getRetrieveByte(index), 0)
+        }
+    }
 }

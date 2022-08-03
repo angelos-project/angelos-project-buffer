@@ -17,8 +17,9 @@ package org.angproj.io.buf.data
 import org.angproj.io.buf.HeapBuffer
 
 /**
- * Mutable heap data buffer representing any mutable data-buffer implementation on the heap.
+ * Mutable heap data-buffer represents a mutable data-buffer allocated on the heap. Use this interface as types on
+ * method parameters in order to allow third party implementations of buffers.
  *
- * @constructor Create empty Mutable heap data buffer
+ * @constructor Create implementation of the MutableHeapDataBuffer interface.
  */
 interface MutableHeapDataBuffer : MutableDataBuffer, HeapBuffer
