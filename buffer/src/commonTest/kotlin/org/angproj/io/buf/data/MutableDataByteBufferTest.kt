@@ -42,5 +42,6 @@ class MutableDataByteBufferTest : MutableDataBufferTest() {
         testMutableDataBufferWriteReverse(populateMutableDataBuffer(mutableDataByteBufferOf(refSize)))
 
         testReset(mutableDataByteBufferOf(populateArray(createArray())))
+        testLimit(mutableDataByteBufferOf(populateArray(createArray())))
     }
 }

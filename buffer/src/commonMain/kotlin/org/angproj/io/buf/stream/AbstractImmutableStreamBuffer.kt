@@ -14,7 +14,6 @@
  */
 package org.angproj.io.buf.stream
 
-import org.angproj.io.buf.BufferException
 import org.angproj.io.buf.Endianness
 
 /**
@@ -34,11 +33,8 @@ abstract class AbstractImmutableStreamBuffer internal constructor(
     endianness: Endianness,
 ) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableStreamBuffer {
     override fun flip(limit: Int) {
-        if(_limit != size)
-            throw BufferException("Immutable stream buffers can not be flipped twice without clearing.")
-
-        check(0 <= limit)
-        check(limit <= size)
+        require(limit in 0 until size) { "Limit must be less than size." }
+        check(_limit == size) { "Immutable buffer already flipped." }
 
         _limit = limit
         _position = 0

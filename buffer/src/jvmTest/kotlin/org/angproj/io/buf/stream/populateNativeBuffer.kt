@@ -30,8 +30,6 @@ actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeB
     for (idx in arr.indices step 8) {
         Internals.unsafe.putLong(ptr + idx, Internals.unsafe.getLong(arr, Internals.byteArrayOffset + idx))
     }
-    if(buf is ImmutableStreamBuffer)
-        buf.flip(arr.size)
     return buf
 }
 

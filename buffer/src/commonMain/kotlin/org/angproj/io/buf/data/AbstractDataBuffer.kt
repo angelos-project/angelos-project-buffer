@@ -33,8 +33,8 @@ abstract class AbstractDataBuffer internal constructor(
     limit: Int,
     endianness: Endianness,
 ) : AbstractBuffer(size, limit, endianness), DataBuffer {
-    override fun limit(l: Int) {
-        check(size >= limit)
+    override fun limit(limit: Int) {
+        require(limit in 0..size)
         _limit = limit
     }
 

@@ -27,9 +27,9 @@ interface DataBuffer : Buffer, Retrievable {
     /**
      * Re-limits the size of the buffer.
      *
-     * @param l Must never exceed the size.
+     * @param limit Must never exceed the size.
      */
-    fun limit(l: Int)
+    fun limit(limit: Int)
 
     /**
      * Calculates the remaining space between the current position and limit.

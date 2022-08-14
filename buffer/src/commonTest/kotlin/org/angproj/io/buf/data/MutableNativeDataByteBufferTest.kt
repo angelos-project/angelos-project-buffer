@@ -37,5 +37,6 @@ class MutableNativeDataByteBufferTest : MutableDataBufferTest() {
         testMutableDataBufferWriteReverse(populateMutableDataBuffer(mutableNativeDataByteBufferOf(refSize)).toMutableDataByteBuffer())
 
         testReset(populateMutableDataBuffer(mutableNativeDataByteBufferOf(refSize)))
+        testLimit(populateMutableDataBuffer(mutableNativeDataByteBufferOf(refSize)))
     }
 }

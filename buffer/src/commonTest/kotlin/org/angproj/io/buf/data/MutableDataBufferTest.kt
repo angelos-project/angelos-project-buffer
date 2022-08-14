@@ -167,4 +167,8 @@ open class MutableDataBufferTest : MutableBufferTest() {
             assertEquals(buf.getRetrieveByte(index), 0)
         }
     }
+
+    fun testLimit(buf: DataBuffer) {
+        assertFailsWith<IllegalArgumentException> { buf.limit(refSize+1) }
+    }
 }

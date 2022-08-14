@@ -14,7 +14,6 @@
  */
 package org.angproj.io.buf.stream
 
-import org.angproj.io.buf.BufferException
 import org.angproj.io.buf.BufferOverflowWarning
 import org.angproj.io.buf.MutableBufferTest
 import kotlin.test.assertEquals
@@ -167,7 +166,7 @@ open class MutableStreamBufferTest : MutableBufferTest() {
 
     fun testImmutableStreamBufferDoubleFlip(buf: ImmutableStreamBuffer) {
         buf.flip(refSize-1)
-        assertFailsWith<BufferException> {
+        assertFailsWith<IllegalStateException> {
             buf.flip(refSize-1)
         }
     }
