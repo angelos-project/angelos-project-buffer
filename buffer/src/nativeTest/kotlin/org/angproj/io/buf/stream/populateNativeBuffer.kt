@@ -17,6 +17,7 @@ package org.angproj.io.buf.stream
 import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
 import org.angproj.io.buf.NativeBuffer
+import kotlin.test.Test
 
 /**
  * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in Native.
@@ -25,6 +26,7 @@ import org.angproj.io.buf.NativeBuffer
  * @param buf
  * @return
  */
+
 actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeBuffer(buf: B): B {
     val ptr = buf.getPointer()
     val arr = populateArray(refArray.copyOf())
@@ -33,6 +35,8 @@ actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeB
             speedmemcpy(ptr.toCPointer<ByteVar>(), arr.refTo(0), arr.size.toUInt())
         }
     }
+    if(buf is ImmutableStreamBuffer)
+        buf.flip(arr.size)
     return buf
 }
 
@@ -42,6 +46,8 @@ actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeB
  * @constructor Create empty Native byte buffer test
  */
 actual class NativeStreamByteBufferTest : AbstractNativeStreamByteBufferTest() {
+
+    @Test
     actual override fun nativeByteBuffer() {
         doNativeByteBuffer()
     }

@@ -29,6 +29,7 @@ class StreamByteBufferTest : MutableStreamBufferTest() {
     @Test
     fun byteBuffer() {
         testMutableStreamBufferRead(streamByteBufferOf(populateArray(createArray())))
+        testImmutableStreamBufferDoubleFlip(streamByteBufferOf(populateArray(createArray())))
 
         testMutableStreamBufferRead(streamByteBufferOf(populateArray(createArray())).toMutableStreamByteBuffer())
         testMutableStreamBufferWrite(streamByteBufferOf(populateArray(createArray())).toMutableStreamByteBuffer())

@@ -30,7 +30,7 @@ object MetaProject {
      *
      * Should be based on semantic versioning as described at https://semver.org
      */
-    const val version = "1.0.0" //+ "-SNAPSHOT"
+    const val version = "1.1.0-rc.1" //+ "-SNAPSHOT"
 
     /**
      * Licence name and URL to original.

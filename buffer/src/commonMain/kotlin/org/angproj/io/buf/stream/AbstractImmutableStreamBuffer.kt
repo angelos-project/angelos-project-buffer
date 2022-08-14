@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -14,11 +14,11 @@
  */
 package org.angproj.io.buf.stream
 
+import org.angproj.io.buf.BufferException
 import org.angproj.io.buf.Endianness
 
 /**
- * A common expect class for the non-mutable stream-buffer that is allocated in native memory on the outside of the
- * heap. Implementation practices may vary depending on source target and platform abilities.
+ * Abstract base class for all immutable stream-buffers.
  *
  * @constructor
  *
@@ -27,9 +27,20 @@ import org.angproj.io.buf.Endianness
  * @param position The initial position in the buffer.
  * @param endianness The initial current endianness of the buffer.
  */
-expect class NativeStreamByteBuffer internal constructor(
+abstract class AbstractImmutableStreamBuffer internal constructor(
     size: Int,
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractImmutableStreamBuffer, ImmutableNativeStreamBuffer
+) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableStreamBuffer {
+    override fun flip(limit: Int) {
+        if(_limit != size)
+            throw BufferException("Immutable stream buffers can not be flipped twice without clearing.")
+
+        check(0 <= limit)
+        check(limit <= size)
+
+        _limit = limit
+        _position = 0
+    }
+}

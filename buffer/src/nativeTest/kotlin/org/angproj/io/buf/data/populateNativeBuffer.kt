@@ -17,6 +17,7 @@ package org.angproj.io.buf.data
 import cbuffer.speedmemcpy
 import kotlinx.cinterop.*
 import org.angproj.io.buf.NativeBuffer
+import kotlin.test.Test
 
 /**
  * Populate native buffer by unsafe access to memory. Necessary to test native immutable buffer in Native.
@@ -42,6 +43,8 @@ actual fun <B : NativeBuffer> AbstractNativeDataByteBufferTest.populateNativeBuf
  * @constructor Create empty Native byte buffer test
  */
 actual class NativeDataByteBufferTest : AbstractNativeDataByteBufferTest() {
+
+    @Test
     actual override fun nativeByteBuffer() {
         doNativeByteBuffer()
     }

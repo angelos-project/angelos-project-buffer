@@ -33,7 +33,7 @@ actual class NativeStreamByteBuffer internal actual constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
+) : AbstractImmutableStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
     private val _array = ByteArray(size)
 
     override fun readByte(): Byte = _array[_position]

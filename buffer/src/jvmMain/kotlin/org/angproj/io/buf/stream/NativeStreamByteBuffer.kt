@@ -35,7 +35,7 @@ actual class NativeStreamByteBuffer internal actual constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
+) : AbstractImmutableStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
     private val _pointer = Internals.unsafe.allocateMemory(size.toLong())
 
     override fun readByte(): Byte = Internals.unsafe.getByte(_pointer + _position)

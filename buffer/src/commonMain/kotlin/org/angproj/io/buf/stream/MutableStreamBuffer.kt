@@ -24,4 +24,12 @@ import org.angproj.io.buf.Writable
  *
  * @constructor Create implementation of the MutableStreamBuffer interface.
  */
-interface MutableStreamBuffer : StreamBuffer, MutableBuffer, Readable, Writable
+interface MutableStreamBuffer : StreamBuffer, MutableBuffer, Readable, Writable {
+    /**
+     * Flips the buffer by setting limit to the value of position, and then setting the position
+     * to 0.
+     * This is used after the buffer has been written to, and is being prepared for reading from.
+     *
+     */
+    fun flip()
+}

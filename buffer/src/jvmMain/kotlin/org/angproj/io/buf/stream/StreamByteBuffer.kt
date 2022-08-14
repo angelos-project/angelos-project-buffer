@@ -36,7 +36,7 @@ actual class StreamByteBuffer internal actual constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
+) : AbstractImmutableStreamBuffer(size, limit, position, endianness), ImmutableHeapStreamBuffer {
     private val _array = array
 
     override fun readByte(): Byte = _array[_position]

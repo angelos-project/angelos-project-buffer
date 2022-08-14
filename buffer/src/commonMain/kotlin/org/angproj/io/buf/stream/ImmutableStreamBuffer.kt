@@ -22,4 +22,16 @@ import org.angproj.io.buf.Readable
  *
  * @constructor Create implementation of the ImmutableStreamBuffer interface.
  */
-interface ImmutableStreamBuffer : StreamBuffer, Readable
+interface ImmutableStreamBuffer : StreamBuffer, Readable {
+
+    /**
+     * Flips the buffer by setting limit to the value of position, and then setting the position
+     * to 0.
+     * This can only be done once before having to clear the buffer. Use with extreme CAUTION,
+     * should only be used when filling from streams from an underlying layer.
+     * Throws BufferException if called twice before clearing.
+     *
+     * @param limit
+     */
+    fun flip(limit: Int)
+}

@@ -47,11 +47,6 @@ abstract class AbstractStreamBuffer(size: Int, limit: Int, position: Int, endian
         _position = 0
     }
 
-    override fun flip() {
-        _limit = _position
-        _position = 0
-    }
-
     override fun rewind() {
         _position = 0
     }

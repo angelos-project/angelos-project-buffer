@@ -37,7 +37,7 @@ actual class NativeStreamByteBuffer internal actual constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
+) : AbstractImmutableStreamBuffer(size, limit, position, endianness), ImmutableNativeStreamBuffer {
     private val _array = memScoped { nativeHeap.allocArray<ByteVar>(size) }
     private val _pointer = _array.pointed.ptr.toLong()
 

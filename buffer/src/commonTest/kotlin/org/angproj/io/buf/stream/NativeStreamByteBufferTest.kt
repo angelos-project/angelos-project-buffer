@@ -27,6 +27,7 @@ abstract class AbstractNativeStreamByteBufferTest : MutableStreamBufferTest() {
 
     fun doNativeByteBuffer() {
         testMutableStreamBufferRead(populateNativeBuffer(nativeStreamByteBufferOf(refSize)))
+        testImmutableStreamBufferDoubleFlip(populateNativeBuffer(nativeStreamByteBufferOf(refSize)))
 
         testMutableStreamBufferRead(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableStreamByteBuffer())
         testMutableStreamBufferWrite(populateNativeBuffer(nativeStreamByteBufferOf(refSize)).toMutableStreamByteBuffer())

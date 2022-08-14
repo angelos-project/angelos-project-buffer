@@ -36,14 +36,6 @@ interface StreamBuffer : Buffer, Readable {
     fun clear()
 
     /**
-     * Flips the buffer by setting limit to the value of position, and then setting the position
-     * to 0.
-     * This is used after the buffer has been written to, and is being prepared for reading from.
-     *
-     */
-    fun flip()
-
-    /**
      * Rewinds the buffer by setting position to 0 without touching the limit.
      */
     fun rewind()

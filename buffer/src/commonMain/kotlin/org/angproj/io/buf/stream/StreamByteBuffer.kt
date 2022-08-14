@@ -34,4 +34,4 @@ expect class StreamByteBuffer internal constructor(
     limit: Int,
     position: Int,
     endianness: Endianness,
-) : AbstractStreamBuffer, ImmutableHeapStreamBuffer
+) : AbstractImmutableStreamBuffer, ImmutableHeapStreamBuffer

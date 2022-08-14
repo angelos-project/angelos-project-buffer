@@ -34,6 +34,11 @@ abstract class AbstractMutableStreamBuffer internal constructor(
     endianness: Endianness,
 ) : AbstractStreamBuffer(size, limit, position, endianness), MutableStreamBuffer {
 
+    override fun flip() {
+        _limit = _position
+        _position = 0
+    }
+
     override fun setWriteByte(value: Byte) {
         hasRemaining(this, Buffer.BYTE_SIZE)
         writeByte(value)
