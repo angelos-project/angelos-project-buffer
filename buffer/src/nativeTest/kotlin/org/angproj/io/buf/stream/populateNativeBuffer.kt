@@ -35,8 +35,6 @@ actual fun <B : NativeBuffer> AbstractNativeStreamByteBufferTest.populateNativeB
             speedmemcpy(ptr.toCPointer<ByteVar>(), arr.refTo(0), arr.size.toUInt())
         }
     }
-    if(buf is ImmutableStreamBuffer)
-        buf.flip(arr.size)
     return buf
 }
 
