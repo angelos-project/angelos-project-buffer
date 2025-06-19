@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,15 +12,10 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
+package org.angproj.io.buf
 
-plugins {
-    `kotlin-dsl`
-}
+import kotlin.time.Duration.Companion.minutes
 
-repositories {
-    gradlePluginPortal()
-}
-
-dependencies {
-    implementation("io.github.gradle-nexus:publish-plugin:1.1.0")
+public abstract class FuzzPrefs {
+    public val maxTotalTime: Long = 2.minutes.inWholeSeconds
 }
