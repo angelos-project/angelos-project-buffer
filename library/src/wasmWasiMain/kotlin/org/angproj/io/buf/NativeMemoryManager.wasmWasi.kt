@@ -17,9 +17,9 @@ package org.angproj.io.buf
 import org.angproj.io.buf.util.DataSize
 
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
+    NativeAccess.unsupported()
 }
 
 internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
+    NativeAccess.unsupported()
 }

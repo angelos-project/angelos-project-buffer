@@ -15,12 +15,26 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.util.DataSize
-import kotlin.UnsupportedOperationException
+import sun.misc.Unsafe
+import java.lang.reflect.Field
+
+
+@Suppress("DiscouragedPrivateApi")
+internal object AnUnsafe{
+    internal val unsafe: Unsafe
+
+    init {
+        val f: Field = Unsafe::class.java.getDeclaredField("theUnsafe")
+        f.isAccessible = true
+        unsafe = f.get(null) as Unsafe
+    }
+}
+
 
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
+    return RootBlock(AnUnsafe.unsafe.allocateMemory(size.size.toLong()), size)
 }
 
 internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
+    AnUnsafe.unsafe.freeMemory(block.getPointer().ptr)
 }

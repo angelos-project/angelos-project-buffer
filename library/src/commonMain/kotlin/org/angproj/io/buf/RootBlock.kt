@@ -16,7 +16,13 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.util.DataSize
 
-
+/**
+ * Represents the root memory block in a memory buffer system.
+ * This block is the top-level block that contains other blocks.
+ *
+ * @property rawPtr The raw pointer to the memory block.
+ * @property size The size of the memory block.
+ */
 public class RootBlock(rawPtr: Long, size: DataSize): MemoryBlock<RootBlock> {
 
     init {
