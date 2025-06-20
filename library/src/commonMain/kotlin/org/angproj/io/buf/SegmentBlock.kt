@@ -39,7 +39,7 @@ public class SegmentBlock(
     override val size: Int
         get() = blockSize
 
-    override fun getByte(index: Int): Byte = NativeAccess.getByteNative<SegmentBlock>(index)
+    override fun getByte(index: Int): Byte = NativeAccess.getByteNative<SegmentBlock>(index + ptr.toLong())
 
     override fun getShort(index: Int): Short = NativeAccess.getShortNative<SegmentBlock>(index)
 
@@ -63,18 +63,18 @@ internal fun NativeAccess.unsupported(): Nothing {
     throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
 }
 
-internal expect inline fun<reified R: Any> NativeAccess.getByteNative(index: Int): Byte
+internal expect inline fun<reified R: Any> NativeAccess.getByteNative(index: Long): Byte
 
-internal expect inline fun<reified R: Any> NativeAccess.getShortNative(index: Int): Short
+internal expect inline fun<reified R: Any> NativeAccess.getShortNative(index: Long): Short
 
-internal expect inline fun<reified R: Any> NativeAccess.getIntNative(index: Int): Int
+internal expect inline fun<reified R: Any> NativeAccess.getIntNative(index: Long): Int
 
-internal expect inline fun<reified R: Any> NativeAccess.getLongNative(index: Int): Long
+internal expect inline fun<reified R: Any> NativeAccess.getLongNative(index: Long): Long
 
-internal expect inline fun<reified R: Any> NativeAccess.setByteNative(index: Int, value: Byte)
+internal expect inline fun<reified R: Any> NativeAccess.setByteNative(index: Long, value: Byte)
 
-internal expect inline fun<reified R: Any> NativeAccess.setShortNative(index: Int, value: Short)
+internal expect inline fun<reified R: Any> NativeAccess.setShortNative(index: Long, value: Short)
 
-internal expect inline fun<reified R: Any> NativeAccess.setIntNative(index: Int, value: Int)
+internal expect inline fun<reified R: Any> NativeAccess.setIntNative(index: Long, value: Int)
 
-internal expect inline fun<reified R: Any> NativeAccess.setLongNative(index: Int, value: Long)
+internal expect inline fun<reified R: Any> NativeAccess.setLongNative(index: Long, value: Long)

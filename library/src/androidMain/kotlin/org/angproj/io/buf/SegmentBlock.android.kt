@@ -14,46 +14,46 @@
  */
 package org.angproj.io.buf
 
-internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Int): Byte {
-    unsupported()
+internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Long): Byte {
+    return AnUnsafe.unsafe.getByte(index)
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getShortNative(index: Int): Short {
-    unsupported()
+internal actual inline fun <reified R : Any> NativeAccess.getShortNative(index: Long): Short {
+    return AnUnsafe.unsafe.getShort(index)
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getIntNative(index: Int): Int {
-    unsupported()
+internal actual inline fun <reified R : Any> NativeAccess.getIntNative(index: Long): Int {
+    return AnUnsafe.unsafe.getInt(index)
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getLongNative(index: Int): Long {
-    unsupported()
+internal actual inline fun <reified R : Any> NativeAccess.getLongNative(index: Long): Long {
+    return AnUnsafe.unsafe.getLong(index)
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setByteNative(
-    index: Int,
+    index: Long,
     value: Byte
 ) {
-    unsupported()
+    AnUnsafe.unsafe.putByte(index, value)
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setShortNative(
-    index: Int,
+    index: Long,
     value: Short
 ) {
-    unsupported()
+    AnUnsafe.unsafe.putShort(index, value)
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setIntNative(
-    index: Int,
+    index: Long,
     value: Int
 ) {
-    unsupported()
+    AnUnsafe.unsafe.putInt(index, value)
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setLongNative(
-    index: Int,
+    index: Long,
     value: Long
 ) {
-    unsupported()
+    AnUnsafe.unsafe.putLong(index, value)
 }

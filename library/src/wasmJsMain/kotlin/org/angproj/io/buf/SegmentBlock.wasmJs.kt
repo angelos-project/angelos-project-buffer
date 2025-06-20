@@ -14,45 +14,45 @@
  */
 package org.angproj.io.buf
 
-internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Int): Byte {
+internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Long): Byte {
     unsupported()
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getShortNative(index: Int): Short {
+internal actual inline fun <reified R : Any> NativeAccess.getShortNative(index: Long): Short {
     unsupported()
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getIntNative(index: Int): Int {
+internal actual inline fun <reified R : Any> NativeAccess.getIntNative(index: Long): Int {
     unsupported()
 }
 
-internal actual inline fun <reified R : Any> NativeAccess.getLongNative(index: Int): Long {
+internal actual inline fun <reified R : Any> NativeAccess.getLongNative(index: Long): Long {
     unsupported()
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setByteNative(
-    index: Int,
+    index: Long,
     value: Byte
 ) {
     unsupported()
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setShortNative(
-    index: Int,
+    index: Long,
     value: Short
 ) {
     unsupported()
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setIntNative(
-    index: Int,
+    index: Long,
     value: Int
 ) {
     unsupported()
 }
 
 internal actual inline fun <reified R : Any> NativeAccess.setLongNative(
-    index: Int,
+    index: Long,
     value: Long
 ) {
     unsupported()
