@@ -20,7 +20,7 @@ package org.angproj.io.buf
  * @property endian The enumeration value of said endian.
  * @constructor Create empty Endianness
  */
-enum class Endianness(val endian: Boolean) {
+public enum class Endianness(public val endian: Boolean) {
 
     /**
      * Big endian enumeration value.
@@ -41,23 +41,23 @@ enum class Endianness(val endian: Boolean) {
      *
      * @return True if big endian.
      */
-    fun isBig(): Boolean = endian == BIG_ENDIAN.endian
+    public fun isBig(): Boolean = endian == BIG_ENDIAN.endian
 
     /**
      * Checks for little endian.
      *
      * @return True if little endian.
      */
-    fun isLittle(): Boolean = endian == LITTLE_ENDIAN.endian
+    public fun isLittle(): Boolean = endian == LITTLE_ENDIAN.endian
 
-    companion object {
+    public companion object {
 
         /**
          * Gives the endian of current platform.
          *
          * @return the native endianness.
          */
-        fun nativeOrder(): Endianness = when (Internals.getEndian()) {
+        public fun nativeOrder(): Endianness = when (Internals.getEndian()) {
             1 -> BIG_ENDIAN
             2 -> LITTLE_ENDIAN
             else -> throw BufferException("Unknown type of endian.")

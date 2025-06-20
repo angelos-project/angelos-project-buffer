@@ -19,7 +19,7 @@ package org.angproj.io.buf
  *
  * @constructor Allocates implemented buffer on the heap region of memory.
  */
-interface HeapBuffer : Buffer {
+public interface HeapBuffer : Buffer {
     /**
      * Get underlying array of buffer.
      * NOT safe for API external use.

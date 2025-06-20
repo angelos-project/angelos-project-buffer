@@ -19,27 +19,27 @@ package org.angproj.io.buf
  *
  * @constructor Create empty Buffer
  */
-interface Buffer {
+public interface Buffer {
 
     /**
      * Total size of the buffer.
      */
-    val size: Int
+    public val size: Int
 
     /**
      * Limitation of how far to operate into the buffer. Must never exceed the size.
      */
-    val limit: Int
+    public val limit: Int
 
     /**
      * The current endianness of the buffer.
      */
-    var endian: Endianness
+    public var endian: Endianness
 
     /**
      * Whether the buffer endianness is reversed contrary to the platform native endianness of the operating system.
      */
-    val reverse: Boolean
+    public val reverse: Boolean
 
     /**
      * Copy this buffer into another said mutable buffer.
@@ -49,7 +49,7 @@ interface Buffer {
      * @param startIndex Start copying from this index of current buffer.
      * @param endIndex End copying at this index of current buffer.
      */
-    fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit) {
+    public fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit) {
         Internals.copyInto(destination, destinationOffset, this, startIndex, endIndex)
     }
 
@@ -58,25 +58,25 @@ interface Buffer {
      *
      * @return the actual ByteBuffer if any.
      */
-    fun getArray(): ByteArray
+    public fun getArray(): ByteArray
 
-    companion object {
-        const val BYTE_SIZE = Byte.SIZE_BYTES
-        const val UBYTE_SIZE = UByte.SIZE_BYTES
-        const val CHAR_SIZE = Char.SIZE_BYTES
-        const val SHORT_SIZE = Short.SIZE_BYTES
-        const val USHORT_SIZE = UShort.SIZE_BYTES
-        const val INT_SIZE = Int.SIZE_BYTES
-        const val UINT_SIZE = UInt.SIZE_BYTES
-        const val LONG_SIZE = Long.SIZE_BYTES
-        const val ULONG_SIZE = ULong.SIZE_BYTES
-        const val FLOAT_SIZE = Float.SIZE_BYTES
-        const val DOUBLE_SIZE = Double.SIZE_BYTES
+    public companion object {
+        public const val BYTE_SIZE: Int = Byte.SIZE_BYTES
+        public const val UBYTE_SIZE: Int = UByte.SIZE_BYTES
+        public const val CHAR_SIZE: Int = Char.SIZE_BYTES
+        public const val SHORT_SIZE: Int = Short.SIZE_BYTES
+        public const val USHORT_SIZE: Int = UShort.SIZE_BYTES
+        public const val INT_SIZE: Int = Int.SIZE_BYTES
+        public const val UINT_SIZE: Int = UInt.SIZE_BYTES
+        public const val LONG_SIZE: Int = Long.SIZE_BYTES
+        public const val ULONG_SIZE: Int = ULong.SIZE_BYTES
+        public const val FLOAT_SIZE: Int = Float.SIZE_BYTES
+        public const val DOUBLE_SIZE: Int = Double.SIZE_BYTES
 
         /**
          * Endianness native to the platform.
          */
-        val nativeEndianness = Endianness.nativeOrder()
+        public val nativeEndianness: Endianness = Endianness.nativeOrder()
 
         /**
          * Verifies the contracted requirements for Buffer.copyInto().
@@ -87,7 +87,7 @@ interface Buffer {
          * @param startIndex start index to copy from at source
          * @param endIndex end index copy to copy from at source
          */
-        inline fun copyIntoContract(
+        public fun copyIntoContract(
             destination: MutableBuffer, destinationOffset: Int,
             source: Buffer, startIndex: Int, endIndex: Int,
         ) {

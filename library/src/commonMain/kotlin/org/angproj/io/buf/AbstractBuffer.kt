@@ -24,7 +24,7 @@ package org.angproj.io.buf
  * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
  * @param endianness The initial current endianness of the buffer.
  */
-abstract class AbstractBuffer internal constructor(
+public abstract class AbstractBuffer internal constructor(
     size: Int,
     limit: Int,
     endianness: Endianness,

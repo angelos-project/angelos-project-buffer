@@ -20,7 +20,7 @@ package org.angproj.io.buf
  *
  * @constructor Allocates implemented buffer outside the heap region of memory.
  */
-interface NativeBuffer : Buffer {
+public interface NativeBuffer : Buffer {
     /**
      * Get pointer to native or heap memory.
      * NOT safe for external API use.
@@ -30,13 +30,13 @@ interface NativeBuffer : Buffer {
      *
      * @return pointer representation of memory block.
      */
-    fun getPointer(): TypePointer<Byte>
+    public fun getPointer(): TypePointer<Byte>
 
     /**
      * Dispose manually of allocated memory. This is the responsibility of any library using native buffers.
      *
      */
-    fun dispose()
+    public fun dispose()
 
     /**
      * Extra support for dummy implementations that actually only can use ByteArray due to

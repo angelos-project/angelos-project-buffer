@@ -19,81 +19,81 @@ package org.angproj.io.buf
  *
  * @constructor Create Readable
  */
-interface Readable {
+public interface Readable {
     /**
      * Read next byte.
      *
      * @return A byte of data.
      */
-    fun getReadByte(): Byte
+    public fun getReadByte(): Byte
 
     /**
      * Read next unsigned byte.
      *
      * @return An unsigned byte of data.
      */
-    fun getReadUByte(): UByte
+    public fun getReadUByte(): UByte
 
     /**
      * Read next character.
      *
      * @return A character of data.
      */
-    fun getReadChar(): Char
+    public fun getReadChar(): Char
 
     /**
      * Read next short integer.
      *
      * @return A short integer of data.
      */
-    fun getReadShort(): Short
+    public fun getReadShort(): Short
 
     /**
      * Read next unsigned short integer.
      *
      * @return An unsigned short integer of data.
      */
-    fun getReadUShort(): UShort
+    public fun getReadUShort(): UShort
 
     /**
      * Read next integer.
      *
      * @return An integer of data.
      */
-    fun getReadInt(): Int
+    public fun getReadInt(): Int
 
     /**
      * Read next unsigned integer.
      *
      * @return An unsigned integer of data.
      */
-    fun getReadUInt(): UInt
+    public fun getReadUInt(): UInt
 
     /**
      * Read next long integer.
      *
      * @return A long integer of data.
      */
-    fun getReadLong(): Long
+    public fun getReadLong(): Long
 
     /**
      * Read next unsigned long integer.
      *
      * @return An unsigned long integer of data
      */
-    fun getReadULong(): ULong
+    public fun getReadULong(): ULong
 
     /**
      * Read next float.
      *
      * @return A float of data.
      */
-    fun getReadFloat(): Float
+    public fun getReadFloat(): Float
 
     /**
      * Read next double.
      *
      * @return A double of data.
      */
-    fun getReadDouble(): Double
+    public fun getReadDouble(): Double
 }

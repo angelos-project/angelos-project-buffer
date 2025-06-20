@@ -19,81 +19,81 @@ package org.angproj.io.buf
  *
  * @constructor Create Writable
  */
-interface Writable {
+public interface Writable {
     /**
      * Write next byte.
      *
      * @param value A byte of data.
      */
-    fun setWriteByte(value: Byte)
+    public fun setWriteByte(value: Byte)
 
     /**
      * Write next unsigned byte.
      *
      * @param value An unsigned byte of data.
      */
-    fun setWriteUByte(value: UByte)
+    public fun setWriteUByte(value: UByte)
 
     /**
      * Write next character.
      *
      * @param value A character of data.
      */
-    fun setWriteChar(value: Char)
+    public fun setWriteChar(value: Char)
 
     /**
      * Write next short integer.
      *
      * @param value A short integer of data.
      */
-    fun setWriteShort(value: Short)
+    public fun setWriteShort(value: Short)
 
     /**
      * Write next unsigned short integer.
      *
      * @param value An unsigned short integer of data.
      */
-    fun setWriteUShort(value: UShort)
+    public fun setWriteUShort(value: UShort)
 
     /**
      * Write next integer.
      *
      * @param value An integer of data.
      */
-    fun setWriteInt(value: Int)
+    public fun setWriteInt(value: Int)
 
     /**
      * Write next unsigned integer.
      *
      * @param value An unsigned integer of data.
      */
-    fun setWriteUInt(value: UInt)
+    public fun setWriteUInt(value: UInt)
 
     /**
      * Write next long integer.
      *
      * @param value A long integer of data.
      */
-    fun setWriteLong(value: Long)
+    public fun setWriteLong(value: Long)
 
     /**
      * Write next unsigned long integer.
      *
      * @param value An unsigned long integer of data.
      */
-    fun setWriteULong(value: ULong)
+    public fun setWriteULong(value: ULong)
 
     /**
      * Write next float.
      *
      * @param value A float of data.
      */
-    fun setWriteFloat(value: Float)
+    public fun setWriteFloat(value: Float)
 
     /**
      * Write next double.
      *
      * @param value A double of data.
      */
-    fun setWriteDouble(value: Double)
+    public fun setWriteDouble(value: Double)
 }

@@ -20,4 +20,4 @@ package org.angproj.io.buf
  *
  * @constructor Create implementation of the MutableBuffer interface.
  */
-interface MutableBuffer : Buffer
+public interface MutableBuffer : Buffer

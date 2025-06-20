@@ -21,4 +21,4 @@ package org.angproj.io.buf
  *
  * @param message The error message describing what happened.
  */
-class BufferException(message: String) : RuntimeException(message)
+public class BufferException(message: String) : RuntimeException(message)

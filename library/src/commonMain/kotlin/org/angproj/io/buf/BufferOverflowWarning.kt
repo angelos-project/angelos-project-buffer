@@ -20,4 +20,4 @@ package org.angproj.io.buf
  *
  * @constructor Create an empty BufferOverflowWarning
  */
-class BufferOverflowWarning : RuntimeException()
+public class BufferOverflowWarning : RuntimeException()
