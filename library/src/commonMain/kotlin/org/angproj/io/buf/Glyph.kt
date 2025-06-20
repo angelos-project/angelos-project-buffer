@@ -125,4 +125,4 @@ public fun glyphWrite(data: ByteArray, pos: Int, glyph: Glyph, size: Int): Unit 
 
 public fun ByteArray.readGlyphAt(pos: Int): Glyph = glyphRead(this, pos, glyphSize(this[pos]))
 
-public fun ByteArray.writeGlyphAt(offset: Int, value: Glyph) = glyphWrite(this, offset, value, glyphSize(value))
+public fun ByteArray.writeGlyphAt(offset: Int, value: Glyph): Unit = glyphWrite(this, offset, value, glyphSize(value))

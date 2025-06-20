@@ -14,7 +14,7 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.aux.com.Limitable
+import org.angproj.io.buf.util.Limitable
 
 /**
  * Represents a memory block that can be used to manage memory in a structured way.

@@ -349,7 +349,7 @@ public fun ByteArray.writeShortAt(offset: Int, value: Short) {
  * @param offset
  * @param value
  */
-public fun ByteArray.writeUShortAt(offset: Int, value: UShort) = writeShortAt(offset, value.toShort())
+public fun ByteArray.writeUShortAt(offset: Int, value: UShort): Unit = writeShortAt(offset, value.toShort())
 
 /**
  * Write Char at offset.
@@ -357,7 +357,7 @@ public fun ByteArray.writeUShortAt(offset: Int, value: UShort) = writeShortAt(of
  * @param offset
  * @param value
  */
-public fun ByteArray.writeCharAt(offset: Int, value: Char) = writeShortAt(offset, value.code.toShort())
+public fun ByteArray.writeCharAt(offset: Int, value: Char): Unit = writeShortAt(offset, value.code.toShort())
 
 /**
  * Write Int at offset.
@@ -378,7 +378,7 @@ public fun ByteArray.writeIntAt(offset: Int, value: Int) {
  * @param offset
  * @param value
  */
-public fun ByteArray.writeUIntAt(offset: Int, value: UInt) = writeIntAt(offset, value.toInt())
+public fun ByteArray.writeUIntAt(offset: Int, value: UInt): Unit = writeIntAt(offset, value.toInt())
 
 /**
  * Write Long at offset.
@@ -403,7 +403,7 @@ public fun ByteArray.writeLongAt(offset: Int, value: Long) {
  * @param offset
  * @param value
  */
-public fun ByteArray.writeULongAt(offset: Int, value: ULong) = writeLongAt(offset, value.toLong())
+public fun ByteArray.writeULongAt(offset: Int, value: ULong): Unit = writeLongAt(offset, value.toLong())
 
 /**
  * Write Float at offset.
@@ -411,7 +411,7 @@ public fun ByteArray.writeULongAt(offset: Int, value: ULong) = writeLongAt(offse
  * @param offset
  * @param value
  */
-public fun ByteArray.writeFloatAt(offset: Int, value: Float) = writeIntAt(offset, value.toBits())
+public fun ByteArray.writeFloatAt(offset: Int, value: Float): Unit = writeIntAt(offset, value.toBits())
 
 /**
  * Write Double at offset.
@@ -419,5 +419,5 @@ public fun ByteArray.writeFloatAt(offset: Int, value: Float) = writeIntAt(offset
  * @param offset
  * @param value
  */
-public fun ByteArray.writeDoubleAt(offset: Int, value: Double) = writeLongAt(offset, value.toBits())
+public fun ByteArray.writeDoubleAt(offset: Int, value: Double): Unit = writeLongAt(offset, value.toBits())
 

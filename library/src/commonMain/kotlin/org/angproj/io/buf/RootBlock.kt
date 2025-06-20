@@ -14,7 +14,7 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.aux.io.DataSize
+import org.angproj.io.buf.util.DataSize
 
 
 public class RootBlock(rawPtr: Long, size: DataSize): MemoryBlock<RootBlock> {

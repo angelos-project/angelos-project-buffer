@@ -57,7 +57,7 @@ public enum class Endianness(public val endian: Boolean) {
          *
          * @return the native endianness.
          */
-        public fun nativeOrder(): Endianness = when (Internals.getEndian()) {
+        public fun nativeOrder(): Endianness = when (0){
             1 -> BIG_ENDIAN
             2 -> LITTLE_ENDIAN
             else -> throw BufferException("Unknown type of endian.")

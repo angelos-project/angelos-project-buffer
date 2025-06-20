@@ -14,16 +14,6 @@
  */
 package org.angproj.io.buf
 
-internal expect class Internals {
-    companion object {
-        fun getEndian(): Int
-
-        fun copyInto(destination: MutableBuffer, destinationOffset: Int, source: Buffer, startIndex: Int, endIndex: Int)
-
-        fun reset(destination: MutableBuffer)
-    }
-}
-
 /**
  * Reverse byte order of Short.
  *

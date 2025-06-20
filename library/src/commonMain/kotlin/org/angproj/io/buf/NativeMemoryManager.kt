@@ -14,7 +14,7 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.aux.io.DataSize
+import org.angproj.io.buf.util.DataSize
 import org.angproj.aux.util.Once
 
 

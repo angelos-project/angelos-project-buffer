@@ -21,7 +21,7 @@ import kotlinx.cinterop.free
 import kotlinx.cinterop.nativeHeap
 import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.toLong
-import org.angproj.aux.io.DataSize
+import org.angproj.io.buf.util.DataSize
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {

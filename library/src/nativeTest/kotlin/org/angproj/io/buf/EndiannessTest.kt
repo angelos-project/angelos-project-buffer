@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf
 
+import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.Platform.isLittleEndian
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,6 +29,7 @@ actual class EndiannessTest : AbstractEndianTest() {
     /**
      * Running tests for nativeOrder on Native checks against kotlin.native.Platform.isLittleEndian for correctness.
      */
+    @OptIn(ExperimentalNativeApi::class)
     @Test
     actual fun nativeOrder() {
         val endianness = Endianness.nativeOrder()

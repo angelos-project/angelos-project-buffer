@@ -50,7 +50,6 @@ public interface Buffer {
      * @param endIndex End copying at this index of current buffer.
      */
     public fun copyInto(destination: MutableBuffer, destinationOffset: Int = 0, startIndex: Int = 0, endIndex: Int = limit) {
-        Internals.copyInto(destination, destinationOffset, this, startIndex, endIndex)
     }
 
     /**
