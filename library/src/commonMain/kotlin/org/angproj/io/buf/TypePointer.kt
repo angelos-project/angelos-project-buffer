@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2022-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -14,9 +14,20 @@
  */
 package org.angproj.io.buf
 
+import kotlin.jvm.JvmInline
+
+
 /**
- * TypePointer holds a native memory raw pointer while adding type assertion.
+ * TypePointer2 holds a native memory raw pointer while adding type assertion.
+ *
+ * This is a specialized version of TypePointer for MemoryBlock types.
  *
  * DON'T MESS WITH RAW POINTERS!
  */
-typealias TypePointer<@Suppress("UNUSED_TYPEALIAS_PARAMETER") T> = Long
+@JvmInline
+public value class TypePointer<E: MemoryBlock<E>>(internal val ptr: Long) {
+
+    public fun toPointer(): TypePointer<Nothing> = TypePointer(ptr)
+
+    override fun toString(): String = "${this::class.simpleName}(ptr=$ptr)"
+}

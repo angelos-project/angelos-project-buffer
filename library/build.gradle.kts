@@ -72,6 +72,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation("org.angproj.aux:angelos-project-aux:0.10.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
