@@ -14,5 +14,5 @@
  */
 package org.angproj.io.buf.seg
 
-public abstract class Segment<E: Segment<E>> : ByteString() {
+public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize) {
 }

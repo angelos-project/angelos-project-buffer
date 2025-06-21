@@ -14,7 +14,13 @@
  */
 package org.angproj.io.buf.seg
 
-public class Memory : Segment<Memory>() {
+import org.angproj.io.buf.MemoryBlock
+import org.angproj.io.buf.SegmentBlock
+
+public class Memory(size: Int) : Segment<Memory>(size) {
+
+    private val data: SegmentBlock = MemoryBlock.nullBlock as SegmentBlock
+
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
         // Implementation here

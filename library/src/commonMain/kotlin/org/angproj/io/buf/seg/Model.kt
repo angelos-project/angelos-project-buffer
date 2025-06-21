@@ -14,7 +14,12 @@
  */
 package org.angproj.io.buf.seg
 
-public class Model : Segment<Model>() {
+import org.angproj.sec.util.ceilDiv
+
+public class Model(size: Int) : Segment<Model>(size) {
+
+    private val data: LongArray = LongArray(size.ceilDiv(8))
+
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
         // Implementation here

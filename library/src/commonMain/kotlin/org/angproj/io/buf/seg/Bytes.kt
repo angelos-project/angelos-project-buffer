@@ -14,7 +14,11 @@
  */
 package org.angproj.io.buf.seg
 
-public class Bytes : Segment<Bytes>() {
+
+public class Bytes(size: Int) : Segment<Bytes>(size) {
+
+    private val data: ByteArray = ByteArray(size)
+
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
         // Implementation here
