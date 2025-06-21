@@ -51,7 +51,7 @@ public interface MemoryBlock<E: MemoryBlock<E>>: Limitable {
      * and returns the created sub-block.
      * @return The created sub-block of type S.
      * */
-    public fun<S: MemoryBlock<S>> subBlock(offset: Int, size: Int, build: (Int, Int, TypePointer<S>) -> S): S {
+    public fun<S: MemoryBlock<S>> subBlock(offset: Int, size: Int, build: MemoryBlock<E>.(Int, Int, TypePointer<S>) -> S): S {
         require(offset >= 0 && offset + size <= this.limit) { "Invalid offset or size for subBlock" }
         return build(offset, size, TypePointer(getPointer().ptr + offset.toLong()))
     }

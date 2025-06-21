@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -17,6 +17,12 @@ package org.angproj.io.buf.util
 import kotlin.math.max
 
 
+/**
+ * Represents a data size in bytes, with predefined sizes that are powers of two.
+ * The sizes range from 32 bytes to 1 gigabyte, with an UNKNOWN size for uninitialized or invalid states.
+ *
+ * @property size The size in bytes.
+ */
 public enum class DataSize(public val size: Int) {
     UNKNOWN(-1),
     _32B(32),
@@ -47,6 +53,14 @@ public enum class DataSize(public val size: Int) {
     _1G(_512M.size * 2);
 
     public companion object {
+
+        /**
+         * Finds the lowest [DataSize] that is greater than or equal to the specified size.
+         *
+         * @param size The size in bytes to compare against.
+         * @return The [DataSize] that is the lowest size above the specified size.
+         * @throws IllegalArgumentException if the size is not within the valid range (0 to 1GB).
+         */
         public fun findLowestAbove(size: Int): DataSize {
             require(size in 0.._1G.size) { "Invalid range" }
             val real = if(size.countOneBits() == 1 && size > 17) size else 1 shl(32 - max(size, 31).countLeadingZeroBits())
@@ -54,3 +68,24 @@ public enum class DataSize(public val size: Int) {
         }
     }
 }
+
+/**
+ * Checks if the [DataSize] is unknown.
+ *
+ * @return true if the size is UNKNOWN, false otherwise.
+ */
+public fun DataSize.isUnknown(): Boolean = this == DataSize.UNKNOWN
+
+/**
+ * Converts the [DataSize] to an integer representing the size in bytes.
+ *
+ * @return The size in bytes as an [Int].
+ */
+public fun DataSize.toInt(): Int = size
+
+/**
+ * Converts the [DataSize] to a long representing the size in bytes.
+ *
+ * @return The size in bytes as a [Long].
+ */
+public fun DataSize.toLong(): Long = size.toLong()

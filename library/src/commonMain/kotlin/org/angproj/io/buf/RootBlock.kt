@@ -15,6 +15,7 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.toInt
 
 /**
  * Represents the root memory block in a memory buffer system.
@@ -39,7 +40,7 @@ public class RootBlock(rawPtr: Long, size: DataSize): MemoryBlock<RootBlock> {
     override fun getPointer(): TypePointer<RootBlock> = pointer
 
     override val size: Int
-        get() = blockSize.size
+        get() = blockSize.toInt()
 
     override val limit: Int
         get() = blockLimit
