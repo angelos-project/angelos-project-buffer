@@ -14,46 +14,63 @@
  */
 package org.angproj.io.buf
 
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.IntVar
+import kotlinx.cinterop.LongVar
+import kotlinx.cinterop.ShortVar
+import kotlinx.cinterop.pointed
+import kotlinx.cinterop.toCPointer
+import kotlinx.cinterop.value
+
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Long): Byte {
-    unsupported()
+    return index.toCPointer<ByteVar>()!!.pointed.value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.getShortNative(index: Long): Short {
-    unsupported()
+    return index.toCPointer<ShortVar>()!!.pointed.value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.getIntNative(index: Long): Int {
-    unsupported()
+    return index.toCPointer<IntVar>()!!.pointed.value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.getLongNative(index: Long): Long {
-    unsupported()
+    return index.toCPointer<LongVar>()!!.pointed.value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.setByteNative(
     index: Long,
     value: Byte
 ) {
-    unsupported()
+    index.toCPointer<ByteVar>()!!.pointed.value = value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.setShortNative(
     index: Long,
     value: Short
 ) {
-    unsupported()
+    index.toCPointer<ShortVar>()!!.pointed.value = value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.setIntNative(
     index: Long,
     value: Int
 ) {
-    unsupported()
+    index.toCPointer<IntVar>()!!.pointed.value = value
 }
 
+@OptIn(ExperimentalForeignApi::class)
 internal actual inline fun <reified R : Any> NativeAccess.setLongNative(
     index: Long,
     value: Long
 ) {
-    unsupported()
+    index.toCPointer<LongVar>()!!.pointed.value = value
 }

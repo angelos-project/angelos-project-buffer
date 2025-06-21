@@ -14,12 +14,22 @@
  */
 package org.angproj.io.buf
 
-
+/**
+ * A SegmentBlock is a memory block that represents a segment of memory.
+ * It is used to read and write data to and from the memory.
+ * It is a fixed size block of memory that can be used to store data.
+ * It is used in conjunction with the MemoryManager to allocate and recycle memory.
+ */
 public class SegmentBlock(
     protected val parent: MemoryBlock<*>,
     protected val ptr: TypePointer<SegmentBlock>,
     protected val blockSize: Int
-) : MemoryBlock<SegmentBlock>, ReadAccess, WriteAccess{
+) : MemoryBlock<SegmentBlock>, ReadAccess, WriteAccess {
+
+    init {
+        require(blockSize > 0) { "Block size must be greater than zero" }
+    }
+
     override val parentBlock: MemoryBlock<*>
         get() = parent
 
@@ -41,26 +51,27 @@ public class SegmentBlock(
 
     override fun getByte(index: Int): Byte = NativeAccess.getByteNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getShort(index: Int): Short = NativeAccess.getShortNative<SegmentBlock>(index)
+    override fun getShort(index: Int): Short = NativeAccess.getShortNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getInt(index: Int): Int = NativeAccess.getIntNative<SegmentBlock>(index)
+    override fun getInt(index: Int): Int = NativeAccess.getIntNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getLong(index: Int): Long = NativeAccess.getLongNative<SegmentBlock>(index)
+    override fun getLong(index: Int): Long = NativeAccess.getLongNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun setByte(index: Int, value: Byte) { NativeAccess.setByteNative<SegmentBlock>(index, value) }
+    override fun setByte(index: Int, value: Byte) { NativeAccess.setByteNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setShort(index: Int, value: Short) { NativeAccess.setShortNative<SegmentBlock>(index, value) }
+    override fun setShort(index: Int, value: Short) { NativeAccess.setShortNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setInt(index: Int, value: Int) { NativeAccess.setIntNative<SegmentBlock>(index, value) }
+    override fun setInt(index: Int, value: Int) { NativeAccess.setIntNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setLong(index: Int, value: Long) { NativeAccess.setLongNative<SegmentBlock>(index, value) }
+    override fun setLong(index: Int, value: Long) { NativeAccess.setLongNative<SegmentBlock>(index + ptr.toLong(), value) }
 
 }
+
 
 internal object NativeAccess
 
 internal fun NativeAccess.unsupported(): Nothing {
-    throw UnsupportedOperationException("Native memory management is not supported in WebAssembly.")
+    throw UnsupportedOperationException("Native memory management is not available.")
 }
 
 internal expect inline fun<reified R: Any> NativeAccess.getByteNative(index: Long): Byte
