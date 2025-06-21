@@ -118,7 +118,7 @@ public object Platform {
 
     public fun isLittleEndian(): Boolean = endian == ENDIAN.LITTLE_ENDIAN
 
-    public fun isBigEndian(): Boolean = endian == ENDIAN.LITTLE_ENDIAN
+    public fun isBigEndian(): Boolean = endian == ENDIAN.BIG_ENDIAN
 
 
     public val bsd: Set<LIB_OS> = setOf(

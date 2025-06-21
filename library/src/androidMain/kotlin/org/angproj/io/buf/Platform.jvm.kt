@@ -37,12 +37,14 @@ public actual fun Platform.currentBitness(): BITNESS = when(cpu) {
     else -> BITNESS.UNKNOWN
 }
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 public actual fun Platform.currentEndian(): ENDIAN = when(System.getProperty("sun.cpu.endian").lowercase()) {
     "little" -> ENDIAN.LITTLE_ENDIAN
     "big" -> ENDIAN.BIG_ENDIAN
     else -> ENDIAN.UNKNOWN
 }
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 public actual fun Platform.currentCpu(): CPU = when(System.getProperty("os.arch").lowercase()) {
     "x86", "i386", "i86pc", "i686" -> CPU.I386
     "x86_64", "amd64" -> CPU.X86_64
@@ -67,6 +69,7 @@ public actual fun Platform.currentCpu(): CPU = when(System.getProperty("os.arch"
     else -> CPU.UNKNOWN
 }
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 public actual fun Platform.currentLibOs(): LIB_OS {
     val osName = System.getProperty("os.name").split(" ".toRegex()).dropLastWhile {
         it.isEmpty() }.toTypedArray()[0].lowercase()
@@ -89,6 +92,7 @@ public actual fun Platform.currentLibOs(): LIB_OS {
     }
 }
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 public actual fun Platform.currentGuiOs(): GUI_OS {
     val osName = System.getProperty("os.name").split(" ".toRegex()).dropLastWhile {
         it.isEmpty() }.toTypedArray()[0].lowercase()

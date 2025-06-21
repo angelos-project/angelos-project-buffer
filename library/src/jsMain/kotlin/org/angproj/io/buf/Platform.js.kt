@@ -39,7 +39,7 @@ public actual fun Platform.currentEndian(): ENDIAN {
     val buffer = ArrayBuffer(16)
     val int8View = Int8Array(buffer)
     val int16View = Int16Array(buffer)
-    int16View[0] set 5
+    int16View[0] = 5
 
     return when (int8View[0].toInt()) {
         5 -> ENDIAN.LITTLE_ENDIAN
