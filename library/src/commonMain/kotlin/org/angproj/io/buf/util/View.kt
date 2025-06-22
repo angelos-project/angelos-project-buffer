@@ -12,15 +12,16 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.util
 
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.unsupported
+/**
+ * The View interface has two properties:
+ *  The first one, isView, says whether the view is a wrapping of a shared Segment, thereby not allowed to close it.
+ *  The second, isMem, says whether the wrapped Segment is raw memory access or not. In such case it must be closed
+ *  if it is original.
+ * */
+public interface View {
+    public fun isView(): Boolean
 
-internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    unsupported()
-}
-
-internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    unsupported()
+    public fun isMem(): Boolean
 }

@@ -70,10 +70,6 @@ public class SegmentBlock(
 
 internal object NativeAccess
 
-internal fun NativeAccess.unsupported(): Nothing {
-    throw UnsupportedOperationException("Native memory management is not available.")
-}
-
 internal expect inline fun<reified R: Any> NativeAccess.getByteNative(index: Long): Byte
 
 internal expect inline fun<reified R: Any> NativeAccess.getShortNative(index: Long): Short

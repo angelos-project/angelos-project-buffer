@@ -14,7 +14,11 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.NativeAccess
+import org.angproj.io.buf.util.unsupported
 import org.angproj.io.buf.util.Cleanable
+import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.toInt
 
 public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable {
 
@@ -22,4 +26,28 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
      * Disposes of the resources held by this segment.
      */
     public abstract override fun dispose()
+
+    public fun isNull(): Boolean = this === nullSegment
+
+    public companion object {
+        /**
+         * A null block is a special case where the block does not contain any data.
+         * It is used to represent an empty or uninitialized memory block.
+         */
+        public val nullSegment: Segment<*> by lazy { createNullSegment() }
+    }
+}
+
+private fun Segment.Companion.createNullSegment(): Segment<*> {
+    return object : Segment<Nothing>(DataSize.UNKNOWN.toInt()) {
+        override fun dispose() { unsupported() }
+        override fun getByte(index: Int): Byte  { unsupported() }
+        override fun getShort(index: Int): Short  { unsupported() }
+        override fun getInt(index: Int): Int  { unsupported() }
+        override fun getLong(index: Int): Long  { unsupported() }
+        override fun setByte(index: Int, value: Byte) { unsupported() }
+        override fun setShort(index: Int, value: Short) { unsupported() }
+        override fun setInt(index: Int, value: Int) { unsupported() }
+        override fun setLong(index: Int, value: Long) { unsupported() }
+    }
 }

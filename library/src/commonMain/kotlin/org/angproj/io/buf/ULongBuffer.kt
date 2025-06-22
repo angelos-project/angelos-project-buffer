@@ -14,13 +14,17 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.unsupported
+import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.TypeSize
 
-internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    unsupported()
-}
 
-internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    unsupported()
+public class ULongBuffer protected constructor(
+    segment: Segment<*>, view: Boolean = false
+): ArrayBuffer<ULong>(segment, view, TypeSize.uLongSize) {
+
+    override fun get(index: Int): ULong = segment.getLong(index).conv2uL()
+
+    override fun set(index: Int, value: ULong) {
+        segment.setLong(index, value.conv2L())
+    }
 }

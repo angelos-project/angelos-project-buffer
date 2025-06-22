@@ -14,13 +14,17 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.unsupported
+import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.TypeSize
 
-internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    unsupported()
-}
 
-internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    unsupported()
+public class ShortBuffer protected constructor(
+    segment: Segment<*>, view: Boolean = false
+): ArrayBuffer<Short>(segment, view, TypeSize.shortSize) {
+
+    override fun get(index: Int): Short = segment.getShort(index)
+
+    override fun set(index: Int, value: Short) {
+        segment.setShort(index, value)
+    }
 }

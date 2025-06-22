@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021-2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,12 +12,11 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.mem
 
 /**
- * Mutable buffer. Use this interface as types on method parameters in order to allow third party implementations
- * of buffers.
+ * Exception thrown when an error occurs in memory management.
  *
- * @constructor Create implementation of the MutableBuffer interface.
+ * @param msg The detail message explaining the exception.
  */
-public interface MutableBuffer : Buffer
+public class MemoryException(msg: String): RuntimeException(msg)

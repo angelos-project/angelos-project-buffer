@@ -27,6 +27,12 @@ import kotlin.jvm.JvmInline
 @JvmInline
 public value class TypePointer<E: MemoryBlock<E>>(internal val ptr: Long) {
 
+    /**
+     * Converts this TypePointer to a TypePointer of Nothing, which is a type that can be used
+     * to represent a pointer to any type.
+     *
+     * @return A TypePointer of Nothing pointing to the same memory address.
+     */
     public fun toPointer(): TypePointer<Nothing> = TypePointer(ptr)
 
     override fun toString(): String = "${this::class.simpleName}(ptr=$ptr)"

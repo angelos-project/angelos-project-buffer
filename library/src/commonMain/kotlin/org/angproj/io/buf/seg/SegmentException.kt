@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -12,14 +12,11 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.seg
 
 /**
- * Every buffer that implements this interface must allocate buffer memory on the outside of the heap
- * of the runtime environment.
+ * Exception thrown when an error occurs in the segment buffer.
  *
- * @constructor Allocates implemented buffer outside the heap region of memory.
+ * @param msg The detail message explaining the exception.
  */
-public interface NativeBuffer : Buffer {
-
-}
+public class SegmentException(msg: String) : RuntimeException(msg)

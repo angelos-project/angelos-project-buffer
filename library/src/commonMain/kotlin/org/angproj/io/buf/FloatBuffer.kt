@@ -14,13 +14,17 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.unsupported
+import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.TypeSize
 
-internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    unsupported()
-}
 
-internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    unsupported()
+public class FloatBuffer protected constructor(
+    segment: Segment<*>, view: Boolean = false
+): ArrayBuffer<Float>(segment, view, TypeSize.floatSize) {
+
+    override fun get(index: Int): Float = segment.getInt(index).conv2F()
+
+    override fun set(index: Int, value: Float) {
+        segment.setInt(index, value.conv2I())
+    }
 }

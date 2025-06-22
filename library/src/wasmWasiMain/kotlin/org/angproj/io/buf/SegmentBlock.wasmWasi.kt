@@ -14,6 +14,8 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.util.unsupported
+
 internal actual inline fun <reified R : Any> NativeAccess.getByteNative(index: Long): Byte {
     unsupported()
 }

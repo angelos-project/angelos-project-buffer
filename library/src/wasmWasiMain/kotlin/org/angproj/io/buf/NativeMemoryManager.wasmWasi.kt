@@ -15,11 +15,12 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.unsupported
 
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    NativeAccess.unsupported()
+    unsupported()
 }
 
 internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    NativeAccess.unsupported()
+    unsupported()
 }

@@ -12,15 +12,16 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.util
 
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.unsupported
-
-internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    unsupported()
+public interface Auto: View, Closeable {
 }
 
-internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
-    unsupported()
+public inline fun<reified T: Auto, R> T.useWith(block: (T) -> R
+): R {
+   return try {
+        block(this)
+    } finally {
+        if(!isView() && isMem()) close()
+    }
 }
