@@ -14,56 +14,58 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.mem.BytesPool
+import org.angproj.sec.SecureRandom
 
-public class Bytes(size: Int) : Segment<Bytes>(size) {
 
-    private val data: ByteArray = ByteArray(size)
+public class Bytes(
+    private val memCtx: BytesPool,
+    private val data: ByteArray
+) : Segment<Bytes>(data.size) {
+
 
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return data[index]
     }
 
     override fun getShort(index: Int): Short {
         index.checkRangeShort<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return getShort<Unit>(data, index)
     }
 
     override fun getInt(index: Int): Int {
         index.checkRangeInt<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return getInt<Unit>(data, index)
     }
 
     override fun getLong(index: Int): Long {
         index.checkRangeLong<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return getLong<Unit>(data, index)
     }
 
     override fun setByte(index: Int, value: Byte) {
         index.checkRangeByte<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        data[index] = value
     }
 
     override fun setShort(index: Int, value: Short) {
         index.checkRangeShort<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        setShort<Unit>(data, index, value)
     }
 
     override fun setInt(index: Int, value: Int) {
         index.checkRangeInt<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        setInt<Unit>(data, index, value)
     }
 
     override fun setLong(index: Int, value: Long) {
         index.checkRangeLong<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        setLong<Unit>(data, index, value)
+    }
+
+    override fun dispose() {
+        SecureRandom.readBytes(data)
+        memCtx.recycle(this)
     }
 }

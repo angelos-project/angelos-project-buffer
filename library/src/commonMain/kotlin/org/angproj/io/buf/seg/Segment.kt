@@ -14,5 +14,12 @@
  */
 package org.angproj.io.buf.seg
 
-public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize) {
+import org.angproj.io.buf.util.Cleanable
+
+public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable {
+
+    /**
+     * Disposes of the resources held by this segment.
+     */
+    public abstract override fun dispose()
 }

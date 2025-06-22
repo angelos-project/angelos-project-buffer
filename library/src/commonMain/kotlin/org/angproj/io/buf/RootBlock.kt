@@ -27,12 +27,12 @@ import org.angproj.io.buf.util.toInt
 public class RootBlock(rawPtr: Long, size: DataSize): MemoryBlock<RootBlock> {
 
     init {
-        require(size.size >= 0) { "Size must be non-negative" }
+        require(size.toInt() >= 0) { "Size must be non-negative" }
     }
 
     private val pointer: TypePointer<RootBlock> = TypePointer(rawPtr)
     private val blockSize: DataSize = size
-    private var blockLimit: Int = this.size
+    private var blockLimit: Int = 0
 
     override val parentBlock: MemoryBlock<*>
         get() = MemoryBlock.nullBlock

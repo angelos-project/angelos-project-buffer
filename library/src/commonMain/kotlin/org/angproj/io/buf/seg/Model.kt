@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.sec.SecureFeed
 import org.angproj.sec.util.ceilDiv
 
 public class Model(size: Int) : Segment<Model>(size) {
@@ -66,5 +67,11 @@ public class Model(size: Int) : Segment<Model>(size) {
         index.checkRangeLong<Unit>()
         // Implementation here
         TODO("Not yet implemented")
+    }
+
+    override fun dispose() {
+        SecureFeed.exportLongs(data, 0, data.size) { i, v ->
+            data[i] = v
+        }
     }
 }

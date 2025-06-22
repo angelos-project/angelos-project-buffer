@@ -2,6 +2,7 @@ package org.angproj.io.buf
 
 import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.toInt
 import kotlin.test.*
 
 class SegmentBlockTest {
@@ -14,7 +15,7 @@ class SegmentBlockTest {
     fun setup(): Unit = ifJvmOrNative {
         manager = NativeMemoryManager(dataSize)
         root = manager.allocate()
-        block = root.subBlock(0, dataSize.size) { _, s, p ->
+        block = root.subBlock(0, dataSize.toInt()) { _, s, p ->
             SegmentBlock(this, p, s) // Create a SegmentBlock with the given size and pointer
         }
     }

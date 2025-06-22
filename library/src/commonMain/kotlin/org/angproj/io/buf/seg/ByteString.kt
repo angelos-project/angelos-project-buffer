@@ -16,6 +16,7 @@ package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.ReadAccess
 import org.angproj.io.buf.WriteAccess
+import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
 
 
@@ -29,7 +30,7 @@ import org.angproj.io.buf.util.Limitable
 public abstract class ByteString(
     protected val stringSize: Int,
     protected var stringLimit: Int = stringSize
-): Limitable, ReadAccess, WriteAccess {
+): AbstractUtilityAware(), Limitable, ReadAccess, WriteAccess {
 
     protected inline fun <reified R: Any> Int.checkRangeByte(): Unit = when(this) {
         !in 0..<stringLimit -> throw IllegalArgumentException("Out of bounds. Byte - $this")
