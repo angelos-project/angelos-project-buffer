@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Segment
@@ -7,7 +21,7 @@ import org.angproj.io.buf.util.toInt
 import kotlin.collections.set
 
 public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
-    public val allocationSize: DataSize,
+    public override val allocationSize: DataSize,
     public val minSize: DataSize,
     public val maxSize: DataSize
 ) : MemoryManager<S>, Cleanable {
@@ -20,6 +34,9 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
             "Allocation size must be greater than or equal to maximum size."
         }
     }
+
+    override val segmentSize: DataSize
+        get() = minSize
 
     protected val segmentMap: MutableMap<DataSize, MutableSet<S>> = mutableMapOf()
 
@@ -35,6 +52,10 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     protected abstract fun subAllocate(size: DataSize): T
 
     protected abstract fun createSegment(data: T): S
+
+    public override fun allocate(): S {
+        return allocate(segmentSize.toInt())
+    }
 
     public override fun allocate(size: Int): S {
         val dataSize = DataSize.findLowestAbove(size)
