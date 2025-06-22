@@ -14,17 +14,17 @@
  */
 package org.angproj.io.buf.mem
 
-import org.angproj.io.buf.seg.Bytes
+import org.angproj.io.buf.seg.Model
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.toInt
+import org.angproj.sec.util.ceilDiv
 
-public abstract class BytesPool(
-    allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
-) : AbstractPoolManager<ByteArray, Bytes>(allocationSize, minSize, maxSize) {
+public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
+) : AbstractPoolManager<LongArray, Model>(allocationSize, minSize, maxSize) {
 
     protected var allocated: Int = 0
 
-    override fun subAllocate(size: DataSize): ByteArray {
+    override fun subAllocate(size: DataSize): LongArray {
         require(allocationSize.toInt() - allocated >= size.toInt()) {
             "Not enough memory available to allocate the requested size."
         }
@@ -33,13 +33,13 @@ public abstract class BytesPool(
         }
 
         allocated += size.toInt()
-        return ByteArray(size.toInt())
+        return LongArray(size.toInt().ceilDiv(8)) // Assuming 64-bit long, hence dividing by 8
     }
 
     override fun createSegment(
-        data: ByteArray
-    ): Bytes {
-        return Bytes(this, data)
+        data: LongArray
+    ): Model {
+        return Model(this, data)
     }
 
     override fun dispose() {

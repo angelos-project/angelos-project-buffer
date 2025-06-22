@@ -14,12 +14,13 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.mem.ModelPool
 import org.angproj.sec.SecureFeed
-import org.angproj.sec.util.ceilDiv
 
-public class Model(size: Int) : Segment<Model>(size) {
-
-    private val data: LongArray = LongArray(size.ceilDiv(8))
+public class Model(
+    private val memCtx: ModelPool,
+    private val data: LongArray
+) : Segment<Model>(data.size * 8) {
 
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
@@ -73,5 +74,6 @@ public class Model(size: Int) : Segment<Model>(size) {
         SecureFeed.exportLongs(data, 0, data.size) { i, v ->
             data[i] = v
         }
+        memCtx.recycle(this)
     }
 }
