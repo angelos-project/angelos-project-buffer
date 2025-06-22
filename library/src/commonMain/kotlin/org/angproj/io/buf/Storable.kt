@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2022-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -25,75 +25,61 @@ public interface Storable {
      *
      * @param value A byte of data.
      */
-    public fun setStoreByte(position: Int, value: Byte)
+    public fun storeByte(position: Int, value: Byte)
 
     /**
      * Store a unsigned byte unto said position.
      *
      * @param value An unsigned byte of data.
      */
-    public fun setStoreUByte(position: Int, value: UByte)
-
-    /**
-     * Store character unto said position.
-     *
-     * @param value A character of data.
-     */
-    public fun setStoreChar(position: Int, value: Char)
+    public fun storeUByte(position: Int, value: UByte)
 
     /**
      * Store a short integer unto said position.
      *
      * @param value A short integer of data.
      */
-    public fun setStoreShort(position: Int, value: Short)
+    public fun storeShort(position: Int, value: Short)
 
     /**
      * Store an unsigned short integer unto said position.
      *
      * @param value An unsigned short integer of data.
      */
-    public fun setStoreUShort(position: Int, value: UShort)
+    public fun storeUShort(position: Int, value: UShort)
 
     /**
      * Store an integer unto said position.
      *
      * @param value An integer of data.
      */
-    public fun setStoreInt(position: Int, value: Int)
+    public fun storeInt(position: Int, value: Int)
 
     /**
      * Store an unsigned integer unto said position.
      *
      * @param value An unsigned integer of data.
      */
-    public fun setStoreUInt(position: Int, value: UInt)
+    public fun storeUInt(position: Int, value: UInt)
 
     /**
      * Store a long integer unto said position.
      *
      * @param value A long integer of data.
      */
-    public fun setStoreLong(position: Int, value: Long)
+    public fun storeLong(position: Int, value: Long)
 
     /**
      * Store an unsigned long integer unto said position.
      *
      * @param value An unsigned long integer of data.
      */
-    public fun setStoreULong(position: Int, value: ULong)
+    public fun storeULong(position: Int, value: ULong)
 
     /**
      * Store a float unto said position.
      *
      * @param value A float of data.
      */
-    public fun setStoreFloat(position: Int, value: Float)
-
-    /**
-     * Store a double unto said position.
-     *
-     * @param value A double of data.
-     */
-    public fun setStoreDouble(position: Int, value: Double)
+    public fun storeFloat(position: Int, value: Float)
 }

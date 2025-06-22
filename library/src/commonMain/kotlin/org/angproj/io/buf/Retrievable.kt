@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2022-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -25,75 +25,68 @@ public interface Retrievable {
      *
      * @return A byte of data.
      */
-    public fun getRetrieveByte(position: Int): Byte
+    public fun retrieveByte(position: Int): Byte
 
     /**
      * Retrieve an unsigned byte from said position.
      *
      * @return An unsigned byte of data.
      */
-    public fun getRetrieveUByte(position: Int): UByte
-
-    /**
-     * Retrieve a character from said position.
-     *
-     * @return A character of data.
-     */
-    public fun getRetrieveChar(position: Int): Char
+    public fun retrieveUByte(position: Int): UByte
 
     /**
      * Retrieve a short integer from said position.
      *
      * @return A short integer of data.
      */
-    public fun getRetrieveShort(position: Int): Short
+    public fun retrieveShort(position: Int): Short
 
     /**
      * Retrieve an unsigned short integer from said position.
      *
      * @return An unsigned short integer of data.
      */
-    public fun getRetrieveUShort(position: Int): UShort
+    public fun retrieveUShort(position: Int): UShort
 
     /**
      * Retrieve an integer from said position.
      *
      * @return An integer of data.
      */
-    public fun getRetrieveInt(position: Int): Int
+    public fun retrieveInt(position: Int): Int
 
     /**
      * Retrieve an unsigned integer from said position.
      *
      * @return An unsigned integer of data.
      */
-    public fun getRetrieveUInt(position: Int): UInt
+    public fun retrieveUInt(position: Int): UInt
 
     /**
      * Retrieve a long integer from said position.
      *
      * @return A long integer of data.
      */
-    public fun getRetrieveLong(position: Int): Long
+    public fun retrieveLong(position: Int): Long
 
     /**
      * Retrieve an unsigned long integer from said position.
      *
      * @return An unsigned long integer of data.
      */
-    public fun getRetrieveULong(position: Int): ULong
+    public fun retrieveULong(position: Int): ULong
 
     /**
      * Retrieve a float from said position.
      *
      * @return A float of data.
      */
-    public fun getRetrieveFloat(position: Int): Float
+    public fun retrieveFloat(position: Int): Float
 
     /**
      * Retrieve a double from said position.
      *
      * @return A double of data.
      */
-    public fun getRetrieveDouble(position: Int): Double
+    public fun retrieveDouble(position: Int): Double
 }

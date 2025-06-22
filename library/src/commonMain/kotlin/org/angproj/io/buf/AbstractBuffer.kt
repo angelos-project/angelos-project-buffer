@@ -25,29 +25,5 @@ package org.angproj.io.buf
  * @param endianness The initial current endianness of the buffer.
  */
 public abstract class AbstractBuffer internal constructor(
-    size: Int,
-    limit: Int,
-    endianness: Endianness,
 ) : Buffer {
-    override val size: Int = size
-
-    protected var _limit: Int = limit
-    override val limit: Int
-        get() = _limit
-
-    private var _endian: Endianness = endianness
-    override var endian: Endianness
-        get() = _endian
-        set(value) {
-            _endian = value
-            _reverse = _endian != Buffer.nativeEndianness
-        }
-
-    private var _reverse: Boolean = _endian != Buffer.nativeEndianness
-    override val reverse: Boolean
-        get() = _reverse
-
-    init {
-        require(size >= limit)
-    }
 }

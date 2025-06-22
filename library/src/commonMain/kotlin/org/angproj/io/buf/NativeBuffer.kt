@@ -22,21 +22,4 @@ package org.angproj.io.buf
  */
 public interface NativeBuffer : Buffer {
 
-
-    /**
-     * Dispose manually of allocated memory. This is the responsibility of any library using native buffers.
-     *
-     */
-    public fun dispose()
-
-    /**
-     * Extra support for dummy implementations that actually only can use ByteArray due to
-     * runtime environment restrictions.
-     *
-     * @return
-     */
-    override fun getArray(): ByteArray {
-        throw UnsupportedOperationException(
-            "Unimplemented necessary implementations to be overridden in cases of emergency.")
-    }
 }

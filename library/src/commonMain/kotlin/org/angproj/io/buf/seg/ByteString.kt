@@ -20,13 +20,6 @@ import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
 
 
-/**
- * A [ByteString] is a string of bytes that can be read and written to.
- * It has a fixed size and a limit that can be set.
- *
- * @property stringSize The size of the segment in bytes.
- * @property stringLimit The limit of the segment in bytes, defaults to [stringSize].
- */
 public abstract class ByteString(
     protected val stringSize: Int,
     protected var stringLimit: Int = stringSize

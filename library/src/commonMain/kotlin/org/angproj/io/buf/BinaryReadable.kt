@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ * Copyright (c) 2022-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
  *
  * This software is available under the terms of the MIT license. Parts are licensed
  * under different terms if stated. The legal terms are attached to the LICENSE file
@@ -14,86 +14,87 @@
  */
 package org.angproj.io.buf
 
+
+/**
+ * Imported from angelos-project-buffer package.
+ */
+
 /**
  * Readable interface for reading data from any type of readable interface including buffers.
  *
  * @constructor Create Readable
  */
-public interface Readable {
+public interface BinaryReadable {
+
+    public val count: Long
+
     /**
      * Read next byte.
      *
      * @return A byte of data.
      */
-    public fun getReadByte(): Byte
+    public fun readByte(): Byte
 
     /**
      * Read next unsigned byte.
      *
      * @return An unsigned byte of data.
      */
-    public fun getReadUByte(): UByte
-
-    /**
-     * Read next character.
-     *
-     * @return A character of data.
-     */
-    public fun getReadChar(): Char
+    public fun readUByte(): UByte
 
     /**
      * Read next short integer.
      *
      * @return A short integer of data.
      */
-    public fun getReadShort(): Short
+    public fun readShort(): Short
 
     /**
      * Read next unsigned short integer.
      *
      * @return An unsigned short integer of data.
      */
-    public fun getReadUShort(): UShort
+    public fun readUShort(): UShort
 
     /**
      * Read next integer.
      *
      * @return An integer of data.
      */
-    public fun getReadInt(): Int
+    public fun readInt(): Int
 
     /**
      * Read next unsigned integer.
      *
      * @return An unsigned integer of data.
      */
-    public fun getReadUInt(): UInt
+    public fun readUInt(): UInt
 
     /**
      * Read next long integer.
      *
      * @return A long integer of data.
      */
-    public fun getReadLong(): Long
+    public fun readLong(): Long
 
     /**
      * Read next unsigned long integer.
      *
      * @return An unsigned long integer of data
      */
-    public fun getReadULong(): ULong
+    public fun readULong(): ULong
 
     /**
      * Read next float.
      *
      * @return A float of data.
      */
-    public fun getReadFloat(): Float
+    public fun readFloat(): Float
 
     /**
      * Read next double.
      *
      * @return A double of data.
      */
-    public fun getReadDouble(): Double
+    public fun readDouble(): Double
 }
