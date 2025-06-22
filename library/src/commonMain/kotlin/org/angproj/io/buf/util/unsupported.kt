@@ -1,5 +1,5 @@
 package org.angproj.io.buf.util
 
-internal fun <E: Any> E.unsupported(): Nothing {
-    throw UnsupportedOperationException("Native memory management is not available.")
+internal fun <E: Any> E.unsupported(msg: String = "Native memory management is not available."): Nothing {
+    throw UnsupportedOperationException(msg)
 }

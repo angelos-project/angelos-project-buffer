@@ -15,6 +15,7 @@
 package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.NativeAccess
+import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.util.unsupported
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
@@ -26,6 +27,8 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
      * Disposes of the resources held by this segment.
      */
     public abstract override fun dispose()
+
+    public open fun address(): TypePointer<*> = unsupported()
 
     public fun isNull(): Boolean = this === nullSegment
 

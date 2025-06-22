@@ -82,4 +82,11 @@ public interface Storable {
      * @param value A float of data.
      */
     public fun storeFloat(position: Int, value: Float)
+
+    /**
+     * Store a double unto said position.
+     *
+     * @param value A double of data.
+     */
+    public fun storeDouble(position: Int, value: Double)
 }

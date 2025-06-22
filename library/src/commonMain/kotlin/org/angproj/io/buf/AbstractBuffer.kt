@@ -16,7 +16,6 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
-import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Auto
 import org.angproj.io.buf.util.UtilityAware
 
@@ -32,8 +31,8 @@ import org.angproj.io.buf.util.UtilityAware
  * @param endianness The initial current endianness of the buffer.
  */
 public abstract class AbstractBuffer protected constructor(
-    protected val segment: Segment<*>, protected val view: Boolean = false
-): UtilityAware, Auto, Comparable<Buffer> {
+    internal val segment: Segment<*>, protected val view: Boolean = false
+) : UtilityAware, Auto, Comparable<Buffer> {
 
     /**
      * Gives the max bytes capacity of the buffer

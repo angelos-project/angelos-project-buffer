@@ -51,6 +51,9 @@ public abstract class FlowBuffer protected constructor(
         _innerOffset = _position
     }
 
+    override val size: Int
+        get() = segment.size
+
     /**
      * The current limit of the buffer as defined.
      * */

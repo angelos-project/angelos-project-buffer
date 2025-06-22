@@ -15,6 +15,7 @@
 package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.SegmentBlock
+import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.mem.MemoryPool
 
 public class Memory(
@@ -80,4 +81,6 @@ public class Memory(
     override fun dispose() {
         memCtx.recycle(this)
     }
+
+    override fun address(): TypePointer<*> = data.getPointer()
 }
