@@ -18,7 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class ShortBuffer protected constructor(
+public class ShortBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Short>(segment, view, TypeSize.shortSize) {
 
