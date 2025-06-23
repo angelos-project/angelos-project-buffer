@@ -48,8 +48,7 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
     }
 
     override fun dispose() {
-        allSegments.clear()
-        segmentMap.clear()
+        super.dispose()
         nativeMemoryManager.release()
     }
 }

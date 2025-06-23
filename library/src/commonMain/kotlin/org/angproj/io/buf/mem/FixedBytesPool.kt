@@ -14,19 +14,13 @@
  */
 package org.angproj.io.buf.mem
 
-import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
 
-public class SingleBytesPool(
+public class FixedBytesPool(
     allocationSize: DataSize,
     segmentSize: DataSize,
 ) : BytesPool(allocationSize, segmentSize, segmentSize) {
     // This class is intentionally left empty. It serves as a concrete implementation of BytesPool
     // that can be used to create instances of BytesPool with arbitrary sizes.
     // The actual allocation and recycling logic is handled in the BytesPool class.
-
-    override fun recycle(segment: Bytes) {
-        super.recycle(segment)
-        dispose()
-    }
 }

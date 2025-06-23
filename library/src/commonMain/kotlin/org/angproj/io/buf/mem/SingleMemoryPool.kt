@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf.mem
 
+import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.util.DataSize
 
 public class SingleMemoryPool(
@@ -23,4 +24,9 @@ public class SingleMemoryPool(
     // This class is intentionally left empty. It serves as a concrete implementation of BytesPool
     // that can be used to create instances of BytesPool with arbitrary sizes.
     // The actual allocation and recycling logic is handled in the BytesPool class.
+
+    override fun recycle(segment: Memory) {
+        super.recycle(segment)
+        dispose()
+    }
 }

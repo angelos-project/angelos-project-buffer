@@ -41,9 +41,4 @@ public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, max
     ): Model {
         return Model(this, data)
     }
-
-    override fun dispose() {
-        allSegments.clear()
-        segmentMap.clear()
-    }
 }

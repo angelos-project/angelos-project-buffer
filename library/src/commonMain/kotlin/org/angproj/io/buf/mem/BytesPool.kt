@@ -41,9 +41,4 @@ public abstract class BytesPool(
     ): Bytes {
         return Bytes(this, data)
     }
-
-    override fun dispose() {
-        allSegments.clear()
-        segmentMap.clear()
-    }
 }

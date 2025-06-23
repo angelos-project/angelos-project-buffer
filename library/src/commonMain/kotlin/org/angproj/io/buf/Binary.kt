@@ -14,10 +14,8 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.unsupported
-import org.angproj.sec.SecureRandom
 import org.angproj.sec.rand.InitializationVector
 
 
@@ -113,6 +111,7 @@ public class Binary(
 
 public fun Binary.address(): TypePointer<Nothing> = segment.address().toPointer()
 
+public fun Binary.asBinaryBuffer(): BinaryBuffer = BinaryBuffer(segment, true)
 public fun Binary.asByteBuffer(): ByteBuffer = ByteBuffer(segment, true)
 public fun Binary.asUByteBuffer(): UByteBuffer = UByteBuffer(segment, true)
 public fun Binary.asShortBuffer(): ShortBuffer = ShortBuffer(segment, true)

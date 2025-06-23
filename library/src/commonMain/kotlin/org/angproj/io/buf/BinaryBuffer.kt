@@ -18,7 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class BinaryBuffer protected constructor(
+public class BinaryBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): FlowBuffer(segment, view), BinaryReadable, BinaryWritable {
 
