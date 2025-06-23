@@ -30,7 +30,7 @@ import org.angproj.io.buf.util.UtilityAware
  * @param limit The initial limitation of how far to operate into the buffer. Must never exceed the size.
  * @param endianness The initial current endianness of the buffer.
  */
-public abstract class AbstractBuffer protected constructor(
+public abstract class AbstractBuffer internal constructor(
     internal val segment: Segment<*>, protected val view: Boolean = false
 ) : UtilityAware, Auto, Comparable<Buffer> {
 

@@ -18,7 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class FloatBuffer protected constructor(
+public class FloatBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Float>(segment, view, TypeSize.floatSize) {
 

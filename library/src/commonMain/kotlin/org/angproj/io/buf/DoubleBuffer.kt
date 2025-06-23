@@ -18,7 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class DoubleBuffer protected constructor(
+public class DoubleBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Double>(segment, view, TypeSize.doubleSize) {
 

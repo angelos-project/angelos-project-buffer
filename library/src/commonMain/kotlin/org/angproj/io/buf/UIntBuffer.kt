@@ -18,7 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class UIntBuffer protected constructor(
+public class UIntBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<UInt>(segment, view, TypeSize.uIntSize) {
 
