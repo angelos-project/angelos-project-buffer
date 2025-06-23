@@ -15,7 +15,6 @@
 package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.mem.MemoryManager
-import org.angproj.sec.SecureFeed
 
 public class Model(
     private val memCtx: MemoryManager<Model>,
@@ -71,9 +70,8 @@ public class Model(
     }
 
     override fun dispose() {
-        SecureFeed.exportLongs(data, 0, data.size) { i, v ->
-            data[i] = v
-        }
+        clear()
+        securelyRandomize()
         memCtx.recycle(this)
     }
 }

@@ -17,6 +17,7 @@ package org.angproj.io.buf.seg
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.mem.MemoryManager
+import org.angproj.sec.SecureFeed
 
 public class Memory(
     private val memCtx: MemoryManager<Memory>,
@@ -79,6 +80,10 @@ public class Memory(
     }
 
     override fun dispose() {
+        clear()
+        SecureFeed.exportLongs(data, 0, data.size) { index, value ->
+            data[index] = value
+        }
         memCtx.recycle(this)
     }
 

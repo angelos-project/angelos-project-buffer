@@ -65,6 +65,7 @@ public class Bytes(
     }
 
     override fun dispose() {
+        clear()
         SecureRandom.readBytes(data)
         memCtx.recycle(this)
     }

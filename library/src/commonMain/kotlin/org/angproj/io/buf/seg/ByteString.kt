@@ -18,6 +18,10 @@ import org.angproj.io.buf.ReadAccess
 import org.angproj.io.buf.WriteAccess
 import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
+import org.angproj.sec.SecureFeed
+import org.angproj.sec.SecureRandom
+import org.angproj.sec.util.TypeSize
+import org.angproj.sec.util.floorMod
 
 
 public abstract class ByteString(
@@ -72,4 +76,13 @@ public abstract class ByteString(
 
     abstract override fun setLong(index: Int, value: Long)
 
+    public fun securelyRandomize() {
+        SecureFeed.exportLongs(this, 0, limit / TypeSize.longSize) { index, value ->
+            setLong(index, value)
+        }
+        val byteSize = limit.floorMod(TypeSize.longSize)
+        SecureRandom.exportBytes(this, limit - byteSize, byteSize) { index, value ->
+            setByte(index, value)
+        }
+    }
 }

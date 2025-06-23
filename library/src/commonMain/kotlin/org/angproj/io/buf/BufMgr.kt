@@ -21,6 +21,11 @@ import org.angproj.io.buf.util.useWith
 import org.angproj.sec.util.TypeSize
 
 public object BufMgr {
+
+    public fun bin(size: Int): Binary = Binary(Default.allocate(size), false)
+
+    public fun binary(size: Int): BinaryBuffer = BinaryBuffer(Default.allocate(size), false)
+
     public fun byteBuf(size: Int): ByteBuffer = ByteBuffer(Default.allocate(size), false)
 
     public fun uByteBuf(size: Int): UByteBuffer = UByteBuffer(Default.allocate(size), false)
