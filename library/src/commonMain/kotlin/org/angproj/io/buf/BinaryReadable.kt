@@ -26,8 +26,6 @@ package org.angproj.io.buf
  */
 public interface BinaryReadable {
 
-    public val count: Long
-
     /**
      * Read next byte.
      *

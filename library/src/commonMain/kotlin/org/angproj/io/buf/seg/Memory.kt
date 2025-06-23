@@ -16,10 +16,10 @@ package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.TypePointer
-import org.angproj.io.buf.mem.MemoryPool
+import org.angproj.io.buf.mem.MemoryManager
 
 public class Memory(
-    private val memCtx: MemoryPool,
+    private val memCtx: MemoryManager<Memory>,
     private val data: SegmentBlock
 ) : Segment<Memory>(data.size) {
 

@@ -14,11 +14,11 @@
  */
 package org.angproj.io.buf.seg
 
-import org.angproj.io.buf.mem.ModelPool
+import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureFeed
 
 public class Model(
-    private val memCtx: ModelPool,
+    private val memCtx: MemoryManager<Model>,
     private val data: LongArray
 ) : Segment<Model>(data.size * 8) {
 

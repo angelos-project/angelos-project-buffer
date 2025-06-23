@@ -14,12 +14,12 @@
  */
 package org.angproj.io.buf.seg
 
-import org.angproj.io.buf.mem.BytesPool
+import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureRandom
 
 
 public class Bytes(
-    private val memCtx: BytesPool,
+    private val memCtx: MemoryManager<Bytes>,
     private val data: ByteArray
 ) : Segment<Bytes>(data.size) {
 
