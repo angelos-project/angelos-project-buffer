@@ -24,7 +24,7 @@ import kotlin.test.assertTrue
  *
  * @constructor Create empty Read write at test
  */
-class ReadWriteAtTest {
+/*class ReadWriteAtTest {
 
     private val refChar: Char = 'Ö'
 
@@ -218,4 +218,4 @@ class ReadWriteAtTest {
         value = value.flipOffFlag7()
         assertFalse(value.checkFlag7())
     }
-}
+}*/

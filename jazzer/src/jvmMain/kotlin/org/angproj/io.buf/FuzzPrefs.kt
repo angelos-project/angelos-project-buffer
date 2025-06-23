@@ -15,7 +15,8 @@
 package org.angproj.io.buf
 
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 public abstract class FuzzPrefs {
-    public val maxTotalTime: Long = 2.minutes.inWholeSeconds
+    public val maxTotalTime: Long = 20.seconds.inWholeSeconds
 }

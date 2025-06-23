@@ -36,8 +36,9 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
             "Requested size must be between minSize and maxSize."
         }
 
-        return rootBlock.subBlock(rootBlock.limit, size.toInt()) { _, s, p ->
-            rootBlock.limitAt(rootBlock.limit + size.toInt())
+        val offset = rootBlock.limit
+        rootBlock.limitAt(rootBlock.limit + size.toInt())
+        return rootBlock.subBlock(offset, size.toInt()) { _, s, p ->
             SegmentBlock(this, p, s)
         }
     }

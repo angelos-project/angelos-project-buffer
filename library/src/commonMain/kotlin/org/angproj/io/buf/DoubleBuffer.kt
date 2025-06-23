@@ -22,9 +22,9 @@ public class DoubleBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Double>(segment, view, TypeSize.doubleSize) {
 
-    override fun get(index: Int): Double = segment.getLong(index).conv2D()
+    override fun get(index: Int): Double = segment.getLong(index * typeSize).conv2D()
 
     override fun set(index: Int, value: Double) {
-        segment.setLong(index, value.conv2L())
+        segment.setLong(index * typeSize, value.conv2L())
     }
 }

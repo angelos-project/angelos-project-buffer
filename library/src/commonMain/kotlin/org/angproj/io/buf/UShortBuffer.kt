@@ -22,9 +22,9 @@ public class UShortBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<UShort>(segment, view, TypeSize.shortSize) {
 
-    override fun get(index: Int): UShort = segment.getShort(index).conv2uS()
+    override fun get(index: Int): UShort = segment.getShort(index * typeSize).conv2uS()
 
     override fun set(index: Int, value: UShort) {
-        segment.setShort(index, value.conv2S())
+        segment.setShort(index * typeSize, value.conv2S())
     }
 }

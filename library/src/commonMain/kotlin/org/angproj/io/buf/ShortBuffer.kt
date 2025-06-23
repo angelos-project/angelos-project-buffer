@@ -18,13 +18,13 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
 
 
-public class ShortBuffer internal constructor(
+public class ShortBuffer(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Short>(segment, view, TypeSize.shortSize) {
 
-    override fun get(index: Int): Short = segment.getShort(index)
+    override fun get(index: Int): Short = segment.getShort(index * typeSize)
 
     override fun set(index: Int, value: Short) {
-        segment.setShort(index, value)
+        segment.setShort(index * typeSize, value)
     }
 }

@@ -16,18 +16,25 @@ package org.angproj.io.buf
 
 import com.code_intelligence.jazzer.Jazzer
 import com.code_intelligence.jazzer.api.FuzzedDataProvider
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
+import org.angproj.io.buf.util.DataSize
+import kotlin.test.assertEquals
 
 
-public object FuzzerSponge256Kt : FuzzPrefs() {
-
-
+public object FuzzerShortBufferKt : FuzzPrefs() {
 
     @JvmStatic
     public fun fuzzerTestOneInput(data: FuzzedDataProvider) {
+        BufMgr.withRam(DataSize._1K) {
+            val buffer = it.asShortBuffer()
+            val array = ShortArray(buffer.size) { data.consumeShort() }
 
-
+            array.forEachIndexed { index, value ->
+                buffer[index] = value
+            }
+            array.forEachIndexed { index, value ->
+                assertEquals(value, buffer[index])
+            }
+        }
     }
 
     @JvmStatic

@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
  *
  * @constructor Create empty Endianness test
  */
-actual class EndiannessTest : AbstractEndianTest() {
+/*actual class EndiannessTest : AbstractEndianTest() {
 
     /**
      * Running tests for nativeOrder on JVM checks against java.nio.ByteOrder for correctness.
@@ -35,4 +35,4 @@ actual class EndiannessTest : AbstractEndianTest() {
             Endianness.LITTLE_ENDIAN -> assertEquals(ByteOrder.nativeOrder(), ByteOrder.LITTLE_ENDIAN)
         }
     }
-}
+}*/

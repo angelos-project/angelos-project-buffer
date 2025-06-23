@@ -15,6 +15,9 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.mem.Default
+import org.angproj.io.buf.mem.SingleMemoryPool
+import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.useWith
 import org.angproj.sec.util.TypeSize
 
 public object BufMgr {
@@ -37,4 +40,13 @@ public object BufMgr {
     public fun floatBuf(size: Int): FloatBuffer = FloatBuffer(Default.allocate(size * TypeSize.floatSize), false)
 
     public fun doubleBuf(size: Int): DoubleBuffer = DoubleBuffer(Default.allocate(size * TypeSize.doubleSize), false)
+
+    /**
+     * Allocates a new [Binary] with the specified size in bytes.
+     * The allocated memory is automatically released when the [Binary] is closed.
+     *
+     * @param size The size of the binary in bytes.
+     * @return A new [Binary] instance with the allocated memory.
+     */
+    public fun<R> withRam(size: DataSize, block: (Binary) -> R): R = Binary(SingleMemoryPool(size, size).allocate()).useWith(block)
 }

@@ -22,9 +22,9 @@ public class FloatBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Float>(segment, view, TypeSize.floatSize) {
 
-    override fun get(index: Int): Float = segment.getInt(index).conv2F()
+    override fun get(index: Int): Float = segment.getInt(index * typeSize).conv2F()
 
     override fun set(index: Int, value: Float) {
-        segment.setInt(index, value.conv2I())
+        segment.setInt(index * typeSize, value.conv2I())
     }
 }

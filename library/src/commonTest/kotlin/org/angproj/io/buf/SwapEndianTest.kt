@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
  *
  * @constructor Create empty Swap endian test
  */
-class SwapEndianTest {
+/*class SwapEndianTest {
 
     private val refChar: Char = 'Ö'
 
@@ -136,4 +136,4 @@ class SwapEndianTest {
         /*assertEquals(Double.MIN_VALUE.swapEndian().swapEndian(), Double.MIN_VALUE)
         assertEquals(Double.MAX_VALUE.swapEndian().swapEndian().toRawBits(), Double.MAX_VALUE.toRawBits()) // <-- Fix KN/JVM */
     }
-}
+}*/

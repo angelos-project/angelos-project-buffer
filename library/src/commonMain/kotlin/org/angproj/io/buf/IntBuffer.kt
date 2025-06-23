@@ -22,9 +22,9 @@ public class IntBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<Int>(segment, view, TypeSize.intSize) {
 
-    override fun get(index: Int): Int = segment.getInt(index)
+    override fun get(index: Int): Int = segment.getInt(index * typeSize)
 
     override fun set(index: Int, value: Int) {
-        segment.setInt(index, value)
+        segment.setInt(index * typeSize, value)
     }
 }

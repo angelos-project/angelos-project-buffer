@@ -22,9 +22,9 @@ public class ULongBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
 ): ArrayBuffer<ULong>(segment, view, TypeSize.uLongSize) {
 
-    override fun get(index: Int): ULong = segment.getLong(index).conv2uL()
+    override fun get(index: Int): ULong = segment.getLong(index * typeSize).conv2uL()
 
     override fun set(index: Int, value: ULong) {
-        segment.setLong(index, value.conv2L())
+        segment.setLong(index * typeSize, value.conv2L())
     }
 }

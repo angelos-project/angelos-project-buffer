@@ -14,7 +14,6 @@
  */
 package org.angproj.io.buf.seg
 
-import org.angproj.io.buf.NativeAccess
 import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.util.unsupported
 import org.angproj.io.buf.util.Cleanable
@@ -43,14 +42,14 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
 
 private fun Segment.Companion.createNullSegment(): Segment<*> {
     return object : Segment<Nothing>(DataSize.UNKNOWN.toInt()) {
-        override fun dispose() { unsupported() }
-        override fun getByte(index: Int): Byte  { unsupported() }
-        override fun getShort(index: Int): Short  { unsupported() }
-        override fun getInt(index: Int): Int  { unsupported() }
-        override fun getLong(index: Int): Long  { unsupported() }
-        override fun setByte(index: Int, value: Byte) { unsupported() }
-        override fun setShort(index: Int, value: Short) { unsupported() }
-        override fun setInt(index: Int, value: Int) { unsupported() }
-        override fun setLong(index: Int, value: Long) { unsupported() }
+        override fun dispose() = unsupported()
+        override fun getByte(index: Int): Byte = unsupported()
+        override fun getShort(index: Int): Short = unsupported()
+        override fun getInt(index: Int): Int = unsupported()
+        override fun getLong(index: Int): Long = unsupported()
+        override fun setByte(index: Int, value: Byte) = unsupported()
+        override fun setShort(index: Int, value: Short) = unsupported()
+        override fun setInt(index: Int, value: Int) = unsupported()
+        override fun setLong(index: Int, value: Long) = unsupported()
     }
 }
