@@ -15,6 +15,8 @@
 package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.mem.MemoryManager
+import org.angproj.sec.SecureFeed
+import kotlin.text.set
 
 public class Model(
     private val memCtx: MemoryManager<Model>,
@@ -71,7 +73,9 @@ public class Model(
 
     override fun dispose() {
         clear()
-        securelyRandomize()
+        SecureFeed.exportLongs(data, 0, data.size) { index, value ->
+            data[index] = value
+        }
         memCtx.recycle(this)
     }
 }

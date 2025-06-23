@@ -81,9 +81,7 @@ public class Memory(
 
     override fun dispose() {
         clear()
-        SecureFeed.exportLongs(data, 0, data.size) { index, value ->
-            data[index] = value
-        }
+        securelyRandomize()
         memCtx.recycle(this)
     }
 
