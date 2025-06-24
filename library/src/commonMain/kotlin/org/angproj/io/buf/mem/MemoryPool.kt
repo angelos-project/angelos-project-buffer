@@ -19,14 +19,13 @@ import org.angproj.io.buf.RootBlock
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 
 public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
 ) : AbstractPoolManager<SegmentBlock, Memory>(allocationSize, minSize, maxSize) {
 
     protected val nativeMemoryManager: NativeMemoryManager = NativeMemoryManager(allocationSize)
 
-    protected val rootBlock: RootBlock = nativeMemoryManager.allocate()
+    protected val rootBlock: RootBlock = nativeMemoryManager.allocate().also { it.limitAt(0) }
 
     override fun subAllocate(size: DataSize): SegmentBlock {
         require(rootBlock.size - rootBlock.limit >= size.toInt()) {

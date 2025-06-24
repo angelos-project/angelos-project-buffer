@@ -19,7 +19,6 @@ import com.code_intelligence.jazzer.api.FuzzedDataProvider
 import org.angproj.io.buf.mem.SingleBytesPool
 import org.angproj.io.buf.mem.SingleMemoryPool
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 import org.angproj.sec.util.TypeSize
 import kotlin.test.assertEquals
 

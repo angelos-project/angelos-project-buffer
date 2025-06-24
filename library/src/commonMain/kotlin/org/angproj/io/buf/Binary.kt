@@ -23,6 +23,10 @@ public class Binary(
     segment: Segment<*>, view: Boolean = false
 ) : BlockBuffer(segment, view), Retrievable, Storable {
 
+    init {
+        check(!segment.isNull()) { "Null segment forbidden!" }
+    }
+
     override fun retrieveByte(position: Int): Byte =
         segment.getByte(position)
 

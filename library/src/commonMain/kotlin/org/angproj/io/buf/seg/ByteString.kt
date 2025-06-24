@@ -101,8 +101,10 @@ public abstract class ByteString(
 
     public fun checkSum(): Int {
         var result: Long = InitializationVector.IV_CA96.iv
-        val longIndex = limit ushr 3
-        val byteOffset = limit and 0x7
+
+        val totalLength = limit
+        val longIndex = totalLength / TypeSize.longSize
+        val byteOffset = totalLength % TypeSize.longSize
 
         if (longIndex > 0) {
             for (index in 0 until longIndex step 8) {
@@ -111,7 +113,7 @@ public abstract class ByteString(
         }
 
         if (byteOffset > 0) {
-            for (index in longIndex until longIndex + byteOffset) {
+            for (index in longIndex until totalLength) {
                 result = (-result.inv() * 13) xor getByte(index).toLong()
             }
         }

@@ -16,7 +16,6 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Model
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 import org.angproj.sec.util.ceilDiv
 
 public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize

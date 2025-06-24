@@ -17,7 +17,6 @@ package org.angproj.io.buf.mem
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 
 public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     public override val allocationSize: DataSize,

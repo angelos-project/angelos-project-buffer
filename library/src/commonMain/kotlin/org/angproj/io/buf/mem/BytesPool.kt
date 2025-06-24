@@ -16,7 +16,6 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 
 public abstract class BytesPool(
     allocationSize: DataSize, minSize: DataSize, maxSize: DataSize

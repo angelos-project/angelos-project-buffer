@@ -16,7 +16,6 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
 
 
 public object Default: MemoryManager<Bytes> {
@@ -30,5 +29,5 @@ public object Default: MemoryManager<Bytes> {
 
     override fun allocate(size: Int): Bytes = Bytes(this, ByteArray(size))
 
-    override fun recycle(segment: Bytes) { super.recycle(segment) }
+    override fun recycle(segment: Bytes) { /* Don't touch! */ }
 }

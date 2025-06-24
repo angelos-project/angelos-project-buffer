@@ -25,7 +25,7 @@ import org.angproj.io.buf.util.DataSize
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    return RootBlock(nativeHeap.allocArray<ByteVar>(size.size).toLong(), size)
+    return RootBlock(nativeHeap.allocArray<ByteVar>(size.toInt()).toLong(), size)
 }
 
 @OptIn(ExperimentalForeignApi::class)

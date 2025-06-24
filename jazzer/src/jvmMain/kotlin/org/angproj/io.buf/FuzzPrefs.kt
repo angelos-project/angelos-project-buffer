@@ -14,7 +14,6 @@
  */
 package org.angproj.io.buf
 
-import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 public abstract class FuzzPrefs {

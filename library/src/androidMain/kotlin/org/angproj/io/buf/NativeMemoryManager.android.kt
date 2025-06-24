@@ -32,7 +32,7 @@ internal object AnUnsafe{
 
 
 internal actual fun NativeMemoryManager.allocateRootBlock(size: DataSize): RootBlock {
-    return RootBlock(AnUnsafe.unsafe.allocateMemory(size.size.toLong()), size)
+    return RootBlock(AnUnsafe.unsafe.allocateMemory(size.toLong()), size)
 }
 
 internal actual fun NativeMemoryManager.releaseRootBlock(block: RootBlock) {
