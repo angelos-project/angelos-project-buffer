@@ -14,6 +14,8 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.seg.SegmentException
+
 /**
  * Interface for read access to a memory block.
  *
@@ -27,7 +29,7 @@ public interface ReadAccess {
      *
      * @param index the index of the byte to return
      * @return the byte at the specified index
-     * @throws IndexOutOfBoundsException if the index is out of bounds
+     * @throws SegmentException if the index is out of bounds
      */
     public  fun getByte(index: Int): Byte
 
@@ -36,7 +38,7 @@ public interface ReadAccess {
      *
      * @param index the index of the short to return
      * @return the short at the specified index
-     * @throws IndexOutOfBoundsException if the index is out of bounds
+     * @throws SegmentException if the index is out of bounds
      */
     public fun getShort(index: Int): Short
 
@@ -45,7 +47,7 @@ public interface ReadAccess {
      *
      * @param index the index of the int to return
      * @return the int at the specified index
-     * @throws IndexOutOfBoundsException if the index is out of bounds
+     * @throws SegmentException if the index is out of bounds
      */
     public fun getInt(index: Int): Int
 
@@ -54,7 +56,7 @@ public interface ReadAccess {
      *
      * @param index the index of the long to return
      * @return the long at the specified index
-     * @throws IndexOutOfBoundsException if the index is out of bounds
+     * @throws SegmentException if the index is out of bounds
      */
     public fun getLong(index: Int): Long
 }
