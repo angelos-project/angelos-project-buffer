@@ -16,6 +16,7 @@ package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureFeed
+import org.angproj.sec.util.TypeSize
 
 /**
  * Concrete implementation of [Segment] backed by a managed [LongArray].
@@ -46,50 +47,61 @@ public class Model(
 
     override fun getByte(index: Int): Byte {
         index.checkRangeByte<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.byteSize).toByte()
     }
 
     override fun getShort(index: Int): Short {
         index.checkRangeShort<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.shortSize).toShort()
     }
 
     override fun getInt(index: Int): Int {
         index.checkRangeInt<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.intSize).toInt()
     }
 
     override fun getLong(index: Int): Long {
         index.checkRangeLong<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.longSize)
     }
 
     override fun setByte(index: Int, value: Byte) {
         index.checkRangeByte<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value.toLong(), byteMask, TypeSize.byteSize)
     }
 
     override fun setShort(index: Int, value: Short) {
         index.checkRangeShort<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        data.shortSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value.toLong(), shortMask, TypeSize.shortSize)
     }
 
     override fun setInt(index: Int, value: Int) {
         index.checkRangeInt<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value.toLong(), intMask, TypeSize.intSize)
     }
 
     override fun setLong(index: Int, value: Long) {
         index.checkRangeLong<Unit>()
-        // Implementation here
-        TODO("Not yet implemented")
+        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value, longMask, TypeSize.longSize)
+    }
+
+    private inline fun <reified R: Any> LongArray.chunkGet(off: Int, idx: Int, size: Int): Long = ((
+            get(off) ushr (idx * TypeSize.longSize)) or if(idx > TypeSize.longSize - size) ((
+            get(off + 1) and (-1L shl ((idx - size) * TypeSize.longSize)).inv()) shl ((
+            TypeSize.longSize - idx) * TypeSize.longSize)) else 0)
+
+    private inline fun <reified R: Any> LongArray.chunkSet(off: Int, idx: Int, value: Long, mask: Long, size: Int) {
+        val pos = idx * TypeSize.longSize
+        set(off, (get(off) and (mask shl pos).inv()) or (value shl pos))
+        if(idx > TypeSize.longSize - size) set(off + 1, ((
+                get(off + 1) and (-1L shl ((idx - size) * TypeSize.longSize))) or (
+                value ushr ((TypeSize.longSize - idx) * TypeSize.longSize))))
+    }
+
+    private inline fun <reified R: Any> LongArray.shortSet(off: Int, idx: Int, value: Long, mask: Long, size: Int) {
+        val pos = idx * TypeSize.longSize
+        set(off, (get(off) and (mask shl pos).inv()) or (value shl pos))
+        if(idx > TypeSize.longSize - size) set(off + 1, ((get(off + 1) and 0xff.inv()) or (value ushr TypeSize.longSize)))
     }
 
     override fun dispose() {
@@ -98,5 +110,12 @@ public class Model(
             data[index] = value
         }
         memCtx.recycle(this)
+    }
+
+    public companion object {
+        public const val longMask: Long = -1
+        public const val intMask: Long = 0xFFFFFFFF
+        public const val shortMask: Long = 0xFFFF
+        public const val byteMask: Long = 0xFF
     }
 }
