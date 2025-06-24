@@ -17,6 +17,28 @@ package org.angproj.io.buf.seg
 import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureFeed
 
+/**
+ * Concrete implementation of [Segment] backed by a managed [LongArray].
+ *
+ * The `Model` class provides a fixed-size, cleanable byte segment that uses a [LongArray] as its underlying storage,
+ * enabling efficient access and manipulation of 64-bit values. It supports read and write operations for primitive types
+ * (byte, short, int, long) with bounds checking, and integrates with a [MemoryManager] for resource recycling and management.
+ *
+ * Key features:
+ * - Provides random access to the underlying long array, mapping byte-based indices to 64-bit storage.
+ * - Implements secure cleanup by overwriting the data with cryptographically secure random long values before recycling.
+ * - Supports explicit resource disposal via [dispose], which clears and recycles the segment.
+ * - Designed for use cases requiring managed, reusable, and securely cleanable memory segments with 64-bit alignment.
+ *
+ * @property memCtx The [MemoryManager] responsible for recycling and managing this segment instance.
+ * @property data The underlying [LongArray] that stores the segment's contents.
+ *
+ * @constructor Creates a new `Model` segment with the given memory manager and long array.
+ *
+ * @see org.angproj.io.buf.seg.Segment
+ * @see org.angproj.io.buf.mem.MemoryManager
+ * @see org.angproj.sec.SecureFeed
+ */
 public class Model(
     private val memCtx: MemoryManager<Model>,
     private val data: LongArray

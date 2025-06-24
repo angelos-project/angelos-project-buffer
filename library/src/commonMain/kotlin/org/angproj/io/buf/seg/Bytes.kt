@@ -17,7 +17,28 @@ package org.angproj.io.buf.seg
 import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureRandom
 
-
+/**
+ * Concrete implementation of [Segment] backed by a managed [ByteArray].
+ *
+ * The `Bytes` class provides a fixed-size, cleanable byte segment that uses a [ByteArray] as its underlying storage.
+ * It supports efficient read and write operations for primitive types (byte, short, int, long) with bounds checking,
+ * and integrates with a [MemoryManager] for resource recycling and management.
+ *
+ * Key features:
+ * - Provides random access to the underlying byte array with safe bounds checking for all supported types.
+ * - Implements secure cleanup by overwriting the data with cryptographically secure random bytes before recycling.
+ * - Supports explicit resource disposal via [dispose], which clears and recycles the segment.
+ * - Designed for use cases requiring managed, reusable, and securely cleanable memory segments.
+ *
+ * @property memCtx The [MemoryManager] responsible for recycling and managing this segment instance.
+ * @property data The underlying [ByteArray] that stores the segment's contents.
+ *
+ * @constructor Creates a new `Bytes` segment with the given memory manager and byte array.
+ *
+ * @see org.angproj.io.buf.seg.Segment
+ * @see org.angproj.io.buf.mem.MemoryManager
+ * @see org.angproj.sec.SecureRandom
+ */
 public class Bytes(
     private val memCtx: MemoryManager<Bytes>,
     private val data: ByteArray

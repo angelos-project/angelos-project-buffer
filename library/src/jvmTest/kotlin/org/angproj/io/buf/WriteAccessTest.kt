@@ -66,8 +66,8 @@ class WriteAccessTest {
     @Test
     fun `test setLong throws IndexOutOfBoundsException`() {
         val mock = mock<WriteAccess> {
-            on { setLong(eq(999), any()) } doThrow IndexOutOfBoundsException()
+            on { setLong(eq(789), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.setLong(999, 0L) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.setLong(789, 0L) }
     }
 }

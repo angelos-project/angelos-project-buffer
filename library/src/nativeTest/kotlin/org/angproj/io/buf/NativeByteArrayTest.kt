@@ -62,16 +62,7 @@ import kotlin.toRawBits
  * Tests both native and reversed byte order, comparing custom extension
  * functions with Kotlin/Native's built-in array operations to ensure consistency.
  *
- * @see org.angproj.io.buf.readShortAt
- * @see org.angproj.io.buf.writeShortAt
- * @see org.angproj.io.buf.readIntAt
- * @see org.angproj.io.buf.writeIntAt
- * @see org.angproj.io.buf.readLongAt
- * @see org.angproj.io.buf.writeLongAt
- * @see org.angproj.io.buf.readFloatAt
- * @see org.angproj.io.buf.writeFloatAt
- * @see org.angproj.io.buf.readDoubleAt
- * @see org.angproj.io.buf.writeDoubleAt
+ * @see org.angproj.io.buf.util.UtilityAware
  */
 @OptIn(ExperimentalNativeApi::class)
 class NativeByteArrayTest: UtilityAware {

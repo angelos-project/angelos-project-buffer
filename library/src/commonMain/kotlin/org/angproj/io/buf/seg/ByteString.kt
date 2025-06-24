@@ -24,6 +24,28 @@ import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.floorMod
 
 
+/**
+ * Abstract base class representing a fixed-size, limitable byte string segment with read and write access.
+ *
+ * The `ByteString` class provides a foundation for managing a sequence of bytes with a defined size and an adjustable limit.
+ * It implements [Limitable], [ReadAccess], and [WriteAccess], allowing for controlled access and modification of the underlying data.
+ *
+ * Key features:
+ * - Enforces bounds checking for byte, short, int, and long access to prevent out-of-bounds operations.
+ * - Allows the limit of accessible data to be adjusted within the range of the total size.
+ * - Supports secure randomization of the segment's memory using cryptographically secure sources.
+ *
+ * Subclasses must implement the abstract methods for reading and writing primitive values at specified indices.
+ *
+ * @property stringSize The total fixed size of the byte string segment.
+ * @property stringLimit The current limit up to which the segment can be accessed or modified.
+ *
+ * @constructor Creates a new `ByteString` with the specified size and optional initial limit.
+ *
+ * @see org.angproj.io.buf.util.Limitable
+ * @see org.angproj.io.buf.ReadAccess
+ * @see org.angproj.io.buf.WriteAccess
+ */
 public abstract class ByteString(
     protected val stringSize: Int,
     protected var stringLimit: Int = stringSize

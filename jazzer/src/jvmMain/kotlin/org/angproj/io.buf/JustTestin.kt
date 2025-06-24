@@ -42,7 +42,7 @@ public object JustTestinKt : FuzzPrefs() {
 
     @JvmStatic
     public fun main(args: Array<String>) {
-        BufMgr.withRam(DataSize._256M) {
+        BufMgr.withRam(DataSize._1G) {
             var time = measureTime { it.securelyRandomize() }
             println("Time taken to securely randomize: $time 1 GB of RAM")
         }

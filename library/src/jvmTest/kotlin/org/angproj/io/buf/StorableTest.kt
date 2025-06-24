@@ -126,32 +126,32 @@ class StorableTest {
     @Test
     fun `test storeLong throws IndexOutOfBoundsException`() {
         val mock = mock<Storable> {
-            on { storeLong(eq(999), any()) } doThrow IndexOutOfBoundsException()
+            on { storeLong(eq(789), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.storeLong(999, 0L) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.storeLong(789, 0L) }
     }
 
     @Test
     fun `test storeULong throws IndexOutOfBoundsException`() {
         val mock = mock<Storable> {
-            on { storeULong(eq(999), any()) } doThrow IndexOutOfBoundsException()
+            on { storeULong(eq(789), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.storeULong(999, 0uL) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.storeULong(789, 0uL) }
     }
 
     @Test
     fun `test storeFloat throws IndexOutOfBoundsException`() {
         val mock = mock<Storable> {
-            on { storeFloat(eq(999), any()) } doThrow IndexOutOfBoundsException()
+            on { storeFloat(eq(789), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.storeFloat(999, 0f) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.storeFloat(789, 0f) }
     }
 
     @Test
     fun `test storeDouble throws IndexOutOfBoundsException`() {
         val mock = mock<Storable> {
-            on { storeDouble(eq(999), any()) } doThrow IndexOutOfBoundsException()
+            on { storeDouble(eq(789), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.storeDouble(999, 0.0) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.storeDouble(789, 0.0) }
     }
 }

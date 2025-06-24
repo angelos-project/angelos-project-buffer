@@ -14,34 +14,8 @@
  */
 package org.angproj.io.buf.seg
 
-import org.angproj.io.buf.SegmentBlock
-import org.angproj.io.buf.TypePointer
-import org.angproj.io.buf.mem.MemoryManager
 
-
-/**
- * Concrete implementation of [Segment] backed by a native or direct memory segment.
- *
- * The `Memory` class provides a fixed-size, cleanable byte segment that uses a [SegmentBlock] as its underlying storage,
- * typically representing native or direct memory. It supports efficient read and write operations for primitive types
- * (byte, short, int, long) with bounds checking, and integrates with a [MemoryManager] for resource recycling and management.
- *
- * Key features:
- * - Provides random access to the underlying memory segment with safe bounds checking for all supported types.
- * - Implements secure cleanup by clearing and randomizing the memory contents before recycling.
- * - Supports explicit resource disposal via [dispose], which securely clears and recycles the segment.
- * - Exposes the native memory address through [address], enabling interoperability with low-level APIs.
- *
- * @property memCtx The [MemoryManager] responsible for recycling and managing this memory segment instance.
- * @property data The underlying [SegmentBlock] that stores the segment's contents, typically representing native memory.
- *
- * @constructor Creates a new `Memory` segment with the given memory manager and segment block.
- *
- * @see org.angproj.io.buf.seg.Segment
- * @see org.angproj.io.buf.mem.MemoryManager
- * @see org.angproj.io.buf.SegmentBlock
- */
-public class Memory(
+/*public class Memory(
     private val memCtx: MemoryManager<Memory>,
     private val data: SegmentBlock
 ) : Segment<Memory>(data.size) {
@@ -108,4 +82,4 @@ public class Memory(
     }
 
     override fun address(): TypePointer<*> = data.getPointer()
-}
+}*/

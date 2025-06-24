@@ -146,32 +146,32 @@ class RetrievableTest {
     @Test
     fun `test retrieveLong throws IndexOutOfBoundsException`() {
         val mock = mock<Retrievable> {
-            on { retrieveLong(eq(999)) } doThrow IndexOutOfBoundsException()
+            on { retrieveLong(eq(789)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveLong(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveLong(789) }
     }
 
     @Test
     fun `test retrieveULong throws IndexOutOfBoundsException`() {
         val mock = mock<Retrievable> {
-            on { retrieveULong(eq(999)) } doThrow IndexOutOfBoundsException()
+            on { retrieveULong(eq(789)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveULong(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveULong(789) }
     }
 
     @Test
     fun `test retrieveFloat throws IndexOutOfBoundsException`() {
         val mock = mock<Retrievable> {
-            on { retrieveFloat(eq(999)) } doThrow IndexOutOfBoundsException()
+            on { retrieveFloat(eq(789)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveFloat(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveFloat(789) }
     }
 
     @Test
     fun `test retrieveDouble throws IndexOutOfBoundsException`() {
         val mock = mock<Retrievable> {
-            on { retrieveDouble(eq(999)) } doThrow IndexOutOfBoundsException()
+            on { retrieveDouble(eq(789)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveDouble(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.retrieveDouble(789) }
     }
 }

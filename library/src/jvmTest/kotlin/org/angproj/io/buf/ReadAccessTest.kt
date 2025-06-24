@@ -70,8 +70,8 @@ class ReadAccessTest {
     @Test
     fun `test getLong throws IndexOutOfBoundsException`() {
         val mock = mock<ReadAccess> {
-            on { getLong(eq(999)) } doThrow IndexOutOfBoundsException()
+            on { getLong(eq(789)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<IndexOutOfBoundsException> { mock.getLong(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.getLong(789) }
     }
 }

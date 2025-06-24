@@ -20,6 +20,29 @@ import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.toInt
 import org.angproj.io.buf.util.unsupported
 
+/**
+ * Abstract base class representing a fixed-size, cleanable byte segment with read and write access.
+ *
+ * The `Segment` class extends [ByteString] and implements [Cleanable], providing a foundation for managing
+ * a segment of bytes with a defined size and explicit resource management. It is designed for use cases
+ * where memory segments or buffers require both controlled access and explicit cleanup.
+ *
+ * Key features:
+ * - Enforces bounds checking for primitive access to prevent out-of-bounds operations.
+ * - Supports explicit resource disposal via [dispose], which must be implemented by subclasses.
+ * - Provides a method to obtain the native memory address of the segment, if supported.
+ * - Includes a singleton [nullSegment] representing an empty or uninitialized segment.
+ *
+ * Type Parameters:
+ * @param E The concrete type of the segment, enabling type-safe operations in subclasses.
+ *
+ * @property segSize The total fixed size of the segment in bytes.
+ *
+ * @constructor Creates a new `Segment` with the specified size.
+ *
+ * @see org.angproj.io.buf.seg.ByteString
+ * @see org.angproj.io.buf.util.Cleanable
+ */
 public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable {
 
     /**

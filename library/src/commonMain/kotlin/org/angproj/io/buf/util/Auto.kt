@@ -14,9 +14,39 @@
  */
 package org.angproj.io.buf.util
 
-public interface Auto: View, Closeable {
-}
+/**
+ * Represents an automatic memory resource that combines the capabilities of a [View] and [Closeable].
+ *
+ * Implementations of this interface provide a view over a memory region and support explicit resource management
+ * via the [close] method. The [Auto] interface is intended for use with memory buffers or similar resources
+ * that require deterministic cleanup.
+ *
+ * Typical usage is to use the [useWith] extension function to ensure the resource is properly closed after use.
+ *
+ * @see View for view-related operations.
+ * @see Closeable for resource management.
+ */
+public interface Auto : View, Closeable
 
+/**
+ * Executes the given [block] function on this [Auto] resource and closes it if it represents a memory resource.
+ *
+ * This function ensures that the [Auto] resource is properly closed after the [block] is executed,
+ * but only if the resource is not a view (`!isView()`) and is a memory resource (`isMem()`).
+ * It is intended to be used for safe and deterministic cleanup of memory resources.
+ *
+ * Example usage:
+ * ```kotlin
+ *     myAutoResource.useWith { resource ->
+ *         // Work with the resource
+ *     }
+ *     // Resource is closed if appropriate
+ * ```
+ * @param block The function to execute with this [Auto] resource.
+ * @return The result of [block] function.
+ * @see Auto
+ * @see Closeable
+ */
 public inline fun<reified T: Auto, R> T.useWith(block: (T) -> R
 ): R {
    return try {
