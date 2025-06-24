@@ -30,6 +30,5 @@ public object Default: MemoryManager<Bytes> {
 
     override fun allocate(size: Int): Bytes = Bytes(this, ByteArray(size))
 
-
-    override fun recycle(segment: Bytes) { segment }
+    override fun recycle(segment: Bytes) { super.recycle(segment) }
 }

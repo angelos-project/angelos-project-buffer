@@ -17,6 +17,13 @@ package org.angproj.io.buf.mem
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.DataSize
 
+/**
+ * A memory manager is responsible for allocating and recycling segments of memory.
+ * It provides methods to allocate segments of a specific size or the default size,
+ * and to recycle segments when they are no longer needed.
+ *
+ * @param S The type of segment managed by this memory manager.
+ */
 public interface MemoryManager<S: Segment<S>> {
 
     public val allocationSize: DataSize

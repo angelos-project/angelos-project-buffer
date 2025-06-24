@@ -53,5 +53,5 @@ public object BufMgr {
      * @param size The size of the binary in bytes.
      * @return A new [Binary] instance with the allocated memory.
      */
-    public fun<R> withRam(size: DataSize, block: (Binary) -> R): R = Binary(SingleMemoryPool(size, size).allocate()).useWith(block)
+    public fun<R> withRam(size: DataSize, block: (Binary) -> R): R = Binary(SingleMemoryPool(size).allocate()).useWith(block)
 }

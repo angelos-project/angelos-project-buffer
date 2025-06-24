@@ -20,6 +20,7 @@ import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
 import org.angproj.sec.SecureFeed
 import org.angproj.sec.SecureRandom
+import org.angproj.sec.rand.InitializationVector
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.floorMod
 
@@ -97,6 +98,26 @@ public abstract class ByteString(
     abstract override fun setInt(index: Int, value: Int)
 
     abstract override fun setLong(index: Int, value: Long)
+
+    public fun checkSum(): Int {
+        var result: Long = InitializationVector.IV_CA96.iv
+        val longIndex = limit ushr 3
+        val byteOffset = limit and 0x7
+
+        if (longIndex > 0) {
+            for (index in 0 until longIndex step 8) {
+                result = (-result.inv() * 7) xor getLong(index)
+            }
+        }
+
+        if (byteOffset > 0) {
+            for (index in longIndex until longIndex + byteOffset) {
+                result = (-result.inv() * 13) xor getByte(index).toLong()
+            }
+        }
+
+        return (result ushr 32).toInt() xor result.toInt()
+    }
 
     public fun securelyRandomize() {
         SecureFeed.exportLongs(this, 0, limit / TypeSize.longSize) { index, value ->
