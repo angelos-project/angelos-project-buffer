@@ -14,8 +14,6 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.seg.SegmentException
-
 /**
  * Interface for write access to a memory block.
  *
@@ -29,34 +27,34 @@ public interface WriteAccess {
      *
      * @param index The index at which to set the value.
      * @param value The byte value to set.
-     * @throws SegmentException if the index is out of bounds
+     * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setByte(index: Int, value: Byte): Unit
+    public fun setByte(index: Int, value: Byte)
 
     /**
      * Sets the value at the specified index to the given short value.
      *
      * @param index The index at which to set the value.
      * @param value The short value to set.
-     * @throws SegmentException if the index is out of bounds
+     * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setShort(index: Int, value: Short): Unit
+    public fun setShort(index: Int, value: Short)
 
     /**
      * Sets the value at the specified index to the given integer value.
      *
      * @param index The index at which to set the value.
      * @param value The integer value to set.
-     * @throws SegmentException if the index is out of bounds
+     * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setInt(index: Int, value: Int): Unit
+    public fun setInt(index: Int, value: Int)
 
     /**
      * Sets the value at the specified index to the given long value.
      *
      * @param index The index at which to set the value.
      * @param value The long value to set.
-     * @throws SegmentException if the index is out of bounds
+     * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setLong(index: Int, value: Long): Unit
+    public fun setLong(index: Int, value: Long)
 }

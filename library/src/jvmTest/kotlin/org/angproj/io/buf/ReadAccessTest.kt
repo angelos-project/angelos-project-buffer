@@ -1,7 +1,7 @@
 package org.angproj.io.buf
 
-import org.angproj.io.buf.seg.SegmentException
 import org.mockito.kotlin.*
+import kotlin.IndexOutOfBoundsException
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
@@ -44,34 +44,34 @@ class ReadAccessTest {
     }
 
     @Test
-    fun `test getByte throws SegmentException`() {
+    fun `test getByte throws IndexOutOfBoundsException`() {
         val mock = mock<ReadAccess> {
-            on { getByte(eq(-1)) } doThrow SegmentException("")
+            on { getByte(eq(-1)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.getByte(-1) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.getByte(-1) }
     }
 
     @Test
-    fun `test getShort throws SegmentException`() {
+    fun `test getShort throws IndexOutOfBoundsException`() {
         val mock = mock<ReadAccess> {
-            on { getShort(eq(100)) } doThrow SegmentException("")
+            on { getShort(eq(100)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.getShort(100) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.getShort(100) }
     }
 
     @Test
-    fun `test getInt throws SegmentException`() {
+    fun `test getInt throws IndexOutOfBoundsException`() {
         val mock = mock<ReadAccess> {
-            on { getInt(eq(-5)) } doThrow SegmentException("")
+            on { getInt(eq(-5)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.getInt(-5) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.getInt(-5) }
     }
 
     @Test
-    fun `test getLong throws SegmentException`() {
+    fun `test getLong throws IndexOutOfBoundsException`() {
         val mock = mock<ReadAccess> {
-            on { getLong(eq(999)) } doThrow SegmentException("")
+            on { getLong(eq(999)) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.getLong(999) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.getLong(999) }
     }
 }

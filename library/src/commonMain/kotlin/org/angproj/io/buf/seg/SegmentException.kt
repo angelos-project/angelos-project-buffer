@@ -19,4 +19,4 @@ package org.angproj.io.buf.seg
  *
  * @param msg The detail message explaining the exception.
  */
-public class SegmentException(msg: String) : RuntimeException(msg)
+public class SegmentException(msg: String) : IndexOutOfBoundsException(msg)

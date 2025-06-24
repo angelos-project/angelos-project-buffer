@@ -1,11 +1,11 @@
 package org.angproj.io.buf
 
-import org.angproj.io.buf.seg.SegmentException
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import kotlin.IndexOutOfBoundsException
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
@@ -40,34 +40,34 @@ class WriteAccessTest {
     }
 
     @Test
-    fun `test setByte throws SegmentException`() {
+    fun `test setByte throws IndexOutOfBoundsException`() {
         val mock = mock<WriteAccess> {
-            on { setByte(eq(-1), any()) } doThrow SegmentException("")
+            on { setByte(eq(-1), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.setByte(-1, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.setByte(-1, 0) }
     }
 
     @Test
-    fun `test setShort throws SegmentException`() {
+    fun `test setShort throws IndexOutOfBoundsException`() {
         val mock = mock<WriteAccess> {
-            on { setShort(eq(100), any()) } doThrow SegmentException("")
+            on { setShort(eq(100), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.setShort(100, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.setShort(100, 0) }
     }
 
     @Test
-    fun `test setInt throws SegmentException`() {
+    fun `test setInt throws IndexOutOfBoundsException`() {
         val mock = mock<WriteAccess> {
-            on { setInt(eq(-5), any()) } doThrow SegmentException("")
+            on { setInt(eq(-5), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.setInt(-5, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.setInt(-5, 0) }
     }
 
     @Test
-    fun `test setLong throws SegmentException`() {
+    fun `test setLong throws IndexOutOfBoundsException`() {
         val mock = mock<WriteAccess> {
-            on { setLong(eq(999), any()) } doThrow SegmentException("")
+            on { setLong(eq(999), any()) } doThrow IndexOutOfBoundsException()
         }
-        assertFailsWith<SegmentException> { mock.setLong(999, 0L) }
+        assertFailsWith<IndexOutOfBoundsException> { mock.setLong(999, 0L) }
     }
 }
