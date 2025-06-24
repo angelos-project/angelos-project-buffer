@@ -3,23 +3,23 @@ package org.angproj.io.buf
 import kotlin.test.*
 
 @Suppress("UNCHECKED_CAST")
-class ShortBufferTest : AbstractArrayBufferTest<Short, ShortBuffer>() {
+class IntBufferTest : AbstractArrayBufferTest<Int, IntBuffer>() {
 
 
     @Test
     fun testBuffer() {
-        testBuffer(Short.MIN_VALUE, Short.MAX_VALUE)
+        testBuffer(Int.MIN_VALUE, Int.MAX_VALUE)
     }
 
     override fun <E> castToType(value: Long): E {
-        return value.toShort() as E
+        return value.toInt() as E
     }
 
     override fun <E> castToLong(value: E): Long {
-        return (value as Short).toLong()
+        return (value as Int).toLong()
     }
 
     override fun <T> asBuffer(bin: Binary): T {
-        return bin.asShortBuffer() as T
+        return bin.asIntBuffer() as T
     }
 }

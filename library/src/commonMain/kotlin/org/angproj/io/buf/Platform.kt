@@ -14,12 +14,12 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.Platform.VARIANT
 import org.angproj.io.buf.Platform.BITNESS
 import org.angproj.io.buf.Platform.CPU
 import org.angproj.io.buf.Platform.ENDIAN
-import org.angproj.io.buf.Platform.LIB_OS
 import org.angproj.io.buf.Platform.GUI_OS
+import org.angproj.io.buf.Platform.LIB_OS
+import org.angproj.io.buf.Platform.VARIANT
 
 
 public object Platform {

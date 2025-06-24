@@ -15,10 +15,10 @@
 package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.TypePointer
-import org.angproj.io.buf.util.unsupported
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.toInt
+import org.angproj.io.buf.util.unsupported
 
 public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable {
 

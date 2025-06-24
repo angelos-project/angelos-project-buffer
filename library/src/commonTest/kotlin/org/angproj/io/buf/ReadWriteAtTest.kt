@@ -14,6 +14,15 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.TestInformationStub.refDouble
+import org.angproj.io.buf.TestInformationStub.refFloat
+import org.angproj.io.buf.TestInformationStub.refInt
+import org.angproj.io.buf.TestInformationStub.refLong
+import org.angproj.io.buf.TestInformationStub.refShort
+import org.angproj.io.buf.TestInformationStub.refUInt
+import org.angproj.io.buf.TestInformationStub.refULong
+import org.angproj.io.buf.TestInformationStub.refUShort
+import org.angproj.io.buf.util.UtilityAware
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -24,21 +33,7 @@ import kotlin.test.assertTrue
  *
  * @constructor Create empty Read write at test
  */
-/*class ReadWriteAtTest {
-
-    private val refChar: Char = 'Ö'
-
-    private val refShort: Short = 0B1010101_10101010
-    private val refUShort: UShort = 0B10101010_10101010u
-
-    private val refInt: Int = 0B1010101_10101010_10101010_10101010
-    private val refUInt: UInt = 0B10101010_10101010_10101010_10101010u
-
-    private val refLong: Long = 0B1010101_10101010_10101010_10101010_10101010_10101010_10101010_10101010L
-    private val refULong: ULong = 0B10101010_10101010_10101010_10101010_10101010_10101010_10101010_10101010u
-
-    private val refFloat: Float = 23.43585F
-    private val refDouble: Double = -0.892384774029876
+class ReadWriteAtTest : UtilityAware {
 
     /**
      * Writing and reading of Short to/from ByteArray.
@@ -60,17 +55,6 @@ import kotlin.test.assertTrue
         val array = ByteArray(8)
         array.writeUShortAt(0, refUShort)
         assertEquals(array.readUShortAt(0), refUShort)
-    }
-
-    /**
-     * Writing and reading of Char to/from ByteArray.
-     *
-     */
-    @Test
-    fun char() {
-        val array = ByteArray(8)
-        array.writeCharAt(0, refChar)
-        assertEquals(array.readCharAt(0), refChar)
     }
 
     /**
@@ -218,4 +202,4 @@ import kotlin.test.assertTrue
         value = value.flipOffFlag7()
         assertFalse(value.checkFlag7())
     }
-}*/
+}

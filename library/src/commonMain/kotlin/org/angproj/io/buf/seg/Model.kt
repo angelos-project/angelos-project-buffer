@@ -16,7 +16,6 @@ package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.mem.MemoryManager
 import org.angproj.sec.SecureFeed
-import kotlin.text.set
 
 public class Model(
     private val memCtx: MemoryManager<Model>,

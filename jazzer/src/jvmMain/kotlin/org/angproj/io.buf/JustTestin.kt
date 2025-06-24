@@ -16,6 +16,9 @@ package org.angproj.io.buf
 
 import com.code_intelligence.jazzer.api.FuzzedDataProvider
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.toInt
+import org.angproj.sec.SecureRandom
+import kotlin.random.Random
 import kotlin.test.assertEquals
 import kotlin.time.measureTime
 
@@ -39,8 +42,8 @@ public object JustTestinKt : FuzzPrefs() {
 
     @JvmStatic
     public fun main(args: Array<String>) {
-        BufMgr.withRam(DataSize._1G) {
-            val time = measureTime { it.asBinary().securelyRandomize() }
+        BufMgr.withRam(DataSize._256M) {
+            var time = measureTime { it.securelyRandomize() }
             println("Time taken to securely randomize: $time 1 GB of RAM")
         }
     }

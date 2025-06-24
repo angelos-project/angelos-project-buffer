@@ -1,59 +1,40 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.SegmentException
+import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.toInt
+import org.angproj.io.buf.util.useWith
 import kotlin.test.*
 
+abstract class AbstractArrayBufferTest<E, T: ArrayBuffer<E>> {
 
-abstract class AbstractArrayBufferTest<T, E: ArrayBuffer<T>> {
+    abstract fun<E> castToType(value: Long): E
+    abstract fun<E> castToLong(value: E): Long
+    abstract fun<T> asBuffer(bin: Binary): T
 
-    protected val bufferSize: Int = 47
-    protected lateinit var buffer: E
-    protected lateinit var testValues: List<T>
+    fun<E> testBuffer(minVal: E, maxVal: E){
+        BufMgr.bin(DataSize._1K.toInt()).useWith {
+            val buffer: ArrayBuffer<E> = asBuffer(it)
 
-    abstract fun createBuffer(size: Int): E
-    abstract fun createTestValues(): List<T> // 0, 1, 3, MID, <neg>, MAX
+            buffer.forEachIndexed { index, value ->
+                buffer[index] = castToType(index * castToLong(maxVal))
+            }
 
-    @BeforeTest
-    fun setup() {
-        buffer = createBuffer(bufferSize)
-        testValues = createTestValues()
+            buffer.forEachIndexed { index, value ->
+                assertEquals(castToType(index * castToLong(maxVal)), buffer[index])
+            }
 
-        check(testValues.size >= 6) { "Test values must contain at least two elements." }
-    }
+            assertFailsWith<SegmentException> { buffer[buffer.size] = minVal }
+            assertFailsWith<SegmentException> { buffer[buffer.size] }
+            assertFailsWith<SegmentException> { buffer[-1] = maxVal }
+            assertFailsWith<SegmentException> { buffer[-1] }
 
-    @Test
-    fun testSetAndGet() {
-        buffer.set(0, 123)
-        buffer.set(1, -456)
-        buffer.set(7, 32767)
-        assertEquals(123, buffer.get(0))
-        assertEquals(-456, buffer.get(1))
-        assertEquals(32767, buffer.get(7))
-    }
+            assertEquals(buffer.limit, buffer.size)
+            assertEquals(buffer.capacity, DataSize._1K.toInt())
 
-    @Test
-    fun testOverwrite() {
-
-        buffer.set(2, 100)
-        assertEquals(100, buffer.get(2))
-        buffer.set(2, 200)
-        assertEquals(200, buffer.get(2))
-    }
-
-    @Test
-    fun testBoundary() {
-
-        buffer.set(0, testValues[0])
-        buffer.set(buffer.size - 1, testValues[1])
-        assertEquals(1, buffer.get(0))
-        assertEquals(2, buffer.get(buffer.size - 1))
-    }
-
-    @Test
-    fun testOutOfBounds() {
-        assertFailsWith<SegmentException> { buffer.get(-1) }
-        assertFailsWith<SegmentException> { buffer.get(buffer.size) }
-        assertFailsWith<SegmentException> { buffer.set(-1, testValues[0]) }
-        assertFailsWith<SegmentException> { buffer.set(buffer.size, testValues[0]) }
+            assertFalse { buffer.isNull() }
+            assertTrue { buffer.isView() }
+            assertFalse { buffer.isMem() }
+        }
     }
 }

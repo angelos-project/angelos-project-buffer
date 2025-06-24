@@ -56,7 +56,7 @@ public abstract class ArrayBuffer<E> protected constructor(
 
 private fun ArrayBuffer.Companion.createNullBuffer(): ArrayBuffer<*> {
     return object : ArrayBuffer<Nothing>(
-        Segment.nullSegment, false, 0
+        Segment.nullSegment, false, Int.MIN_VALUE
     ) {
         override fun get(index: Int): Nothing { unsupported() }
         override fun set(index: Int, value: Nothing) { unsupported() }

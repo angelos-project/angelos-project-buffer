@@ -17,7 +17,7 @@ package org.angproj.io.buf.seg
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.mem.MemoryManager
-import org.angproj.sec.SecureFeed
+
 
 public class Memory(
     private val memCtx: MemoryManager<Memory>,

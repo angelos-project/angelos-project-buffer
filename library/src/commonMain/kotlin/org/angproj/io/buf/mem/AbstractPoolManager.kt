@@ -18,7 +18,6 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.toInt
-import kotlin.collections.set
 
 public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     public override val allocationSize: DataSize,
