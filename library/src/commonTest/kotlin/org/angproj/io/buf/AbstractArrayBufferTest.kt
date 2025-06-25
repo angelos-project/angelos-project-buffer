@@ -1,40 +1,62 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.SegmentException
-import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
-import org.angproj.io.buf.util.useWith
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
-abstract class AbstractArrayBufferTest<E, T: ArrayBuffer<E>> {
+abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() {
 
-    abstract fun<E> castToType(value: Long): E
-    abstract fun<E> castToLong(value: E): Long
-    abstract fun<T> asBuffer(bin: Binary): T
+    protected val capValue: Int = 128
+    protected abstract val refValue: T
 
-    fun<E> testBuffer(minVal: E, maxVal: E){
-        BufMgr.bin(DataSize._1K.toInt()).useWith {
-            val buffer: ArrayBuffer<E> = asBuffer(it)
+    abstract override fun setInput(): ArrayBuffer<T>
 
-            buffer.forEachIndexed { index, value ->
-                buffer[index] = castToType(index * castToLong(maxVal))
-            }
+    @Test
+    fun getCapacity() { assertEquals(setInput().capacity, capValue) }
 
-            buffer.forEachIndexed { index, value ->
-                assertEquals(castToType(index * castToLong(maxVal)), buffer[index])
-            }
+    @Test
+    fun getLimit() {
+        val buf = setInput()
+        assertEquals(buf.limit, buf.size)
+    }
 
-            assertFailsWith<SegmentException> { buffer[buffer.size] = minVal }
-            assertFailsWith<SegmentException> { buffer[buffer.size] }
-            assertFailsWith<SegmentException> { buffer[-1] = maxVal }
-            assertFailsWith<SegmentException> { buffer[-1] }
+    @Test
+    fun getIndices() {
+        val lb = setInput()
+        val i = lb.indices
+        assertEquals(i.first, 0)
+        assertEquals(i.last, lb.limit-1)
+    }
 
-            assertEquals(buffer.limit, buffer.size)
-            assertEquals(buffer.capacity, DataSize._1K.toInt())
+    @Test
+    fun getLastIndex() {
+        val lb = setInput()
+        assertEquals(lb.lastIndex, lb.limit-1) }
 
-            assertFalse { buffer.isNull() }
-            assertTrue { buffer.isView() }
-            assertFalse { buffer.isMem() }
-        }
+    @Test
+    fun testGetSet() {
+        val lb = setInput()
+        lb.forEach { assertEquals(it, refValue) }
+
+        assertFailsWith<SegmentException> { lb[-1] }
+        assertFailsWith<SegmentException> { lb[-1] = refValue }
+
+        assertFailsWith<SegmentException> { lb[lb.limit] }
+        assertFailsWith<SegmentException> { lb[lb.limit] = refValue }
     }
 }

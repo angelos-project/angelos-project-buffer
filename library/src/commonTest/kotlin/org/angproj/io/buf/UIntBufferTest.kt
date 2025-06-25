@@ -1,25 +1,39 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@Suppress("UNCHECKED_CAST")
-class UIntBufferTest : AbstractArrayBufferTest<UInt, UIntBuffer>() {
 
+class UIntBufferTest: AbstractArrayBufferTest<UInt>() {
+
+    override val refValue: UInt = TestInformationStub.refUInt
+
+    override fun setInput(): UIntBuffer {
+        val lb = BufMgr.bin(capValue).asUIntBuffer()
+        (0 until lb.limit).forEach {
+            lb[it] = refValue
+        }
+        return lb
+    }
 
     @Test
-    fun testBuffer() {
-        testBuffer(UInt.MIN_VALUE, UInt.MAX_VALUE)
-    }
-
-    override fun <E> castToType(value: Long): E {
-        return value.toUInt() as E
-    }
-
-    override fun <E> castToLong(value: E): Long {
-        return (value as UInt).toLong()
-    }
-
-    override fun <T> asBuffer(bin: Binary): T {
-        return bin.asUIntBuffer() as T
+    fun testNullByteBuffer() {
+        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertFalse(setInput().isNull())
     }
 }

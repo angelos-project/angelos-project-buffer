@@ -1,25 +1,39 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@Suppress("UNCHECKED_CAST")
-class DoubleBufferTest : AbstractArrayBufferTest<Double, DoubleBuffer>() {
 
+class DoubleBufferTest: AbstractArrayBufferTest<Double>() {
+
+    override val refValue: Double = TestInformationStub.refDouble
+
+    override fun setInput(): DoubleBuffer {
+        val lb = BufMgr.bin(capValue).asDoubleBuffer()
+        (0 until lb.limit).forEach {
+            lb[it] = refValue
+        }
+        return lb
+    }
 
     @Test
-    fun testBuffer() {
-        testBuffer(Double.MIN_VALUE, Double.MAX_VALUE)
-    }
-
-    override fun <E> castToType(value: Long): E {
-        return value.toDouble() as E
-    }
-
-    override fun <E> castToLong(value: E): Long {
-        return (value as Double).toLong()
-    }
-
-    override fun <T> asBuffer(bin: Binary): T {
-        return bin.asDoubleBuffer() as T
+    fun testNullByteBuffer() {
+        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertFalse(setInput().isNull())
     }
 }

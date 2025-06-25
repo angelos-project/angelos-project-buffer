@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.dokka)
-    jacoco
+    alias(libs.plugins.kover)
 }
 
 group = "org.angproj.io.buf"
@@ -150,7 +150,7 @@ tasks.dokkaHtml {
     }
 }
 
-jacoco {
+/*jacoco {
     toolVersion = "0.8.12"
     reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
 }
@@ -183,5 +183,11 @@ tasks {
             csv.required.set(true)
             html.required.set(true)
         }
+    }
+}*/
+
+kover {
+    reports {
+
     }
 }

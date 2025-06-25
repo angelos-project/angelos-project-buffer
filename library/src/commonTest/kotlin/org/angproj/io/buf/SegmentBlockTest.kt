@@ -1,9 +1,25 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
 import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.util.DataSize
-import org.angproj.io.buf.util.toInt
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class SegmentBlockTest {
     private val dataSize = DataSize._1K // Define the data size for the segment block

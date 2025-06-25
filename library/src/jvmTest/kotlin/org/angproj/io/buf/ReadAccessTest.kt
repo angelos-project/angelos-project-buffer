@@ -1,7 +1,6 @@
 package org.angproj.io.buf
 
 import org.mockito.kotlin.*
-import kotlin.IndexOutOfBoundsException
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 

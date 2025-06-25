@@ -1,25 +1,39 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@Suppress("UNCHECKED_CAST")
-class UShortBufferTest : AbstractArrayBufferTest<UShort, UShortBuffer>() {
 
+class UShortBufferTest: AbstractArrayBufferTest<UShort>() {
+
+    override val refValue: UShort = TestInformationStub.refUShort
+
+    override fun setInput(): UShortBuffer {
+        val lb = BufMgr.bin(capValue).asUShortBuffer()
+        (0 until lb.limit).forEach {
+            lb[it] = refValue
+        }
+        return lb
+    }
 
     @Test
-    fun testBuffer() {
-        testBuffer(UShort.MIN_VALUE, UShort.MAX_VALUE)
-    }
-
-    override fun <E> castToType(value: Long): E {
-        return value.toUShort() as E
-    }
-
-    override fun <E> castToLong(value: E): Long {
-        return (value as UShort).toLong()
-    }
-
-    override fun <T> asBuffer(bin: Binary): T {
-        return bin.asUShortBuffer() as T
+    fun testNullByteBuffer() {
+        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertFalse(setInput().isNull())
     }
 }

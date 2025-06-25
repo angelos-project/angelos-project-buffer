@@ -99,26 +99,19 @@ public abstract class ByteString(
 
     abstract override fun setLong(index: Int, value: Long)
 
-    public fun checkSum(): Int {
-        var result: Long = InitializationVector.IV_CA96.iv
+    public fun checkSum(seed: Long = 0): Long {
+        var result: Long = InitializationVector.IV_CA96.iv xor seed
+        var pos = 0
 
-        val totalLength = limit
-        val longIndex = totalLength / TypeSize.longSize
-        val byteOffset = totalLength % TypeSize.longSize
-
-        if (longIndex > 0) {
-            for (index in 0 until longIndex step 8) {
-                result = (-result.inv() * 7) xor getLong(index)
-            }
+        repeat(limit.floorDiv(TypeSize.longSize)) {
+            result = (-result.inv() * 5) xor getLong(pos)
+            pos += TypeSize.longSize
+        }
+        repeat(limit.floorMod(TypeSize.longSize)) {
+            result = (-result.inv() * 13) xor getByte(pos++).toLong()
         }
 
-        if (byteOffset > 0) {
-            for (index in longIndex until totalLength) {
-                result = (-result.inv() * 13) xor getByte(index).toLong()
-            }
-        }
-
-        return (result ushr 32).toInt() xor result.toInt()
+        return result
     }
 
     public fun securelyRandomize() {

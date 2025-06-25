@@ -1,7 +1,11 @@
 package org.angproj.io.buf.util
 
-import kotlin.test.*
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class AutoTest {
 

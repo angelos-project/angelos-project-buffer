@@ -23,9 +23,8 @@ import org.angproj.io.buf.TestInformationStub.refLong
 import org.angproj.io.buf.TestInformationStub.refShort
 import org.angproj.io.buf.util.UtilityAware
 import java.nio.ByteOrder
-import java.nio.ByteBuffer as JavaByteBuffer
 import kotlin.test.Test
-import kotlin.toRawBits
+import java.nio.ByteBuffer as JavaByteBuffer
 
 
 /**

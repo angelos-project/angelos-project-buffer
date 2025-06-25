@@ -1,25 +1,39 @@
+/**
+ * Copyright (c) 2024-2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@Suppress("UNCHECKED_CAST")
-class UByteBufferTest : AbstractArrayBufferTest<UByte, UByteBuffer>() {
 
+class UByteBufferTest: AbstractArrayBufferTest<UByte>() {
+
+    override val refValue: UByte = TestInformationStub.refUByte
+
+    override fun setInput(): UByteBuffer {
+        val lb = BufMgr.bin(capValue).asUByteBuffer()
+        (0 until lb.limit).forEach {
+            lb[it] = refValue
+        }
+        return lb
+    }
 
     @Test
-    fun testBuffer() {
-        testBuffer(UByte.MIN_VALUE, UByte.MAX_VALUE)
-    }
-
-    override fun <E> castToType(value: Long): E {
-        return value.toUByte() as E
-    }
-
-    override fun <E> castToLong(value: E): Long {
-        return (value as UByte).toLong()
-    }
-
-    override fun <T> asBuffer(bin: Binary): T {
-        return bin.asUByteBuffer() as T
+    fun testNullByteBuffer() {
+        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertFalse(setInput().isNull())
     }
 }

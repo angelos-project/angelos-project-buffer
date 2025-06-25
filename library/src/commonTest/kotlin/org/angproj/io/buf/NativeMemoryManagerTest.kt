@@ -17,9 +17,9 @@ package org.angproj.io.buf
 import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.util.DataSize
 import kotlin.test.Test
-import kotlin.test.assertSame
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertSame
 
 
 class NativeMemoryManagerTest {
