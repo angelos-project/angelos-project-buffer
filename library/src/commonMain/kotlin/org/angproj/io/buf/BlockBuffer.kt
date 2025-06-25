@@ -46,4 +46,12 @@ public abstract class BlockBuffer internal constructor(
     }
 
     internal inline fun <reified E : Any> remaining(position: Int): Int = segment.limit - position
+
+    override fun hashCode(): Int {
+        var result = segment.hashCode()
+        result = 31 * result + size
+        result = 31 * result + limit
+        result = 31 * result + capacity
+        return result
+    }
 }

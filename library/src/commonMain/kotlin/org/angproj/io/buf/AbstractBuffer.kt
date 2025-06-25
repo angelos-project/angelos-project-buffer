@@ -32,7 +32,7 @@ import org.angproj.io.buf.util.UtilityAware
  */
 public abstract class AbstractBuffer internal constructor(
     internal val segment: Segment<*>, protected val view: Boolean = false
-) : UtilityAware, Auto, Comparable<Buffer> {
+) : UtilityAware, Auto, Comparable<AbstractBuffer> {
 
     /**
      * Gives the max bytes capacity of the buffer
@@ -60,11 +60,11 @@ public abstract class AbstractBuffer internal constructor(
     public override fun equals(other: Any?): Boolean {
         if(this === other) return true
         if(other == null || this::class != other::class) return false
-        other as Buffer
+        other as AbstractBuffer
         return compareTo(other) == 0
     }
 
     public override fun hashCode(): Int = segment.hashCode()
 
-    public override operator fun compareTo(other: Buffer): Int { return hashCode() - other.hashCode() }
+    public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
 }

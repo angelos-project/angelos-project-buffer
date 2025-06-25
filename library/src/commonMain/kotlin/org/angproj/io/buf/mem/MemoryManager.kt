@@ -16,6 +16,7 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.unsupported
 
 /**
  * A memory manager is responsible for allocating and recycling segments of memory.
@@ -34,4 +35,24 @@ public interface MemoryManager<S: Segment<S>> {
     public fun allocate(size: Int): S
 
     public fun recycle(segment: S)
+
+    public companion object {
+        /**
+         * Creates a null memory manager that does not allocate any memory.
+         * This is useful for cases where no memory management is needed.
+         */
+        public val nullManager : MemoryManager<*> by lazy {
+            createNullManager()
+        }
+    }
+}
+
+private fun MemoryManager.Companion.createNullManager(): MemoryManager<*> = object : MemoryManager<Nothing> {
+    override val allocationSize: DataSize = DataSize.UNKNOWN
+    override val segmentSize: DataSize = DataSize.UNKNOWN
+
+    override fun allocate(): Nothing = unsupported()
+    override fun allocate(size: Int): Nothing = unsupported()
+    override fun recycle(segment: Nothing) { /* Don't touch! */ }
+
 }

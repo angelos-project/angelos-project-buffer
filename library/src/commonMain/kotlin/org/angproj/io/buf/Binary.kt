@@ -16,7 +16,6 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.unsupported
-import org.angproj.sec.rand.InitializationVector
 
 
 public class Binary(
@@ -87,19 +86,7 @@ public class Binary(
     override fun storeDouble(position: Int, value: Double): Unit =
         segment.setLong(position, value.conv2L())
 
-    public fun checkSum(key: Long = 0): Long {
-        var result: Long = InitializationVector.IV_CA96.iv xor key
-        with(segment) {
-            when(limit < 8) {
-                true -> (0 until limit).forEach { result = result * 31 + getByte(it) }
-                else -> {
-                    (0 until limit-7 step 8).forEach { result = (-result.inv() * 13) xor getLong(it) }
-                    result = (-result.inv() * 13) xor getLong(limit-8)
-                }
-            }
-        }
-        return result
-    }
+    public fun checkSum(key: Long = 0): Long = segment.checkSum(key)
 
     public fun isNull(): Boolean = this === nullBinary
 
