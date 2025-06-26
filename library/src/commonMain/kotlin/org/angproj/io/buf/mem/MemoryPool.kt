@@ -29,12 +29,10 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
     protected val rootBlock: RootBlock = nativeMemoryManager.allocate().also { it.limitAt(0) }
 
     override fun subAllocate(size: DataSize): SegmentBlock {
-        MemoryManager.req(rootBlock.size - rootBlock.limit >= size.toInt()) {
-            "Not enough memory available to allocate the requested size."
-        }
-        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt()) {
-            "Requested size must be between minSize and maxSize."
-        }
+        MemoryManager.req(rootBlock.size - rootBlock.limit >= size.toInt(),
+            "Not enough memory available to allocate the requested size.")
+        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt(),
+            "Requested size must be between minSize and maxSize.")
 
         val offset = rootBlock.limit
         rootBlock.limitAt(rootBlock.limit + size.toInt())
@@ -51,8 +49,6 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
         super.dispose()
         nativeMemoryManager.release()
     }
-
-    override fun isNull(): Boolean = this === nullManager
 
     public companion object {
         public val nullManager : MemoryManager<Memory> by lazy {

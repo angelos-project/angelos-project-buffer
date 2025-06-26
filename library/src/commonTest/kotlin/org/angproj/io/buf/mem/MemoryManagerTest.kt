@@ -1,14 +1,14 @@
 package org.angproj.io.buf.mem
 
 import kotlin.test.Test
-import kotlin.test.assertTrue
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 
 class MemoryManagerTest {
 
     @Test
     fun testMemoryManagerNullManager() {
-        assertTrue{ MemoryManager.nullManager.isNull() }
+        assertNotNull(MemoryManager.nullManager)
     }
 
     @Test

@@ -36,8 +36,6 @@ public interface MemoryManager<S: Segment<S>> {
 
     public fun recycle(segment: S)
 
-    public fun isNull(): Boolean = this === nullManager
-
     public companion object {
         /**
          * Creates a null memory manager that does not allocate any memory.
@@ -47,8 +45,8 @@ public interface MemoryManager<S: Segment<S>> {
             createNullManager()
         }
 
-        public fun req(expr: Boolean, msg: () -> String) {
-            if( !expr ) throw MemoryException(msg())
+        public fun req(expr: Boolean, msg: String) {
+            if( !expr ) throw MemoryException(msg)
         }
     }
 }

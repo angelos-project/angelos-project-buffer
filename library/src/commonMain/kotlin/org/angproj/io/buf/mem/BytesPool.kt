@@ -25,12 +25,10 @@ public abstract class BytesPool(
     protected var allocated: Int = 0
 
     override fun subAllocate(size: DataSize): ByteArray {
-        MemoryManager.req(totalSize.toInt() - allocated >= size.toInt()) {
-            "Not enough memory available to allocate the requested size."
-        }
-        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt()) {
-            "Requested size must be between minSize and maxSize."
-        }
+        MemoryManager.req(totalSize.toInt() - allocated >= size.toInt(),
+            "Not enough memory available to allocate the requested size.")
+        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt(),
+            "Requested size must be between minSize and maxSize.")
 
         allocated += size.toInt()
         return ByteArray(size.toInt())
@@ -41,8 +39,6 @@ public abstract class BytesPool(
     ): Bytes {
         return Bytes(this, data)
     }
-
-    override fun isNull(): Boolean = this === nullManager
 
     public companion object {
         public val nullManager : MemoryManager<Bytes> by lazy {

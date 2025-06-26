@@ -28,9 +28,8 @@ public object Default: MemoryManager<Bytes> {
     override fun allocate(): Bytes = allocate(segmentSize.toInt())
 
     override fun allocate(size: Int): Bytes {
-        MemoryManager.req(size in 0..DataSize._1G.toInt()) {
-            "Requested size must be between minSize and maxSize."
-        }
+        MemoryManager.req(size in 0..DataSize._1G.toInt(),
+            "Requested size must be between minSize and maxSize.")
         return Bytes(this, ByteArray(size))
     }
 

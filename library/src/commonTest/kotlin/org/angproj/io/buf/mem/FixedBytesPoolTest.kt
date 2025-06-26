@@ -3,6 +3,8 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.seg.Bytes
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class FixedBytesPoolTest : AbstractFixedPoolTest<Bytes, FixedBytesPool>() {
 
@@ -20,5 +22,15 @@ class FixedBytesPoolTest : AbstractFixedPoolTest<Bytes, FixedBytesPool>() {
 
     override fun recycle(pool: FixedBytesPool, obj: Bytes) {
         pool.recycle(obj)
+    }
+
+    @Test
+    fun testAllocateSeveralTimes() {
+        val pool = createPool()
+        val bytes = pool.allocate(minSize.toInt())
+        pool.recycle(bytes)
+        val bytes2 = pool.allocate(minSize.toInt())
+        pool.recycle(bytes2)
+        pool.dispose()
     }
 }

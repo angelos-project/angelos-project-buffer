@@ -25,12 +25,10 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
 ) : MemoryManager<S>, Cleanable {
 
     init {
-        MemoryManager.req(maxSize.toInt() >= minSize.toInt()) {
-            "Maximum size must be greater than or equal to minimum size."
-        }
-        MemoryManager.req(totalSize.toInt() >= maxSize.toInt()) {
-            "Allocation size must be greater than or equal to maximum size."
-        }
+        MemoryManager.req(maxSize.toInt() >= minSize.toInt(),
+            "Maximum size must be greater than or equal to minimum size.")
+        MemoryManager.req(totalSize.toInt() >= maxSize.toInt(),
+            "Allocation size must be greater than or equal to maximum size.")
     }
 
     override val segmentSize: DataSize
@@ -56,9 +54,10 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun allocate(size: Int): S {
-        MemoryManager.req(size in minSize.toInt()..maxSize.toInt()) {
-            "Requested size must be between minSize and maxSize."
-        }
+        MemoryManager.req(
+            size in minSize.toInt()..maxSize.toInt(),
+        "Requested size must be between minSize and maxSize."
+        )
         val dataSize = DataSize.findLowestAbove(size)
 
         if (!segmentMap.containsKey(dataSize)) {
@@ -77,9 +76,7 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun recycle(segment: S) {
-        MemoryManager.req(segment in allSegments) {
-            "Memory block not managed by this MemoryManager."
-        }
+        MemoryManager.req(segment in allSegments, "Memory block not managed by this MemoryManager.")
         segmentMap[DataSize.findLowestAbove(segment.size)]!!.add(segment)
     }
 

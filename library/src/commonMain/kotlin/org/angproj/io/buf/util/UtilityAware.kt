@@ -116,13 +116,3 @@ public interface UtilityAware {
 
     private companion object: AbstractUtilityAware()
 }
-
-public object UtilityAwareContext : UtilityAware
-
-public fun <T> withUtility(block: UtilityAwareContext.() -> T): T = UtilityAwareContext.block()
-public suspend fun <T> withAsyncUtil(block: suspend UtilityAwareContext.() -> T): T = UtilityAwareContext.block()
-
-
-public inline fun <reified T> withUtility(
-    array: ByteArray, block: UtilityAwareContext.(array: ByteArray) -> T
-): T = UtilityAwareContext.block(array)
