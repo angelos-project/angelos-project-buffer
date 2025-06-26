@@ -20,6 +20,7 @@ import org.angproj.sec.util.TypeSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 
 
 class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
@@ -268,5 +269,10 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
             m.positionAt(m.limit-7)
             m.writeLong(1) // Must throw
         }
+    }
+
+    @Test
+    fun testNotNull() {
+        assertFalse{ setInput().isNull() }
     }
 }

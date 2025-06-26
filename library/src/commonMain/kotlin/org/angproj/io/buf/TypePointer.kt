@@ -35,5 +35,5 @@ public value class TypePointer<E: MemoryBlock<E>>(internal val ptr: Long) {
      */
     public fun toPointer(): TypePointer<Nothing> = TypePointer(ptr)
 
-    override fun toString(): String = "${this::class.simpleName}(ptr=$ptr)"
+    override fun toString(): String = "${this::class.simpleName}(ptr=0x${ptr.toString(16)})"
 }

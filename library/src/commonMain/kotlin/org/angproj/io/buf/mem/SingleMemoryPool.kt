@@ -34,7 +34,9 @@ public class SingleMemoryPool(
      * @param segment The segment to recycle.
      */
     override fun recycle(segment: Memory) {
-        super.recycle(segment)
+        //super.recycle(segment)
+        check(segment === allSegments.first()) { "SingleMemoryPool can only recycle the single allocated segment." }
+        // Above is an emergency solution against state hackers
         dispose()
     }
 }

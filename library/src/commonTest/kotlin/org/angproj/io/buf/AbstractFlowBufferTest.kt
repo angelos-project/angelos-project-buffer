@@ -18,6 +18,7 @@ import org.angproj.io.buf.util.DataSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
 
@@ -141,5 +142,10 @@ abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
     @Test
     fun getRemaining() {
         assertEquals(setInput().remaining, DataSize._1K.toInt() - posValue)
+    }
+
+    @Test
+    fun testNullBuffer() {
+        assertTrue{ FlowBuffer.nullBuffer.isNull() }
     }
 }

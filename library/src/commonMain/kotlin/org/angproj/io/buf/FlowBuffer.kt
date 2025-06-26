@@ -22,11 +22,6 @@ public abstract class FlowBuffer protected constructor(
     segment: Segment<*>, view: Boolean = false
 ): AbstractBuffer(segment, view) {
 
-    private var _innerOffset: Int = 0
-    private var _count: Long = 0
-     public val count: Long
-         get() = _count + (_position - _innerOffset)
-
     /**
      * Gives the max capacity of the buffer
      * */
@@ -46,9 +41,7 @@ public abstract class FlowBuffer protected constructor(
      * */
     public fun positionAt(newPos: Int) {
         require(newPos in _mark..segment.limit)
-        _count += _position - _innerOffset
         _position = newPos
-        _innerOffset = _position
     }
 
     override val size: Int

@@ -5,6 +5,7 @@ import org.angproj.sec.util.TypeSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotEquals
 
 
 class BinaryTest: AbstractBlockBufferTest<Binary>() {
@@ -193,5 +194,12 @@ class BinaryTest: AbstractBlockBufferTest<Binary>() {
         assertFailsWith<SegmentException> {
             m.storeLong(m.limit - 7, 1) // Must throw
         }
+    }
+
+    @Test
+    fun testCheckSum() {
+        val bin = setInput()
+        val expectedCheckSum = TestInformationStub.refArray.sumOf { it.toLong() }
+        assertNotEquals(expectedCheckSum, bin.checkSum())
     }
 }

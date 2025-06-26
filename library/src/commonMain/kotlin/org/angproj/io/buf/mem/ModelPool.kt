@@ -16,6 +16,7 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Model
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.unsupported
 import org.angproj.sec.util.ceilDiv
 
 public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
@@ -40,4 +41,19 @@ public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, max
     ): Model {
         return Model(this, data)
     }
+
+    public companion object {
+        public val nullManager : MemoryManager<Model> by lazy {
+            createNullManager()
+        }
+    }
+}
+
+private fun ModelPool.Companion.createNullManager(): MemoryManager<Model> = object : MemoryManager<Model> {
+    override val allocationSize: DataSize = DataSize.UNKNOWN
+    override val segmentSize: DataSize = DataSize.UNKNOWN
+
+    override fun allocate(): Nothing = unsupported()
+    override fun allocate(size: Int): Nothing = unsupported()
+    override fun recycle(segment: Model) { /* Don't touch! */ }
 }

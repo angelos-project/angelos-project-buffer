@@ -19,6 +19,7 @@ import org.angproj.io.buf.RootBlock
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.unsupported
 
 public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
 ) : AbstractPoolManager<SegmentBlock, Memory>(allocationSize, minSize, maxSize) {
@@ -50,4 +51,19 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
         super.dispose()
         nativeMemoryManager.release()
     }
+
+    public companion object {
+        public val nullManager : MemoryManager<Memory> by lazy {
+            createNullManager()
+        }
+    }
+}
+
+private fun MemoryPool.Companion.createNullManager(): MemoryManager<Memory> = object : MemoryManager<Memory> {
+    override val allocationSize: DataSize = DataSize.UNKNOWN
+    override val segmentSize: DataSize = DataSize.UNKNOWN
+
+    override fun allocate(): Nothing = unsupported()
+    override fun allocate(size: Int): Nothing = unsupported()
+    override fun recycle(segment: Memory) { /* Don't touch! */ }
 }

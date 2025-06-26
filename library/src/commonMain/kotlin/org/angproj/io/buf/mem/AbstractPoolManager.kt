@@ -64,7 +64,9 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
 
         if (segmentMap.get(dataSize).isNullOrEmpty()) {
             val segment = createSegment(subAllocate(dataSize))
+            println("Allocating new segment of size $dataSize")
             allSegments.add(segment)
+            println(allSegments)
             return segment
         } else {
             val segment = segmentMap[dataSize]!!.first()

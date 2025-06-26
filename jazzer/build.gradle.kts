@@ -20,10 +20,8 @@ kotlin {
             api(project(":library"))
             implementation("org.angproj.sec:angelos-project-secrand:0.10.4")
             implementation(libs.kotlin.test)
-            implementation("com.code-intelligence:jazzer:0.24.0")
-            implementation("com.code-intelligence:jazzer-api:0.24.0")
-            //implementation(libs.kotlin.jazzer)
-            //implementation(libs.kotlin.jazzer.api)
+            implementation(libs.kotlin.jazzer)
+            implementation(libs.kotlin.jazzer.api)
         }
     }
 }

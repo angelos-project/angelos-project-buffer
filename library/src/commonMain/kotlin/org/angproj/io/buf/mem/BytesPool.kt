@@ -16,6 +16,7 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.unsupported
 
 public abstract class BytesPool(
     allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
@@ -40,4 +41,19 @@ public abstract class BytesPool(
     ): Bytes {
         return Bytes(this, data)
     }
+
+    public companion object {
+        public val nullManager : MemoryManager<Bytes> by lazy {
+            createNullManager()
+        }
+    }
+}
+
+private fun BytesPool.Companion.createNullManager(): MemoryManager<Bytes> = object : MemoryManager<Bytes> {
+    override val allocationSize: DataSize = DataSize.UNKNOWN
+    override val segmentSize: DataSize = DataSize.UNKNOWN
+
+    override fun allocate(): Nothing = unsupported()
+    override fun allocate(size: Int): Nothing = unsupported()
+    override fun recycle(segment: Bytes) { /* Don't touch! */ }
 }
