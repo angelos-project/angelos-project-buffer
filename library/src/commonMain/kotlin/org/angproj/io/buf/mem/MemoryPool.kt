@@ -29,10 +29,10 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
     protected val rootBlock: RootBlock = nativeMemoryManager.allocate().also { it.limitAt(0) }
 
     override fun subAllocate(size: DataSize): SegmentBlock {
-        require(rootBlock.size - rootBlock.limit >= size.toInt()) {
+        MemoryManager.req(rootBlock.size - rootBlock.limit >= size.toInt()) {
             "Not enough memory available to allocate the requested size."
         }
-        require(size.toInt() in minSize.toInt()..maxSize.toInt()) {
+        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt()) {
             "Requested size must be between minSize and maxSize."
         }
 
@@ -52,6 +52,8 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
         nativeMemoryManager.release()
     }
 
+    override fun isNull(): Boolean = this === nullManager
+
     public companion object {
         public val nullManager : MemoryManager<Memory> by lazy {
             createNullManager()
@@ -59,8 +61,8 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
     }
 }
 
-private fun MemoryPool.Companion.createNullManager(): MemoryManager<Memory> = object : MemoryManager<Memory> {
-    override val allocationSize: DataSize = DataSize.UNKNOWN
+private fun MemoryPool.Companion.createNullManager(): MemoryManager<Memory> = object :  MemoryManager<Memory>{
+    override val totalSize: DataSize = DataSize.UNKNOWN
     override val segmentSize: DataSize = DataSize.UNKNOWN
 
     override fun allocate(): Nothing = unsupported()

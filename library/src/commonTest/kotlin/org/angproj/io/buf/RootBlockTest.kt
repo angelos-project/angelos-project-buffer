@@ -1,6 +1,5 @@
 package org.angproj.io.buf
 
-import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.util.DataSize
 import kotlin.test.*
 

@@ -107,10 +107,10 @@ class ByteStringTest {
     @Test
     fun testBoundsChecking() {
         val bs = TestByteString(8)
-        assertFailsWith<org.angproj.io.buf.seg.SegmentException> { bs.getByte(8) }
-        assertFailsWith<org.angproj.io.buf.seg.SegmentException> { bs.setShort(7, 0) }
-        assertFailsWith<org.angproj.io.buf.seg.SegmentException> { bs.getInt(6) }
-        assertFailsWith<org.angproj.io.buf.seg.SegmentException> { bs.setLong(2, 0L) }
+        assertFailsWith<SegmentException> { bs.getByte(8) }
+        assertFailsWith<SegmentException> { bs.setShort(7, 0) }
+        assertFailsWith<SegmentException> { bs.getInt(6) }
+        assertFailsWith<SegmentException> { bs.setLong(2, 0L) }
     }
 
     @Test

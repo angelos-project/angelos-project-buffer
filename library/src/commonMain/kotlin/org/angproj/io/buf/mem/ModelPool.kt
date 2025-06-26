@@ -25,10 +25,10 @@ public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, max
     protected var allocated: Int = 0
 
     override fun subAllocate(size: DataSize): LongArray {
-        require(allocationSize.toInt() - allocated >= size.toInt()) {
+        MemoryManager.req(totalSize.toInt() - allocated >= size.toInt()) {
             "Not enough memory available to allocate the requested size."
         }
-        require(size.toInt() in minSize.toInt()..maxSize.toInt()) {
+        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt()) {
             "Requested size must be between minSize and maxSize."
         }
 
@@ -42,6 +42,8 @@ public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, max
         return Model(this, data)
     }
 
+    override fun isNull(): Boolean = this === nullManager
+
     public companion object {
         public val nullManager : MemoryManager<Model> by lazy {
             createNullManager()
@@ -49,8 +51,8 @@ public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, max
     }
 }
 
-private fun ModelPool.Companion.createNullManager(): MemoryManager<Model> = object : MemoryManager<Model> {
-    override val allocationSize: DataSize = DataSize.UNKNOWN
+private fun ModelPool.Companion.createNullManager(): MemoryManager<Model> = object : MemoryManager<Model>{
+    override val totalSize: DataSize = DataSize.UNKNOWN
     override val segmentSize: DataSize = DataSize.UNKNOWN
 
     override fun allocate(): Nothing = unsupported()

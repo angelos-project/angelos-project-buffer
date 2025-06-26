@@ -19,16 +19,16 @@ import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
 
 public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
-    public override val allocationSize: DataSize,
+    public override val totalSize: DataSize,
     public val minSize: DataSize,
     public val maxSize: DataSize
 ) : MemoryManager<S>, Cleanable {
 
     init {
-        require(maxSize.toInt() >= minSize.toInt()) {
+        MemoryManager.req(maxSize.toInt() >= minSize.toInt()) {
             "Maximum size must be greater than or equal to minimum size."
         }
-        require(allocationSize.toInt() >= maxSize.toInt()) {
+        MemoryManager.req(totalSize.toInt() >= maxSize.toInt()) {
             "Allocation size must be greater than or equal to maximum size."
         }
     }
@@ -56,6 +56,9 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun allocate(size: Int): S {
+        MemoryManager.req(size in minSize.toInt()..maxSize.toInt()) {
+            "Requested size must be between minSize and maxSize."
+        }
         val dataSize = DataSize.findLowestAbove(size)
 
         if (!segmentMap.containsKey(dataSize)) {
@@ -64,9 +67,7 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
 
         if (segmentMap.get(dataSize).isNullOrEmpty()) {
             val segment = createSegment(subAllocate(dataSize))
-            println("Allocating new segment of size $dataSize")
             allSegments.add(segment)
-            println(allSegments)
             return segment
         } else {
             val segment = segmentMap[dataSize]!!.first()
@@ -76,7 +77,7 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun recycle(segment: S) {
-        check(segment in allSegments) {
+        MemoryManager.req(segment in allSegments) {
             "Memory block not managed by this MemoryManager."
         }
         segmentMap[DataSize.findLowestAbove(segment.size)]!!.add(segment)

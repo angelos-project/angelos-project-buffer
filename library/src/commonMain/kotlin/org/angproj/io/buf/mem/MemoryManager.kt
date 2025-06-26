@@ -27,7 +27,7 @@ import org.angproj.io.buf.util.unsupported
  */
 public interface MemoryManager<S: Segment<S>> {
 
-    public val allocationSize: DataSize
+    public val totalSize: DataSize
     public val segmentSize: DataSize
 
     public fun allocate(): S
@@ -35,6 +35,8 @@ public interface MemoryManager<S: Segment<S>> {
     public fun allocate(size: Int): S
 
     public fun recycle(segment: S)
+
+    public fun isNull(): Boolean = this === nullManager
 
     public companion object {
         /**
@@ -44,11 +46,15 @@ public interface MemoryManager<S: Segment<S>> {
         public val nullManager : MemoryManager<*> by lazy {
             createNullManager()
         }
+
+        public fun req(expr: Boolean, msg: () -> String) {
+            if( !expr ) throw MemoryException(msg())
+        }
     }
 }
 
 private fun MemoryManager.Companion.createNullManager(): MemoryManager<*> = object : MemoryManager<Nothing> {
-    override val allocationSize: DataSize = DataSize.UNKNOWN
+    override val totalSize: DataSize = DataSize.UNKNOWN
     override val segmentSize: DataSize = DataSize.UNKNOWN
 
     override fun allocate(): Nothing = unsupported()
