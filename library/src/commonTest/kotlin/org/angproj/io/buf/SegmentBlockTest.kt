@@ -20,6 +20,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class SegmentBlockTest {
     private val dataSize = DataSize._1K // Define the data size for the segment block
@@ -63,5 +64,29 @@ class SegmentBlockTest {
     fun testReadWriteLong(): Unit = ifJvmOrNative {
         block.setLong(4, 0x123456789ABCDEF0)
         assertEquals(0x123456789ABCDEF0, block.getLong(4))
+    }
+
+    @Test
+    fun getParentBlock(): Unit = ifJvmOrNative {
+        assertEquals(root, block.parentBlock)
+        assertTrue { block.parentBlock.parentBlock.isNull() }
+    }
+
+    @Test
+    fun testBlockSize(): Unit = ifJvmOrNative {
+        assertEquals(dataSize.toInt(), block.size)
+    }
+
+    @Test
+    fun testBlockLimit(): Unit = ifJvmOrNative {
+        assertEquals(dataSize.toInt(), block.limit)
+        block.limitAt(512)
+        assertEquals(512, block.limit)
+    }
+
+    @Test
+    fun testBlockPointer(): Unit = ifJvmOrNative {
+        val pointer = block.getPointer()
+        assertEquals(root.getPointer().ptr, pointer.ptr)
     }
 }

@@ -1,6 +1,8 @@
 package org.angproj.io.buf
 
+import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.seg.SegmentException
+import org.angproj.io.buf.util.DataSize
 import org.angproj.sec.util.TypeSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -201,5 +203,13 @@ class BinaryTest: AbstractBlockBufferTest<Binary>() {
         val bin = setInput()
         val expectedCheckSum = TestInformationStub.refArray.sumOf { it.toLong() }
         assertNotEquals(expectedCheckSum, bin.checkSum())
+    }
+
+    @Test
+    fun testAddress(): Unit = ifJvmOrNative {
+        BufMgr.withRam(DataSize._32B) { binary ->
+            assertNotEquals(0, binary.address().ptr)
+            assertEquals(DataSize._32B.toInt(), binary.size)
+        }
     }
 }

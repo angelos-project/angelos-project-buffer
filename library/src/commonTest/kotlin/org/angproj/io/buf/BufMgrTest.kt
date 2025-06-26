@@ -21,10 +21,26 @@ class BufMgrTest {
     }
 
     @Test
+    fun testUByteBufferReadWrite() {
+        val buf = BufMgr.uByteBuf(4)
+        buf[0] = 255u
+        assertEquals(255u, buf[0])
+        buf.close()
+    }
+
+    @Test
     fun testShortBufferReadWrite() {
         val buf = BufMgr.shortBuf(2)
         buf[0] = 12345
         assertEquals(12345, buf[0])
+        buf.close()
+    }
+
+    @Test
+    fun testUShortBufferReadWrite() {
+        val buf = BufMgr.uShortBuf(2)
+        buf[0] = 65535u
+        assertEquals(65535u, buf[0])
         buf.close()
     }
 
@@ -37,10 +53,42 @@ class BufMgrTest {
     }
 
     @Test
+    fun testUIntBufferReadWrite() {
+        val buf = BufMgr.uIntBuf(2)
+        buf[0] = 0xFFFFFFFFu
+        assertEquals(0xFFFFFFFFu, buf[0])
+        buf.close()
+    }
+
+    @Test
     fun testLongBufferReadWrite() {
         val buf = BufMgr.longBuf(1)
         buf[0] = 0x1122334455667788L
         assertEquals(0x1122334455667788L, buf[0])
+        buf.close()
+    }
+
+    @Test
+    fun testULongBufferReadWrite() {
+        val buf = BufMgr.uLongBuf(1)
+        buf[0] = 0xFFFFFFFFFFFFFFFFu
+        assertEquals(0xFFFFFFFFFFFFFFFFu, buf[0])
+        buf.close()
+    }
+
+    @Test
+    fun testFloatBufferReadWrite() {
+        val buf = BufMgr.floatBuf(2)
+        buf[0] = 3.14f
+        assertEquals(3.14f, buf[0])
+        buf.close()
+    }
+
+    @Test
+    fun testDoubleBufferReadWrite() {
+        val buf = BufMgr.doubleBuf(2)
+        buf[0] = 2.718281828459045
+        assertEquals(2.718281828459045, buf[0])
         buf.close()
     }
 

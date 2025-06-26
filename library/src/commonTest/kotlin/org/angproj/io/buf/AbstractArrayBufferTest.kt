@@ -18,6 +18,7 @@ import org.angproj.io.buf.seg.SegmentException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() {
 
@@ -58,5 +59,11 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
 
         assertFailsWith<SegmentException> { lb[lb.limit] }
         assertFailsWith<SegmentException> { lb[lb.limit] = refValue }
+    }
+
+    @Test
+    fun testNullBuffer() {
+        assertTrue{ FlowBuffer.nullBuffer.isNull() }
+        assertEquals(FlowBuffer.nullBuffer.size, 0)
     }
 }

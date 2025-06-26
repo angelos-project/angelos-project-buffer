@@ -147,5 +147,6 @@ abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
     @Test
     fun testNullBuffer() {
         assertTrue{ FlowBuffer.nullBuffer.isNull() }
+        assertEquals(FlowBuffer.nullBuffer.size, 0)
     }
 }

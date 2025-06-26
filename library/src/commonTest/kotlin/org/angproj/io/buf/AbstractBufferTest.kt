@@ -211,4 +211,11 @@ abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
     fun close() {
         setInput().close()
     }
+
+    @Test
+    fun testHashCode() {
+        val input = setInput()
+        val hashCode = input.hashCode()
+        assertEquals(hashCode, input.hashCode(), "Hash code should be consistent")
+    }
 }
