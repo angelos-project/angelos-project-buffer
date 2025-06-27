@@ -1,8 +1,8 @@
 package org.angproj.io.buf
 
-import org.angproj.aux.util.ifJvmOrNative
 import org.angproj.io.buf.seg.SegmentException
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.ifJvmOrNative
 import org.angproj.sec.util.TypeSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
