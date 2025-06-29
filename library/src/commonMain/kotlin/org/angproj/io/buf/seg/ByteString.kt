@@ -22,6 +22,7 @@ import org.angproj.sec.SecureFeed
 import org.angproj.sec.SecureRandom
 import org.angproj.sec.rand.InitializationVector
 import org.angproj.sec.util.TypeSize
+import org.angproj.sec.util.ensure
 import org.angproj.sec.util.floorMod
 
 
@@ -58,7 +59,7 @@ public abstract class ByteString(
      * @throws SegmentException if the index is out of bounds for a byte value.
      */
     protected inline fun <reified R: Any> Int.checkRangeByte(): Unit = when(this) {
-        !in 0..<stringLimit -> throw SegmentException("Out of bounds. Byte - $this")
+        !in 0..<stringLimit -> ensure { SegmentException("Out of bounds. Byte - $this") }
         else -> Unit
     }
 
@@ -68,7 +69,7 @@ public abstract class ByteString(
      * @throws SegmentException if the index is out of bounds for a short value.
      */
     protected inline fun <reified R: Any> Int.checkRangeShort(): Unit = when(this) {
-        !in 0..<stringLimit-1 -> throw SegmentException("Out of bounds. Short - $this")
+        !in 0..<stringLimit-1 -> ensure { SegmentException("Out of bounds. Short - $this") }
         else -> Unit
     }
 
@@ -78,7 +79,7 @@ public abstract class ByteString(
      * @throws SegmentException if the index is out of bounds for an integer value.
      */
     protected inline fun <reified R: Any> Int.checkRangeInt(): Unit = when(this) {
-        !in 0..<stringLimit-3 -> throw SegmentException("Out of bounds. Int - $this")
+        !in 0..<stringLimit-3 -> ensure { SegmentException("Out of bounds. Int - $this") }
         else -> Unit
     }
 
@@ -88,7 +89,7 @@ public abstract class ByteString(
      * @throws SegmentException if the index is out of bounds for a long value.
      */
     protected inline fun <reified R: Any> Int.checkRangeLong(): Unit = when(this) {
-        !in 0..<stringLimit-7 -> throw SegmentException("Out of bounds. Long - $this")
+        !in 0..<stringLimit-7 -> ensure { SegmentException("Out of bounds. Long - $this") }
         else -> Unit
     }
 

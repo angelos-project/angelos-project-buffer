@@ -44,10 +44,6 @@ public interface MemoryManager<S: Segment<S>> {
         public val nullManager : MemoryManager<*> by lazy {
             createNullManager()
         }
-
-        public fun req(expr: Boolean, msg: String) {
-            if( !expr ) throw MemoryException(msg)
-        }
     }
 }
 

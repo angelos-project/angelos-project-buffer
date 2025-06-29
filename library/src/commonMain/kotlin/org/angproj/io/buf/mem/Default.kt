@@ -16,6 +16,7 @@ package org.angproj.io.buf.mem
 
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
+import org.angproj.sec.util.ensure
 
 
 public object Default: MemoryManager<Bytes> {
@@ -28,8 +29,8 @@ public object Default: MemoryManager<Bytes> {
     override fun allocate(): Bytes = allocate(segmentSize.toInt())
 
     override fun allocate(size: Int): Bytes {
-        MemoryManager.req(size in 0..DataSize._1G.toInt(),
-            "Requested size must be between minSize and maxSize.")
+        ensure(size in 0..DataSize._1G.toInt()) {
+            MemoryException("Requested size must be between minSize and maxSize.") }
         return Bytes(this, ByteArray(size))
     }
 

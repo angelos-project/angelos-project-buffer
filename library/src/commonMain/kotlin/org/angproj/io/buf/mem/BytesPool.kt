@@ -17,6 +17,7 @@ package org.angproj.io.buf.mem
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.unsupported
+import org.angproj.sec.util.ensure
 
 public abstract class BytesPool(
     allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
@@ -25,10 +26,8 @@ public abstract class BytesPool(
     protected var allocated: Int = 0
 
     override fun subAllocate(size: DataSize): ByteArray {
-        MemoryManager.req(totalSize.toInt() - allocated >= size.toInt(),
-            "Not enough memory available to allocate the requested size.")
-        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt(),
-            "Requested size must be between minSize and maxSize.")
+        ensure(totalSize.toInt() - allocated >= size.toInt()) { MemoryException("Not enough memory available to allocate the requested size.") }
+        ensure(size.toInt() in minSize.toInt()..maxSize.toInt()) { MemoryException("Requested size must be between minSize and maxSize.") }
 
         allocated += size.toInt()
         return ByteArray(size.toInt())

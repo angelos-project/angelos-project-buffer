@@ -17,6 +17,7 @@ package org.angproj.io.buf.mem
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
+import org.angproj.sec.util.ensure
 
 public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     public override val totalSize: DataSize,
@@ -25,10 +26,8 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
 ) : MemoryManager<S>, Cleanable {
 
     init {
-        MemoryManager.req(maxSize.toInt() >= minSize.toInt(),
-            "Maximum size must be greater than or equal to minimum size.")
-        MemoryManager.req(totalSize.toInt() >= maxSize.toInt(),
-            "Allocation size must be greater than or equal to maximum size.")
+        ensure(maxSize.toInt() >= minSize.toInt()) { MemoryException("Maximum size must be greater than or equal to minimum size.") }
+        ensure(totalSize.toInt() >= maxSize.toInt()) { MemoryException("Allocation size must be greater than or equal to maximum size.") }
     }
 
     override val segmentSize: DataSize
@@ -54,10 +53,8 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun allocate(size: Int): S {
-        MemoryManager.req(
-            size in minSize.toInt()..maxSize.toInt(),
-        "Requested size must be between minSize and maxSize."
-        )
+        ensure(size in minSize.toInt()..maxSize.toInt()) {
+            MemoryException("Requested size must be between minSize and maxSize.") }
         val dataSize = DataSize.findLowestAbove(size)
 
         if (!segmentMap.containsKey(dataSize)) {
@@ -76,7 +73,7 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
     }
 
     public override fun recycle(segment: S) {
-        MemoryManager.req(segment in allSegments, "Memory block not managed by this MemoryManager.")
+        ensure(segment in allSegments) { MemoryException("Memory block not managed by this MemoryManager.") }
         segmentMap[DataSize.findLowestAbove(segment.size)]!!.add(segment)
     }
 

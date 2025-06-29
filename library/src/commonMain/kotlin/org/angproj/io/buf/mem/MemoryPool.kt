@@ -20,6 +20,7 @@ import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.unsupported
+import org.angproj.sec.util.ensure
 
 public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
 ) : AbstractPoolManager<SegmentBlock, Memory>(allocationSize, minSize, maxSize) {
@@ -29,10 +30,10 @@ public abstract class MemoryPool(allocationSize: DataSize, minSize: DataSize, ma
     protected val rootBlock: RootBlock = nativeMemoryManager.allocate().also { it.limitAt(0) }
 
     override fun subAllocate(size: DataSize): SegmentBlock {
-        MemoryManager.req(rootBlock.size - rootBlock.limit >= size.toInt(),
-            "Not enough memory available to allocate the requested size.")
-        MemoryManager.req(size.toInt() in minSize.toInt()..maxSize.toInt(),
-            "Requested size must be between minSize and maxSize.")
+        ensure(rootBlock.size - rootBlock.limit >= size.toInt()) {
+            MemoryException("Not enough memory available to allocate the requested size.") }
+        ensure(size.toInt() in minSize.toInt()..maxSize.toInt()) {
+            MemoryException("Requested size must be between minSize and maxSize.") }
 
         val offset = rootBlock.limit
         rootBlock.limitAt(rootBlock.limit + size.toInt())
