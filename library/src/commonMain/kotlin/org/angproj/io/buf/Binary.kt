@@ -15,7 +15,9 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
+import org.angproj.io.buf.util.BinHex
 import org.angproj.io.buf.util.unsupported
+import org.angproj.sec.util.ceilDiv
 
 
 public class Binary(
@@ -117,3 +119,5 @@ public fun Binary.asFloatBuffer(): FloatBuffer = FloatBuffer(segment, true)
 public fun Binary.asDoubleBuffer(): DoubleBuffer = DoubleBuffer(segment, true)
 
 public fun <E: AbstractBuffer>E.asBinary(): Binary = Binary(this.segment, true)
+
+public fun Binary.binToHex(): Text = BufMgr.txt(this.limit * 2).also { BinHex.binToHex(this, it) }

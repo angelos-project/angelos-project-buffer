@@ -16,13 +16,17 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.mem.Default
 import org.angproj.io.buf.mem.SingleMemoryPool
+import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.useWith
 import org.angproj.sec.util.TypeSize
+import org.angproj.utf.Unicode
 
 public object BufMgr {
 
     public fun bin(size: Int): Binary = Binary(Default.allocate(size), false)
+
+    public fun txt(size: Int): Text = Text(Default.allocate(size), false)
 
     public fun binary(size: Int): BinaryBuffer = BinaryBuffer(Default.allocate(size), false)
 
@@ -54,4 +58,8 @@ public object BufMgr {
      * @return A new [Binary] instance with the allocated memory.
      */
     public fun<R> withRam(size: DataSize, block: (Binary) -> R): R = Binary(SingleMemoryPool(size).allocate()).useWith(block)
+
+    public fun wrapAsBin(data: ByteArray): Binary = Binary(Bytes(Default, data), true)
+
+    public fun stringToText(str: String): Text = Text(Bytes(Default, Unicode.decode(str)))
 }
