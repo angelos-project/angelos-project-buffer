@@ -45,9 +45,11 @@ public class Text internal constructor(
     }
 
     override fun iterator(): Iterator<CodePoint> = object : Iterator<CodePoint> {
-        private var position = 0
-        override fun hasNext(): Boolean = remaining<Int>(position) > 0
-        override fun next(): CodePoint = this@Text.retrieveGlyph(position).also { position += it.octets() }
+        private var _position = 0
+        public val position: Int
+            get() = _position
+        override fun hasNext(): Boolean = remaining<Int>(_position) > 0
+        override fun next(): CodePoint = this@Text.retrieveGlyph(_position).also { _position += it.octets() }
     }
 
     override fun retrieveGlyph(position: Int): CodePoint {

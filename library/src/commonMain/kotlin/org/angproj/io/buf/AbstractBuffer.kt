@@ -14,10 +14,13 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.Auto
 import org.angproj.io.buf.util.UtilityAware
+import org.angproj.sec.util.TypeSize
+import org.angproj.sec.util.floorMod
 
 
 /**
@@ -67,4 +70,46 @@ public abstract class AbstractBuffer internal constructor(
     public override fun hashCode(): Int = segment.hashCode()
 
     public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
+}
+
+
+public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: Int, idxFrom: Int, idxTo: Int) {
+    val length = idxTo - idxFrom
+    require(idxFrom <= idxTo) {
+        "Start index ($idxFrom) is larger than end index ($idxTo)" }
+    require(length >= 0) {
+        "Length ($length) can not be negative" }
+    require(idxFrom in 0..<this.limit) {
+        "Start index ($idxFrom) not in memory range" }
+    require(idxFrom + length in 0..this.limit) {
+        "End index (${idxFrom + length}) outside of memory range" }
+    require(offset in 0..<dest.limit) {
+        "Destination offset ($offset) not in memory range" }
+    require(offset + length in 0..dest.limit) {
+        "End index (${offset + length}) outside of memory range" }
+
+    when {
+        dest.segment is Bytes && segment is Bytes -> segment.copyInto(dest.segment, offset, idxFrom, idxTo)
+        dest.segment is Memory && segment is Memory -> segment.copyInto(dest.segment, offset, idxFrom, idxTo)
+        else -> {
+            val destination = dest.segment
+            var index = 0
+
+            repeat(length.floorDiv(TypeSize.longSize)) {
+                destination.setLong(
+                    offset + index,
+                    segment.getLong(idxFrom + index)
+                )
+                index += TypeSize.longSize
+            }
+
+            repeat(length.floorMod(TypeSize.longSize)) {
+                destination.setByte(
+                    offset + index,
+                    segment.getByte(idxFrom + index)
+                )
+                index++
+            }
+        }
+    }
 }

@@ -59,14 +59,6 @@ class BinHexTest {
     @Test
     fun decodeToBin() {
         val data = BufMgr.wrapAsBin(data)
-        val a1 = lower.hexToBin()
-
-        (0 until data.size).forEach {
-            println(a1.retrieveByte(it))
-            println(data.retrieveByte(it))
-            if(a1.retrieveByte(it) != data.retrieveByte(it)) return@forEach
-        }
-
         assertEquals(lower.hexToBin().checkSum(), data.checkSum())
         assertEquals(upper.hexToBin().checkSum(), data.checkSum())
     }

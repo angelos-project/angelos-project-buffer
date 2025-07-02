@@ -20,7 +20,6 @@ import org.angproj.io.buf.asBinaryBuffer
 import org.angproj.sec.util.floorMod
 import org.angproj.utf.AbstractUnicodeAware
 import org.angproj.utf.toCodePoint
-import kotlin.jvm.JvmStatic
 
 
 public object BinHex : AbstractUnicodeAware() {

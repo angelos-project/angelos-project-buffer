@@ -14,9 +14,16 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.NativeAccess
 import org.angproj.io.buf.SegmentBlock
 import org.angproj.io.buf.TypePointer
+import org.angproj.io.buf.getByteNative
+import org.angproj.io.buf.getLongNative
 import org.angproj.io.buf.mem.MemoryManager
+import org.angproj.io.buf.setByteNative
+import org.angproj.io.buf.setLongNative
+import org.angproj.sec.util.TypeSize
+import org.angproj.sec.util.floorMod
 
 
 /**
@@ -108,4 +115,28 @@ public class Memory(
     }
 
     override fun address(): TypePointer<*> = data.getPointer()
+
+    internal fun copyInto(dest: Memory, offset: Int, idxFrom: Int, idxTo: Int) {
+        val length = idxTo - idxFrom
+
+        val source = (data.getPointer().ptr + idxFrom)
+        val destination = dest.data.getPointer().ptr + offset
+        var index = 0L
+
+        repeat(length.floorDiv(TypeSize.longSize)) {
+            NativeAccess.setLongNative<Unit>(
+                destination + index,
+                NativeAccess.getLongNative<Unit>(source + index)
+            )
+            index += TypeSize.longSize
+        }
+
+        repeat(length.floorMod(TypeSize.longSize)) {
+            NativeAccess.setByteNative<Unit>(
+                destination + index,
+                NativeAccess.getByteNative<Unit>(source + index)
+            )
+            index++
+        }
+    }
 }

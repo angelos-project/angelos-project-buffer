@@ -17,7 +17,6 @@ package org.angproj.io.buf
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.BinHex
 import org.angproj.io.buf.util.unsupported
-import org.angproj.sec.util.ceilDiv
 
 
 public class Binary(
@@ -117,6 +116,10 @@ public fun Binary.asLongBuffer(): LongBuffer = LongBuffer(segment, true)
 public fun Binary.asULongBuffer(): ULongBuffer = ULongBuffer(segment, true)
 public fun Binary.asFloatBuffer(): FloatBuffer = FloatBuffer(segment, true)
 public fun Binary.asDoubleBuffer(): DoubleBuffer = DoubleBuffer(segment, true)
+
+public fun Binary.asTextBuffer(): TextBuffer = TextBuffer(segment, true)
+public fun Binary.asText(): Text = Text(segment, true)
+
 
 public fun <E: AbstractBuffer>E.asBinary(): Binary = Binary(this.segment, true)
 

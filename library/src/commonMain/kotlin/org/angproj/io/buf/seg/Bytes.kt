@@ -90,4 +90,8 @@ public class Bytes(
         SecureRandom.readBytes(data)
         memCtx.recycle(this)
     }
+
+    internal fun copyInto(dest: Bytes, offset: Int, idxFrom: Int, idxTo: Int) {
+        this.data.copyInto(dest.data, offset, idxFrom, idxTo)
+    }
 }
