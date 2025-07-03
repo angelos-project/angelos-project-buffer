@@ -67,6 +67,8 @@ public abstract class AbstractBuffer internal constructor(
         return compareTo(other) == 0
     }
 
+    public infix fun contentEquals(other: AbstractBuffer): Boolean = segment.checkSum() == other.segment.checkSum()
+
     public override fun hashCode(): Int = segment.hashCode()
 
     public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
@@ -93,22 +95,22 @@ public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: In
         dest.segment is Memory && segment is Memory -> segment.copyInto(dest.segment, offset, idxFrom, idxTo)
         else -> {
             val destination = dest.segment
-            var index = 0
+            var pos = 0
 
             repeat(length.floorDiv(TypeSize.longSize)) {
                 destination.setLong(
-                    offset + index,
-                    segment.getLong(idxFrom + index)
+                    offset + pos,
+                    segment.getLong(idxFrom + pos)
                 )
-                index += TypeSize.longSize
+                pos += TypeSize.longSize
             }
 
             repeat(length.floorMod(TypeSize.longSize)) {
                 destination.setByte(
-                    offset + index,
-                    segment.getByte(idxFrom + index)
+                    offset + pos,
+                    segment.getByte(idxFrom + pos)
                 )
-                index++
+                pos++
             }
         }
     }

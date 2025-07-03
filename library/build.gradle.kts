@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "org.angproj.io.buf"
-version = "1.1.0-alpha.3"
+version = "1.1.0-alpha.4"
 
 kotlin {
     explicitApi()
@@ -73,7 +73,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation("org.angproj.sec:angelos-project-secrand:0.11.7")
-            implementation("org.angproj.utf:angelos-project-utf:0.1.4")
+            implementation("org.angproj.utf:angelos-project-utf:0.1.5")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -119,24 +119,24 @@ public class Memory(
     internal fun copyInto(dest: Memory, offset: Int, idxFrom: Int, idxTo: Int) {
         val length = idxTo - idxFrom
 
-        val source = (data.getPointer().ptr + idxFrom)
-        val destination = dest.data.getPointer().ptr + offset
-        var index = 0L
+        val srcPtr = (data.getPointer().ptr + idxFrom)
+        val dstPtr = dest.data.getPointer().ptr + offset
+        var pos = 0L
 
         repeat(length.floorDiv(TypeSize.longSize)) {
             NativeAccess.setLongNative<Unit>(
-                destination + index,
-                NativeAccess.getLongNative<Unit>(source + index)
+                dstPtr + pos,
+                NativeAccess.getLongNative<Unit>(srcPtr + pos)
             )
-            index += TypeSize.longSize
+            pos += TypeSize.longSize
         }
 
         repeat(length.floorMod(TypeSize.longSize)) {
             NativeAccess.setByteNative<Unit>(
-                destination + index,
-                NativeAccess.getByteNative<Unit>(source + index)
+                dstPtr + pos,
+                NativeAccess.getByteNative<Unit>(srcPtr + pos)
             )
-            index++
+            pos++
         }
     }
 }

@@ -63,27 +63,22 @@ public class Text internal constructor(
     }
 
     public fun checkSum(key: Long = 0): Long = segment.checkSum(key)
+
+    public override fun toString(): String {
+        val text = mutableListOf<Char>()
+        forEach { text.add(it.value.toChar()) }
+        return text.toCharArray().concatToString()
+    }
 }
 
 public fun String.toText(): Text = BufMgr.stringToText(this)
 
 public fun Text.hexToBin(): Binary = BufMgr.bin(this.size.ceilDiv(2)).also { BinHex.hexToBin(this, it) }
 
-
-/*public operator fun Text.plus(other: Text): MutableList<Text> = mutableListOf(this, other)
-
-public operator fun MutableList<Text>.plus(other: Text): MutableList<Text> = also { MutableList.add(other) }
-
-public operator fun MutableList<Text>.plusAssign(other: Text) {
-    MutableList.add(other)
-}
-
-public fun List<Text>.toBinary(): Text {
-    val out = BufMgr.txt(sumOf { it.limit })
-    var dstOff = 0
-    forEach {
-        it.copyInto(out, dstOff, 0, it.limit)
-        dstOff += it.limit
+public fun Text.toGlyphBuffer(): GlyphBuffer {
+    return GlyphBuffer().also { gb ->
+        forEach { cp ->
+            gb.insert(cp)
+        }
     }
-    return out
-}*/
+}

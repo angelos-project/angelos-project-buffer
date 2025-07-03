@@ -237,7 +237,8 @@ public abstract class ByteString(
             pos += TypeSize.longSize
         }
         repeat(limit.floorMod(TypeSize.longSize)) {
-            result = (-result.inv() * 13) xor getByte(pos++).toLong()
+            result = (-result.inv() * 13) xor getByte(pos).toLong()
+            pos++
         }
 
         return result

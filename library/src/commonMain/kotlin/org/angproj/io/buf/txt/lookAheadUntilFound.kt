@@ -12,16 +12,19 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.txt
 
-import org.angproj.io.buf.mem.Default
-import org.angproj.io.buf.seg.Bytes
-import java.nio.file.FileSystems
-import java.nio.file.Files
+import org.angproj.io.buf.Text
+import org.angproj.utf.CodePoint
+import org.angproj.utf.octets
 
+public fun Text.lookAheadUntilFound(index: Int, tokens: Set<CodePoint>): IntRange {
+    var position = index
 
-public fun BufMgr.textFile(path: String): TextBuffer {
-    val realPath = FileSystems.getDefault().getPath(path)
-    return TextBuffer(Bytes(Default, Files.readAllBytes(realPath)))
+    do {
+        val codePoint = retrieveGlyph(position)
+        position += codePoint.octets()
+    } while (!tokens.contains(codePoint) && limit > position)
+
+    return index..position
 }
-
