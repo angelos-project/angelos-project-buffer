@@ -15,54 +15,62 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
+import org.angproj.io.buf.txt.GlyphString
+import org.angproj.io.buf.txt.GlyphIterator
 import org.angproj.io.buf.util.BinHex
 import org.angproj.sec.util.ceilDiv
 import org.angproj.utf.CodePoint
-import org.angproj.utf.UnicodeAware
-import org.angproj.utf.octets
+import org.angproj.utf.Policy
+import org.angproj.utf.Unicode
+import org.angproj.utf.iter.CodePointIterable
+import org.angproj.utf.iter.CodePointIterator
 
 
 public class Text internal constructor(
-    segment: Segment<*>, view: Boolean = false
-) : BlockBuffer(segment, view), TextRetrievable, TextStorable, Iterable<CodePoint>, UnicodeAware {
+    segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
+) : BlockBuffer(segment, view), TextRetrievable, TextStorable, CodePointIterable {
 
-    public fun count(): Int {
-        var cnt = 0
-        var idx = 0
-        while (idx < limit) {
-            idx = jumpNext(idx)
-            cnt++
-        }
-        return cnt
-    }
-
-    protected fun jumpNext(index: Int): Int {
-        val offset: Int = hasGlyphSize(segment.getByte(index)) + index
-        return when {
-            offset > index -> offset
-            else -> error("Index not start of UTF-8 glyph.")
-        }
-    }
-
-    override fun iterator(): Iterator<CodePoint> = object : Iterator<CodePoint> {
-        private var _position = 0
-        public val position: Int
-            get() = _position
-        override fun hasNext(): Boolean = remaining<Int>(_position) > 0
-        override fun next(): CodePoint = this@Text.retrieveGlyph(_position).also { _position += it.octets() }
-    }
+    override fun iterator(): CodePointIterator = GlyphIterator(this)
 
     override fun retrieveGlyph(position: Int): CodePoint {
         var offset = position
-        return readGlyphBlk(remaining<Int>(offset)) { segment.getByte(offset++) }
+        return Unicode.readGlyphByPolicyBlk(
+            remaining<Int>(offset), policy
+        ) {
+            segment.getByte(offset++)
+        }
     }
 
     override fun storeGlyph(position: Int, codePoint: CodePoint): Int {
         var offset = position
-        return writeGlyphBlk(codePoint, remaining<Int>(offset)) { segment.setByte(offset++, it) }
+        return Unicode.writeGlyphByPolicyBlk(
+            codePoint, remaining<Int>(offset), policy
+        ) {
+            segment.setByte(offset++, it)
+        }
     }
 
-    public fun checkSum(key: Long = 0): Long = segment.checkSum(key)
+    public fun find(start: Int, tokens: Set<Int>): Int {
+        val iter = GlyphIterator(this, start)
+        while(iter.hasNext()) {
+            if(tokens.contains(iter.next().value))
+                break
+        }
+        return iter.position
+    }
+
+    public fun parse(start: Int, tokens: Set<Int>): Int {
+        val iter = GlyphIterator(this, start)
+        while(iter.hasNext()) {
+            if(!tokens.contains(iter.next().value))
+                break
+        }
+        return iter.position - 1
+    }
+
+    public fun applyPolicy() {
+        iterator().forEach { _ -> }
+    }
 
     public override fun toString(): String {
         val text = mutableListOf<Char>()
@@ -71,14 +79,13 @@ public class Text internal constructor(
     }
 }
 
-public fun String.toText(): Text = BufMgr.stringToText(this)
+public fun String.toText(policy: Policy = Policy.basic): Text = BufMgr.stringToText(this, policy)
 
 public fun Text.hexToBin(): Binary = BufMgr.bin(this.size.ceilDiv(2)).also { BinHex.hexToBin(this, it) }
 
-public fun Text.toGlyphBuffer(): GlyphBuffer {
-    return GlyphBuffer().also { gb ->
-        forEach { cp ->
-            gb.insert(cp)
-        }
-    }
+public fun Text.toGlyphString(): GlyphString {
+    val iter = iterator()
+    val ints = mutableListOf<Int>()
+    iter.forEach { ints.add(it.value) }
+    return GlyphString(ints)
 }

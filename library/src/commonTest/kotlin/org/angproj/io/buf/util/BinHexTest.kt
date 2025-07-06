@@ -6,6 +6,7 @@ import org.angproj.io.buf.hexToBin
 import org.angproj.io.buf.toText
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 class BinHexTest {
@@ -52,14 +53,14 @@ class BinHexTest {
     @Test
     fun encodeToHex() {
         val data = BufMgr.wrapAsBin(data)
-        assertEquals(lower.checkSum(), data.binToHex().checkSum())
+        assertEquals(lower, data.binToHex())
 
     }
 
     @Test
     fun decodeToBin() {
         val data = BufMgr.wrapAsBin(data)
-        assertEquals(lower.hexToBin().checkSum(), data.checkSum())
-        assertEquals(upper.hexToBin().checkSum(), data.checkSum())
+        assertTrue { lower.hexToBin().contentEquals(data) }
+        assertTrue { upper.hexToBin().contentEquals(data) }
     }
 }

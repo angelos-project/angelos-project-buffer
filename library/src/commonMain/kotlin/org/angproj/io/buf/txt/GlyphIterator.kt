@@ -16,15 +16,22 @@ package org.angproj.io.buf.txt
 
 import org.angproj.io.buf.Text
 import org.angproj.utf.CodePoint
+import org.angproj.utf.Policy
+import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.octets
 
-public fun Text.lookAheadUntilFound(index: Int, tokens: Set<CodePoint>): IntRange {
-    var position = index
+public class GlyphIterator(private val txt: Text, index: Int = 0) : CodePointIterator {
 
-    do {
-        val codePoint = retrieveGlyph(position)
-        position += codePoint.octets()
-    } while (!tokens.contains(codePoint) && limit > position)
+    private val policy: Policy = txt.policy
 
-    return index..position
+    private var _position: Int = index
+
+    public val position: Int
+        get() = _position
+
+    override fun hasNext(): Boolean = txt.limit > _position
+
+    override fun next(): CodePoint = txt.retrieveGlyph(_position).also {
+        _position += it.octets()
+    }
 }

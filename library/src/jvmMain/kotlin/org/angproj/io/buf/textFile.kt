@@ -16,12 +16,13 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.mem.Default
 import org.angproj.io.buf.seg.Bytes
+import org.angproj.utf.Policy
 import java.nio.file.FileSystems
 import java.nio.file.Files
 
 
-public fun BufMgr.textFile(path: String): TextBuffer {
+public fun BufMgr.textFile(path: String, policy: Policy = Policy.basic): TextBuffer {
     val realPath = FileSystems.getDefault().getPath(path)
-    return TextBuffer(Bytes(Default, Files.readAllBytes(realPath)))
+    return TextBuffer(Bytes(Default, Files.readAllBytes(realPath)), policy = policy).also { it.asText().applyPolicy() }
 }
 

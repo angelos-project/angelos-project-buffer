@@ -15,103 +15,64 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
+import org.angproj.io.buf.txt.GlyphIterator
+import org.angproj.utf.Ascii
 import org.angproj.utf.CodePoint
-import org.angproj.utf.UnicodeAware
+import org.angproj.utf.Policy
+import org.angproj.utf.Unicode
+import org.angproj.utf.iter.CodePointIterable
+import org.angproj.utf.iter.CodePointIterator
 
 
 public class TextBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false
-): FlowBuffer(segment, view), UnicodeAware {
+    segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
+): FlowBuffer(segment, view), CodePointIterable {
 
-    public fun read(): CodePoint = readGlyphBlk(remaining) {
+    public fun read(): CodePoint = Unicode.readGlyphByPolicyBlk(remaining, policy) {
         segment.getByte(_position++)
     }
 
-    public fun read(text: TextBuffer, offset: Int, length: Int): Int {
-        text.positionAt(offset)
-        var cnt = 0
-        try {
-            while(cnt < length) { cnt += text.write(read()) }
-        } catch (_: IllegalStateException) {}
-        return cnt
-    }
-
-    public fun write(codePoint: CodePoint): Int = writeGlyphBlk(codePoint, remaining) {
+    public fun write(codePoint: CodePoint): Int = Unicode.writeGlyphByPolicyBlk(codePoint, remaining, policy) {
         segment.setByte(_position++, it)
     }
 
+    public fun readLine(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): Text {
+        val start = position
+        val txt = asText()
+        val end = txt.find(start, setOf(newLine.value))
+        positionAt(end)
+        return BufMgr.txt(end - start, policy).also { this.copyInto(it, 0, start, end) }
+    }
+
+    public fun readLines(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): List<Text> {
+        val lines = mutableListOf<Text>()
+        while(remaining > 0)
+            lines.add(readLine(newLine))
+        return lines.toList()
+    }
+
     public fun write(txt: Text): Int {
-        var cnt = 0
-        try {
-            txt.forEach { cnt += write(it) }
-        } catch (_: IllegalStateException) {}
-        return cnt
+        txt.copyInto(this, position, 0, txt.limit)
+        positionAt(position + txt.limit)
+        return txt.limit
     }
 
-    protected fun write(str: String): Int {
-        return write(str.toText())
+    public fun write(str: String): Int {
+        return write(str.toText(policy))
     }
 
-    public fun write(text: TextBuffer, offset: Int, length: Int): Int {
-        text.positionAt(offset)
-        var cnt = 0
-        try {
-            while(cnt < length) { cnt += write(text.read()) }
-        } catch (_: IllegalStateException) {}
-        return cnt
+    public fun write(buf: TextBuffer): Int {
+        val length = buf.limit - buf.mark
+        buf.copyInto(this, position, buf.mark, buf.limit)
+        positionAt(position + length)
+        return length
     }
 
-    /**
-     * Gets the byte [index] of the next glyph if outside [toIndex] it returns its original value,
-     * or throws an error if malformed octet byte.
-     * */
-    protected fun jumpNext(index: Int): Int {
-        val offset: Int = hasGlyphSize(segment.getByte(index)) + index
-        return when {
-            offset > index -> if(offset < limit) offset else index
-            else -> error("Index not beginning of UTF-8 glyph.")
-        }
+    public fun applyPolicy() {
+        iterator().forEach { _ -> }
     }
 
-    /**
-     * Seeks from byte [index] after the beginning byte of next UTF-8 glyph up to [limit].
-     * */
-    protected fun seekNext(index: Int): Int {
-        var pos = index
-        do { pos++ } while(!isGlyphStart(segment.getByte(pos)) && pos < limit)
-        return pos
-    }
+    public fun asText(): Text = Text(segment, true, policy)
 
-    protected fun currentOrSeekNext(index: Int): Int = if(isGlyphStart(segment.getByte(index))) index else seekNext(index)
-
-    /**
-     * Seeks from byte [index] after the beginning byte of previous UTF-8 glyph down to [mark].
-     * */
-    protected fun seekPrev(index: Int): Int {
-        var pos = index
-        do { pos-- } while(!isGlyphStart(segment.getByte(pos)) && pos >= _mark)
-        return pos
-    }
-
-    protected fun currentOrSeekPrev(index: Int): Int = if(isGlyphStart(segment.getByte(index))) index else seekPrev(index)
-
-    /**
-     * Seeks for the byte index of [offset] which is X number of multibyte characters,
-     * between [fromIndex] and [toIndex] which defaults to [mark] and [limit], if the
-     * seek goes out of range it returns -1.
-     * */
-    public fun seek(offset: Int, fromIndex: Int = mark, toIndex: Int = limit): Int {
-        var current = currentOrSeekPrev(fromIndex)
-        var pos = 0
-        while(current < toIndex && pos < offset) {
-            val next = jumpNext(current)
-            if(current == next) break
-            else current = next
-            pos++
-        }
-        return if(pos == offset) current else -1
-    }
+    override fun iterator(): CodePointIterator = GlyphIterator(asText(), position)
 }
-
-public fun TextBuffer.asText(): Text = Text(segment, true)
-

@@ -12,16 +12,22 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.txt
 
+import org.angproj.io.buf.BufMgr
+import org.angproj.io.buf.Text
+import org.angproj.io.buf.TextRetrievable
+import org.angproj.io.buf.TextStorable
 import org.angproj.io.buf.util.Sized
 import org.angproj.utf.AbstractUnicodeAware
 import org.angproj.utf.Ascii
 import org.angproj.utf.CodePoint
+import org.angproj.utf.alphabetOf
+import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.toCodePoint
 
 
-public class GlyphBuffer(
+public class GlyphString(
     initialGlyphs: MutableList<Int> = mutableListOf()
 ) : AbstractUnicodeAware(), Sized, TextRetrievable, TextStorable, Iterable<CodePoint> {
 
@@ -57,11 +63,17 @@ public class GlyphBuffer(
 
     public fun last(): CodePoint = glyphs.last().toCodePoint()
 
-    public fun trim(chars: Set<Int> = invisibleCharacters): GlyphBuffer {
+    public fun trimLeft(chars: Set<Int> = invisibleCharacters): GlyphString {
         if(glyphs.isNotEmpty()) while(glyphs.firstOrNull() in chars) { glyphs.removeAt(0) }
+        return this
+    }
+
+    public fun trimRight(chars: Set<Int> = invisibleCharacters): GlyphString {
         if(glyphs.isNotEmpty()) while(glyphs.lastOrNull() in chars) { glyphs.removeAt(glyphs.lastIndex) }
         return this
     }
+
+    public fun trim(chars: Set<Int> = invisibleCharacters): GlyphString = trimLeft(chars).trimRight(chars)
 
     override fun retrieveGlyph(position: Int): CodePoint {
         return glyphs[position].toCodePoint()
@@ -90,21 +102,50 @@ public class GlyphBuffer(
         return ca.concatToString()
     }
 
-    override fun iterator(): Iterator<CodePoint> = object : Iterator<CodePoint> {
+    override fun iterator(): CodePointIterator = object : CodePointIterator {
         var pos = 0
         override fun next(): CodePoint = glyphs[pos].toCodePoint()
         override fun hasNext(): Boolean = pos < size
     }
 
-    public companion object {
-        public val invisibleCharacters: Set<Int> = setOf(
-            Ascii.CTRL_HT.cp,
-            Ascii.CTRL_LF.cp,
-            Ascii.CTRL_VT.cp,
-            Ascii.CTRL_FF.cp,
-            Ascii.CTRL_CR.cp,
-            Ascii.PRNT_SPACE.cp
-        )
+    public companion object Companion {
+        public val invisibleCharacters: Set<Int> by lazy {
+            alphabetOf(
+                Ascii.CTRL_HT,
+                Ascii.CTRL_LF,
+                Ascii.CTRL_VT,
+                Ascii.CTRL_FF,
+                Ascii.CTRL_CR,
+                Ascii.PRNT_SPACE
+            )
+        }
+
+        public val hexaDecimals: Set<Int> by lazy {
+            alphabetOf(
+                Ascii.PRNT_ZERO,
+                Ascii.PRNT_ONE,
+                Ascii.PRNT_TWO,
+                Ascii.PRNT_THREE,
+                Ascii.PRNT_FOUR,
+                Ascii.PRNT_FIVE,
+                Ascii.PRNT_SIX,
+                Ascii.PRNT_SEVEN,
+                Ascii.PRNT_EIGHT,
+                Ascii.PRNT_NINE,
+                Ascii.PRNT_A_UP,
+                Ascii.PRNT_A_LOW,
+                Ascii.PRNT_B_UP,
+                Ascii.PRNT_B_LOW,
+                Ascii.PRNT_C_UP,
+                Ascii.PRNT_C_LOW,
+                Ascii.PRNT_D_UP,
+                Ascii.PRNT_D_LOW,
+                Ascii.PRNT_E_UP,
+                Ascii.PRNT_E_LOW,
+                Ascii.PRNT_F_UP,
+                Ascii.PRNT_F_LOW
+            )
+        }
     }
 }
 

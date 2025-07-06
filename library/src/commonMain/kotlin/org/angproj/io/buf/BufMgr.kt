@@ -20,15 +20,18 @@ import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.util.DataSize
 import org.angproj.io.buf.util.useWith
 import org.angproj.sec.util.TypeSize
+import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
 
 public object BufMgr {
 
     public fun bin(size: Int): Binary = Binary(Default.allocate(size), false)
 
-    public fun txt(size: Int): Text = Text(Default.allocate(size), false)
+    public fun txt(size: Int, policy: Policy = Policy.basic): Text = Text(Default.allocate(size), false, policy)
 
     public fun binary(size: Int): BinaryBuffer = BinaryBuffer(Default.allocate(size), false)
+
+    public fun text(size: Int, policy: Policy = Policy.basic): TextBuffer = TextBuffer(Default.allocate(size), false, policy)
 
     public fun byteBuf(size: Int): ByteBuffer = ByteBuffer(Default.allocate(size), false)
 
@@ -61,5 +64,5 @@ public object BufMgr {
 
     public fun wrapAsBin(data: ByteArray): Binary = Binary(Bytes(Default, data), true)
 
-    public fun stringToText(str: String): Text = Text(Bytes(Default, Unicode.decode(str)))
+    public fun stringToText(str: String, policy: Policy = Policy.basic): Text = Text(Bytes(Default, Unicode.decode(str)), false, policy)
 }

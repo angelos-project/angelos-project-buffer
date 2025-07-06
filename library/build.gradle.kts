@@ -73,7 +73,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation("org.angproj.sec:angelos-project-secrand:0.11.7")
-            implementation("org.angproj.utf:angelos-project-utf:0.1.5")
+            implementation("org.angproj.utf:angelos-project-utf:0.2.1")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

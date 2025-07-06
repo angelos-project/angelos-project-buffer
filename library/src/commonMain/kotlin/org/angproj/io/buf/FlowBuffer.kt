@@ -29,6 +29,7 @@ public abstract class FlowBuffer protected constructor(
         get() = segment.size
 
     protected var _position: Int = 0
+
     /**
      * The current position of the cursor in the buffer.
      * */
