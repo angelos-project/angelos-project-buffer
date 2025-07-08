@@ -15,11 +15,13 @@
 package org.angproj.io.buf.json
 
 import org.angproj.sec.util.ensure
+import org.angproj.utf.AbstractUnicodeAware
 import org.angproj.utf.Ascii
+import org.angproj.utf.UnicodeAware
 import org.angproj.utf.alphabetOf
 
 
-public enum class JsonParser: Parser {
+public enum class JsonParser: Parser, UnicodeAware {
     JSON {
         override fun parse(lexer: Lexer, start: Int): Int {
             TODO("Not yet implemented")
@@ -62,27 +64,55 @@ public enum class JsonParser: Parser {
     },
     STRING {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            return lexer.txt.predicate(start) {
+                it == Ascii.PRNT_QUOT.toInt()
+            }.let {
+                CHARACTERS.parse(lexer, it)
+            }.let {
+                lexer.txt.predicate(it) { it ->
+                    it == Ascii.PRNT_QUOT.toInt()
+                }
+            }
         }
     },
     CHARACTERS {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            var totSize = 0
+            do {
+                val size = CHARACTER.parse(lexer, start + totSize)
+                totSize += size
+            } while (size > 0)
+            return totSize
         }
     },
     CHARACTER {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            val bslashSize = lexer.txt.predicate(start) { it == Ascii.PRNT_BSLASH.toInt() }
+            return if(bslashSize > 0) {
+                bslashSize.let { ESCAPE.parse(lexer, start + bslashSize) }
+            } else {
+                lexer.txt.predicate(start) { isValid(it) && it != Ascii.PRNT_QUOT.toInt() }
+            }
         }
     },
     ESCAPE {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            val size = lexer.txt.predicate(start) { it in escape }
+            val uSize = lexer.txt.predicate(start) { it == Ascii.PRNT_U_LOW.toInt() }
+            return when {
+                uSize > 0 -> (start + uSize).let { HEX.parse(lexer, it) }
+                size == 0 -> ensure { JsonParserException("$this expected at ${lexer.position()}") }
+                else -> start + size
+            }
         }
     },
     HEX {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            val size = lexer.txt.parse(start) { it in hex }
+            return when(size) {
+                4 -> start + size
+                else -> ensure { JsonParserException("$this expected at ${lexer.position()}") }
+            }
         }
     },
     NUMBER {
@@ -156,7 +186,28 @@ public enum class JsonParser: Parser {
         }
     };
 
-    public companion object {
+    public companion object{
+        public val escape: Set<Int> by lazy {
+            alphabetOf(
+                Ascii.PRNT_QUOT, Ascii.PRNT_SLASH,
+                Ascii.PRNT_BSLASH, Ascii.PRNT_B_LOW,
+                Ascii.PRNT_F_LOW, Ascii.PRNT_N_LOW,
+                Ascii.PRNT_R_LOW, Ascii.PRNT_T_LOW,
+                Ascii.PRNT_U_LOW
+            ) + digit
+        }
+
+        public val hex: Set<Int> by lazy {
+            alphabetOf(
+                Ascii.PRNT_A_LOW, Ascii.PRNT_A_UP,
+                Ascii.PRNT_B_LOW, Ascii.PRNT_B_UP,
+                Ascii.PRNT_C_LOW, Ascii.PRNT_C_UP,
+                Ascii.PRNT_D_LOW, Ascii.PRNT_D_UP,
+                Ascii.PRNT_E_LOW, Ascii.PRNT_E_UP,
+                Ascii.PRNT_F_LOW, Ascii.PRNT_F_UP,
+            ) + digit
+        }
+
         public val digit: Set<Int> by lazy {
             alphabetOf(Ascii.PRNT_ZERO) + onenine
         }
