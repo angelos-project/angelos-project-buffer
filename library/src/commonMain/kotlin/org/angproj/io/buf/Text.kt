@@ -24,6 +24,7 @@ import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
 import org.angproj.utf.iter.CodePointIterable
 import org.angproj.utf.iter.CodePointIterator
+import org.angproj.utf.octets
 
 
 public class Text internal constructor(
@@ -66,6 +67,51 @@ public class Text internal constructor(
                 break
         }
         return iter.position - 1
+    }
+
+    /**
+     * Scans the text starting from the specified position, advancing the iterator until the predicate [logic] returns true.
+     * Searching for the beginning of compliance.
+     *
+     * @param start The starting position (in code points) within the text.
+     * @param logic A predicate function that takes a code point (as `Int`) and returns `true` to indicate a match.
+     * @return The position (in code points) where [logic] first returned true, or the end position if not found.
+     */
+    public fun find(start: Int, logic: (Int) -> Boolean): Int {
+        val iter = GlyphIterator(this, start)
+        while(iter.hasNext()) {
+            if(logic(iter.next().value))
+                break
+        }
+
+        return iter.position
+    }
+
+    /**
+     * Scans the text starting from the specified position, advancing the iterator as long as the predicate [logic] returns false.
+     * Searching for the end of compliance
+     *
+     * @param start The starting position (in code points) within the text.
+     * @param logic A predicate function that takes a code point (as `Int`) and returns `true` to continue parsing.
+     * @return The position (in code points) of the last code point for which [logic] returned true, or `start - 1` if none matched.
+     */
+    public fun parse(start: Int, logic: (Int) -> Boolean): Int {
+        var pos = start
+        while(remaining<Int>(pos) > 0) {
+            val size = predicate(pos, logic)
+            if(size == 0)
+                break
+            pos += size
+        }
+        return pos
+    }
+
+    /**
+     * Gives the size of the glyph if predicate is true or zero
+     * */
+    public fun predicate(pos: Int, predicate: (Int) -> Boolean): Int {
+        val next = retrieveGlyph(pos)
+        return if(predicate(next.value)) next.octets() else 0
     }
 
     public fun applyPolicy() {
