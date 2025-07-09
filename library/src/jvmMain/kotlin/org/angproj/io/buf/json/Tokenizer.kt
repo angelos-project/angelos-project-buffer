@@ -14,15 +14,5 @@
  */
 package org.angproj.io.buf.json
 
-import org.angproj.io.buf.Text
-
-public class Lexer(public val txt: Text, public val row: Int, public val col: Int) {
-    private var intRange: IntRange = 0..0
-
-    public var start: Int = -1
-    public var end: Int = -1
-
-    public val children: MutableList<Lexer> = mutableListOf()
-
-    public fun position(): String = "line $row, letter $col"
+public class Tokenizer {
 }

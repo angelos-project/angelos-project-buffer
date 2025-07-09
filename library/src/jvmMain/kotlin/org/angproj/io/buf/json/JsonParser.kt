@@ -15,10 +15,10 @@
 package org.angproj.io.buf.json
 
 import org.angproj.sec.util.ensure
-import org.angproj.utf.AbstractUnicodeAware
 import org.angproj.utf.Ascii
 import org.angproj.utf.UnicodeAware
 import org.angproj.utf.alphabetOf
+import org.angproj.utf.octets
 
 
 public enum class JsonParser: Parser, UnicodeAware {
@@ -29,7 +29,15 @@ public enum class JsonParser: Parser, UnicodeAware {
     },
     VALUE {
         override fun parse(lexer: Lexer, start: Int): Int {
-            TODO("Not yet implemented")
+            val init = lexer.txt.retrieveGlyph(start)
+            val size = init.octets()
+            return when {
+                init.value == Ascii.PRNT_LBRACE.toInt() -> OBJECT.parse(lexer, start)
+                init.value == Ascii.PRNT_LBRACK.toInt() -> ARRAY.parse(lexer, start)
+                init.value == Ascii.PRNT_QUOT.toInt() -> STRING.parse(lexer, start)
+                //init.value == Ascii.PRNT_EQUALS.toInt() || (init.value in digit) ->
+                else -> ensure { JsonParserException("$this expected at ${lexer.position()}") }
+            }
         }
     },
     OBJECT {

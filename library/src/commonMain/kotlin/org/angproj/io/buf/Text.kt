@@ -114,6 +114,21 @@ public class Text internal constructor(
         return if(predicate(next.value)) next.octets() else 0
     }
 
+    public fun startsWith(prefix: Text, startIndex: Int): Boolean {
+        var pos = 0
+        while (prefix.remaining<Unit>(pos) > 0) {
+            val glyph = prefix.retrieveGlyph(pos)
+            pos += glyph.octets()
+            if(retrieveGlyph(startIndex + pos) != glyph)
+                return false
+        }
+        return true
+    }
+
+    public fun substr(start: Int, end: Int): Text {
+        return BufMgr.txt(end - start, policy).also { this.copyInto(it, 0, start, end) }
+    }
+
     public fun applyPolicy() {
         iterator().forEach { _ -> }
     }

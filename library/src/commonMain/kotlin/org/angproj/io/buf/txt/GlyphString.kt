@@ -24,6 +24,7 @@ import org.angproj.utf.Ascii
 import org.angproj.utf.CodePoint
 import org.angproj.utf.alphabetOf
 import org.angproj.utf.iter.CodePointIterator
+import org.angproj.utf.octets
 import org.angproj.utf.toCodePoint
 
 
@@ -84,6 +85,24 @@ public class GlyphString(
         return codePoint.value
     }
 
+    public fun integerOf(range: IntRange, multiple: Long): Long {
+        var value: Long = 0
+        range.forEach {
+            value *= multiple + digitToNumber<Unit>(glyphs[it])
+        }
+        return value
+    }
+
+    public fun fractionOf(range: IntRange, fraction: Double): Double {
+        var fractionSize = 1.0
+        var value = .0
+        range.forEach {
+            fractionSize *= fraction
+            value += digitToNumber<Unit>(glyphs[it]) * fractionSize
+        }
+        return value
+    }
+
     public fun octets(): Int = glyphs.sumOf { unicodeOctetSize<Int>(it) }
 
     public fun toText(): Text {
@@ -120,7 +139,10 @@ public class GlyphString(
             )
         }
 
-        public val hexaDecimals: Set<Int> by lazy {
+        public const val octMultiple: Long = 8
+        public const val octFraction: Double = 1.0 / 8.0
+
+        public val octal: Set<Int> by lazy {
             alphabetOf(
                 Ascii.PRNT_ZERO,
                 Ascii.PRNT_ONE,
@@ -130,8 +152,24 @@ public class GlyphString(
                 Ascii.PRNT_FIVE,
                 Ascii.PRNT_SIX,
                 Ascii.PRNT_SEVEN,
+            )
+        }
+
+        public const val decMultiple: Long = 10
+        public const val decFraction: Double = 1.0 / 10.0
+
+        public val decimal: Set<Int> by lazy {
+            octal + alphabetOf(
                 Ascii.PRNT_EIGHT,
-                Ascii.PRNT_NINE,
+                Ascii.PRNT_NINE
+            )
+        }
+
+        public const val hexMultiple: Long = 16
+        public const val hexFraction: Double = 1.0 / 16.0
+
+        public val hex: Set<Int> by lazy {
+            decimal + alphabetOf(
                 Ascii.PRNT_A_UP,
                 Ascii.PRNT_A_LOW,
                 Ascii.PRNT_B_UP,
