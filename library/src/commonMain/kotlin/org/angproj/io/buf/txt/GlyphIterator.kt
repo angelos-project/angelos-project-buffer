@@ -20,11 +20,11 @@ import org.angproj.utf.Policy
 import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.octets
 
-public class GlyphIterator(private val txt: Text, index: Int = 0) : CodePointIterator {
+public class GlyphIterator(private val txt: Text) : CodePointIterator {
 
     private val policy: Policy = txt.policy
 
-    private var _position: Int = index
+    private var _position: Int = 0 // TODO(Check this)
 
     public val position: Int
         get() = _position

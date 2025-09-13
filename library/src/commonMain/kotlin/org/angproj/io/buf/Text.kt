@@ -23,7 +23,6 @@ import org.angproj.utf.CodePoint
 import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
 import org.angproj.utf.iter.CodePointIterable
-import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.octets
 
 
@@ -31,7 +30,7 @@ public class Text internal constructor(
     segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
 ) : BlockBuffer(segment, view), TextRetrievable, TextStorable, CodePointIterable {
 
-    override fun iterator(): CodePointIterator = GlyphIterator(this)
+    override fun iterator(): GlyphIterator = GlyphIterator(this)
 
     override fun retrieveGlyph(position: Int): CodePoint {
         var offset = position
@@ -51,8 +50,8 @@ public class Text internal constructor(
         }
     }
 
-    public fun find(start: Int, tokens: Set<Int>): Int {
-        val iter = GlyphIterator(this, start)
+    public fun find(tokens: Set<Int>): Int {
+        val iter = iterator()
         while(iter.hasNext()) {
             if(tokens.contains(iter.next().value))
                 break
@@ -60,8 +59,8 @@ public class Text internal constructor(
         return iter.position
     }
 
-    public fun parse(start: Int, tokens: Set<Int>): Int {
-        val iter = GlyphIterator(this, start)
+    public fun parse(tokens: Set<Int>): Int {
+        val iter = iterator()
         while(iter.hasNext()) {
             if(!tokens.contains(iter.next().value))
                 break
@@ -78,13 +77,14 @@ public class Text internal constructor(
      * @return The position (in code points) where [logic] first returned true, or the end position if not found.
      */
     public fun find(start: Int, logic: (Int) -> Boolean): Int {
-        val iter = GlyphIterator(this, start)
-        while(iter.hasNext()) {
-            if(logic(iter.next().value))
+        var pos = start
+        while(remaining<Int>(pos) > 0) {
+            val size = predicate(pos, logic)
+            if(size > 0)
                 break
+            pos += size
         }
-
-        return iter.position
+        return pos
     }
 
     /**

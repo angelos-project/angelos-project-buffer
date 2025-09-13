@@ -23,13 +23,12 @@ class JsonTest {
     }
 
     @Test
-    fun testNumberParsing() {
-       /* val numbers = BufMgr.textFile("src/jvmTest/resources/integers.txt")
-        numbers.readLines().forEachIndexed { index, value ->
+    fun testNumberParsing() { val numbers = BufMgr.textFile("src/jvmTest/resources/integers.txt")
+        /*numbers.readLines().forEachIndexed { index, value ->
             //it.toGlyphString().trim().toString().toDouble()
             val lexer = Lexer(value, index + 1, 1)
             val data = JsonParser.INTEGER.parse(lexer, 0)
-            println(value.substr(0, data).toGlyphString().integerOf(0..data, 10))
+            println(TextParser.parseInt(value.substr(0, data)))
             //println("$data, ${value.limit-1}: ${(value.limit - 1) == data}")
         }*/
 

@@ -39,7 +39,9 @@ public class TextBuffer internal constructor(
     public fun readLine(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): Text {
         val start = position
         val txt = asText()
-        val end = txt.find(start, setOf(newLine.value))
+        val end = txt.find(start) {
+            it == newLine.value // TODO(Check whether this is right or not)
+        }
         positionAt(end)
         return BufMgr.txt(end - start, policy).also { this.copyInto(it, 0, start, end) }
     }
@@ -74,5 +76,5 @@ public class TextBuffer internal constructor(
 
     public fun asText(): Text = Text(segment, true, policy)
 
-    override fun iterator(): CodePointIterator = GlyphIterator(asText(), position)
+    override fun iterator(): CodePointIterator = GlyphIterator(asText())
 }
