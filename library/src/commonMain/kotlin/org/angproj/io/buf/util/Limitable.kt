@@ -35,6 +35,7 @@ public interface Limitable: Sized {
      * Sets a new usage limit for the element.
      *
      * @param newLimit The new limit value, which should be between 0 and [size].
+     * @throws IndexOutOfBoundsException if the new limit is out of bounds.
      */
     public fun limitAt(newLimit: Int)
 
