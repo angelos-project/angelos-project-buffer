@@ -1,76 +1,81 @@
+/**
+ * Copyright (c) 2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
+import org.mockito.Mock
 import org.mockito.kotlin.*
+import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class ReadAccessTest {
 
-    @Test
-    fun `test getByte is called with correct arguments`() {
-        val mock = mock<ReadAccess> {
-            on { getByte(2) } doReturn 0x7F
-        }
-        mock.getByte(2)
-        verify(mock).getByte(2)
+    @Mock
+    private lateinit var readAccess: ReadAccess
+
+    @BeforeTest
+    fun setup() {
+        readAccess = mock()
     }
 
     @Test
-    fun `test getShort is called with correct arguments`() {
-        val mock = mock<ReadAccess> {
-            on { getShort(1) } doReturn 12345
-        }
-        mock.getShort(1)
-        verify(mock).getShort(1)
+    fun testGetByte() {
+        whenever(readAccess.getByte(2)).doReturn(0x7f)
+        assertEquals(readAccess.getByte(2), 0x7f)
     }
 
     @Test
-    fun `test getInt is called with correct arguments`() {
-        val mock = mock<ReadAccess> {
-            on { getInt(0) } doReturn 0xDEADBEEF.toInt()
-        }
-        mock.getInt(0)
-        verify(mock).getInt(0)
+    fun testGetShort() {
+        whenever(readAccess.getShort(1)).doReturn(12345)
+        assertEquals(readAccess.getShort(1), 12345)
     }
 
     @Test
-    fun `test getLong is called with correct arguments`() {
-        val mock = mock<ReadAccess> {
-            on { getLong(3) } doReturn 0x123456789ABCDEFL
-        }
-        mock.getLong(3)
-        verify(mock).getLong(3)
+    fun testGetInt() {
+        whenever(readAccess.getInt(0)).doReturn(0xDEADBEEF.toInt())
+        assertEquals(readAccess.getInt(0), 0xDEADBEEF.toInt())
     }
 
     @Test
-    fun `test getByte throws IndexOutOfBoundsException`() {
-        val mock = mock<ReadAccess> {
-            on { getByte(eq(-1)) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.getByte(-1) }
+    fun testGetLong() {
+        whenever(readAccess.getLong(3)).doReturn(0x123456789ABCDEFL)
+        assertEquals(readAccess.getLong(3), 0x123456789ABCDEFL)
     }
 
     @Test
-    fun `test getShort throws IndexOutOfBoundsException`() {
-        val mock = mock<ReadAccess> {
-            on { getShort(eq(100)) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.getShort(100) }
+    fun testGetByteThrowException() {
+        whenever(readAccess.getByte(-1)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getByte(-1) }
     }
 
     @Test
-    fun `test getInt throws IndexOutOfBoundsException`() {
-        val mock = mock<ReadAccess> {
-            on { getInt(eq(-5)) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.getInt(-5) }
+    fun testGetShortThrowException() {
+        whenever(readAccess.getShort(-1)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getShort(-1) }
     }
 
     @Test
-    fun `test getLong throws IndexOutOfBoundsException`() {
-        val mock = mock<ReadAccess> {
-            on { getLong(eq(789)) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.getLong(789) }
+    fun testGetIntThrowException() {
+        whenever(readAccess.getInt(-1)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getInt(-1) }
+    }
+
+    @Test
+    fun testGetLongThrowException() {
+        whenever(readAccess.getLong(-1)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getLong(-1) }
     }
 }
