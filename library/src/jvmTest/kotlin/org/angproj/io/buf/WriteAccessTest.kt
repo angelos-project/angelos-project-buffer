@@ -1,68 +1,81 @@
+/**
+ * Copyright (c) 2025 by Kristoffer Paulsson <kristoffer.paulsson@talenten.se>.
+ *
+ * This software is available under the terms of the MIT license. Parts are licensed
+ * under different terms if stated. The legal terms are attached to the LICENSE file
+ * and are made available on:
+ *
+ *      https://opensource.org/licenses/MIT
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Contributors:
+ *      Kristoffer Paulsson - initial implementation
+ */
 package org.angproj.io.buf
 
+import org.mockito.Mock
 import org.mockito.kotlin.*
+import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class WriteAccessTest {
 
-    @Test
-    fun `test setByte is called with correct arguments`() {
-        val mock = mock<WriteAccess>()
-        mock.setByte(2, 0x7F)
-        verify(mock).setByte(2, 0x7F)
+    @Mock
+    private lateinit var writeAccess: WriteAccess
+
+    @BeforeTest
+    fun setup() {
+        writeAccess = mock()
     }
 
     @Test
-    fun `test setShort is called with correct arguments`() {
-        val mock = mock<WriteAccess>()
-        mock.setShort(1, 12345)
-        verify(mock).setShort(1, 12345)
+    fun testSetByte() {
+        doNothing().whenever(writeAccess).setByte(2, 0x7f)
+        assertEquals(Unit, writeAccess.setByte(2, 0x7f))
     }
 
     @Test
-    fun `test setInt is called with correct arguments`() {
-        val mock = mock<WriteAccess>()
-        mock.setInt(0, 0xDEADBEEF.toInt())
-        verify(mock).setInt(0, 0xDEADBEEF.toInt())
+    fun testSetShort() {
+        doNothing().whenever(writeAccess).setShort(1, 12345)
+        assertEquals(Unit, writeAccess.setShort(1, 12345))
     }
 
     @Test
-    fun `test setLong is called with correct arguments`() {
-        val mock = mock<WriteAccess>()
-        mock.setLong(3, 0x123456789ABCDEFL)
-        verify(mock).setLong(3, 0x123456789ABCDEFL)
+    fun testSetInt() {
+        doNothing().whenever(writeAccess).setInt(0, 0xDEADBEEF.toInt())
+        assertEquals(Unit, writeAccess.setInt(0, 0xDEADBEEF.toInt()))
     }
 
     @Test
-    fun `test setByte throws IndexOutOfBoundsException`() {
-        val mock = mock<WriteAccess> {
-            on { setByte(eq(-1), any()) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.setByte(-1, 0) }
+    fun testSetLong() {
+        doNothing().whenever(writeAccess).setLong(3, 0x123456789ABCDEFL)
+        assertEquals(Unit, writeAccess.setLong(3, 0x123456789ABCDEFL))
     }
 
     @Test
-    fun `test setShort throws IndexOutOfBoundsException`() {
-        val mock = mock<WriteAccess> {
-            on { setShort(eq(100), any()) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.setShort(100, 0) }
+    fun testSetByteThrowException() {
+        whenever(writeAccess.setByte(-1, 0)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setByte(-1, 0) }
     }
 
     @Test
-    fun `test setInt throws IndexOutOfBoundsException`() {
-        val mock = mock<WriteAccess> {
-            on { setInt(eq(-5), any()) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.setInt(-5, 0) }
+    fun testSetShortThrowException() {
+        whenever(writeAccess.setShort(-1, 0)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setShort(-1, 0) }
     }
 
     @Test
-    fun `test setLong throws IndexOutOfBoundsException`() {
-        val mock = mock<WriteAccess> {
-            on { setLong(eq(789), any()) } doThrow IndexOutOfBoundsException()
-        }
-        assertFailsWith<IndexOutOfBoundsException> { mock.setLong(789, 0L) }
+    fun testSetIntThrowException() {
+        whenever(writeAccess.setInt(-1, 0)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setInt(-1, 0) }
+    }
+
+    @Test
+    fun testSetLongThrowException() {
+        whenever(writeAccess.setLong(-1, 0)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setLong(0-1, 0) }
     }
 }
