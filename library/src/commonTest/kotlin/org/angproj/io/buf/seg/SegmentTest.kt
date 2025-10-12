@@ -66,5 +66,10 @@ abstract class SegmentTest<S: Segment<S>> {
         assertFailsWith<SegmentException> { segment.setShort(31, 0) }
         assertFailsWith<SegmentException> { segment.getInt(29) }
         assertFailsWith<SegmentException> { segment.setLong(25, 0L) }
+
+        assertFailsWith<SegmentException> { segment.getByte(-1) }
+        assertFailsWith<SegmentException> { segment.setShort(-1, 0) }
+        assertFailsWith<SegmentException> { segment.getInt(-1) }
+        assertFailsWith<SegmentException> { segment.setLong(-1, 0L) }
     }
 }
