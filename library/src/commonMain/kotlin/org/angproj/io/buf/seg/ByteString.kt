@@ -108,7 +108,7 @@ public abstract class ByteString(
      * The new limit must be between 0 and the total size of the segment.
      *
      * @param newLimit The new limit to set for the segment. Must be between 0 and [size].
-     * @throws IllegalArgumentException if the new limit is out of bounds.
+     * @throws SegmentException if the new limit is out of bounds.
      */
     override fun limitAt(newLimit: Int) {
         require(newLimit in 0..size) { "New limit must be between 0 and $stringSize" }
