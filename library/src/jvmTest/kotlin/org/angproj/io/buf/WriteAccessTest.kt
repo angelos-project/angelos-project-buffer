@@ -76,6 +76,6 @@ class WriteAccessTest {
     @Test
     fun testSetLongThrowException() {
         whenever(writeAccess.setLong(-1, 0)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setLong(0-1, 0) }
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setLong(-1, 0) }
     }
 }
