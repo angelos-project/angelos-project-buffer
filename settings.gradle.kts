@@ -1,5 +1,4 @@
 rootProject.name = "angelos-project-buffer"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {

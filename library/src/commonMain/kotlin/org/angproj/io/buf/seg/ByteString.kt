@@ -19,7 +19,6 @@ import org.angproj.io.buf.WriteAccess
 import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
 import org.angproj.sec.SecureFeed
-import org.angproj.sec.SecureRandom
 import org.angproj.sec.rand.InitializationVector
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.ensure
@@ -266,11 +265,11 @@ public abstract class ByteString(
      * ensuring that the segment is filled with high-quality random data.
      */
     public fun securelyRandomize() {
-        SecureFeed.exportLongs(this, 0, limit / TypeSize.longSize) { index, value ->
+        SecureFeed.readLongs(this, 0, limit / TypeSize.longSize) { index, value ->
             setLong(index, value)
         }
         val byteSize = limit.floorMod(TypeSize.longSize)
-        SecureRandom.exportBytes(this, limit - byteSize, byteSize) { index, value ->
+        SecureFeed.readBytes(this, limit - byteSize, byteSize) { index, value ->
             setByte(index, value)
         }
     }

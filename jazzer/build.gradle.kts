@@ -18,12 +18,10 @@ kotlin {
     sourceSets {
         jvmMain.dependencies {
             api(project(":library"))
-            implementation("org.angproj.sec:angelos-project-secrand:0.12.1")
+            implementation("org.angproj.sec:angelos-project-secrand:0.12.2")
             implementation(libs.kotlin.test)
-            //implementation(libs.kotlin.jazzer)
-            //implementation(libs.kotlin.jazzer.api)
-            implementation("com.code-intelligence:jazzer:0.24.0")
-            implementation("com.code-intelligence:jazzer-api:0.24.0")
+            implementation(libs.kotlin.jazzer)
+            implementation(libs.kotlin.jazzer.api)
         }
     }
 }

@@ -106,7 +106,7 @@ public class Model(
 
     override fun dispose() {
         clear()
-        SecureFeed.exportLongs(data, 0, data.size) { index, value ->
+        SecureFeed.readLongs(data, 0, data.size) { index, value ->
             data[index] = value
         }
         memCtx.recycle(this)
