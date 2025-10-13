@@ -287,39 +287,6 @@ public abstract class ByteString(
         }
     }
 
-    /**
-     * Computes the hash code for this byte string segment.
-     *
-     * The hash code is calculated based on the segment's checksum and its size.
-     * This method overrides the default hash code implementation to provide a custom
-     * hash code based on the segment's content and size.
-     *
-     * @return The computed hash code as an integer.
-     */
-    /*override fun hashCode(): Int {
-        var result = checkSum()
-        result = 31 * result + limit
-        result = 31 * result + size
-        return result
-    }*/
-
-    /**
-     * Compares this byte string segment with another object for equality.
-     *
-     * Two byte string segments are considered equal if they have the same hash code.
-     * This method overrides the default equality check to provide a custom implementation
-     * based on the segment's checksum and size.
-     *
-     * @param other The object to compare with this byte string segment.
-     * @return `true` if the other object is a `ByteString` with the same hash code, `false` otherwise.
-     */
-    /*override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is ByteString) return false
-
-        return hashCode() == other.hashCode()
-    }*/
-
     public fun contentEquals(other: ByteString?): Boolean {
         if (this === other) return true
         if (other !is ByteString) return false
