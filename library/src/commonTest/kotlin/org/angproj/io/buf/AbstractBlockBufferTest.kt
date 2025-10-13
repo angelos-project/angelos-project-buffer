@@ -14,7 +14,7 @@ abstract class AbstractBlockBufferTest<E: BlockBuffer> {
         val diff = setInput()
         diff.segment.setByte(txtLen-1, (diff.segment.getByte(txtLen-1)+1).toByte())
         assertNotEquals(diff, setInput())
-        assertEquals(setInput(), setInput())
+        assertTrue{setInput().contentEquals(setInput())}
     }
 
     @Test
