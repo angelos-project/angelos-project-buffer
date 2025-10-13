@@ -53,7 +53,7 @@ class BinHexTest {
     @Test
     fun encodeToHex() {
         val data = BufMgr.wrapAsBin(data)
-        assertEquals(lower, data.binToHex())
+        assertTrue { lower.contentEquals(data.binToHex()) }
 
     }
 

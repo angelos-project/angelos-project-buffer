@@ -158,8 +158,7 @@ class ByteStringTest {
             bs1.setByte(i, (i * 2).toByte())
             bs2.setByte(i, (i * 2).toByte())
         }
-        assertEquals(bs1, bs2)
-        assertEquals(bs1.hashCode(), bs2.hashCode())
+        assertTrue {bs1.contentEquals(bs2)}
         bs2.setByte(0, 99)
         assertNotEquals(bs1, bs2)
     }

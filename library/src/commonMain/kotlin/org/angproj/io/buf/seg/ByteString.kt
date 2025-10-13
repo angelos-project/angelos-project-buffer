@@ -296,12 +296,12 @@ public abstract class ByteString(
      *
      * @return The computed hash code as an integer.
      */
-    override fun hashCode(): Int {
+    /*override fun hashCode(): Int {
         var result = checkSum()
         result = 31 * result + limit
         result = 31 * result + size
         return result
-    }
+    }*/
 
     /**
      * Compares this byte string segment with another object for equality.
@@ -313,10 +313,17 @@ public abstract class ByteString(
      * @param other The object to compare with this byte string segment.
      * @return `true` if the other object is a `ByteString` with the same hash code, `false` otherwise.
      */
-    override fun equals(other: Any?): Boolean {
+    /*override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ByteString) return false
 
         return hashCode() == other.hashCode()
+    }*/
+
+    public fun contentEquals(other: ByteString?): Boolean {
+        if (this === other) return true
+        if (other !is ByteString) return false
+
+        return checkSum() == other.checkSum()
     }
 }
