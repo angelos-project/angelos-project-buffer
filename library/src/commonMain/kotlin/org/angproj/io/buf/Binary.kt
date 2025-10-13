@@ -17,6 +17,7 @@ package org.angproj.io.buf
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.BinHex
 import org.angproj.io.buf.util.unsupported
+import org.angproj.sec.Uuid
 
 
 public class Binary(
@@ -87,7 +88,7 @@ public class Binary(
     override fun storeDouble(position: Int, value: Double): Unit =
         segment.setLong(position, value.conv2L())
 
-    public fun checkSum(key: Long = 0): Long = segment.checkSum(key)
+    public fun checkSum(key: Uuid = Uuid.nil): Long = segment.checkSum(key)
 
     public fun isNull(): Boolean = this === nullBinary
 

@@ -19,7 +19,11 @@ import org.angproj.io.buf.WriteAccess
 import org.angproj.io.buf.util.AbstractUtilityAware
 import org.angproj.io.buf.util.Limitable
 import org.angproj.sec.SecureFeed
+import org.angproj.sec.Uuid
+import org.angproj.sec.rand.AbstractSponge256
 import org.angproj.sec.rand.InitializationVector
+import org.angproj.sec.util.HashAbsorber
+import org.angproj.sec.util.Octet
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.ensure
 import org.angproj.sec.util.floorMod
@@ -227,20 +231,29 @@ public abstract class ByteString(
      * @param seed The initial seed value to start the checksum calculation. Defaults to 0.
      * @return The computed checksum as a long value.
      */
-    public fun checkSum(seed: Long = 0): Long {
-        var result: Long = InitializationVector.IV_CA96.iv xor seed
-        var pos = 0
+    public fun checkSum(seed: Uuid = Uuid.nil): Long {
+        val sponge = object : AbstractSponge256() {}
+        val hashAbsorber = HashAbsorber(sponge)
+        var offset = 0
+
+        hashAbsorber.absorb(seed.upper)
+        hashAbsorber.absorb(seed.lower)
 
         repeat(limit.floorDiv(TypeSize.longSize)) {
-            result = (-result.inv() * 5) xor getLong(pos)
-            pos += TypeSize.longSize
-        }
-        repeat(limit.floorMod(TypeSize.longSize)) {
-            result = (-result.inv() * 13) xor getByte(pos).toLong()
-            pos++
+            hashAbsorber.absorb(getLong(offset))
+            offset += TypeSize.longSize
         }
 
-        return result
+        if(offset < limit) {
+            val finalValue = Octet.readNet(this, offset, limit.floorMod(TypeSize.longSize)) { index ->
+                getByte(index)
+            }
+
+            hashAbsorber.absorb(finalValue)
+        }
+
+        sponge.scramble()
+        return sponge.squeeze(0)
     }
 
     /**
@@ -253,7 +266,7 @@ public abstract class ByteString(
      * @return The computed checksum as an integer.
      */
     public fun checkSum(): Int {
-        val result: Long = checkSum(InitializationVector.IV_3569.iv)
+        val result: Long = checkSum(Uuid(InitializationVector.IV_356C.iv, InitializationVector.IV_CA96.iv))
         return (result ushr 32).toInt() xor result.toInt()
     }
 

@@ -72,4 +72,9 @@ abstract class SegmentTest<S: Segment<S>> {
         assertFailsWith<SegmentException> { segment.getInt(-1) }
         assertFailsWith<SegmentException> { segment.setLong(-1, 0L) }
     }
+
+    @Test
+    fun testCheckSum32EmptyBytes() {
+        assertEquals(0x3c75d83e, segment.checkSum())
+    }
 }
