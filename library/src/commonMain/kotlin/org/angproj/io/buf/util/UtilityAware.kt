@@ -15,7 +15,7 @@
 package org.angproj.io.buf.util
 
 
-public interface UtilityAware {
+public interface  UtilityAware {
 
     /**
      * Imported from angelos-project-buffer package.
