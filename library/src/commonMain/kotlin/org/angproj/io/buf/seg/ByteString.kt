@@ -245,7 +245,7 @@ public abstract class ByteString(
         }
 
         if(offset < limit) {
-            val finalValue = Octet.readNet(this, offset, limit.floorMod(TypeSize.longSize)) { index ->
+            val finalValue = Octet.read(this, offset, limit.floorMod(TypeSize.longSize)) { index ->
                 getByte(index)
             }
 

@@ -14,6 +14,8 @@
  */
 package org.angproj.io.buf.util
 
+import org.angproj.sec.util.Octet
+import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.toUnitFraction
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -193,5 +195,100 @@ class AbstractUtilityTest : UtilityAware {
         assertEquals(upperInt.toUnitFraction(), byteArray.readRevFloatAt(0))
         byteArray.writeRevDoubleAt(0, long.toUnitFraction())
         assertEquals(long.toUnitFraction(), byteArray.readRevDoubleAt(0))
+    }
+
+    /**
+     * Synchronizes org.angproj.util.Octet with AbstractUtilityAware
+     * */
+    @Test
+    fun testWriteReadOctet() {
+        val byteArray = ByteArray(TypeSize.longSize)
+
+        // Long
+        Octet.write(long, byteArray, 0, TypeSize.longSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(long, byteArray.readLongAt(0))
+
+       byteArray.writeLongAt(0, long)
+        var result = Octet.read(byteArray, 0, byteArray.size) { index ->
+            byteArray[index]
+        }
+        assertEquals(long, result)
+
+        // Int
+        Octet.write(upperInt.toLong(), byteArray, 4, TypeSize.intSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(upperInt, byteArray.readIntAt(4))
+
+        byteArray.writeIntAt(4, upperInt)
+        result = Octet.read(byteArray, 4, TypeSize.intSize) { index ->
+            byteArray[index]
+        }
+        assertEquals(upperInt, result.toInt())
+
+        // Short
+        Octet.write(upperShort.toLong(), byteArray, 6, TypeSize.shortSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(upperShort, byteArray.readShortAt(6))
+
+        byteArray.writeShortAt(6, upperShort)
+        result = Octet.read(byteArray, 6, TypeSize.shortSize) { index ->
+            byteArray[index]
+        }
+        assertEquals(upperShort, result.toShort())
+    }
+
+    /**
+     * Synchronizes org.angproj.util.Octet with AbstractUtilityAware
+     * */
+    @Test
+    fun testWriteRevReadRevOctet() {
+        val byteArray = ByteArray(TypeSize.longSize)
+
+        byteArray.writeRevShortAt(0, upperShort)
+        assertEquals(upperShort, byteArray.readRevShortAt(0))
+        byteArray.writeRevIntAt(0, upperInt)
+        assertEquals(upperInt, byteArray.readRevIntAt(0))
+        byteArray.writeRevLongAt(0, long)
+        assertEquals(long, byteArray.readRevLongAt(0))
+
+        // Long
+        Octet.writeRev(long, byteArray, 0, TypeSize.longSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(long, byteArray.readRevLongAt(0))
+
+        byteArray.writeRevLongAt(0, long)
+        var result = Octet.readRev(byteArray, 0, byteArray.size) { index ->
+            byteArray[index]
+        }
+        assertEquals(long, result)
+
+        // Int
+        Octet.writeRev(upperInt.toLong(), byteArray, 4, TypeSize.intSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(upperInt, byteArray.readRevIntAt(4))
+
+        byteArray.writeRevIntAt(4, upperInt)
+        result = Octet.readRev(byteArray, 4, TypeSize.intSize) { index ->
+            byteArray[index]
+        }
+        assertEquals(upperInt, result.toInt())
+
+        // Short
+        Octet.writeRev(upperShort.toLong(), byteArray, 6, TypeSize.shortSize) { index, value ->
+            byteArray[index] = value
+        }
+        assertEquals(upperShort, byteArray.readRevShortAt(6))
+
+        byteArray.writeRevShortAt(6, upperShort)
+        result = Octet.readRev(byteArray, 6, TypeSize.shortSize) { index ->
+            byteArray[index]
+        }
+        assertEquals(upperShort, result.toShort())
     }
 }
