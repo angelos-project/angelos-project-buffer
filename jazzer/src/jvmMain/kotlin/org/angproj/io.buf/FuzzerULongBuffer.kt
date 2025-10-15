@@ -17,6 +17,7 @@ package org.angproj.io.buf
 import com.code_intelligence.jazzer.Jazzer
 import com.code_intelligence.jazzer.api.FuzzedDataProvider
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.withUtility
 import kotlin.test.assertEquals
 
 
