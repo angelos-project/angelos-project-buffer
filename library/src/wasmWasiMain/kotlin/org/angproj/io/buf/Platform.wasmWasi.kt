@@ -29,16 +29,6 @@ public actual fun Platform.currentBitness(): BITNESS = when {
     else -> BITNESS.SIZE_32BIT // De facto
 }
 
-/**
- * Little-endian is standard
- * https://webassembly.org/docs/portability/
- * */
-public actual fun Platform.currentEndian(): ENDIAN {
-    return when {
-        else -> ENDIAN.LITTLE_ENDIAN // De facto
-    }
-}
-
 public actual fun Platform.currentCpu(): CPU = when {
     else -> CPU.UNKNOWN
 }

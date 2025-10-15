@@ -38,13 +38,6 @@ public actual fun Platform.currentBitness(): BITNESS = when(cpu) {
 }
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-public actual fun Platform.currentEndian(): ENDIAN = when(System.getProperty("sun.cpu.endian").lowercase()) {
-    "little" -> ENDIAN.LITTLE_ENDIAN
-    "big" -> ENDIAN.BIG_ENDIAN
-    else -> ENDIAN.UNKNOWN
-}
-
-@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 public actual fun Platform.currentCpu(): CPU = when(System.getProperty("os.arch").lowercase()) {
     "x86", "i386", "i86pc", "i686" -> CPU.I386
     "x86_64", "amd64" -> CPU.X86_64

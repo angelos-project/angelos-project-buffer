@@ -129,5 +129,5 @@ public abstract class AbstractUtilityAware {
     /**
      * Network byte order is different if platform byte order is little endian.
      * */
-    protected val networkDifference: Boolean = Platform.isLittleEndian()
+    protected val netRev: Boolean = Platform.isNetRev()
 }

@@ -34,12 +34,6 @@ public actual fun Platform.currentBitness(): BITNESS = when(kotlin.native.Platfo
 }
 
 @OptIn(ExperimentalNativeApi::class)
-public actual fun Platform.currentEndian(): ENDIAN = when(kotlin.native.Platform.isLittleEndian) {
-    true -> ENDIAN.LITTLE_ENDIAN
-    else -> ENDIAN.BIG_ENDIAN
-}
-
-@OptIn(ExperimentalNativeApi::class)
 public actual fun Platform.currentCpu(): CPU = when(kotlin.native.Platform.cpuArchitecture) {
     CpuArchitecture.X64 -> CPU.X86_64
     CpuArchitecture.X86 -> CPU.I386

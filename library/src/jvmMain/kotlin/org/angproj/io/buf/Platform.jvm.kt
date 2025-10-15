@@ -37,12 +37,6 @@ public actual fun Platform.currentBitness(): BITNESS = when(cpu) {
     else -> BITNESS.UNKNOWN
 }
 
-public actual fun Platform.currentEndian(): ENDIAN = when(System.getProperty("sun.cpu.endian").lowercase()) {
-    "little" -> ENDIAN.LITTLE_ENDIAN
-    "big" -> ENDIAN.BIG_ENDIAN
-    else -> ENDIAN.UNKNOWN
-}
-
 public actual fun Platform.currentCpu(): CPU = when(System.getProperty("os.arch").lowercase()) {
     "x86", "i386", "i86pc", "i686" -> CPU.I386
     "x86_64", "amd64" -> CPU.X86_64

@@ -20,6 +20,8 @@ import org.angproj.io.buf.Platform.ENDIAN
 import org.angproj.io.buf.Platform.GUI_OS
 import org.angproj.io.buf.Platform.LIB_OS
 import org.angproj.io.buf.Platform.VARIANT
+import org.angproj.io.buf.util.unsupported
+import org.angproj.sec.util.Octet
 
 
 public object Platform {
@@ -33,7 +35,6 @@ public object Platform {
 
 
     public enum class ENDIAN {
-        UNKNOWN,
         LITTLE_ENDIAN,
         BIG_ENDIAN;
     }
@@ -116,10 +117,10 @@ public object Platform {
 
     public fun isUnix(): Boolean = libOs !in notUnix
 
-    public fun isLittleEndian(): Boolean = endian == ENDIAN.LITTLE_ENDIAN
-
-    public fun isBigEndian(): Boolean = endian == ENDIAN.BIG_ENDIAN
-
+    /**
+     * If platform native endian is different to network endian.
+     * */
+    public fun isNetRev(): Boolean = endian != ENDIAN.BIG_ENDIAN
 
     public val bsd: Set<LIB_OS> = setOf(
         LIB_OS.FREEBSD, LIB_OS.OPENBSD, LIB_OS.NETBSD,
@@ -141,7 +142,11 @@ public expect fun Platform.currentVariant(): VARIANT
 
 public expect fun Platform.currentBitness(): BITNESS
 
-public expect fun Platform.currentEndian(): ENDIAN
+public fun Platform.currentEndian(): ENDIAN = when {
+    Octet.isLittleEndian -> ENDIAN.LITTLE_ENDIAN
+    Octet.isBigEndian -> ENDIAN.BIG_ENDIAN
+    else -> unsupported("Unsupported endian mode")
+}
 
 public expect fun Platform.currentCpu(): CPU
 

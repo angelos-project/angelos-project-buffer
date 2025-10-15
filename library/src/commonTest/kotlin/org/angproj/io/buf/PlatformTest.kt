@@ -46,8 +46,8 @@ class PlatformTest {
         // is32Bit and is64Bit are mutually exclusive
         assertNotEquals(Platform.is32Bit(), Platform.is64Bit())
 
-        // isLittleEndian and isBigEndian are mutually exclusive
-        assertNotEquals(Platform.isLittleEndian(), Platform.isBigEndian())
+        assertNotEquals(Platform.isNetRev(), Platform.endian == Platform.ENDIAN.BIG_ENDIAN)
+        assertEquals(Platform.isNetRev(), Platform.endian == Platform.ENDIAN.LITTLE_ENDIAN)
 
         // bsd and notUnix sets
         assertTrue(Platform.bsd.contains(Platform.LIB_OS.FREEBSD))
@@ -78,8 +78,5 @@ class PlatformTest {
         assertTrue(Platform.isUnix() || !Platform.isUnix())
 
         assertTrue(Platform.isBSD() || !Platform.isBSD())
-
-        // Test isLittleEndian and isBigEndian methods
-        assertTrue(Platform.isLittleEndian() || Platform.isBigEndian())
     }
 }

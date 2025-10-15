@@ -198,7 +198,7 @@ class AbstractUtilityTest : UtilityAware {
     }
 
     /**
-     * Synchronizes org.angproj.util.Octet with AbstractUtilityAware
+     * Synchronizes org.angproj.util.Octet with AbstractUtility
      * */
     @Test
     fun testWriteReadOctet() {
@@ -242,7 +242,7 @@ class AbstractUtilityTest : UtilityAware {
     }
 
     /**
-     * Synchronizes org.angproj.util.Octet with AbstractUtilityAware
+     * Synchronizes org.angproj.util.Octet with AbstractUtility
      * */
     @Test
     fun testWriteRevReadRevOctet() {

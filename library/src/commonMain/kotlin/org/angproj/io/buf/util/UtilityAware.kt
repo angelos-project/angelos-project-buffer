@@ -56,14 +56,14 @@ public interface  UtilityAware {
     public fun Float.swapEndian(): Float = convI2F<Unit>(swapInt<Unit>(convF2I<Unit>(this)))
     public fun Double.swapEndian(): Double = convL2D<Unit>(swapLong<Long>(convD2L<Unit>(this)))
 
-    public fun Short.asNet(): Short = if(networkDifference) swapShort<Unit>(this) else this
-    public fun UShort.asNet(): UShort = if(networkDifference) convS2US<Unit>(swapShort<Unit>(convUS2S<Unit>(this))) else this
-    public fun Int.asNet(): Int = if(networkDifference) swapInt<Unit>(this) else this
-    public fun UInt.asNet(): UInt = if(networkDifference) convI2UI<Unit>(swapInt<Unit>(convUI2I<Unit>(this))) else this
-    public fun Long.asNet(): Long = if(networkDifference) swapLong<Long>(this) else this
-    public fun ULong.asNet(): ULong = if(networkDifference) convL2UL<Unit>(swapLong<Long>(convUL2L<Unit>(this))) else this
-    public fun Float.asNet(): Float = if(networkDifference) convI2F<Unit>(swapInt<Unit>(convF2I<Unit>(this))) else this
-    public fun Double.asNet(): Double = if(networkDifference) convL2D<Unit>(swapLong<Long>(convD2L<Unit>(this))) else this
+    public fun Short.asNet(): Short = if(netRev) swapShort<Unit>(this) else this
+    public fun UShort.asNet(): UShort = if(netRev) convS2US<Unit>(swapShort<Unit>(convUS2S<Unit>(this))) else this
+    public fun Int.asNet(): Int = if(netRev) swapInt<Unit>(this) else this
+    public fun UInt.asNet(): UInt = if(netRev) convI2UI<Unit>(swapInt<Unit>(convUI2I<Unit>(this))) else this
+    public fun Long.asNet(): Long = if(netRev) swapLong<Long>(this) else this
+    public fun ULong.asNet(): ULong = if(netRev) convL2UL<Unit>(swapLong<Long>(convUL2L<Unit>(this))) else this
+    public fun Float.asNet(): Float = if(netRev) convI2F<Unit>(swapInt<Unit>(convF2I<Unit>(this))) else this
+    public fun Double.asNet(): Double = if(netRev) convL2D<Unit>(swapLong<Long>(convD2L<Unit>(this))) else this
 
     public fun Byte.conv2uB(): UByte = convB2UB<Unit>(this)
     public fun UByte.conv2B(): Byte = convUB2B<Unit>(this)
