@@ -14,12 +14,8 @@
  */
 package org.angproj.io.buf
 
-import org.angproj.io.buf.util.UtilityAware
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 public abstract class FuzzPrefs {
-    public val maxTotalTime: Long = 20.seconds.inWholeSeconds
+    public val maxTotalTime: Long = 1.minutes.inWholeSeconds
 }
-
-public object UtilityAwareContext : UtilityAware
-public fun <T> withUtility(block: UtilityAwareContext.() -> T): T = UtilityAwareContext.block()

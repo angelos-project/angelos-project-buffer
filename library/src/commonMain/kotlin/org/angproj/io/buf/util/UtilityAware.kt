@@ -116,3 +116,6 @@ public interface  UtilityAware {
 
     private companion object: AbstractUtilityAware()
 }
+
+private object UtilityAwareContext : UtilityAware
+public fun <T> withUtility(block: UtilityAware.() -> T): T = UtilityAwareContext.block()
