@@ -16,13 +16,13 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.txt.GlyphString
-import org.angproj.io.buf.txt.GlyphIterator
 import org.angproj.io.buf.util.BinHex
 import org.angproj.sec.util.ceilDiv
 import org.angproj.utf.CodePoint
 import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
 import org.angproj.utf.iter.CodePointIterable
+import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.octets
 
 
@@ -30,7 +30,15 @@ public class Text internal constructor(
     segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
 ) : BlockBuffer(segment, view), TextRetrievable, TextStorable, CodePointIterable {
 
-    override fun iterator(): GlyphIterator = GlyphIterator(this)
+    override fun iterator(): CodePointIterator = object : CodePointIterator {
+        private var _pos = 0
+        public val position: Int
+            get() = _pos
+        override fun hasNext(): Boolean = remaining<Unit>(_pos) > 0
+        override fun next(): CodePoint = retrieveGlyph(_pos).also {
+            _pos += it.octets()
+        }
+    }
 
     override fun retrieveGlyph(position: Int): CodePoint {
         var offset = position
@@ -50,79 +58,16 @@ public class Text internal constructor(
         }
     }
 
-    public fun find(tokens: Set<Int>): Int {
-        val iter = iterator()
-        while(iter.hasNext()) {
-            if(tokens.contains(iter.next().value))
-                break
-        }
-        return iter.position
-    }
-
-    public fun parse(tokens: Set<Int>): Int {
-        val iter = iterator()
-        while(iter.hasNext()) {
-            if(!tokens.contains(iter.next().value))
-                break
-        }
-        return iter.position - 1
-    }
-
     /**
-     * Scans the text starting from the specified position, advancing the iterator until the predicate [logic] returns true.
-     * Searching for the beginning of compliance.
-     *
-     * @param start The starting position (in code points) within the text.
-     * @param logic A predicate function that takes a code point (as `Int`) and returns `true` to indicate a match.
-     * @return The position (in code points) where [logic] first returned true, or the end position if not found.
-     */
-    public fun find(start: Int, logic: (Int) -> Boolean): Int {
-        var pos = start
-        while(remaining<Int>(pos) > 0) {
-            val size = predicate(pos, logic)
-            if(size > 0)
-                break
-            pos += size
-        }
-        return pos
-    }
-
-    /**
-     * Scans the text starting from the specified position, advancing the iterator as long as the predicate [logic] returns false.
-     * Searching for the end of compliance
-     *
-     * @param start The starting position (in code points) within the text.
-     * @param logic A predicate function that takes a code point (as `Int`) and returns `true` to continue parsing.
-     * @return The position (in code points) of the last code point for which [logic] returned true, or `start - 1` if none matched.
-     */
-    public fun parse(start: Int, logic: (Int) -> Boolean): Int {
-        var pos = start
-        while(remaining<Int>(pos) > 0) {
-            val size = predicate(pos, logic)
-            if(size == 0)
-                break
-            pos += size
-        }
-        return pos
-    }
-
-    /**
-     * Gives the size of the glyph if predicate is true or zero
+     * Scan from start and continue to iterate while the predicate is met, then return the start position of the next glyph.
      * */
-    public fun predicate(pos: Int, predicate: (Int) -> Boolean): Int {
-        val next = retrieveGlyph(pos)
-        return if(predicate(next.value)) next.octets() else 0
-    }
-
-    public fun startsWith(prefix: Text, startIndex: Int): Boolean {
-        var pos = 0
-        while (prefix.remaining<Unit>(pos) > 0) {
-            val glyph = prefix.retrieveGlyph(pos)
-            pos += glyph.octets()
-            if(retrieveGlyph(startIndex + pos) != glyph)
-                return false
+    public fun scanUntil(start: Int, predicate: (CodePoint) -> Boolean): Int {
+        var pos = start
+        while (remaining<Unit>(pos) != 0) {
+            if(!predicate(retrieveGlyph(pos))) break
+            pos += Unicode.hasGlyphSize(segment.getByte(pos))
         }
-        return true
+        return pos
     }
 
     public fun substr(start: Int, end: Int): Text {
@@ -133,10 +78,9 @@ public class Text internal constructor(
         iterator().forEach { _ -> }
     }
 
-    public override fun toString(): String {
-        val text = mutableListOf<Char>()
-        forEach { text.add(it.value.toChar()) }
-        return text.toCharArray().concatToString()
+    public override fun toString(): String = buildString {
+        this@Text.forEach { append(it.value.toChar()) }
+        return this@buildString.toString()
     }
 }
 

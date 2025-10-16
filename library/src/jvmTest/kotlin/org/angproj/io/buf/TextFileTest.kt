@@ -1,15 +1,21 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.txt.toTextBuffer
+import java.nio.file.FileSystems
+import java.nio.file.Files
 import kotlin.test.Test
-import kotlin.test.assertContentEquals
+import kotlin.test.assertTrue
 
 class TextFileTest {
 
     @Test
     fun testLoadLines() {
-        val josephus = BufMgr.textFile("src/jvmTest/resources/Josephus_book_XI.txt")
+        val filePath = "src/jvmTest/resources/Josephus_book_XI.txt"
+        val josephus = BufMgr.textFile(filePath)
+        val lines = josephus.readLines()
 
-        assertContentEquals(josephus, josephus.readLines().toTextBuffer())
+        Files.readString(FileSystems.getDefault().getPath(filePath)).split("\n").forEachIndexed { index, string ->
+            assertTrue { string.toText().contentEquals(lines.get(index)) }
+        }
     }
 }

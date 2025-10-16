@@ -15,18 +15,16 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
-import org.angproj.io.buf.txt.GlyphIterator
 import org.angproj.utf.Ascii
 import org.angproj.utf.CodePoint
 import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
-import org.angproj.utf.iter.CodePointIterable
-import org.angproj.utf.iter.CodePointIterator
+import kotlin.math.min
 
 
 public class TextBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
-): FlowBuffer(segment, view), CodePointIterable {
+): FlowBuffer(segment, view) {
 
     public fun read(): CodePoint = Unicode.readGlyphByPolicyBlk(remaining, policy) {
         segment.getByte(_position++)
@@ -36,20 +34,22 @@ public class TextBuffer internal constructor(
         segment.setByte(_position++, it)
     }
 
-    public fun readLine(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): Text {
-        val start = position
-        val txt = asText()
-        val end = txt.find(start) {
-            it == newLine.value // TODO(Check whether this is right or not)
+    private fun readLineImpl(txt: Text, start: Int, newLine: CodePoint): Text {
+        val end = txt.scanUntil(start) { it != newLine }
+        val size = end - start
+        return BufMgr.txt(size, policy).also {
+            if(size > 0) txt.copyInto(it, 0, start, end)
+            positionAt(min(end+1, limit))
         }
-        positionAt(end)
-        return BufMgr.txt(end - start, policy).also { this.copyInto(it, 0, start, end) }
     }
+
+    public fun readLine(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): Text = readLineImpl(asText(), position, newLine)
 
     public fun readLines(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): List<Text> {
         val lines = mutableListOf<Text>()
+        val txt = asText()
         while(remaining > 0)
-            lines.add(readLine(newLine))
+            lines.add(readLineImpl(txt, position, newLine))
         return lines.toList()
     }
 
@@ -71,10 +71,8 @@ public class TextBuffer internal constructor(
     }
 
     public fun applyPolicy() {
-        iterator().forEach { _ -> }
+        asText().forEach { _ -> }
     }
 
     public fun asText(): Text = Text(segment, true, policy)
-
-    override fun iterator(): CodePointIterator = GlyphIterator(asText())
 }
