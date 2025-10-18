@@ -17,6 +17,8 @@ package org.angproj.io.buf
 import org.angproj.io.buf.util.UtilityAware
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.assertFalse
 
 abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
 
@@ -217,5 +219,18 @@ abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
         val input = setInput()
         val hashCode = input.hashCode()
         assertEquals(hashCode, input.hashCode(), "Hash code should be consistent")
+    }
+
+    @Test
+    fun testCopyInto() {
+        val a = setInput()
+        a.segment.securelyRandomize()
+        val b = setInput()
+
+        assertFalse { a.contentEquals(b) }
+
+        a.copyInto(b, 0, 0, b.size)
+
+        assertTrue { a.contentEquals(b) }
     }
 }

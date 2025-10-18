@@ -28,7 +28,9 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
     abstract override fun setInput(): ArrayBuffer<T>
 
     @Test
-    fun getCapacity() { assertEquals(setInput().capacity, capValue) }
+    fun getCapacity() {
+        assertEquals(setInput().capacity, capValue)
+    }
 
     @Test
     fun getLimit() {
@@ -41,13 +43,14 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
         val lb = setInput()
         val i = lb.indices
         assertEquals(i.first, 0)
-        assertEquals(i.last, lb.limit-1)
+        assertEquals(i.last, lb.limit - 1)
     }
 
     @Test
     fun getLastIndex() {
         val lb = setInput()
-        assertEquals(lb.lastIndex, lb.limit-1) }
+        assertEquals(lb.lastIndex, lb.limit - 1)
+    }
 
     @Test
     fun testGetSet() {
@@ -63,7 +66,7 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
 
     @Test
     fun testNullBuffer() {
-        assertTrue{ FlowBuffer.nullBuffer.isNull() }
+        assertTrue { FlowBuffer.nullBuffer.isNull() }
         assertEquals(FlowBuffer.nullBuffer.size, 0)
     }
 }

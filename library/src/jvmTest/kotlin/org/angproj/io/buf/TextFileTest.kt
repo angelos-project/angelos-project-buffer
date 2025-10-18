@@ -14,7 +14,7 @@ class TextFileTest {
         val josephus = BufMgr.textFile(filePath)
         val lines = josephus.iterator()
 
-        Files.readString(FileSystems.getDefault().getPath(filePath)).split("\n").forEachIndexed { index, string ->
+        Files.readString(FileSystems.getDefault().getPath(filePath)).split("\n").forEach { string ->
             assertTrue { string.toText().contentEquals(lines.next()) }
         }
 
