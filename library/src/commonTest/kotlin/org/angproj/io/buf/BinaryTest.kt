@@ -33,7 +33,7 @@ class BinaryTest: AbstractBlockBufferTest<Binary>() {
         TestInformationStub.refArray.forEachIndexed { index, value ->
             buf.storeByte(index, value)
         }
-        return buf
+        return buf.asBinary() // asBinary to make it a view and not original
     }
 
     @Test
