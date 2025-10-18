@@ -15,6 +15,7 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.ensure
 import org.angproj.utf.Ascii
 import org.angproj.utf.CodePoint
 import org.angproj.utf.Policy
@@ -23,8 +24,20 @@ import kotlin.math.min
 
 
 public class TextBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
-): FlowBuffer(segment, view) {
+    segment: Segment<*>,
+    view: Boolean = false,
+    public val policy: Policy = Policy.basic,
+    public val newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()
+): FlowBuffer(segment, view), Iterable<Text> {
+
+    override fun iterator(): Iterator<Text> = object: Iterator<Text> {
+        private val txt = asText()
+        override fun hasNext(): Boolean = position < txt.limit
+        override fun next(): Text {
+            ensure<NoSuchElementException>(hasNext()) { NoSuchElementException("EOF") }
+            return readLineImpl(txt, position, newLine)
+        }
+    }
 
     public fun read(): CodePoint = Unicode.readGlyphByPolicyBlk(remaining, policy) {
         segment.getByte(_position++)
@@ -36,22 +49,14 @@ public class TextBuffer internal constructor(
 
     private fun readLineImpl(txt: Text, start: Int, newLine: CodePoint): Text {
         val end = txt.scanUntil(start) { it != newLine }
-        val size = end - start
-        return BufMgr.txt(size, policy).also {
-            if(size > 0) txt.copyInto(it, 0, start, end)
+        return txt.subText(start, end).also {
             positionAt(min(end+1, limit))
         }
     }
 
     public fun readLine(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): Text = readLineImpl(asText(), position, newLine)
 
-    public fun readLines(newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()): List<Text> {
-        val lines = mutableListOf<Text>()
-        val txt = asText()
-        while(remaining > 0)
-            lines.add(readLineImpl(txt, position, newLine))
-        return lines.toList()
-    }
+    public fun readLines(): List<Text> = toList()
 
     public fun write(txt: Text): Int {
         txt.copyInto(this, position, 0, txt.limit)
