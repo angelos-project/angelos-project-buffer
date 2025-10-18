@@ -91,17 +91,20 @@ public abstract class AbstractBuffer internal constructor(
 
 public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: Int, idxFrom: Int, idxTo: Int) {
     val length = idxTo - idxFrom
+    val srcLim = this.segment.limit
+    val dstLim = dest.segment.limit
+
     require(idxFrom <= idxTo) {
         "Start index ($idxFrom) is larger than end index ($idxTo)" }
     require(length >= 0) {
         "Length ($length) can not be negative" }
-    require(idxFrom in 0..<this.limit) {
+    require(idxFrom in 0..<srcLim) {
         "Start index ($idxFrom) not in memory range" }
-    require(idxFrom + length in 0..this.limit) {
+    require(idxFrom + length in 0..srcLim) {
         "End index (${idxFrom + length}) outside of memory range" }
-    require(offset in 0..<dest.limit) {
+    require(offset in 0..<dstLim) {
         "Destination offset ($offset) not in memory range" }
-    require(offset + length in 0..dest.limit) {
+    require(offset + length in 0..dstLim) {
         "End index (${offset + length}) outside of memory range" }
 
     when {
