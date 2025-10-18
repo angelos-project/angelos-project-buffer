@@ -287,7 +287,7 @@ public abstract class ByteString(
         }
     }
 
-    public fun contentEquals(other: ByteString?): Boolean {
+    public infix fun contentEquals(other: ByteString?): Boolean {
         if (this === other) return true
         if (other !is ByteString) return false
 

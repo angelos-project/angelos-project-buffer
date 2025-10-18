@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.seg.ByteString
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
@@ -67,10 +68,23 @@ public abstract class AbstractBuffer internal constructor(
         return compareTo(other) == 0
     }
 
-    public infix fun contentEquals(other: AbstractBuffer): Boolean = segment.checkSum() == other.segment.checkSum()
+    public infix fun contentEquals(other: AbstractBuffer?): Boolean {
+        if (this === other) return true
+        if (other !is AbstractBuffer) return false
 
-    public override fun hashCode(): Int = segment.hashCode()
+        return segment.checkSum() == other.segment.checkSum()
+    }
 
+    //= segment.checkSum() == other.segment.checkSum()
+
+    override fun hashCode(): Int {
+        var result = segment.hashCode()
+        result = 31 * result + size
+        result = 31 * result + limit
+        result = 31 * result + capacity
+        result = 31 * result + if(view) 1 else 0
+        return result
+    }
     public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
 }
 
