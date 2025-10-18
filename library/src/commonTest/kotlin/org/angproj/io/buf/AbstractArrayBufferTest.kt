@@ -69,4 +69,9 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
         assertTrue { FlowBuffer.nullBuffer.isNull() }
         assertEquals(FlowBuffer.nullBuffer.size, 0)
     }
+
+    @Test
+    fun testIterator() {
+        setInput().forEach { assertEquals(it, refValue) }
+    }
 }
