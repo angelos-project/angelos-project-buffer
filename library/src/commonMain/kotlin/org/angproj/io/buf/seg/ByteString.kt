@@ -278,8 +278,8 @@ public abstract class ByteString(
      * ensuring that the segment is filled with high-quality random data.
      */
     public fun securelyRandomize() {
-        SecureFeed.readLongs(this, 0, limit / TypeSize.longSize) { index, value ->
-            setLong(index, value)
+        SecureFeed.readLongs(this, 0, limit.floorDiv(TypeSize.longSize)) { index, value ->
+            setLong(index * TypeSize.longSize, value)
         }
         val byteSize = limit.floorMod(TypeSize.longSize)
         SecureFeed.readBytes(this, limit - byteSize, byteSize) { index, value ->

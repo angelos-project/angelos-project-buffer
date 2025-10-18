@@ -54,7 +54,7 @@ abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
 
         assertFalse { a.contentEquals(b) }
 
-        a.copyInto(b, 0, 0, b.size)
+        a.copyInto(b, 0, 0, b.capacity)
 
         assertTrue { a.contentEquals(b) }
     }
