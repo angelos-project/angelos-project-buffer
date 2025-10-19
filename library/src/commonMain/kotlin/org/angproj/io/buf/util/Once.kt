@@ -33,7 +33,6 @@ import kotlin.reflect.KProperty
  * @param E The type of the property being delegated.
  */
 public class Once<E: Any> {
-    // FIXME make unittest
 
     private lateinit var handle: E
 
@@ -58,6 +57,4 @@ public class Once<E: Any> {
         check(!::handle.isInitialized) { "Already initialized" }
         handle = value
     }
-
-    public fun isInitialized(): Boolean = ::handle.isInitialized
 }
