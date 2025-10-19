@@ -12,15 +12,18 @@
  * Contributors:
  *      Kristoffer Paulsson - initial implementation
  */
-package org.angproj.io.buf
+package org.angproj.io.buf.util
 
-import org.angproj.io.buf.util.Limitable
 import org.mockito.Mock
-import org.mockito.kotlin.*
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.mockito.kotlin.doNothing
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.Test
+import kotlin.test.BeforeTest
 
 
 class LimitableMockitoTest {
