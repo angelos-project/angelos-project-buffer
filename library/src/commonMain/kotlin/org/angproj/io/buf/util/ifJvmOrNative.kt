@@ -17,6 +17,7 @@ package org.angproj.io.buf.util
 import org.angproj.io.buf.Platform
 import org.angproj.io.buf.currentVariant
 
+// FIXME make unittest
 public inline fun<reified E: Any> ifJvmOrNative(block: () -> E): E = when(Platform.currentVariant()) {
     Platform.VARIANT.JVM, Platform.VARIANT.NATIVE -> block()
     else -> Unit as E

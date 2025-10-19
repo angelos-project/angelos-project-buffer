@@ -26,7 +26,7 @@ import org.angproj.utf.iter.CodePointIterable
 import org.angproj.utf.iter.CodePointIterator
 import org.angproj.utf.octets
 
-
+// TODO Implement a complete TextTest
 public class Text internal constructor(
     segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
 ) : BlockBuffer(segment, view), TextRetrievable, TextStorable, CodePointIterable {

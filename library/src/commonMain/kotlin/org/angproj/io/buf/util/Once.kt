@@ -33,6 +33,7 @@ import kotlin.reflect.KProperty
  * @param E The type of the property being delegated.
  */
 public class Once<E: Any> {
+    // FIXME make unittest
 
     private lateinit var handle: E
 

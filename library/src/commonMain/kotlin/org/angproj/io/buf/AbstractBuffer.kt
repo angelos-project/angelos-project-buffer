@@ -60,6 +60,7 @@ public abstract class AbstractBuffer internal constructor(
         if(!isView()) segment.dispose()
     }
 
+    // FIXME Some unit test
     public fun securelyRandomize(): Unit = segment.securelyRandomize()
 
     public override fun equals(other: Any?): Boolean {
@@ -88,8 +89,11 @@ public abstract class AbstractBuffer internal constructor(
     public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
 }
 
-
+/**
+ * Always copies with offset, idxFrom and idxTo, calculated in byte units.
+ * */
 public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: Int, idxFrom: Int, idxTo: Int) {
+    // TODO Implement or search for complete unit tests
     val length = idxTo - idxFrom
     val srcLim = this.segment.limit
     val dstLim = dest.segment.limit

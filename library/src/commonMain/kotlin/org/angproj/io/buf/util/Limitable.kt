@@ -26,6 +26,8 @@ package org.angproj.io.buf.util
  * @see Sized
  */
 public interface Limitable: Sized {
+    // FIXME make unittest
+    // FIXME make Mock
     /**
      * The limited use of an element between 0 and size.
      */

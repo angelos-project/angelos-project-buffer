@@ -27,6 +27,8 @@ package org.angproj.io.buf.util
  * @see org.angproj.io.buf.util.Auto
  */
 public interface View {
+    // FIXME make unittest
+    // FIXME make Mock
 
     /**
      * Indicates if this instance is a view (wrapper) of a shared segment.

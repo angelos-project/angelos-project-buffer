@@ -278,6 +278,7 @@ public abstract class ByteString(
      * ensuring that the segment is filled with high-quality random data.
      */
     public fun securelyRandomize() {
+        // TODO Implement tests or benchmark and health-checks
         SecureFeed.readLongs(this, 0, limit.floorDiv(TypeSize.longSize)) { index, value ->
             setLong(index * TypeSize.longSize, value)
         }

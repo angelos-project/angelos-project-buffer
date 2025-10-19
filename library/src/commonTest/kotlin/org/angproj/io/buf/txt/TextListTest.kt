@@ -6,6 +6,7 @@ import org.angproj.io.buf.toTextBuffer
 import kotlin.collections.plusAssign
 import kotlin.test.Test
 
+// FIXME Move to TextTest, eventually complement
 class TextListTest {
 
     @Test
