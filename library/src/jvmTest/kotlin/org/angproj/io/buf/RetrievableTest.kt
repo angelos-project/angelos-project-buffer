@@ -5,6 +5,7 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class RetrievableTest {
+    // TODO Review and merge with RetrievableMockitoTest
 
     @Test
     fun `test retrieveByte is called with correct arguments`() {

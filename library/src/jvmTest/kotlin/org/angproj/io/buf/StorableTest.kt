@@ -5,6 +5,7 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class StorableTest {
+    // TODO Review and merge with StorableMockitoTest
 
     @Test
     fun `test storeByte is called with correct arguments`() {

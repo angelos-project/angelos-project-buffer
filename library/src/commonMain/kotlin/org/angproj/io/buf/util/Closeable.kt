@@ -25,8 +25,6 @@ package org.angproj.io.buf.util
  * and document any exceptions that may be thrown.
  */
 public interface Closeable {
-    // FIXME make unittest
-    // FIXME make Mock
 
     /**
      * Closes this resource, releasing any underlying resources.
