@@ -26,9 +26,6 @@ package org.angproj.io.buf.util
  * and document any exceptions that may be thrown.
  */
 public interface Cleanable {
-    // FIXME make untittest
-    // FIXME make Mock
-
 
     /**
      * Disposes of the resources held by this object.
