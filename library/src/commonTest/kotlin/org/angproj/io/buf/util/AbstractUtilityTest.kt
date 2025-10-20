@@ -14,6 +14,7 @@
  */
 package org.angproj.io.buf.util
 
+import org.angproj.sec.Uuid
 import org.angproj.sec.util.Octet
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.toUnitFraction
@@ -313,5 +314,15 @@ class AbstractUtilityTest : UtilityAware {
             byteArray[index]
         }
         assertEquals(upperShort, result.toShort())
+    }
+
+    @Test
+    fun testUuidConversion() {
+        withUtility {
+            val uuid = Uuid.uuid()
+            val byteArray = ByteArray(16)
+            byteArray.writeRevLongAt(0, uuid.upper.asNet())
+            byteArray.writeRevLongAt(8, uuid.lower.asNet())
+        }
     }
 }
