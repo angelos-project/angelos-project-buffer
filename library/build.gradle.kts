@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "org.angproj.io.buf"
-version = "1.1.0-alpha.4"
+version = "1.1.0-alpha.5"
 
 kotlin {
     explicitApi()

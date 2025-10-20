@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-
+// FIXME rename
 public object FuzzerOctetWriteKt : FuzzPrefs() {
 
     @JvmStatic

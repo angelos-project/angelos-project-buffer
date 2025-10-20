@@ -21,6 +21,7 @@ import org.mockito.kotlin.verify
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
+// FIXME review
 class BinaryReadableTest {
 
     @Test
