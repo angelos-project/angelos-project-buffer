@@ -101,4 +101,10 @@ class TextTest: AbstractBlockBufferTest<Text>() {
         result += "baz!".toText()
         assertEquals("Foo bar baz!", result.toTextBuffer().asText().toString())
     }
+
+    @Test
+    fun allCombos4Test() {
+        val result = textListOf("Hello, ", "world!")
+        assertEquals("Hello, world!", result.toTextBuffer().asText().toString())
+    }
 }
