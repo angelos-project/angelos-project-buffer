@@ -24,8 +24,6 @@ package org.angproj.io.buf.util
  * Implementations should document the unit and meaning of [size] (e.g., bytes, elements).
  */
 public interface Sized {
-    // FIXME make unittest
-    // FIXME make Mock
 
     /**
      * The fixed size of the element.

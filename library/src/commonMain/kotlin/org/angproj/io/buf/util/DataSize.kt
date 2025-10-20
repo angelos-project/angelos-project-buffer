@@ -24,7 +24,6 @@ import kotlin.math.max
  * @property capacity The size in bytes.
  */
 public enum class DataSize(private val capacity: Int) {
-    // FIXME make unittest
     UNKNOWN(-1),
     _32B(32),
     _64B(_32B.capacity * 2),

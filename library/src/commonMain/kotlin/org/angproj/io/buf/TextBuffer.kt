@@ -22,7 +22,6 @@ import org.angproj.utf.Policy
 import org.angproj.utf.Unicode
 import kotlin.math.min
 
-// TODO Implement a complete TextBufferTest
 public class TextBuffer internal constructor(
     segment: Segment<*>,
     view: Boolean = false,
