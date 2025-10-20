@@ -24,6 +24,9 @@ abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
 
     protected abstract val posValue: Int
 
+    abstract override fun setInput(): E
+
+
     @Test
     fun getCapacity() {
         assertEquals(setInput().capacity, DataSize._1K.toInt())

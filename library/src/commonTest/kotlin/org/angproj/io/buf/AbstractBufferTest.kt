@@ -22,7 +22,7 @@ import kotlin.test.assertFalse
 
 abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
 
-    protected abstract fun setInput(): E
+    protected abstract fun setInput(): AbstractBuffer
 
     @Test
     fun isView() {

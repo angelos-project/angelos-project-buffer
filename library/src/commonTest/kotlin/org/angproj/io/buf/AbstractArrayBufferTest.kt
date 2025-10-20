@@ -66,8 +66,8 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
 
     @Test
     fun testNullBuffer() {
-        assertTrue { FlowBuffer.nullBuffer.isNull() }
-        assertEquals(FlowBuffer.nullBuffer.size, 0)
+        assertTrue { ArrayBuffer.nullBuffer.isNull() }
+        assertEquals(ArrayBuffer.nullBuffer.size, 0)
     }
 
     @Test

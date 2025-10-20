@@ -60,9 +60,6 @@ public abstract class AbstractBuffer internal constructor(
         if(!isView()) segment.dispose()
     }
 
-    // FIXME Some unit test
-    public fun securelyRandomize(): Unit = segment.securelyRandomize()
-
     public override fun equals(other: Any?): Boolean {
         if(this === other) return true
         if(other == null || this::class != other::class) return false
