@@ -140,6 +140,29 @@ class AbstractUtilityTest : UtilityAware {
     }
 
     @Test
+    fun testAsNet() {
+        if(Octet.isLittleEndian) {
+            assertEquals(0x2211, upperShort.asNet())
+            assertEquals(0x2211u, upperShort.conv2uS().asNet())
+            assertEquals(0x44332211, upperInt.asNet())
+            assertEquals(0x44332211u, upperInt.conv2uI().asNet())
+            assertEquals(0x8877665544332211uL.toLong(), long.asNet())
+            assertEquals(0x8877665544332211uL, long.conv2uL().asNet())
+            assertEquals(0x44332211.conv2F(), upperInt.conv2F().asNet())
+            assertEquals(0x8877665544332211uL.conv2L().conv2D(), long.conv2D().asNet())
+        } else {
+            assertEquals(0x2211.toShort().swapEndian(), upperShort.asNet())
+            assertEquals(0x2211u.toUShort().swapEndian(), upperShort.conv2uS().asNet())
+            assertEquals(0x44332211.swapEndian(), upperInt.asNet())
+            assertEquals(0x44332211u.swapEndian(), upperInt.conv2uI().asNet())
+            assertEquals(0x8877665544332211uL.toLong().swapEndian(), long.asNet())
+            assertEquals(0x8877665544332211uL.swapEndian(), long.conv2uL().asNet())
+            assertEquals(0x44332211.conv2F().swapEndian(), upperInt.conv2F().asNet())
+            assertEquals(0x8877665544332211uL.conv2L().conv2D().swapEndian(), long.conv2D().asNet())
+        }
+    }
+
+    @Test
     fun testConv() {
         assertEquals(long, long.conv2uL().conv2L())
         assertEquals(long.toUnitFraction(), long.toUnitFraction().conv2L().conv2D())
