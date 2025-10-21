@@ -22,23 +22,23 @@ import kotlin.test.assertEquals
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-// FIXME rename
-public object FuzzerOctetWriteKt : FuzzPrefs() {
+public object FuzzerUtilityReadRevKt : FuzzPrefs() {
 
     @JvmStatic
     public fun fuzzerTestOneInput(data: FuzzedDataProvider) {
         val value = data.consumeLong()
         val array = ByteArray(8)
 
-        withUtility {
-            array.writeLongAt(0, value)
-        }
-
         val buffer = ByteBuffer.wrap(array)
-        if(ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN) {
-            buffer.order(ByteOrder.LITTLE_ENDIAN)
+        if(ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN) {
+            buffer.order(ByteOrder.BIG_ENDIAN)
         }
-        val loaded = buffer.getLong()
+        buffer.putLong(value)
+
+        var loaded = 0L
+        withUtility {
+            loaded = array.readRevLongAt(0)
+        }
 
         assertEquals(value, loaded)
     }
