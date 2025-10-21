@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
+abstract class AbstractFlowBufferTest<E: AbstractFlowBuffer>: AbstractBufferTest<E>() {
 
     protected abstract val posValue: Int
 
@@ -149,7 +149,7 @@ abstract class AbstractFlowBufferTest<E: FlowBuffer>: AbstractBufferTest<E>() {
 
     @Test
     fun testNullBuffer() {
-        assertTrue{ FlowBuffer.nullBuffer.isNull() }
-        assertEquals(FlowBuffer.nullBuffer.size, 0)
+        assertTrue{ AbstractFlowBuffer.nullBuffer.isNull() }
+        assertEquals(AbstractFlowBuffer.nullBuffer.size, 0)
     }
 }

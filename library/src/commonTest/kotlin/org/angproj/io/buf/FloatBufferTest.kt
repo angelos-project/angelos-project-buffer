@@ -33,7 +33,7 @@ class FloatBufferTest: AbstractArrayBufferTest<Float>() {
 
     @Test
     fun testNullByteBuffer() {
-        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertTrue(AbstractArrayBuffer.nullBuffer.isNull())
         assertFalse(setInput().isNull())
     }
 }

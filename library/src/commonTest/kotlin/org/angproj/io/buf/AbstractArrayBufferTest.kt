@@ -20,12 +20,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() {
+abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<AbstractArrayBuffer<T>>() {
 
     protected val capValue: Int = 128
     protected abstract val refValue: T
 
-    abstract override fun setInput(): ArrayBuffer<T>
+    abstract override fun setInput(): AbstractArrayBuffer<T>
 
     @Test
     fun getCapacity() {
@@ -66,8 +66,8 @@ abstract class AbstractArrayBufferTest<T>: AbstractBufferTest<ArrayBuffer<T>>() 
 
     @Test
     fun testNullBuffer() {
-        assertTrue { ArrayBuffer.nullBuffer.isNull() }
-        assertEquals(ArrayBuffer.nullBuffer.size, 0)
+        assertTrue { AbstractArrayBuffer.nullBuffer.isNull() }
+        assertEquals(AbstractArrayBuffer.nullBuffer.size, 0)
     }
 
     @Test

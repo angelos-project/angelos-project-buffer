@@ -33,7 +33,7 @@ class UByteBufferTest: AbstractArrayBufferTest<UByte>() {
 
     @Test
     fun testNullByteBuffer() {
-        assertTrue(ArrayBuffer.nullBuffer.isNull())
+        assertTrue(AbstractArrayBuffer.nullBuffer.isNull())
         assertFalse(setInput().isNull())
     }
 }

@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class DoubleBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<Double>(segment, view, TypeSize.doubleSize) {
+): AbstractArrayBuffer<Double>(segment, view, TypeSize.doubleSize) {
 
     override fun get(index: Int): Double = segment.getLong(index * typeSize).conv2D()
 

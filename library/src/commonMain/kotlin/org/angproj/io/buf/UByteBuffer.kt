@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class UByteBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<UByte>(segment, view, TypeSize.uByteSize) {
+): AbstractArrayBuffer<UByte>(segment, view, TypeSize.uByteSize) {
 
     override fun get(index: Int): UByte = segment.getByte(index).conv2uB()
 

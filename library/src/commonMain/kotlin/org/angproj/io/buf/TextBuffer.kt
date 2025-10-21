@@ -27,7 +27,7 @@ public class TextBuffer internal constructor(
     view: Boolean = false,
     public val policy: Policy = Policy.basic,
     public val newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()
-): FlowBuffer(segment, view), Iterable<Text> {
+): AbstractFlowBuffer(segment, view), Iterable<Text> {
 
     override fun iterator(): Iterator<Text> = object: Iterator<Text> {
         private val txt = asText()

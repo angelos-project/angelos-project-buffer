@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class ShortBuffer(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<Short>(segment, view, TypeSize.shortSize) {
+): AbstractArrayBuffer<Short>(segment, view, TypeSize.shortSize) {
 
     override fun get(index: Int): Short = segment.getShort(index * typeSize)
 

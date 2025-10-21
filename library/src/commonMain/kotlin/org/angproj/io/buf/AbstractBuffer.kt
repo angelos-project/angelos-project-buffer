@@ -17,8 +17,6 @@ package org.angproj.io.buf
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
-import org.angproj.io.buf.util.Auto
-import org.angproj.io.buf.util.UtilityAware
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.floorMod
 
@@ -35,22 +33,22 @@ import org.angproj.sec.util.floorMod
  */
 public abstract class AbstractBuffer internal constructor(
     internal val segment: Segment<*>, protected val view: Boolean = false
-) : UtilityAware, Auto, Comparable<AbstractBuffer> {
+) : Buffer {
 
     /**
      * Gives the max bytes capacity of the buffer
      * */
-    public abstract val capacity: Int
+    public abstract override val capacity: Int
 
     /**
      * Gives the max size of the buffers represented item
      * */
-    public abstract val size: Int
+    public abstract override val size: Int
 
     /**
      * The current limit of the buffer as defined.
      * */
-    public abstract val limit: Int
+    public abstract override val limit: Int
 
     override fun isView(): Boolean = view
 
@@ -83,7 +81,7 @@ public abstract class AbstractBuffer internal constructor(
         return result
     }
 
-    public override operator fun compareTo(other: AbstractBuffer): Int { return hashCode() - other.hashCode() }
+    public override operator fun compareTo(other: Buffer): Int { return hashCode() - other.hashCode() }
 }
 
 /**

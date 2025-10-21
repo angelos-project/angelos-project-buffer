@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class LongBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<Long>(segment, view, TypeSize.longSize) {
+): AbstractArrayBuffer<Long>(segment, view, TypeSize.longSize) {
 
     override fun get(index: Int): Long = segment.getLong(index * typeSize)
 

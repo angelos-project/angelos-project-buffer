@@ -17,7 +17,7 @@ package org.angproj.io.buf
 import kotlin.test.*
 
 
-abstract class AbstractBlockBufferTest<E: BlockBuffer>: AbstractBufferTest<E>() {
+abstract class AbstractBlockBufferTest<E: AbstractBlockBuffer>: AbstractBufferTest<E>() {
 
     protected abstract val txtLen: Int
 

@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class BinaryBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): FlowBuffer(segment, view), BinaryReadable, BinaryWritable {
+): AbstractFlowBuffer(segment, view), BinaryReadable, BinaryWritable {
 
     override fun readByte(): Byte =
         segment.getByte(_position).also { _position += TypeSize.byteSize }

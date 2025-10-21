@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class UIntBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<UInt>(segment, view, TypeSize.uIntSize) {
+): AbstractArrayBuffer<UInt>(segment, view, TypeSize.uIntSize) {
 
     override fun get(index: Int): UInt = segment.getInt(index * typeSize).conv2uI()
 

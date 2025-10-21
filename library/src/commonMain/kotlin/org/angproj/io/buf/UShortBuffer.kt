@@ -20,7 +20,7 @@ import org.angproj.sec.util.TypeSize
 
 public class UShortBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false
-): ArrayBuffer<UShort>(segment, view, TypeSize.shortSize) {
+): AbstractArrayBuffer<UShort>(segment, view, TypeSize.shortSize) {
 
     override fun get(index: Int): UShort = segment.getShort(index * typeSize).conv2uS()
 
