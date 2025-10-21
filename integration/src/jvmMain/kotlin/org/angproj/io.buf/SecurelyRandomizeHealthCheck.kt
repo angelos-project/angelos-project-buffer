@@ -20,12 +20,13 @@ import org.angproj.sec.stat.BenchmarkSession
 import org.angproj.sec.stat.MonteCarloTester
 import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.time.measureTime
 
 public fun healthCheck(binary: Binary): Boolean {
-    val objectSponge = BinaryBenchmark(binary)
-    val samplesNeeded = MonteCarloTester.Mode.MODE_64_BIT.size * 10_000_000L / objectSponge.sampleByteSize
+    val objectBinary = BinaryBenchmark(binary)
+    val samplesNeeded = MonteCarloTester.Mode.MODE_64_BIT.size * 10_000_000L / objectBinary.sampleByteSize
 
-    val session = BenchmarkSession(samplesNeeded, objectSponge.sampleByteSize, objectSponge)
+    val session = BenchmarkSession(samplesNeeded, objectBinary.sampleByteSize, objectBinary)
     val monteCarlo = session.registerTester { MonteCarloTester(10_000_000, MonteCarloTester.Mode.MODE_64_BIT, it) }
     val avalancheEffect = session.registerTester { AvalancheEffectTester(10_000_000, it) }
 
