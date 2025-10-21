@@ -34,3 +34,5 @@ plugins {
 
 include(":library")
 include(":jazzer")
+include(":integration")
+
