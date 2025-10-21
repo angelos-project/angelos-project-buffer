@@ -15,7 +15,7 @@
 package org.angproj.io.buf
 
 
-public interface FlowBuffer : Buffer {
+public interface FlowBuffer : BlockBuffer {
 
     /**
      * Gives the max capacity of the buffer
@@ -46,7 +46,7 @@ public interface FlowBuffer : Buffer {
      * The newLimit must be between the current mark and given capacity.
      * If the limit is before the current position, the position is moved to the new limit.
      * */
-    public fun limitAt(newLimit: Int)
+    public override fun limitAt(newLimit: Int)
 
     /**
      * Given mark at position zero or as latest defined.
@@ -66,7 +66,7 @@ public interface FlowBuffer : Buffer {
     /**
      * Rewinds and set limit to the given capacity.
      * */
-    public fun clear()
+    public override fun clear()
 
     /**
      *  Flips the limit to the current position,

@@ -22,6 +22,14 @@ public interface BlockBuffer : Buffer {
 
     override val capacity: Int
 
+    override fun isView(): Boolean
+
+    override fun isMem(): Boolean
+
+    override fun close(): Unit
+
+    public override operator fun compareTo(other: Buffer): Int
+
     /**
      * The same as on Buffer with upper limit.
      * */

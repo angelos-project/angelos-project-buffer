@@ -32,4 +32,12 @@ public interface ArrayBuffer<E>: Buffer, Iterable<E>{
     public operator fun set(index: Int, value: E)
 
     public fun isNull(): Boolean
+
+    override fun isView(): Boolean
+
+    override fun isMem(): Boolean
+
+    override fun close(): Unit
+
+    public override operator fun compareTo(other: Buffer): Int
 }
