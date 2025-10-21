@@ -38,7 +38,7 @@ public interface Buffer : UtilityAware, Auto, Comparable<Buffer> {
 
     override fun isMem(): Boolean
 
-    override fun close()
+    override fun close(): Unit
 
     public override operator fun compareTo(other: Buffer): Int
 
