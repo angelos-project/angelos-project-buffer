@@ -16,6 +16,7 @@ package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.ensure
 
 
 public abstract class AbstractFlowBuffer protected constructor(
@@ -41,7 +42,7 @@ public abstract class AbstractFlowBuffer protected constructor(
      * The newPos has to be between the current mark and the current limit.
      * */
     public override fun positionAt(newPos: Int) {
-        require(newPos in _mark..segment.limit)
+        ensure<BufferException>(newPos in _mark..segment.limit) { BufferException("New position outside buffer") }
         _position = newPos
     }
 
@@ -60,7 +61,7 @@ public abstract class AbstractFlowBuffer protected constructor(
      * If the limit is before the current position, the position is moved to the new limit.
      * */
     public override fun limitAt(newLimit: Int) {
-        require(newLimit in _mark..segment.size)
+        ensure<BufferException>(_mark in 0..segment.size) { BufferException("New limit outside mark") }
         segment.limitAt(newLimit)
         if(_position > newLimit) positionAt(newLimit) //_position = newLimit
     }

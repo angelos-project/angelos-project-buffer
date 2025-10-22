@@ -18,6 +18,7 @@ import org.angproj.io.buf.seg.Segment
 import org.angproj.io.buf.util.BinHex
 import org.angproj.io.buf.util.unsupported
 import org.angproj.sec.Uuid
+import org.angproj.sec.util.ensure
 
 
 public class Binary(
@@ -25,7 +26,7 @@ public class Binary(
 ) : AbstractBlockBuffer(segment, view), Retrievable, Storable {
 
     init {
-        check(!segment.isNull()) { "Null segment forbidden!" }
+        ensure<BufferException>(!segment.isNull()) { BufferException("Null segment forbidden!") }
     }
 
     override fun retrieveByte(position: Int): Byte =

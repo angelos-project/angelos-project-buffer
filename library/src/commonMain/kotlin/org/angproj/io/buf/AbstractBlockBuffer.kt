@@ -15,6 +15,7 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.seg.Segment
+import org.angproj.sec.util.ensure
 
 
 public abstract class AbstractBlockBuffer internal constructor(
@@ -34,7 +35,7 @@ public abstract class AbstractBlockBuffer internal constructor(
      * The same as on Buffer with upper limit.
      * */
     public override fun limitAt(newLimit: Int) {
-        require(newLimit in 0..segment.size)
+        ensure<BufferException>(newLimit in 0..segment.size) { BufferException("New limit outside buffer") }
         segment.limitAt(newLimit)
     }
 
