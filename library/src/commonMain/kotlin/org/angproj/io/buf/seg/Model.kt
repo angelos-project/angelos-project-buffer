@@ -28,7 +28,7 @@ import org.angproj.sec.util.TypeSize
  * Key features:
  * - Provides random access to the underlying long array, mapping byte-based indices to 64-bit storage.
  * - Implements secure cleanup by overwriting the data with cryptographically secure random long values before recycling.
- * - Supports explicit resource disposal via [dispose], which clears and recycles the segment.
+ * - Supports explicit resource disposal via [closeImpl], which clears and recycles the segment.
  * - Designed for use cases requiring managed, reusable, and securely cleanable memory segments with 64-bit alignment.
  *
  * @property memCtx The [MemoryManager] responsible for recycling and managing this segment instance.
@@ -104,7 +104,7 @@ public class Model(
         if(idx > TypeSize.longSize - size) set(off + 1, ((get(off + 1) and 0xff.inv()) or (value ushr TypeSize.longSize)))
     }
 
-    override fun dispose() {
+    override fun closeImpl() {
         clear()
         SecureFeed.readLongs(data, 0, data.size) { index, value ->
             data[index] = value

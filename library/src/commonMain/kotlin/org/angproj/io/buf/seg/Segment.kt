@@ -29,7 +29,7 @@ import org.angproj.io.buf.util.unsupported
  *
  * Key features:
  * - Enforces bounds checking for primitive access to prevent out-of-bounds operations.
- * - Supports explicit resource disposal via [dispose], which must be implemented by subclasses.
+ * - Supports explicit resource disposal via [closeImpl], which must be implemented by subclasses.
  * - Provides a method to obtain the native memory address of the segment, if supported.
  * - Includes a singleton [nullSegment] representing an empty or uninitialized segment.
  *
@@ -43,12 +43,12 @@ import org.angproj.io.buf.util.unsupported
  * @see org.angproj.io.buf.seg.ByteString
  * @see org.angproj.io.buf.util.Cleanable
  */
-public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable, ResourceClosable {
+public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), ResourceClosable {
 
     /**
      * Disposes of the resources held by this segment.
      */
-    public abstract override fun dispose()
+    protected abstract fun closeImpl()
 
     internal var _closed: Boolean = false
 
@@ -57,7 +57,7 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
     override fun close() {
         if(!_closed) {
             _closed = true
-            dispose()
+            closeImpl()
         }
     }
 
@@ -76,7 +76,7 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
 
 private fun Segment.Companion.createNullSegment(): Segment<*> {
     return object : Segment<Nothing>(DataSize.UNKNOWN.toInt()) {
-        override fun dispose() = unsupported()
+        override fun closeImpl() = unsupported()
         override fun getByte(index: Int): Byte = unsupported()
         override fun getShort(index: Int): Short = unsupported()
         override fun getInt(index: Int): Int = unsupported()

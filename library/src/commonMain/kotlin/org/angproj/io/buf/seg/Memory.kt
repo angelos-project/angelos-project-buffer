@@ -36,7 +36,7 @@ import org.angproj.sec.util.floorMod
  * Key features:
  * - Provides random access to the underlying memory segment with safe bounds checking for all supported types.
  * - Implements secure cleanup by clearing and randomizing the memory contents before recycling.
- * - Supports explicit resource disposal via [dispose], which securely clears and recycles the segment.
+ * - Supports explicit resource disposal via [closeImpl], which securely clears and recycles the segment.
  * - Exposes the native memory address through [address], enabling interoperability with low-level APIs.
  *
  * @property memCtx The [MemoryManager] responsible for recycling and managing this memory segment instance.
@@ -108,7 +108,7 @@ public class Memory(
         data.setLong(index, value)
     }
 
-    override fun dispose() {
+    override fun closeImpl() {
         clear()
         securelyRandomize()
         memCtx.recycle(this)

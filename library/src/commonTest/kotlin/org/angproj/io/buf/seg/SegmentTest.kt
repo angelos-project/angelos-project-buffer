@@ -19,6 +19,8 @@ import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
+import kotlin.test.assertFalse
 
 abstract class SegmentTest<S: Segment<S>> {
 
@@ -33,7 +35,7 @@ abstract class SegmentTest<S: Segment<S>> {
 
     @AfterTest
     fun tearDown() {
-        segment.dispose()
+        segment.close()
     }
 
     @Test
@@ -76,5 +78,13 @@ abstract class SegmentTest<S: Segment<S>> {
     @Test
     fun testCheckSum32EmptyBytes() {
         assertEquals(0x3c75d83e, segment.checkSum())
+    }
+
+    @Test
+    fun testIsOpenAndClose() {
+        assertTrue(segment.isOpen())
+        segment.close()
+        assertFalse(segment.isOpen())
+        segment.close()
     }
 }

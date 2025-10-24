@@ -27,7 +27,7 @@ import org.angproj.sec.SecureRandom
  * Key features:
  * - Provides random access to the underlying byte array with safe bounds checking for all supported types.
  * - Implements secure cleanup by overwriting the data with cryptographically secure random bytes before recycling.
- * - Supports explicit resource disposal via [dispose], which clears and recycles the segment.
+ * - Supports explicit resource disposal via [closeImpl], which clears and recycles the segment.
  * - Designed for use cases requiring managed, reusable, and securely cleanable memory segments.
  *
  * @property memCtx The [MemoryManager] responsible for recycling and managing this segment instance.
@@ -85,7 +85,7 @@ public class Bytes(
         setLong<Unit>(data, index, value)
     }
 
-    override fun dispose() {
+    override fun closeImpl() {
         clear()
         SecureRandom.readBytes(data)
         memCtx.recycle(this)
