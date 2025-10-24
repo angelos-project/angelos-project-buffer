@@ -46,6 +46,8 @@ abstract class AbstractFlowBufferTest<E: AbstractFlowBuffer>: AbstractBufferTest
 
         assertFailsWith<BufferException> { buf.positionAt(buf.mark-1) }
         assertFailsWith<BufferException> { buf.positionAt(buf.limit+1) }
+
+
     }
 
     @Test
@@ -64,6 +66,18 @@ abstract class AbstractFlowBufferTest<E: AbstractFlowBuffer>: AbstractBufferTest
 
         assertFailsWith<BufferException> { buf.limitAt(buf.mark-1) }
         assertFailsWith<BufferException> { buf.limitAt(buf.capacity+1) }
+
+        buf.clear()
+        buf.positionAt(buf.capacity / 2)
+        buf.markAt()
+        buf.limitAt(buf.mark)
+        assertEquals(buf.mark, buf.limit)
+
+        buf.clear()
+        buf.positionAt(buf.capacity / 2)
+        buf.markAt()
+        buf.limitAt(buf.capacity)
+        assertEquals(buf.capacity, buf.limit)
     }
 
     @Test
