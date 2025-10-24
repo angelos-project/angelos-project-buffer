@@ -17,6 +17,7 @@ package org.angproj.io.buf.seg
 import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.util.Cleanable
 import org.angproj.io.buf.util.DataSize
+import org.angproj.io.buf.util.ResourceClosable
 import org.angproj.io.buf.util.unsupported
 
 /**
@@ -42,12 +43,23 @@ import org.angproj.io.buf.util.unsupported
  * @see org.angproj.io.buf.seg.ByteString
  * @see org.angproj.io.buf.util.Cleanable
  */
-public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable {
+public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize), Cleanable, ResourceClosable {
 
     /**
      * Disposes of the resources held by this segment.
      */
     public abstract override fun dispose()
+
+    internal var _closed: Boolean = false
+
+    override fun isOpen(): Boolean = !_closed
+
+    override fun close() {
+        if(!_closed) {
+            _closed = true
+            dispose()
+        }
+    }
 
     public open fun address(): TypePointer<*> = unsupported()
 

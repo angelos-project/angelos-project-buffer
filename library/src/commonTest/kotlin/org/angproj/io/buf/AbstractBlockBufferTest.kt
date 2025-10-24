@@ -45,8 +45,8 @@ abstract class AbstractBlockBufferTest<E: AbstractBlockBuffer>: AbstractBufferTe
     fun limitAt() {
         val buf = setInput()
 
-        assertFailsWith<IllegalArgumentException> { buf.limitAt(-1) }
-        assertFailsWith<IllegalArgumentException> { buf.limitAt(buf.limit + 1) }
+        assertFailsWith<BufferException> { buf.limitAt(-1) }
+        assertFailsWith<BufferException> { buf.limitAt(buf.limit + 1) }
 
         buf.limitAt(txtLen - 5)
         assertEquals(buf.limit, txtLen - 5)

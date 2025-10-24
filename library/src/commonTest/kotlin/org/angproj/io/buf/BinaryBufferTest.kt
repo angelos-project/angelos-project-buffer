@@ -148,7 +148,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
         val m = setInput()
 
         m.readByte()
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.readByte()
         }
@@ -162,7 +162,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
 
         m.positionAt(0)
         m.writeByte(1)
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.writeByte(1)
         }
@@ -180,7 +180,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
         val m = setInput()
 
         m.readShort()
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.readShort()
         }
@@ -194,7 +194,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
 
         m.positionAt(0)
         m.writeShort(1)
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.writeShort(1)
         }
@@ -212,7 +212,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
         val m = setInput()
 
         m.readInt()
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.readInt()
         }
@@ -226,7 +226,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
 
         m.positionAt(0)
         m.writeInt(1)
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.writeInt(1)
         }
@@ -244,7 +244,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
         val m = setInput()
 
         m.readLong()
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.readLong()
         }
@@ -258,7 +258,7 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
 
         m.positionAt(0)
         m.writeLong(1)
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.writeLong(-1)
         }

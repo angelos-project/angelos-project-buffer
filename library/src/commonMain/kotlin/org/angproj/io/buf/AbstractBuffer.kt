@@ -18,6 +18,7 @@ import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
 import org.angproj.sec.util.TypeSize
+import org.angproj.sec.util.ensure
 import org.angproj.sec.util.floorMod
 
 
@@ -55,7 +56,7 @@ public abstract class AbstractBuffer internal constructor(
     override fun isMem(): Boolean = segment is Memory
 
     override fun close() {
-        if(!isView()) segment.dispose()
+        if(!isView()) segment.close()
     }
 
     public override fun equals(other: Any?): Boolean {
@@ -92,6 +93,8 @@ public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: In
     val length = idxTo - idxFrom
     val srcLim = this.segment.limit
     val dstLim = dest.segment.limit
+
+    ensure<BufferException>(this.segment.isOpen() && dest.segment.isOpen()) { BufferException("Closed segments error") }
 
     require(idxFrom <= idxTo) {
         "Start index ($idxFrom) is larger than end index ($idxTo)" }

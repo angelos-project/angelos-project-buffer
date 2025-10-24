@@ -85,7 +85,7 @@ class TextBufferTest : AbstractFlowBufferTest<TextBuffer>() {
         val m = setInput()
 
         // negative position is illegal for read
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.read()
         }
@@ -102,7 +102,7 @@ class TextBufferTest : AbstractFlowBufferTest<TextBuffer>() {
         val m = setInput()
 
         // negative position illegal for write
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<BufferException> {
             m.positionAt(-1)
             m.write("x")
         }
