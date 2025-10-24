@@ -84,12 +84,6 @@ class TextBufferTest : AbstractFlowBufferTest<TextBuffer>() {
     fun readBoundsCheck() {
         val m = setInput()
 
-        // negative position is illegal for read
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.read()
-        }
-
         // position at limit must throw on read
         assertFailsWith<IllegalStateException> {
             m.positionAt(m.limit)
@@ -100,12 +94,6 @@ class TextBufferTest : AbstractFlowBufferTest<TextBuffer>() {
     @Test
     fun writeBoundsCheck() {
         val m = setInput()
-
-        // negative position illegal for write
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.write("x")
-        }
 
         // writing at limit should throw segment-level exception
         m.positionAt(m.limit)

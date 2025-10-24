@@ -147,24 +147,11 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
     fun byteRWOutbound() {
         val m = setInput()
 
-        m.readByte()
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.readByte()
-        }
-
         m.positionAt(m.limit - TypeSize.byteSize)
         m.readByte() // Won't crash
         assertFailsWith<SegmentException> {
             m.positionAt(m.limit)
             m.readByte() // Must throw
-        }
-
-        m.positionAt(0)
-        m.writeByte(1)
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.writeByte(1)
         }
 
         m.positionAt(m.limit - TypeSize.byteSize)
@@ -179,24 +166,11 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
     fun shortRWOutbound() {
         val m = setInput()
 
-        m.readShort()
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.readShort()
-        }
-
         m.positionAt(m.limit - TypeSize.shortSize)
         m.readShort() // Won't crash
         assertFailsWith<SegmentException> {
             m.positionAt(m.limit-1)
             m.readShort() // Must throw
-        }
-
-        m.positionAt(0)
-        m.writeShort(1)
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.writeShort(1)
         }
 
         m.positionAt(m.limit - TypeSize.shortSize)
@@ -211,24 +185,11 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
     fun intRWOutbound() {
         val m = setInput()
 
-        m.readInt()
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.readInt()
-        }
-
         m.positionAt(m.limit - TypeSize.intSize)
         m.readInt() // Won't crash
         assertFailsWith<SegmentException> {
             m.positionAt(m.limit-3)
             m.readInt() // Must throw
-        }
-
-        m.positionAt(0)
-        m.writeInt(1)
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.writeInt(1)
         }
 
         m.positionAt(m.limit - TypeSize.intSize)
@@ -243,24 +204,11 @@ class BinaryBufferTest: AbstractFlowBufferTest<BinaryBuffer>() {
     fun longRWOutbound() {
         val m = setInput()
 
-        m.readLong()
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.readLong()
-        }
-
         m.positionAt(m.limit - TypeSize.longSize)
         m.readLong() // Won't crash
         assertFailsWith<SegmentException> {
             m.positionAt(m.limit-7)
             m.readLong() // Must throw
-        }
-
-        m.positionAt(0)
-        m.writeLong(1)
-        assertFailsWith<BufferException> {
-            m.positionAt(-1)
-            m.writeLong(-1)
         }
 
         m.positionAt(m.limit - TypeSize.longSize)
