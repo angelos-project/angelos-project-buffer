@@ -68,6 +68,7 @@ public abstract class AbstractPoolManager<T: Any, S: Segment<S>>(
         } else {
             val segment = segmentMap[dataSize]!!.first()
             segmentMap[dataSize]!!.remove(segment)
+            segment._closed = false // opening recycled segments
             return segment
         }
     }
