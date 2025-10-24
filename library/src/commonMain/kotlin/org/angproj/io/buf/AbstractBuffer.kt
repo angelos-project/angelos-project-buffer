@@ -55,7 +55,7 @@ public abstract class AbstractBuffer internal constructor(
 
     override fun isMem(): Boolean = segment is Memory
 
-    override fun close() {
+    final override fun close() {
         if(!isView()) segment.close()
     }
 

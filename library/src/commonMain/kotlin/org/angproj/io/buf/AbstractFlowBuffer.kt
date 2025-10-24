@@ -122,10 +122,6 @@ public abstract class AbstractFlowBuffer protected constructor(
 
     override fun isMem(): Boolean = segment is Memory
 
-    override fun close() {
-        segment.dispose()
-    }
-
     public override fun isNull(): Boolean = this === nullBuffer
 
     public companion object Companion {
