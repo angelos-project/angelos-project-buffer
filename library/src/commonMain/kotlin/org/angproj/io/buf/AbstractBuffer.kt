@@ -89,7 +89,6 @@ public abstract class AbstractBuffer internal constructor(
  * Always copies with offset, idxFrom and idxTo, calculated in byte units.
  * */
 public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: Int, idxFrom: Int, idxTo: Int) {
-    // TODO Implement or search for complete unit tests
     val length = idxTo - idxFrom
     val srcLim = this.segment.limit
     val dstLim = dest.segment.limit
