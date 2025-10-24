@@ -61,7 +61,7 @@ public abstract class AbstractFlowBuffer protected constructor(
      * If the limit is before the current position, the position is moved to the new limit.
      * */
     public override fun limitAt(newLimit: Int) {
-        ensure<BufferException>(_mark in 0..segment.size) { BufferException("New limit outside mark") }
+        ensure<BufferException>(newLimit in _mark..segment.size) { BufferException("New limit outside mark") }
         segment.limitAt(newLimit)
         if(_position > newLimit) positionAt(newLimit) //_position = newLimit
     }

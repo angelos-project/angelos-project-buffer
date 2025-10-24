@@ -62,8 +62,8 @@ abstract class AbstractFlowBufferTest<E: AbstractFlowBuffer>: AbstractBufferTest
         assertEquals(buf.limit, posValue - 5)
         assertEquals(buf.position, posValue - 5)
 
-        assertFailsWith<IllegalArgumentException> { buf.limitAt(buf.mark-1) }
-        assertFailsWith<IllegalArgumentException> { buf.limitAt(buf.capacity+1) }
+        assertFailsWith<BufferException> { buf.limitAt(buf.mark-1) }
+        assertFailsWith<BufferException> { buf.limitAt(buf.capacity+1) }
     }
 
     @Test
