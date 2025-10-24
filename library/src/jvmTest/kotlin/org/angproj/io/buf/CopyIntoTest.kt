@@ -41,4 +41,26 @@ class CopyIntoTest {
             }
         }
     }
+
+    @Test
+    fun testCopyIntoClosed() {
+        BufMgr.withRam(DataSize._128B) { mem1 ->
+            BufMgr.withRam(DataSize._64B) { mem2 ->
+                // Validates that negative length fails
+                mem1.close()
+                assertFailsWith<BufferException> {
+                    mem2.copyInto(mem1, 32, 0, 64)
+                }
+            }
+        }
+        BufMgr.withRam(DataSize._128B) { mem1 ->
+            BufMgr.withRam(DataSize._64B) { mem2 ->
+                // Validates that negative length fails
+                mem2.close()
+                assertFailsWith<BufferException> {
+                    mem1.copyInto(mem2, 0, 32, 96)
+                }
+            }
+        }
+    }
 }
