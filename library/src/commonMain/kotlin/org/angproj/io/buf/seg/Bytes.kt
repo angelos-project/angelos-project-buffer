@@ -52,18 +52,25 @@ public class Bytes(
 
     override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
-        return getShort<Unit>(data, index)
+        return when(revOrder) {
+            true -> return getRevShort<Unit>(data, index)
+            else -> getShort<Unit>(data, index)
+        }
     }
 
     override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
-        return getInt<Unit>(data, index)
-    }
+        return when(revOrder) {
+            true -> return getRevInt<Unit>(data, index)
+            else -> getInt<Unit>(data, index)
+        }    }
 
     override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
-        return getLong<Unit>(data, index)
-    }
+        return when(revOrder) {
+            true -> return getRevLong<Unit>(data, index)
+            else -> getLong<Unit>(data, index)
+        }    }
 
     override fun setByte(index: Int, value: Byte) {
         index.checkRangeByte<Unit>()
@@ -72,17 +79,25 @@ public class Bytes(
 
     override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Unit>()
-        setShort<Unit>(data, index, value)
+        when (revOrder) {
+            true -> setRevShort<Unit>(data, index, value)
+            else -> setShort<Unit>(data, index, value)
+        }
     }
 
     override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Unit>()
-        setInt<Unit>(data, index, value)
-    }
+        when (revOrder) {
+            true -> setRevInt<Unit>(data, index, value)
+            else -> setInt<Unit>(data, index, value)
+        }    }
 
     override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
-        setLong<Unit>(data, index, value)
+        when (revOrder) {
+            true -> setRevLong<Unit>(data, index, value)
+            else -> setLong<Unit>(data, index, value)
+        }
     }
 
     override fun closeImpl() {
