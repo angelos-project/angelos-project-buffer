@@ -36,6 +36,7 @@ public interface WriteAccess {
      *
      * @param index The index at which to set the value.
      * @param value The short value to set.
+     * @param revOrder Whether to write in reverse byte order.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
     public fun setShort(index: Int, value: Short, revOrder: Boolean)
@@ -45,6 +46,7 @@ public interface WriteAccess {
      *
      * @param index The index at which to set the value.
      * @param value The integer value to set.
+     * @param revOrder Whether to write in reverse byte order.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
     public fun setInt(index: Int, value: Int, revOrder: Boolean)
@@ -54,6 +56,7 @@ public interface WriteAccess {
      *
      * @param index The index at which to set the value.
      * @param value The long value to set.
+     * @param revOrder Whether to write in reverse byte order.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
     public fun setLong(index: Int, value: Long, revOrder: Boolean)

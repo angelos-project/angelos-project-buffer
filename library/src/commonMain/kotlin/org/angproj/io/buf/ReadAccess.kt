@@ -35,6 +35,7 @@ public interface ReadAccess {
      * Returns the short at the specified index.
      *
      * @param index the index of the short to return
+     * @param revOrder whether to read in reverse byte order
      * @return the short at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
@@ -44,6 +45,7 @@ public interface ReadAccess {
      * Returns the int at the specified index.
      *
      * @param index the index of the int to return
+     * @param revOrder whether to read in reverse byte order
      * @return the int at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
@@ -53,6 +55,7 @@ public interface ReadAccess {
      * Returns the long at the specified index.
      *
      * @param index the index of the long to return
+     * @param revOrder whether to read in reverse byte order
      * @return the long at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */

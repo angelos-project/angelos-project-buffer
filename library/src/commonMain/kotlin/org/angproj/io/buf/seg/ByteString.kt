@@ -147,6 +147,7 @@ public abstract class ByteString(
      * the size of a short (2 bytes).
      *
      * @param index The index from which to read the short value. Must be a multiple of 2.
+     * @param revOrder Whether to read the bytes in reverse order (big-endian vs little-endian).
      * @return The short value read from the segment.
      */
     abstract override fun getShort(index: Int, revOrder: Boolean): Short
@@ -159,6 +160,7 @@ public abstract class ByteString(
      * the size of an integer (4 bytes).
      *
      * @param index The index from which to read the integer value. Must be a multiple of 4.
+     * @param revOrder Whether to read the bytes in reverse order (big-endian vs little-endian).
      * @return The integer value read from the segment.
      */
     abstract override fun getInt(index: Int, revOrder: Boolean): Int
@@ -171,6 +173,7 @@ public abstract class ByteString(
      * the size of a long (8 bytes).
      *
      * @param index The index from which to read the long value. Must be a multiple of 8.
+     * @param revOrder Whether to read the bytes in reverse order (big-endian vs little-endian).
      * @return The long value read from the segment.
      */
     abstract override fun getLong(index: Int, revOrder: Boolean): Long
@@ -195,6 +198,7 @@ public abstract class ByteString(
      *
      * @param index The index at which to set the short value. Must be a multiple of 2.
      * @param value The short value to set in the segment.
+     * @param revOrder Whether to write the bytes in reverse order (big-endian vs little-endian).
      */
     abstract override fun setShort(index: Int, value: Short, revOrder: Boolean)
 
@@ -207,6 +211,7 @@ public abstract class ByteString(
      *
      * @param index The index at which to set the integer value. Must be a multiple of 4.
      * @param value The integer value to set in the segment.
+     * @param revOrder Whether to write the bytes in reverse order (big-endian vs little-endian).
      */
     abstract override fun setInt(index: Int, value: Int, revOrder: Boolean)
 
@@ -219,6 +224,7 @@ public abstract class ByteString(
      *
      * @param index The index at which to set the long value. Must be a multiple of 8.
      * @param value The long value to set in the segment.
+     * @param revOrder Whether to write the bytes in reverse order (big-endian vs little-endian).
      */
     abstract override fun setLong(index: Int, value: Long, revOrder: Boolean)
 
