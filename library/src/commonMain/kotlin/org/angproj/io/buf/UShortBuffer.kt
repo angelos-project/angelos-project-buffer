@@ -19,8 +19,8 @@ import org.angproj.sec.util.TypeSize
 
 
 public class UShortBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false
-): AbstractArrayBuffer<UShort>(segment, view, TypeSize.shortSize) {
+    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+): AbstractArrayBuffer<UShort>(segment, view, TypeSize.shortSize, endian) {
 
     override fun get(index: Int): UShort = segment.getShort(index * typeSize).conv2uS()
 

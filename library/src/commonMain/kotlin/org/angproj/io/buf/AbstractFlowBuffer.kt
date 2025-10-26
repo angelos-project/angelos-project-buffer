@@ -20,8 +20,8 @@ import org.angproj.sec.util.ensure
 
 
 public abstract class AbstractFlowBuffer protected constructor(
-    segment: Segment<*>, view: Boolean = false
-): AbstractBuffer(segment, view), FlowBuffer {
+    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+): AbstractBuffer(segment, view, endian), FlowBuffer {
 
     /**
      * Gives the max capacity of the buffer
@@ -135,7 +135,7 @@ public abstract class AbstractFlowBuffer protected constructor(
 
 private fun AbstractFlowBuffer.Companion.createNullBuffer(): AbstractFlowBuffer {
     return object : AbstractFlowBuffer(
-        Segment.nullSegment, false
+        Segment.nullSegment, false, Platform.endian
     ) {
         override val size: Int = 0
     }

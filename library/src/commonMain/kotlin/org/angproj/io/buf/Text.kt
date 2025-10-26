@@ -28,8 +28,8 @@ import org.angproj.utf.octets
 
 // TODO Implement a complete TextTest
 public class Text internal constructor(
-    segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic
-) : AbstractBlockBuffer(segment, view), TextRetrievable, TextStorable, CodePointIterable {
+    segment: Segment<*>, view: Boolean = false, public val policy: Policy = Policy.basic, endian: Platform.ENDIAN
+) : AbstractBlockBuffer(segment, view, endian), TextRetrievable, TextStorable, CodePointIterable {
 
     override fun iterator(): CodePointIterator = object : CodePointIterator {
         private var _prev = CodePoint.nullCodePoint

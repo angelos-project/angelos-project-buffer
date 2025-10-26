@@ -23,6 +23,6 @@ import java.nio.file.Files
 
 public fun BufMgr.textFile(path: String, policy: Policy = Policy.basic): TextBuffer {
     val realPath = FileSystems.getDefault().getPath(path)
-    return TextBuffer(Bytes(Default, Files.readAllBytes(realPath)), policy = policy).also { it.asText().applyPolicy() }
+    return TextBuffer(Bytes(Default, Files.readAllBytes(realPath)), policy = policy, endian = Platform.endian).also { it.asText().applyPolicy() }
 }
 

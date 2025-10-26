@@ -19,8 +19,8 @@ import org.angproj.io.buf.util.unsupported
 
 
 public abstract class AbstractArrayBuffer<E> protected constructor(
-    segment: Segment<*>, view: Boolean = false, protected val typeSize: Int
-): AbstractBuffer(segment, view), ArrayBuffer<E>{
+    segment: Segment<*>, view: Boolean = false, protected val typeSize: Int, endian: Platform.ENDIAN
+): AbstractBuffer(segment, view, endian), ArrayBuffer<E>{
 
     override fun iterator(): Iterator<E> = object: Iterator<E> {
         private var index = 0
@@ -56,7 +56,7 @@ public abstract class AbstractArrayBuffer<E> protected constructor(
 
 private fun AbstractArrayBuffer.Companion.createNullBuffer(): AbstractArrayBuffer<*> {
     return object : AbstractArrayBuffer<Nothing>(
-        Segment.nullSegment, false, Int.MIN_VALUE
+        Segment.nullSegment, false, Int.MIN_VALUE, Platform.endian
     ) {
         override fun get(index: Int): Nothing { unsupported() }
         override fun set(index: Int, value: Nothing) { unsupported() }

@@ -22,8 +22,8 @@ import org.angproj.sec.util.ensure
 
 
 public class Binary(
-    segment: Segment<*>, view: Boolean = false
-) : AbstractBlockBuffer(segment, view), Retrievable, Storable {
+    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+) : AbstractBlockBuffer(segment, view, endian), Retrievable, Storable {
 
     init {
         ensure<BufferException>(!segment.isNull()) { BufferException("Null segment forbidden!") }
@@ -107,22 +107,22 @@ public fun Binary.address(): TypePointer<Nothing> = segment.address().toPointer(
 
 public fun Binary.securelyRandomize(): Unit = segment.securelyRandomize()
 
-public fun Binary.asBinaryBuffer(): BinaryBuffer = BinaryBuffer(segment, true)
-public fun Binary.asByteBuffer(): ByteBuffer = ByteBuffer(segment, true)
-public fun Binary.asUByteBuffer(): UByteBuffer = UByteBuffer(segment, true)
-public fun Binary.asShortBuffer(): ShortBuffer = ShortBuffer(segment, true)
-public fun Binary.asUShortBuffer(): UShortBuffer = UShortBuffer(segment, true)
-public fun Binary.asIntBuffer(): IntBuffer = IntBuffer(segment, true)
-public fun Binary.asUIntBuffer(): UIntBuffer = UIntBuffer(segment, true)
-public fun Binary.asLongBuffer(): LongBuffer = LongBuffer(segment, true)
-public fun Binary.asULongBuffer(): ULongBuffer = ULongBuffer(segment, true)
-public fun Binary.asFloatBuffer(): FloatBuffer = FloatBuffer(segment, true)
-public fun Binary.asDoubleBuffer(): DoubleBuffer = DoubleBuffer(segment, true)
+public fun Binary.asBinaryBuffer(): BinaryBuffer = BinaryBuffer(segment, true, byteOrder)
+public fun Binary.asByteBuffer(): ByteBuffer = ByteBuffer(segment, true, byteOrder)
+public fun Binary.asUByteBuffer(): UByteBuffer = UByteBuffer(segment, true, byteOrder)
+public fun Binary.asShortBuffer(): ShortBuffer = ShortBuffer(segment, true, byteOrder)
+public fun Binary.asUShortBuffer(): UShortBuffer = UShortBuffer(segment, true, byteOrder)
+public fun Binary.asIntBuffer(): IntBuffer = IntBuffer(segment, true, byteOrder)
+public fun Binary.asUIntBuffer(): UIntBuffer = UIntBuffer(segment, true, byteOrder)
+public fun Binary.asLongBuffer(): LongBuffer = LongBuffer(segment, true, byteOrder)
+public fun Binary.asULongBuffer(): ULongBuffer = ULongBuffer(segment, true, byteOrder)
+public fun Binary.asFloatBuffer(): FloatBuffer = FloatBuffer(segment, true, byteOrder)
+public fun Binary.asDoubleBuffer(): DoubleBuffer = DoubleBuffer(segment, true, byteOrder)
 
-public fun Binary.asTextBuffer(): TextBuffer = TextBuffer(segment, true)
-public fun Binary.asText(): Text = Text(segment, true)
+public fun Binary.asTextBuffer(): TextBuffer = TextBuffer(segment, true, endian = byteOrder)
+public fun Binary.asText(): Text = Text(segment, true, endian = byteOrder)
 
 
-public fun <E: AbstractBuffer>E.asBinary(): Binary = Binary(this.segment, true)
+public fun <E: AbstractBuffer>E.asBinary(): Binary = Binary(this.segment, true, byteOrder)
 
 public fun Binary.binToHex(): Text = BufMgr.txt(this.limit * 2).also { BinHex.binToHex(this, it) }

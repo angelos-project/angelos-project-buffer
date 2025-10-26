@@ -19,8 +19,8 @@ import org.angproj.sec.util.ensure
 
 
 public abstract class AbstractBlockBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false
-) : AbstractBuffer(segment, view), BlockBuffer {
+    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+) : AbstractBuffer(segment, view, endian), BlockBuffer {
 
     override val size: Int
         get() = segment.size

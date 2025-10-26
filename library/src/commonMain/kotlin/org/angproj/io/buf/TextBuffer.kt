@@ -26,8 +26,9 @@ public class TextBuffer internal constructor(
     segment: Segment<*>,
     view: Boolean = false,
     public val policy: Policy = Policy.basic,
-    public val newLine: CodePoint = Ascii.CTRL_LF.toCodePoint()
-): AbstractFlowBuffer(segment, view), Iterable<Text> {
+    public val newLine: CodePoint = Ascii.CTRL_LF.toCodePoint(),
+    endian: Platform.ENDIAN
+): AbstractFlowBuffer(segment, view, endian), Iterable<Text> {
 
     override fun iterator(): Iterator<Text> = object: Iterator<Text> {
         private val txt = asText()
@@ -78,5 +79,5 @@ public class TextBuffer internal constructor(
         asText().forEach { _ -> }
     }
 
-    public fun asText(): Text = Text(segment, true, policy)
+    public fun asText(): Text = Text(segment, true, policy, byteOrder)
 }
