@@ -75,17 +75,26 @@ public class Memory(
 
     override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
-        return data.getShort(index)
+        return when(revOrder) {
+            true -> shortReverse<Unit>(data.getShort(index), revOrder)
+            else -> data.getShort(index)
+        }
     }
 
     override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
-        return data.getInt(index)
+        return when(revOrder) {
+            true -> intReverse<Unit>(data.getInt(index), revOrder)
+            else -> data.getInt(index)
+        }
     }
 
     override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
-        return data.getLong(index)
+        return when(revOrder) {
+            true -> longReverse<Unit>(data.getLong(index), revOrder)
+            else -> data.getLong(index)
+        }
     }
 
     override fun setByte(index: Int, value: Byte) {
@@ -95,17 +104,32 @@ public class Memory(
 
     override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Unit>()
-        data.setShort(index, value)
+        data.setShort(index, shortReverse<Unit>(value, revOrder))
     }
 
     override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Unit>()
-        data.setInt(index, value)
+        data.setInt(index, intReverse<Unit>(value, revOrder))
     }
 
     override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
-        data.setLong(index, value)
+        data.setLong(index, longReverse<Unit>(value, revOrder))
+    }
+
+    private inline fun <reified R: Any> shortReverse(value: Short, swap: Boolean): Short = when(swap) {
+        true -> swapShort<Unit>(value)
+        false -> value
+    }
+
+    private inline fun <reified R: Any> intReverse(value: Int, swap: Boolean): Int = when(swap) {
+        true -> swapInt<Unit>(value)
+        false -> value
+    }
+
+    private inline fun <reified R: Any> longReverse(value: Long, swap: Boolean): Long = when(swap) {
+        true -> swapLong<Unit>(value)
+        false -> value
     }
 
     override fun closeImpl() {

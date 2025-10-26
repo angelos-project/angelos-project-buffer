@@ -90,7 +90,8 @@ public class Bytes(
         when (revOrder) {
             true -> setRevInt<Unit>(data, index, value)
             else -> setInt<Unit>(data, index, value)
-        }    }
+        }
+    }
 
     override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
