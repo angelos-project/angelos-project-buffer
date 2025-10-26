@@ -50,17 +50,17 @@ public class Bytes(
         return data[index]
     }
 
-    override fun getShort(index: Int): Short {
+    override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
         return getShort<Unit>(data, index)
     }
 
-    override fun getInt(index: Int): Int {
+    override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
         return getInt<Unit>(data, index)
     }
 
-    override fun getLong(index: Int): Long {
+    override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
         return getLong<Unit>(data, index)
     }
@@ -70,17 +70,17 @@ public class Bytes(
         data[index] = value
     }
 
-    override fun setShort(index: Int, value: Short) {
+    override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Unit>()
         setShort<Unit>(data, index, value)
     }
 
-    override fun setInt(index: Int, value: Int) {
+    override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Unit>()
         setInt<Unit>(data, index, value)
     }
 
-    override fun setLong(index: Int, value: Long) {
+    override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
         setLong<Unit>(data, index, value)
     }

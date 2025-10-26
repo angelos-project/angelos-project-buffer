@@ -73,17 +73,17 @@ public class Memory(
         return data.getByte(index)
     }
 
-    override fun getShort(index: Int): Short {
+    override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
         return data.getShort(index)
     }
 
-    override fun getInt(index: Int): Int {
+    override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
         return data.getInt(index)
     }
 
-    override fun getLong(index: Int): Long {
+    override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
         return data.getLong(index)
     }
@@ -93,17 +93,17 @@ public class Memory(
         data.setByte(index, value)
     }
 
-    override fun setShort(index: Int, value: Short) {
+    override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Unit>()
         data.setShort(index, value)
     }
 
-    override fun setInt(index: Int, value: Int) {
+    override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Unit>()
         data.setInt(index, value)
     }
 
-    override fun setLong(index: Int, value: Long) {
+    override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
         data.setLong(index, value)
     }

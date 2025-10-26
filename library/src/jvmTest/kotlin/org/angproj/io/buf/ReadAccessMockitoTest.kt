@@ -39,20 +39,20 @@ class ReadAccessMockitoTest {
 
     @Test
     fun testGetShort() {
-        whenever(readAccess.getShort(1)).doReturn(12345)
-        assertEquals(readAccess.getShort(1), 12345)
+        whenever(readAccess.getShort(1, false)).doReturn(12345)
+        assertEquals(readAccess.getShort(1, false), 12345)
     }
 
     @Test
     fun testGetInt() {
-        whenever(readAccess.getInt(0)).doReturn(0xDEADBEEF.toInt())
-        assertEquals(readAccess.getInt(0), 0xDEADBEEF.toInt())
+        whenever(readAccess.getInt(0, false)).doReturn(0xDEADBEEF.toInt())
+        assertEquals(readAccess.getInt(0, false), 0xDEADBEEF.toInt())
     }
 
     @Test
     fun testGetLong() {
-        whenever(readAccess.getLong(3)).doReturn(0x123456789ABCDEFL)
-        assertEquals(readAccess.getLong(3), 0x123456789ABCDEFL)
+        whenever(readAccess.getLong(3, false)).doReturn(0x123456789ABCDEFL)
+        assertEquals(readAccess.getLong(3, false), 0x123456789ABCDEFL)
     }
 
     @Test
@@ -63,19 +63,19 @@ class ReadAccessMockitoTest {
 
     @Test
     fun testGetShortThrowException() {
-        whenever(readAccess.getShort(-1)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { readAccess.getShort(-1) }
+        whenever(readAccess.getShort(-1, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getShort(-1, false) }
     }
 
     @Test
     fun testGetIntThrowException() {
-        whenever(readAccess.getInt(-1)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { readAccess.getInt(-1) }
+        whenever(readAccess.getInt(-1, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getInt(-1, false) }
     }
 
     @Test
     fun testGetLongThrowException() {
-        whenever(readAccess.getLong(-1)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { readAccess.getLong(-1) }
+        whenever(readAccess.getLong(-1, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { readAccess.getLong(-1, false) }
     }
 }

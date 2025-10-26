@@ -22,9 +22,9 @@ public class IntBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Int>(segment, view, TypeSize.intSize, endian) {
 
-    override fun get(index: Int): Int = segment.getInt(index * typeSize)
+    override fun get(index: Int): Int = segment.getInt(index * typeSize, _isRevOrder)
 
     override fun set(index: Int, value: Int) {
-        segment.setInt(index * typeSize, value)
+        segment.setInt(index * typeSize, value, _isRevOrder)
     }
 }

@@ -38,7 +38,7 @@ public interface ReadAccess {
      * @return the short at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun getShort(index: Int): Short
+    public fun getShort(index: Int, revOrder: Boolean): Short
 
     /**
      * Returns the int at the specified index.
@@ -47,7 +47,7 @@ public interface ReadAccess {
      * @return the int at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun getInt(index: Int): Int
+    public fun getInt(index: Int, revOrder: Boolean): Int
 
     /**
      * Returns the long at the specified index.
@@ -56,5 +56,5 @@ public interface ReadAccess {
      * @return the long at the specified index
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun getLong(index: Int): Long
+    public fun getLong(index: Int, revOrder: Boolean): Long
 }

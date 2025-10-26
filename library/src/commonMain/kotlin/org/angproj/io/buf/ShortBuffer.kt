@@ -22,9 +22,9 @@ public class ShortBuffer(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Short>(segment, view, TypeSize.shortSize, endian) {
 
-    override fun get(index: Int): Short = segment.getShort(index * typeSize)
+    override fun get(index: Int): Short = segment.getShort(index * typeSize, _isRevOrder)
 
     override fun set(index: Int, value: Short) {
-        segment.setShort(index * typeSize, value)
+        segment.setShort(index * typeSize, value, _isRevOrder)
     }
 }

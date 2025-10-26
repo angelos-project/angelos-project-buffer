@@ -78,12 +78,12 @@ private fun Segment.Companion.createNullSegment(): Segment<*> {
     return object : Segment<Nothing>(DataSize.UNKNOWN.toInt()) {
         override fun closeImpl() = unsupported()
         override fun getByte(index: Int): Byte = unsupported()
-        override fun getShort(index: Int): Short = unsupported()
-        override fun getInt(index: Int): Int = unsupported()
-        override fun getLong(index: Int): Long = unsupported()
+        override fun getShort(index: Int, revOrder: Boolean): Short = unsupported()
+        override fun getInt(index: Int, revOrder: Boolean): Int = unsupported()
+        override fun getLong(index: Int, revOrder: Boolean): Long = unsupported()
         override fun setByte(index: Int, value: Byte) = unsupported()
-        override fun setShort(index: Int, value: Short) = unsupported()
-        override fun setInt(index: Int, value: Int) = unsupported()
-        override fun setLong(index: Int, value: Long) = unsupported()
+        override fun setShort(index: Int, value: Short, revOrder: Boolean) = unsupported()
+        override fun setInt(index: Int, value: Int, revOrder: Boolean) = unsupported()
+        override fun setLong(index: Int, value: Long, revOrder: Boolean) = unsupported()
     }
 }

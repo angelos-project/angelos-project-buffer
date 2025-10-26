@@ -149,7 +149,7 @@ public abstract class ByteString(
      * @param index The index from which to read the short value. Must be a multiple of 2.
      * @return The short value read from the segment.
      */
-    abstract override fun getShort(index: Int): Short
+    abstract override fun getShort(index: Int, revOrder: Boolean): Short
 
     /**
      * Gets an integer value at the specified index in the byte string segment.
@@ -161,7 +161,7 @@ public abstract class ByteString(
      * @param index The index from which to read the integer value. Must be a multiple of 4.
      * @return The integer value read from the segment.
      */
-    abstract override fun getInt(index: Int): Int
+    abstract override fun getInt(index: Int, revOrder: Boolean): Int
 
     /**
      * Gets a long value at the specified index in the byte string segment.
@@ -173,7 +173,7 @@ public abstract class ByteString(
      * @param index The index from which to read the long value. Must be a multiple of 8.
      * @return The long value read from the segment.
      */
-    abstract override fun getLong(index: Int): Long
+    abstract override fun getLong(index: Int, revOrder: Boolean): Long
 
     /**
      * Sets a byte value at the specified index in the byte string segment.
@@ -196,7 +196,7 @@ public abstract class ByteString(
      * @param index The index at which to set the short value. Must be a multiple of 2.
      * @param value The short value to set in the segment.
      */
-    abstract override fun setShort(index: Int, value: Short)
+    abstract override fun setShort(index: Int, value: Short, revOrder: Boolean)
 
     /**
      * Sets an integer value at the specified index in the byte string segment.
@@ -208,7 +208,7 @@ public abstract class ByteString(
      * @param index The index at which to set the integer value. Must be a multiple of 4.
      * @param value The integer value to set in the segment.
      */
-    abstract override fun setInt(index: Int, value: Int)
+    abstract override fun setInt(index: Int, value: Int, revOrder: Boolean)
 
     /**
      * Sets a long value at the specified index in the byte string segment.
@@ -220,7 +220,7 @@ public abstract class ByteString(
      * @param index The index at which to set the long value. Must be a multiple of 8.
      * @param value The long value to set in the segment.
      */
-    abstract override fun setLong(index: Int, value: Long)
+    abstract override fun setLong(index: Int, value: Long, revOrder: Boolean)
 
     /**
      * Computes a checksum for the byte string segment using a specified seed.
@@ -240,7 +240,7 @@ public abstract class ByteString(
         hashAbsorber.absorb(seed.lower)
 
         repeat(limit.floorDiv(TypeSize.longSize)) {
-            hashAbsorber.absorb(getLong(offset))
+            hashAbsorber.absorb(getLong(offset, false))
             offset += TypeSize.longSize
         }
 
@@ -279,7 +279,7 @@ public abstract class ByteString(
      */
     public fun securelyRandomize() {
         SecureFeed.readLongs(this, 0, limit.floorDiv(TypeSize.longSize)) { index, value ->
-            setLong(index * TypeSize.longSize, value)
+            setLong(index * TypeSize.longSize, value, false)
         }
         val byteSize = limit.floorMod(TypeSize.longSize)
         SecureFeed.readBytes(this, limit - byteSize, byteSize) { index, value ->

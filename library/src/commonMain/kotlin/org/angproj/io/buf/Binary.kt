@@ -36,28 +36,28 @@ public class Binary(
         segment.getByte(position).conv2uB()
 
     override fun retrieveShort(position: Int): Short =
-        segment.getShort(position)
+        segment.getShort(position, _isRevOrder)
 
     override fun retrieveUShort(position: Int): UShort =
-        segment.getShort(position).conv2uS()
+        segment.getShort(position, _isRevOrder).conv2uS()
 
     override fun retrieveInt(position: Int): Int =
-        segment.getInt(position)
+        segment.getInt(position, _isRevOrder)
 
     override fun retrieveUInt(position: Int): UInt =
-        segment.getInt(position).conv2uI()
+        segment.getInt(position, _isRevOrder).conv2uI()
 
     override fun retrieveLong(position: Int): Long =
-        segment.getLong(position)
+        segment.getLong(position, _isRevOrder)
 
     override fun retrieveULong(position: Int): ULong =
-        segment.getLong(position).conv2uL()
+        segment.getLong(position, _isRevOrder).conv2uL()
 
     override fun retrieveFloat(position: Int): Float =
-       segment.getInt(position).conv2F()
+       segment.getInt(position, _isRevOrder).conv2F()
 
     override fun retrieveDouble(position: Int): Double =
-        segment.getLong(position).conv2D()
+        segment.getLong(position, _isRevOrder).conv2D()
 
     override fun storeByte(position: Int, value: Byte): Unit =
         segment.setByte(position, value)
@@ -66,28 +66,28 @@ public class Binary(
         segment.setByte(position, value.conv2B())
 
     override fun storeShort(position: Int, value: Short): Unit =
-        segment.setShort(position, value)
+        segment.setShort(position, value, _isRevOrder)
 
     override fun storeUShort(position: Int, value: UShort): Unit =
-        segment.setShort(position, value.conv2S())
+        segment.setShort(position, value.conv2S(), _isRevOrder)
 
     override fun storeInt(position: Int, value: Int): Unit =
-        segment.setInt(position, value)
+        segment.setInt(position, value, _isRevOrder)
 
     override fun storeUInt(position: Int, value: UInt): Unit =
-        segment.setInt(position, value.conv2I())
+        segment.setInt(position, value.conv2I(), _isRevOrder)
 
     override fun storeLong(position: Int, value: Long): Unit =
-        segment.setLong(position, value)
+        segment.setLong(position, value,_isRevOrder)
 
     override fun storeULong(position: Int, value: ULong): Unit =
-        segment.setLong(position, value.conv2L())
+        segment.setLong(position, value.conv2L(), _isRevOrder)
 
     override fun storeFloat(position: Int, value: Float): Unit =
-        segment.setInt(position, value.conv2I())
+        segment.setInt(position, value.conv2I(), _isRevOrder)
 
     override fun storeDouble(position: Int, value: Double): Unit =
-        segment.setLong(position, value.conv2L())
+        segment.setLong(position, value.conv2L(), _isRevOrder)
 
     public fun checkSum(key: Uuid = Uuid.nil): Long = segment.checkSum(key)
 

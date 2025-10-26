@@ -39,20 +39,20 @@ class WriteAccessMockitoTest {
 
     @Test
     fun testSetShort() {
-        doNothing().whenever(writeAccess).setShort(1, 12345)
-        assertEquals(Unit, writeAccess.setShort(1, 12345))
+        doNothing().whenever(writeAccess).setShort(1, 12345, false)
+        assertEquals(Unit, writeAccess.setShort(1, 12345, false))
     }
 
     @Test
     fun testSetInt() {
-        doNothing().whenever(writeAccess).setInt(0, 0xDEADBEEF.toInt())
-        assertEquals(Unit, writeAccess.setInt(0, 0xDEADBEEF.toInt()))
+        doNothing().whenever(writeAccess).setInt(0, 0xDEADBEEF.toInt(), false)
+        assertEquals(Unit, writeAccess.setInt(0, 0xDEADBEEF.toInt(), false))
     }
 
     @Test
     fun testSetLong() {
-        doNothing().whenever(writeAccess).setLong(3, 0x123456789ABCDEFL)
-        assertEquals(Unit, writeAccess.setLong(3, 0x123456789ABCDEFL))
+        doNothing().whenever(writeAccess).setLong(3, 0x123456789ABCDEFL, false)
+        assertEquals(Unit, writeAccess.setLong(3, 0x123456789ABCDEFL, false))
     }
 
     @Test
@@ -63,19 +63,19 @@ class WriteAccessMockitoTest {
 
     @Test
     fun testSetShortThrowException() {
-        whenever(writeAccess.setShort(-1, 0)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setShort(-1, 0) }
+        whenever(writeAccess.setShort(-1, 0, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setShort(-1, 0, false) }
     }
 
     @Test
     fun testSetIntThrowException() {
-        whenever(writeAccess.setInt(-1, 0)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setInt(-1, 0) }
+        whenever(writeAccess.setInt(-1, 0, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setInt(-1, 0, false) }
     }
 
     @Test
     fun testSetLongThrowException() {
-        whenever(writeAccess.setLong(-1, 0)).doThrow(IndexOutOfBoundsException())
-        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setLong(-1, 0) }
+        whenever(writeAccess.setLong(-1, 0, false)).doThrow(IndexOutOfBoundsException())
+        assertFailsWith<IndexOutOfBoundsException> { writeAccess.setLong(-1, 0, false) }
     }
 }

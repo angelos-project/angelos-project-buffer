@@ -46,33 +46,33 @@ abstract class SegmentTest<S: Segment<S>> {
 
     @Test
     fun testGetSetShort() {
-        segment.setShort(1, 0x1234)
-        assertEquals(0x1234.toShort(), segment.getShort(1))
+        segment.setShort(1, 0x1234, false)
+        assertEquals(0x1234.toShort(), segment.getShort(1, false))
     }
 
     @Test
     fun testGetSetInt() {
-        segment.setInt(2, 0xCAFEBABE.toInt())
-        assertEquals(0xCAFEBABE.toInt(), segment.getInt(2))
+        segment.setInt(2, 0xCAFEBABE.toInt(), false)
+        assertEquals(0xCAFEBABE.toInt(), segment.getInt(2, false))
     }
 
     @Test
     fun testGetSetLong() {
-        segment.setLong(4, 0x1122334455667788L)
-        assertEquals(0x1122334455667788L, segment.getLong(4))
+        segment.setLong(4, 0x1122334455667788L, false)
+        assertEquals(0x1122334455667788L, segment.getLong(4, false))
     }
 
     @Test
     fun testBoundsCheck() {
         assertFailsWith<SegmentException> { segment.getByte(32) }
-        assertFailsWith<SegmentException> { segment.setShort(31, 0) }
-        assertFailsWith<SegmentException> { segment.getInt(29) }
-        assertFailsWith<SegmentException> { segment.setLong(25, 0L) }
+        assertFailsWith<SegmentException> { segment.setShort(31, 0, false) }
+        assertFailsWith<SegmentException> { segment.getInt(29, false) }
+        assertFailsWith<SegmentException> { segment.setLong(25, 0L, false) }
 
         assertFailsWith<SegmentException> { segment.getByte(-1) }
-        assertFailsWith<SegmentException> { segment.setShort(-1, 0) }
-        assertFailsWith<SegmentException> { segment.getInt(-1) }
-        assertFailsWith<SegmentException> { segment.setLong(-1, 0L) }
+        assertFailsWith<SegmentException> { segment.setShort(-1, 0, false) }
+        assertFailsWith<SegmentException> { segment.getInt(-1, false) }
+        assertFailsWith<SegmentException> { segment.setLong(-1, 0L, false) }
     }
 
     @Test

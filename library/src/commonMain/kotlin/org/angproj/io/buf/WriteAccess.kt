@@ -38,7 +38,7 @@ public interface WriteAccess {
      * @param value The short value to set.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setShort(index: Int, value: Short)
+    public fun setShort(index: Int, value: Short, revOrder: Boolean)
 
     /**
      * Sets the value at the specified index to the given integer value.
@@ -47,7 +47,7 @@ public interface WriteAccess {
      * @param value The integer value to set.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setInt(index: Int, value: Int)
+    public fun setInt(index: Int, value: Int, revOrder: Boolean)
 
     /**
      * Sets the value at the specified index to the given long value.
@@ -56,5 +56,5 @@ public interface WriteAccess {
      * @param value The long value to set.
      * @throws IndexOutOfBoundsException if the index is out of bounds
      */
-    public fun setLong(index: Int, value: Long)
+    public fun setLong(index: Int, value: Long, revOrder: Boolean)
 }

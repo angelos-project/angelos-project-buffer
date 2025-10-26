@@ -22,9 +22,9 @@ public class FloatBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Float>(segment, view, TypeSize.floatSize, endian) {
 
-    override fun get(index: Int): Float = segment.getInt(index * typeSize).conv2F()
+    override fun get(index: Int): Float = segment.getInt(index * typeSize, _isRevOrder).conv2F()
 
     override fun set(index: Int, value: Float) {
-        segment.setInt(index * typeSize, value.conv2I())
+        segment.setInt(index * typeSize, value.conv2I(), _isRevOrder)
     }
 }

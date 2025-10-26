@@ -22,9 +22,9 @@ public class LongBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Long>(segment, view, TypeSize.longSize, endian) {
 
-    override fun get(index: Int): Long = segment.getLong(index * typeSize)
+    override fun get(index: Int): Long = segment.getLong(index * typeSize, _isRevOrder)
 
     override fun set(index: Int, value: Long) {
-        segment.setLong(index * typeSize, value)
+        segment.setLong(index * typeSize, value, _isRevOrder)
     }
 }

@@ -26,13 +26,13 @@ class TestByteString(size: Int, limit: Int = size) : ByteString(size, limit) {
         return data[index]
     }
 
-    override fun getShort(index: Int): Short {
+    override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Short>()
         return ((data[index].toInt() and 0xFF) or
                 ((data[index + 1].toInt() and 0xFF) shl 8)).toShort()
     }
 
-    override fun getInt(index: Int): Int {
+    override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Int>()
         return (data[index].toInt() and 0xFF) or
                 ((data[index + 1].toInt() and 0xFF) shl 8) or
@@ -40,7 +40,7 @@ class TestByteString(size: Int, limit: Int = size) : ByteString(size, limit) {
                 ((data[index + 3].toInt() and 0xFF) shl 24)
     }
 
-    override fun getLong(index: Int): Long {
+    override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Long>()
         return (0..7).fold(0L) { acc, i ->
             acc or ((data[index + i].toLong() and 0xFF) shl (8 * i))
@@ -52,18 +52,18 @@ class TestByteString(size: Int, limit: Int = size) : ByteString(size, limit) {
         data[index] = value
     }
 
-    override fun setShort(index: Int, value: Short) {
+    override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Short>()
         data[index] = (value.toInt() and 0xFF).toByte()
         data[index + 1] = ((value.toInt() shr 8) and 0xFF).toByte()
     }
 
-    override fun setInt(index: Int, value: Int) {
+    override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Int>()
         for (i in 0..3) data[index + i] = ((value shr (8 * i)) and 0xFF).toByte()
     }
 
-    override fun setLong(index: Int, value: Long) {
+    override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Long>()
         for (i in 0..7) data[index + i] = ((value shr (8 * i)) and 0xFF).toByte()
     }
@@ -100,31 +100,31 @@ class ByteStringTest {
     @Test
     fun testSetGetShort() {
         val bs = TestByteString(4)
-        bs.setShort(1, 0x1234)
-        assertEquals(0x1234.toShort(), bs.getShort(1))
+        bs.setShort(1, 0x1234, false)
+        assertEquals(0x1234.toShort(), bs.getShort(1, false))
     }
 
     @Test
     fun testSetGetInt() {
         val bs = TestByteString(8)
-        bs.setInt(2, 0xCAFEBABE.toInt())
-        assertEquals(0xCAFEBABE.toInt(), bs.getInt(2))
+        bs.setInt(2, 0xCAFEBABE.toInt(), false)
+        assertEquals(0xCAFEBABE.toInt(), bs.getInt(2, false))
     }
 
     @Test
     fun testSetGetLong() {
         val bs = TestByteString(16)
-        bs.setLong(4, 0x1122334455667788L)
-        assertEquals(0x1122334455667788L, bs.getLong(4))
+        bs.setLong(4, 0x1122334455667788L, false)
+        assertEquals(0x1122334455667788L, bs.getLong(4, false))
     }
 
     @Test
     fun testBoundsChecking() {
         val bs = TestByteString(8)
         assertFailsWith<SegmentException> { bs.getByte(8) }
-        assertFailsWith<SegmentException> { bs.setShort(7, 0) }
-        assertFailsWith<SegmentException> { bs.getInt(6) }
-        assertFailsWith<SegmentException> { bs.setLong(2, 0L) }
+        assertFailsWith<SegmentException> { bs.setShort(7, 0, false) }
+        assertFailsWith<SegmentException> { bs.getInt(6, false) }
+        assertFailsWith<SegmentException> { bs.setLong(2, 0L, false) }
     }
 
     @Test

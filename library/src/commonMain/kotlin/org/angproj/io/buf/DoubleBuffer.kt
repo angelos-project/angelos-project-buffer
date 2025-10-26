@@ -22,9 +22,9 @@ public class DoubleBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Double>(segment, view, TypeSize.doubleSize, endian) {
 
-    override fun get(index: Int): Double = segment.getLong(index * typeSize).conv2D()
+    override fun get(index: Int): Double = segment.getLong(index * typeSize, _isRevOrder).conv2D()
 
     override fun set(index: Int, value: Double) {
-        segment.setLong(index * typeSize, value.conv2L())
+        segment.setLong(index * typeSize, value.conv2L(), _isRevOrder)
     }
 }

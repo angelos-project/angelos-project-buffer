@@ -24,7 +24,7 @@ public class SegmentBlock(
     protected val parent: MemoryBlock<*>,
     protected val ptr: TypePointer<SegmentBlock>,
     protected val blockSize: Int
-) : MemoryBlock<SegmentBlock>, ReadAccess, WriteAccess {
+) : MemoryBlock<SegmentBlock>/*, ReadAccess, WriteAccess*/ {
 
     init {
         require(blockSize > 0) { "Block size must be greater than zero" }
@@ -49,21 +49,21 @@ public class SegmentBlock(
     override val size: Int
         get() = blockSize
 
-    override fun getByte(index: Int): Byte = NativeAccess.getByteNative<SegmentBlock>(index + ptr.toLong())
+    public fun getByte(index: Int): Byte = NativeAccess.getByteNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getShort(index: Int): Short = NativeAccess.getShortNative<SegmentBlock>(index + ptr.toLong())
+    public fun getShort(index: Int): Short = NativeAccess.getShortNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getInt(index: Int): Int = NativeAccess.getIntNative<SegmentBlock>(index + ptr.toLong())
+    public fun getInt(index: Int): Int = NativeAccess.getIntNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun getLong(index: Int): Long = NativeAccess.getLongNative<SegmentBlock>(index + ptr.toLong())
+    public fun getLong(index: Int): Long = NativeAccess.getLongNative<SegmentBlock>(index + ptr.toLong())
 
-    override fun setByte(index: Int, value: Byte) { NativeAccess.setByteNative<SegmentBlock>(index + ptr.toLong(), value) }
+    public fun setByte(index: Int, value: Byte) { NativeAccess.setByteNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setShort(index: Int, value: Short) { NativeAccess.setShortNative<SegmentBlock>(index + ptr.toLong(), value) }
+    public fun setShort(index: Int, value: Short) { NativeAccess.setShortNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setInt(index: Int, value: Int) { NativeAccess.setIntNative<SegmentBlock>(index + ptr.toLong(), value) }
+    public fun setInt(index: Int, value: Int) { NativeAccess.setIntNative<SegmentBlock>(index + ptr.toLong(), value) }
 
-    override fun setLong(index: Int, value: Long) { NativeAccess.setLongNative<SegmentBlock>(index + ptr.toLong(), value) }
+    public fun setLong(index: Int, value: Long) { NativeAccess.setLongNative<SegmentBlock>(index + ptr.toLong(), value) }
 
 }
 

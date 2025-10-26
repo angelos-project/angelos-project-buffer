@@ -133,7 +133,8 @@ public fun <E: AbstractBuffer, S: AbstractBuffer> E.copyInto(dest: S, offset: In
             repeat(length.floorDiv(TypeSize.longSize)) {
                 destination.setLong(
                     offset + pos,
-                    segment.getLong(idxFrom + pos)
+                    segment.getLong(idxFrom + pos, false),
+                    false
                 )
                 pos += TypeSize.longSize
             }

@@ -22,9 +22,9 @@ public class UIntBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<UInt>(segment, view, TypeSize.uIntSize, endian) {
 
-    override fun get(index: Int): UInt = segment.getInt(index * typeSize).conv2uI()
+    override fun get(index: Int): UInt = segment.getInt(index * typeSize, _isRevOrder).conv2uI()
 
     override fun set(index: Int, value: UInt) {
-        segment.setInt(index * typeSize, value.conv2I())
+        segment.setInt(index * typeSize, value.conv2I(), _isRevOrder)
     }
 }

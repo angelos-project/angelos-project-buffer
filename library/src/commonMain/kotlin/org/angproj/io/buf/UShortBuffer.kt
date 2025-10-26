@@ -22,9 +22,9 @@ public class UShortBuffer internal constructor(
     segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<UShort>(segment, view, TypeSize.shortSize, endian) {
 
-    override fun get(index: Int): UShort = segment.getShort(index * typeSize).conv2uS()
+    override fun get(index: Int): UShort = segment.getShort(index * typeSize, false).conv2uS()
 
     override fun set(index: Int, value: UShort) {
-        segment.setShort(index * typeSize, value.conv2S())
+        segment.setShort(index * typeSize, value.conv2S(), false)
     }
 }
