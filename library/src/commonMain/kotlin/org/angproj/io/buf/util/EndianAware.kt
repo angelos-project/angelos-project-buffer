@@ -21,8 +21,8 @@ import org.angproj.io.buf.Platform
  *
  * Implementations represent entities whose behavior depends on byte order (for
  * example multi-byte integer reads/writes). Implementations should expose the
- * active byte order via [currentEndian], indicate whether it differs from the
- * platform default via [isReversed], and update internal state when [setEndian]
+ * active byte order via [byteOrder], indicate whether it differs from the
+ * platform default via [byteSwapping], and update internal state when [setEndian]
  * is called.
  *
  * @see Platform.ENDIAN
@@ -38,24 +38,24 @@ public interface EndianAware {
      * @return the current [Platform.ENDIAN] used by this object
      * @see Platform.ENDIAN
      */
-    public val currentEndian: Platform.ENDIAN
+    public val byteOrder: Platform.ENDIAN
 
     /**
      * True if the current endian differs from the platform default.
      *
-     * This value is typically `true` when [currentEndian] is not equal to the
+     * This value is typically `true` when [byteOrder] is not equal to the
      * platform's default endian. Implementations may use this flag to decide
      * whether byte-swapping is required.
      */
-    public val isReversed: Boolean
+    public val byteSwapping: Boolean
 
     /**
      * Set the endian setting of the object.
      *
      * Implementations must update any internal state necessary so that subsequent
-     * read/write operations use the supplied [endian].
+     * read/write operations use the supplied [byteOrder].
      *
-     * @param endian the new [Platform.ENDIAN] to use
+     * @param byteOrder the new [Platform.ENDIAN] to use
      */
-    public fun setEndian(endian: Platform.ENDIAN)
+    public fun setEndian(byteOrder: Platform.ENDIAN)
 }

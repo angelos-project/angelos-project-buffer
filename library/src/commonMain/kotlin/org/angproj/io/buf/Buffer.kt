@@ -15,9 +15,10 @@
 package org.angproj.io.buf
 
 import org.angproj.io.buf.util.Auto
+import org.angproj.io.buf.util.EndianAware
 import org.angproj.io.buf.util.UtilityAware
 
-public interface Buffer : UtilityAware, Auto, Comparable<Buffer> {
+public interface Buffer : UtilityAware, EndianAware, Auto, Comparable<Buffer> {
 
     /**
      * Gives the max bytes capacity of the buffer

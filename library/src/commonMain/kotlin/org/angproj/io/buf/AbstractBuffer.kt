@@ -17,6 +17,7 @@ package org.angproj.io.buf
 import org.angproj.io.buf.seg.Bytes
 import org.angproj.io.buf.seg.Memory
 import org.angproj.io.buf.seg.Segment
+import org.angproj.io.buf.util.EndianAware
 import org.angproj.sec.util.TypeSize
 import org.angproj.sec.util.ensure
 import org.angproj.sec.util.floorMod
@@ -33,8 +34,22 @@ import org.angproj.sec.util.floorMod
  * @param endianness The initial current endianness of the buffer.
  */
 public abstract class AbstractBuffer internal constructor(
-    internal val segment: Segment<*>, protected val view: Boolean = false
+    internal val segment: Segment<*>, protected val view: Boolean = false, endian: Platform.ENDIAN = Platform.endian
 ) : Buffer {
+
+    override val byteOrder: Platform.ENDIAN
+        get() = when{
+            Platform.isNetRev() && _isRevOrder -> Platform.ENDIAN.BIG_ENDIAN
+            else -> Platform.ENDIAN.LITTLE_ENDIAN
+        }
+
+    protected var _isRevOrder: Boolean = endian != Platform.endian
+    override val byteSwapping: Boolean
+        get() = _isRevOrder
+
+    override fun setEndian(byteOrder: Platform.ENDIAN) {
+        _isRevOrder = byteOrder != Platform.endian
+    }
 
     /**
      * Gives the max bytes capacity of the buffer
