@@ -75,26 +75,17 @@ public class Memory(
 
     override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
-        return when(revOrder) {
-            true -> shortReverse<Unit>(data.getShort(index), revOrder)
-            else -> data.getShort(index)
-        }
+        return shortReverse<Unit>(data.getShort(index), revOrder)
     }
 
     override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
-        return when(revOrder) {
-            true -> intReverse<Unit>(data.getInt(index), revOrder)
-            else -> data.getInt(index)
-        }
+        return intReverse<Unit>(data.getInt(index), revOrder)
     }
 
     override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
-        return when(revOrder) {
-            true -> longReverse<Unit>(data.getLong(index), revOrder)
-            else -> data.getLong(index)
-        }
+        return longReverse<Unit>(data.getLong(index), revOrder)
     }
 
     override fun setByte(index: Int, value: Byte) {
@@ -115,21 +106,6 @@ public class Memory(
     override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
         data.setLong(index, longReverse<Unit>(value, revOrder))
-    }
-
-    private inline fun <reified R: Any> shortReverse(value: Short, swap: Boolean): Short = when(swap) {
-        true -> swapShort<Unit>(value)
-        false -> value
-    }
-
-    private inline fun <reified R: Any> intReverse(value: Int, swap: Boolean): Int = when(swap) {
-        true -> swapInt<Unit>(value)
-        false -> value
-    }
-
-    private inline fun <reified R: Any> longReverse(value: Long, swap: Boolean): Long = when(swap) {
-        true -> swapLong<Unit>(value)
-        false -> value
     }
 
     override fun closeImpl() {

@@ -52,17 +52,17 @@ public class Model(
 
     override fun getShort(index: Int, revOrder: Boolean): Short {
         index.checkRangeShort<Unit>()
-        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.shortSize).toShort()
+        return shortReverse<Unit>(data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.shortSize).toShort(), revOrder)
     }
 
     override fun getInt(index: Int, revOrder: Boolean): Int {
         index.checkRangeInt<Unit>()
-        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.intSize).toInt()
+        return intReverse<Unit>(data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.intSize).toInt(), revOrder)
     }
 
     override fun getLong(index: Int, revOrder: Boolean): Long {
         index.checkRangeLong<Unit>()
-        return data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.longSize)
+        return longReverse<Unit>(data.chunkGet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, TypeSize.longSize), revOrder)
     }
 
     override fun setByte(index: Int, value: Byte) {
@@ -72,17 +72,17 @@ public class Model(
 
     override fun setShort(index: Int, value: Short, revOrder: Boolean) {
         index.checkRangeShort<Unit>()
-        data.shortSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value.toLong(), shortMask, TypeSize.shortSize)
+        data.shortSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, shortReverse<Unit>(value, revOrder).toLong(), shortMask, TypeSize.shortSize)
     }
 
     override fun setInt(index: Int, value: Int, revOrder: Boolean) {
         index.checkRangeInt<Unit>()
-        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value.toLong(), intMask, TypeSize.intSize)
+        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, intReverse<Unit>(value, revOrder).toLong(), intMask, TypeSize.intSize)
     }
 
     override fun setLong(index: Int, value: Long, revOrder: Boolean) {
         index.checkRangeLong<Unit>()
-        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, value, longMask, TypeSize.longSize)
+        data.chunkSet<Unit>(index / TypeSize.longSize, index % TypeSize.longSize, longReverse<Unit>(value, revOrder), longMask, TypeSize.longSize)
     }
 
     private inline fun <reified R: Any> LongArray.chunkGet(off: Int, idx: Int, size: Int): Long = ((
@@ -102,21 +102,6 @@ public class Model(
         val pos = idx * TypeSize.longSize
         set(off, (get(off) and (mask shl pos).inv()) or (value shl pos))
         if(idx > TypeSize.longSize - size) set(off + 1, ((get(off + 1) and 0xff.inv()) or (value ushr TypeSize.longSize)))
-    }
-
-    private inline fun <reified R: Any> shortReverse(value: Short, swap: Boolean): Short = when(swap) {
-        true -> swapShort<Unit>(value)
-        false -> value
-    }
-
-    private inline fun <reified R: Any> intReverse(value: Int, swap: Boolean): Int = when(swap) {
-        true -> swapInt<Unit>(value)
-        false -> value
-    }
-
-    private inline fun <reified R: Any> longReverse(value: Long, swap: Boolean): Long = when(swap) {
-        true -> swapLong<Unit>(value)
-        false -> value
     }
 
     override fun closeImpl() {

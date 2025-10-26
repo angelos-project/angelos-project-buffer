@@ -65,6 +65,21 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
 
     public fun isNull(): Boolean = this === nullSegment
 
+    protected inline fun <reified R: Any> shortReverse(value: Short, swap: Boolean): Short = when(swap) {
+        true -> swapShort<Unit>(value)
+        false -> value
+    }
+
+    protected inline fun <reified R: Any> intReverse(value: Int, swap: Boolean): Int = when(swap) {
+        true -> swapInt<Unit>(value)
+        false -> value
+    }
+
+    protected inline fun <reified R: Any> longReverse(value: Long, swap: Boolean): Long = when(swap) {
+        true -> swapLong<Unit>(value)
+        false -> value
+    }
+
     public companion object {
         /**
          * A null block is a special case where the block does not contain any data.
