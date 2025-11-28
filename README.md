@@ -6,3 +6,27 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.angproj.io.buf/angelos-project-buffer.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.angproj.io.buf/angelos-project-buffer)
 
 A data-buffer made to be used without old legacy, in a modern asynchronous environment. With all necessary fundaments.
+
+FIXME:
+============================
+org.angproj.io.buf.mem:
+ModelPool.subAllocate
+Default.allocate
+Memory.copyInto
+
+org.angproj.io.buf.util:
+UtilityAware.*.asNet
+
+org.angproj.io.buf.seg:
+Segment.address
+ByteString.checksum
+
+org.angproj.io.buf:
+*Buffer.constructor
+BinaryBuffer.constructor
+Text.textListOf/plusAssign/plusAssign
+Text.CodePointIterator._prev/_pos/_cnt
+SegmentBlock.limitAt
+NativeMemoryManager.release
+AbstractBuffer.copyInto
+AbstractBuffer._isRevOrder/byteSwapping/setEndian
