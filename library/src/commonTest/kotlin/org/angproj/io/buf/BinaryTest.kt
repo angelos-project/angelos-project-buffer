@@ -236,8 +236,8 @@ class BinaryTest: AbstractBlockBufferTest<Binary>() {
             for (i in srcSeg.size - TypeSize.longSize until srcSeg.size) {
                 srcSeg.securelyRandomize()
                 srcSeg.copyInto(destSeg, 0, 0, i)
-                repeat(i) { it ->
-                    assertEquals(srcSeg.segment.getByte(it), destSeg.segment.getByte(it))
+                repeat(i) { idx ->
+                    assertEquals(srcSeg.segment.getByte(idx), destSeg.segment.getByte(idx))
                 }
             }
         }

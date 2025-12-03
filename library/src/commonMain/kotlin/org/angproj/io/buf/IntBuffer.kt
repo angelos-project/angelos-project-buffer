@@ -19,7 +19,7 @@ import org.angproj.sec.util.TypeSize
 
 
 public class IntBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+    segment: Segment<*>, view: Boolean, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Int>(segment, view, TypeSize.intSize, endian) {
 
     override fun get(index: Int): Int = segment.getInt(index * typeSize, _isRevOrder)

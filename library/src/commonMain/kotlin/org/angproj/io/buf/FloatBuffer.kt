@@ -19,7 +19,7 @@ import org.angproj.sec.util.TypeSize
 
 
 public class FloatBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+    segment: Segment<*>, view: Boolean, endian: Platform.ENDIAN
 ): AbstractArrayBuffer<Float>(segment, view, TypeSize.floatSize, endian) {
 
     override fun get(index: Int): Float = segment.getInt(index * typeSize, _isRevOrder).conv2F()

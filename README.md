@@ -22,8 +22,8 @@ org.angproj.io.buf.seg:
 * ByteString.checksum (fixed)
 
 org.angproj.io.buf:
-* *Buffer.constructor
-* BinaryBuffer.constructor
+* *Buffer.constructor (fixed)
+* BinaryBuffer.constructor (fixed)
 * Text.textListOf/plusAssign/plusAssign
 * Text.CodePointIterator._prev/_pos/_cnt
 * SegmentBlock.limitAt

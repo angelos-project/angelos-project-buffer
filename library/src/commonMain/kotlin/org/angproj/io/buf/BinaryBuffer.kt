@@ -19,7 +19,7 @@ import org.angproj.sec.util.TypeSize
 
 
 public class BinaryBuffer internal constructor(
-    segment: Segment<*>, view: Boolean = false, endian: Platform.ENDIAN
+    segment: Segment<*>, view: Boolean, endian: Platform.ENDIAN
 ): AbstractFlowBuffer(segment, view, endian), BinaryReadable, BinaryWritable {
 
     override fun readByte(): Byte =
