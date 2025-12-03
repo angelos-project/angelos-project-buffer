@@ -10,23 +10,23 @@ A data-buffer made to be used without old legacy, in a modern asynchronous envir
 FIXME:
 ============================
 org.angproj.io.buf.mem:
-ModelPool.subAllocate
-Default.allocate
-Memory.copyInto
+* ModelPool.subAllocate
+* Default.allocate
+* Memory.copyInto (fixed)
 
 org.angproj.io.buf.util:
-UtilityAware.*.asNet
+* UtilityAware.*.asNet
 
 org.angproj.io.buf.seg:
-Segment.address
-ByteString.checksum
+* Segment.address
+* ByteString.checksum
 
 org.angproj.io.buf:
-*Buffer.constructor
-BinaryBuffer.constructor
-Text.textListOf/plusAssign/plusAssign
-Text.CodePointIterator._prev/_pos/_cnt
-SegmentBlock.limitAt
-NativeMemoryManager.release
-AbstractBuffer.copyInto
-AbstractBuffer._isRevOrder/byteSwapping/setEndian
+* *Buffer.constructor
+* BinaryBuffer.constructor
+* Text.textListOf/plusAssign/plusAssign
+* Text.CodePointIterator._prev/_pos/_cnt
+* SegmentBlock.limitAt
+* NativeMemoryManager.release
+* AbstractBuffer.copyInto
+* AbstractBuffer._isRevOrder/byteSwapping/setEndian

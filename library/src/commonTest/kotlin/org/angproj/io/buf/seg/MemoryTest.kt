@@ -16,6 +16,7 @@ package org.angproj.io.buf.seg
 
 import org.angproj.io.buf.mem.SingleMemoryPool
 import org.angproj.io.buf.util.DataSize
+import org.angproj.sec.util.TypeSize
 import kotlin.test.*
 
 class MemoryTest : SegmentTest<Memory>() {
@@ -24,5 +25,19 @@ class MemoryTest : SegmentTest<Memory>() {
     @Test
     fun testCreateDispose() {
         assertFalse(segment.isNull(), "Bytes should not be disposed after creation")
+    }
+
+    @Test
+    fun testCopyIntoArbitraryLength() {
+        val destSeg = createSegment()
+
+        for (i in segment.size - TypeSize.longSize until segment.size) {
+            segment.securelyRandomize()
+            segment.copyInto(destSeg, 0, 0, i)
+            repeat(i) {
+                assertEquals(segment.getByte(it), destSeg.getByte(it))
+            }
+        }
+        destSeg.close()
     }
 }
