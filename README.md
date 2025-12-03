@@ -28,5 +28,5 @@ org.angproj.io.buf:
 * Text.CodePointIterator._prev/_pos/_cnt
 * SegmentBlock.limitAt
 * NativeMemoryManager.release
-* AbstractBuffer.copyInto
+* AbstractBuffer.copyInto (fixed)
 * AbstractBuffer._isRevOrder/byteSwapping/setEndian

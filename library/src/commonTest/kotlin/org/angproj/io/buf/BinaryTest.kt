@@ -226,4 +226,20 @@ class BinaryTest: AbstractBlockBufferTest<Binary>() {
             assertEquals(DataSize._32B.toInt(), binary.size)
         }
     }
+
+    @Test
+    fun testCopyIntoArbitraryLength() {
+        val srcSeg = BufMgr.bin(DataSize._32B.toInt()).asBinary()
+        BufMgr.withRam(DataSize._32B) {
+            val destSeg = it.asBinary()
+
+            for (i in srcSeg.size - TypeSize.longSize until srcSeg.size) {
+                srcSeg.securelyRandomize()
+                srcSeg.copyInto(destSeg, 0, 0, i)
+                repeat(i) { it ->
+                    assertEquals(srcSeg.segment.getByte(it), destSeg.segment.getByte(it))
+                }
+            }
+        }
+    }
 }
