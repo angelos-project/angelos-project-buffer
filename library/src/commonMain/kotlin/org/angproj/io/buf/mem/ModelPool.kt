@@ -23,15 +23,9 @@ import org.angproj.sec.util.ensure
 public abstract class ModelPool(allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
 ) : AbstractPoolManager<LongArray, Model>(allocationSize, minSize, maxSize) {
 
-    protected var allocated: Int = 0
-
     override fun subAllocate(size: DataSize): LongArray {
-        ensure(totalSize.toInt() - allocated >= size.toInt()) {
-            MemoryException("Not enough memory available to allocate the requested size.") }
         ensure(size.toInt() in minSize.toInt()..maxSize.toInt()) {
             MemoryException("Requested size must be between minSize and maxSize.") }
-
-        allocated += size.toInt()
         return LongArray(size.toInt().ceilDiv(8)) // Assuming 64-bit long, hence dividing by 8
     }
 

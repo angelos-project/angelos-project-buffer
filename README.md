@@ -10,7 +10,7 @@ A data-buffer made to be used without old legacy, in a modern asynchronous envir
 FIXME:
 ============================
 org.angproj.io.buf.mem:
-* ModelPool.subAllocate
+* ModelPool.subAllocate (fixed)
 * Default.allocate (fixed)
 * Memory.copyInto (fixed)
 

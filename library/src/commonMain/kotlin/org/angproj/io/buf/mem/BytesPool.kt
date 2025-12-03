@@ -23,13 +23,8 @@ public abstract class BytesPool(
     allocationSize: DataSize, minSize: DataSize, maxSize: DataSize
 ) : AbstractPoolManager<ByteArray, Bytes>(allocationSize, minSize, maxSize) {
 
-    protected var allocated: Int = 0
-
     override fun subAllocate(size: DataSize): ByteArray {
-        ensure(totalSize.toInt() - allocated >= size.toInt()) { MemoryException("Not enough memory available to allocate the requested size.") }
         ensure(size.toInt() in minSize.toInt()..maxSize.toInt()) { MemoryException("Requested size must be between minSize and maxSize.") }
-
-        allocated += size.toInt()
         return ByteArray(size.toInt())
     }
 
