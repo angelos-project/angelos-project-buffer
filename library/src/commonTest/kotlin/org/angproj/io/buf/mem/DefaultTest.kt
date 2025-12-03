@@ -14,7 +14,7 @@
  */
 package org.angproj.io.buf.mem
 
-
+import kotlin.test.Test
 import org.angproj.io.buf.seg.Bytes
 
 class DefaultTest : AbstractFixedPoolTest<Bytes, Default>() {
@@ -32,5 +32,16 @@ class DefaultTest : AbstractFixedPoolTest<Bytes, Default>() {
 
     override fun recycle(pool: Default, obj: Bytes) {
         pool.recycle(obj)
+    }
+
+    @Test
+    fun testAllocateSeveralTimes() {
+        val pool = createPool()
+        val bytes = pool.allocate(minSize.toInt())
+        pool.recycle(bytes)
+        val bytes2 = pool.allocate(minSize.toInt())
+        pool.recycle(bytes2)
+        val bytes3 = pool.allocate()
+        pool.recycle(bytes3)
     }
 }

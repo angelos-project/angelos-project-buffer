@@ -11,11 +11,11 @@ FIXME:
 ============================
 org.angproj.io.buf.mem:
 * ModelPool.subAllocate
-* Default.allocate
+* Default.allocate (fixed)
 * Memory.copyInto (fixed)
 
 org.angproj.io.buf.util:
-* UtilityAware.*.asNet
+* UtilityAware.*.asNet (advanced)
 
 org.angproj.io.buf.seg:
 * Segment.address (fixed)
