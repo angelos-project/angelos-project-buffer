@@ -61,7 +61,7 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
         }
     }
 
-    public open fun address(): TypePointer<*> = unsupported()
+    public abstract fun address(): TypePointer<*>
 
     public fun isNull(): Boolean = this === nullSegment
 
@@ -92,6 +92,7 @@ public abstract class Segment<E: Segment<E>>(segSize: Int) : ByteString(segSize)
 private fun Segment.Companion.createNullSegment(): Segment<*> {
     return object : Segment<Nothing>(DataSize.UNKNOWN.toInt()) {
         override fun closeImpl() = unsupported()
+        override fun address(): TypePointer<*> = unsupported()
         override fun getByte(index: Int): Byte = unsupported()
         override fun getShort(index: Int, revOrder: Boolean): Short = unsupported()
         override fun getInt(index: Int, revOrder: Boolean): Int = unsupported()

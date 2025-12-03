@@ -14,7 +14,9 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.mem.MemoryManager
+import org.angproj.io.buf.util.unsupported
 import org.angproj.sec.SecureRandom
 
 /**
@@ -106,6 +108,9 @@ public class Bytes(
         SecureRandom.readBytes(data)
         memCtx.recycle(this)
     }
+
+    override fun address(): TypePointer<*> = unsupported()
+
 
     internal fun copyInto(dest: Bytes, offset: Int, idxFrom: Int, idxTo: Int) {
         this.data.copyInto(dest.data, offset, idxFrom, idxTo)

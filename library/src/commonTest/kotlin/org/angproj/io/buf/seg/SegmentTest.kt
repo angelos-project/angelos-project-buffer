@@ -87,4 +87,9 @@ abstract class SegmentTest<S: Segment<S>> {
         assertFalse(segment.isOpen())
         segment.close()
     }
+
+    @Test
+    open fun testAddress() {
+        assertFailsWith<UnsupportedOperationException> { segment.address() }
+    }
 }

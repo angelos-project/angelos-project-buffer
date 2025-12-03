@@ -40,4 +40,9 @@ class MemoryTest : SegmentTest<Memory>() {
         }
         destSeg.close()
     }
+
+    @Test
+    override fun testAddress() {
+        assertTrue { segment.address().ptr != 0L }
+    }
 }

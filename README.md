@@ -18,7 +18,7 @@ org.angproj.io.buf.util:
 * UtilityAware.*.asNet
 
 org.angproj.io.buf.seg:
-* Segment.address
+* Segment.address (fixed)
 * ByteString.checksum
 
 org.angproj.io.buf:

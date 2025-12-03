@@ -14,7 +14,9 @@
  */
 package org.angproj.io.buf.seg
 
+import org.angproj.io.buf.TypePointer
 import org.angproj.io.buf.mem.MemoryManager
+import org.angproj.io.buf.util.unsupported
 import org.angproj.sec.SecureFeed
 import org.angproj.sec.util.TypeSize
 
@@ -111,6 +113,8 @@ public class Model(
         }
         memCtx.recycle(this)
     }
+
+    override fun address(): TypePointer<*> = unsupported()
 
     public companion object {
         public const val longMask: Long = -1
