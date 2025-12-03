@@ -234,10 +234,10 @@ public abstract class ByteString(
      * The checksum is calculated by iterating through the segment's bytes and applying a series of transformations
      * based on the byte values and the provided seed. The result is a long value that represents the checksum.
      *
-     * @param seed The initial seed value to start the checksum calculation. Defaults to 0.
+     * @param seed The initial seed value to start the checksum calculation.
      * @return The computed checksum as a long value.
      */
-    public fun checkSum(seed: Uuid = Uuid.nil): Long {
+    public fun checkSum(seed: Uuid): Long {
         val sponge = object : AbstractSponge256() {}
         val hashAbsorber = HashAbsorber(sponge)
         var offset = 0

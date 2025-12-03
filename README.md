@@ -19,7 +19,7 @@ org.angproj.io.buf.util:
 
 org.angproj.io.buf.seg:
 * Segment.address (fixed)
-* ByteString.checksum
+* ByteString.checksum (fixed)
 
 org.angproj.io.buf:
 * *Buffer.constructor
