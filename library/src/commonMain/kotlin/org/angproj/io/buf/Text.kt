@@ -105,15 +105,33 @@ public fun textOf(): MutableList<Text> = mutableListOf()
 
 public fun textOf(vararg txts: Text): MutableList<Text> = txts.toMutableList()
 
-public fun textOf(vararg strs: String): MutableList<Text> = strs.mapTo(mutableListOf()) { it.toText() }
+public fun textOf(vararg strs: String): MutableList<Text> = strs.mapTo(textOf()) { it.toText() }
 
 public operator fun MutableList<Text>.plusAssign(other: Text) { this.add(other) }
 
 public operator fun MutableList<Text>.plusAssign(other: String) { this += other.toText() }
 
+public operator fun MutableList<Text>.plusAssign(other: MutableList<Text>) { this.addAll(other) }
+
 public operator fun MutableList<Text>.plus(other: Text): MutableList<Text> = this.apply { add(other) }
 
 public operator fun MutableList<Text>.plus(other: String): MutableList<Text> = this.apply { add(other.toText()) }
+
+public operator fun MutableList<Text>.plus(other: MutableList<Text>): MutableList<Text> = this.apply { addAll(other) }
+
+public fun MutableList<Text>.join(separator: Text): List<Text> {
+    if (this.isEmpty()) return this
+    val result = mutableListOf<Text>()
+    forEachIndexed { index, txt ->
+        result += txt
+        if (index < this.lastIndex) {
+            result += separator
+        }
+    }
+    return result.toList()
+}
+
+public fun MutableList<Text>.join(separator: String): List<Text> = join(separator.toText())
 
 public fun List<Text>.toTextBuffer(policy: Policy = Policy.basic): TextBuffer {
     val size = sumOf { it.limit }

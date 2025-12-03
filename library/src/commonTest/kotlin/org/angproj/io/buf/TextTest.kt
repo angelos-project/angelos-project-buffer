@@ -14,8 +14,10 @@
  */
 package org.angproj.io.buf
 
+import org.angproj.io.buf.plusAssign
 import org.angproj.io.buf.seg.SegmentException
 import org.angproj.sec.util.TypeSize
+import org.angproj.utf.Policy
 import org.angproj.utf.toCodePoint
 import kotlin.collections.plusAssign
 import kotlin.test.Test
@@ -159,5 +161,62 @@ class TextTest: AbstractBlockBufferTest<Text>() {
         assertEquals("Hello, world!", buffer.asText().toString())
         val text = list.toText()
         assertEquals("Hello, world!", text.toString())
+    }
+
+    @Test
+    fun plusAssignAddsAllFromMutableList() {
+        val a = textOf("Hello, ")
+        val b = textOf("world!", " How")
+        a += b
+        assertEquals("Hello, world! How", a.toText().toString())
+    }
+
+    @Test
+    fun plusWithMutableListReturnsCombined() {
+        val base = textOf("A")
+        val other = textOf("B", "C")
+        val combined = base + other
+        // current semantics add into the same instance and return it
+        assertEquals("ABC", combined.toText().toString())
+        // ensure base was mutated as well
+        assertEquals("ABC", base.toText().toString())
+    }
+
+    @Test
+    fun joinWithTextSeparatorInsertsSeparators() {
+        val parts = textOf("one", "two", "three")
+        val joined = parts.join(", ".toText())
+        // join returns a List<Text> with separators between elements
+        assertEquals("one, two, three", joined.toText().toString())
+        // verify expected number of elements: 5 (element, sep, element, sep, element)
+        assertEquals(5, joined.size)
+    }
+
+    @Test
+    fun joinWithStringSeparatorWorks() {
+        val parts = textOf("x", "y")
+        val joined = parts.join("::")
+        assertEquals("x::y", joined.toText().toString())
+    }
+
+    @Test
+    fun listToTextAndToTextBufferProduceConcatenation() {
+        val list = textOf("Alpha", "Beta", "Gamma")
+        val txt = list.toText()
+        val buf = list.toTextBuffer(Policy.basic)
+        assertEquals("AlphaBetaGamma", txt.toString())
+        assertEquals("AlphaBetaGamma", buf.asText().toString())
+    }
+
+    @Test
+    fun textOfEmptyAndVarargsBehave() {
+        val empty = textOf()
+        assertTrue(empty.isEmpty())
+
+        val a = "Hello, ".toText()
+        val b = "world!".toText()
+        val list = textOf(a, b)
+        assertEquals(2, list.size)
+        assertEquals("Hello, world!", list.toText().toString())
     }
 }
