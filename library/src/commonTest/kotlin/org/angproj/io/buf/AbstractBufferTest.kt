@@ -58,4 +58,16 @@ abstract class AbstractBufferTest<E: AbstractBuffer>: UtilityAware {
 
         assertTrue { a.contentEquals(b) }
     }
+
+    @Test
+    fun testSetEndian() {
+        val a = setInput()
+        if(a.byteSwapping) {
+            a.setEndian(Platform.endian)
+            assertFalse(a.byteSwapping)
+        } else {
+            a.setEndian(Platform.ENDIAN.BIG_ENDIAN)
+            assertTrue(a.byteSwapping)
+        }
+    }
 }

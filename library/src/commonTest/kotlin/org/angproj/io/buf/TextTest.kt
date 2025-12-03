@@ -78,6 +78,21 @@ class TextTest: AbstractBlockBufferTest<Text>() {
         }
     }
 
+    @Test
+    fun testTextIterator() {
+        val txt = setInput()
+        val iter = txt.iterator()
+
+        iter.next()
+
+        while (iter.hasNext()) {
+            iter.next()
+            assertTrue { iter.position > 0 }
+            assertTrue { iter.previous != 0.toCodePoint() }
+            assertTrue { iter.count > 0 }
+        }
+    }
+
     /*@Test
     fun allCombosTest() {
         val result = textListOf()
