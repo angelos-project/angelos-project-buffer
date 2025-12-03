@@ -101,21 +101,19 @@ public fun String.toText(policy: Policy = Policy.basic): Text = BufMgr.stringToT
 public fun Text.hexToBin(): Binary = BufMgr.bin(this.size.ceilDiv(2)).also { BinHex.hexToBin(this, it) }
 
 // Text lists
-public fun textListOf(vararg txts: Text): MutableList<Text> {
-    return txts.toMutableList()
-}
+public fun textOf(): MutableList<Text> = mutableListOf()
 
-public fun textListOf(vararg strs: String = listOf<String>().toTypedArray()): MutableList<Text> {
-    val txts = mutableListOf<Text>()
-    strs.forEach { txts.add(it.toText()) }
-    return txts
-}
+public fun textOf(vararg txts: Text): MutableList<Text> = txts.toMutableList()
 
-public operator fun MutableList<Text>.plusAssign(other: Text) { add(other) }
+public fun textOf(vararg strs: String): MutableList<Text> = strs.mapTo(mutableListOf()) { it.toText() }
 
-public operator fun MutableList<Text>.plusAssign(other: TextBuffer) { add(other.asText()) }
+public operator fun MutableList<Text>.plusAssign(other: Text) { this.add(other) }
 
-public operator fun MutableList<Text>.plusAssign(other: String) { add(other.toText()) }
+public operator fun MutableList<Text>.plusAssign(other: String) { this += other.toText() }
+
+public operator fun MutableList<Text>.plus(other: Text): MutableList<Text> = this.apply { add(other) }
+
+public operator fun MutableList<Text>.plus(other: String): MutableList<Text> = this.apply { add(other.toText()) }
 
 public fun List<Text>.toTextBuffer(policy: Policy = Policy.basic): TextBuffer {
     val size = sumOf { it.limit }
@@ -124,3 +122,5 @@ public fun List<Text>.toTextBuffer(policy: Policy = Policy.basic): TextBuffer {
     buffer.applyPolicy()
     return buffer.also { it.reset() }
 }
+
+public fun List<Text>.toText(): Text = toTextBuffer().asText()

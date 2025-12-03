@@ -20,6 +20,7 @@ import org.angproj.utf.toCodePoint
 import kotlin.collections.plusAssign
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlin.test.assertFailsWith
 
 
@@ -75,7 +76,7 @@ class TextTest: AbstractBlockBufferTest<Text>() {
         }
     }
 
-    @Test
+    /*@Test
     fun allCombosTest() {
         val result = textListOf()
         result += "Hello, ".toText()
@@ -106,5 +107,57 @@ class TextTest: AbstractBlockBufferTest<Text>() {
     fun allCombos4Test() {
         val result = textListOf("Hello, ", "world!")
         assertEquals("Hello, world!", result.toTextBuffer().asText().toString())
+    }*/
+
+    @Test
+    fun textOfEmpty() {
+        val list = textOf()
+        assertTrue(list.isEmpty())
+    }
+
+    @Test
+    fun textOfVarargTexts() {
+        val a = "Hello, ".toText()
+        val b = "world!".toText()
+        val list = textOf(a, b)
+        assertEquals(2, list.size)
+        assertEquals("Hello, world!", list.toText().toString())
+    }
+
+    @Test
+    fun textOfVarargStrings() {
+        val list = textOf("Hello, ", "world!")
+        assertEquals("Hello, world!", list.toText().toString())
+    }
+
+    @Test
+    fun plusAssignAndPlusOperators() {
+        val a = "Foo ".toText()
+        val b = "bar ".toText()
+        val c = "baz!".toText()
+
+        val result = textOf()
+        result += a
+        result += "bar "
+        assertEquals("Foo bar ", result.toText().toString())
+
+        val appended = result + c
+        // plus returns the same list instance with the element added
+        assertEquals("Foo bar baz!", appended.toTextBuffer().asText().toString())
+
+        val combined = textOf("Foo ") + b
+        assertEquals("Foo bar ", combined.toTextBuffer().asText().toString())
+
+        val combined2 = textOf() + "baz!"
+        assertEquals("baz!", combined2.toTextBuffer().asText().toString())
+    }
+
+    @Test
+    fun toTextBufferAndToText() {
+        val list = textOf("Hello, ".toText(), "world!".toText())
+        val buffer = list.toTextBuffer()
+        assertEquals("Hello, world!", buffer.asText().toString())
+        val text = list.toText()
+        assertEquals("Hello, world!", text.toString())
     }
 }

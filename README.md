@@ -24,7 +24,7 @@ org.angproj.io.buf.seg:
 org.angproj.io.buf:
 * *Buffer.constructor (fixed)
 * BinaryBuffer.constructor (fixed)
-* Text.textListOf/plusAssign/plusAssign
+* Text.textListOf/plusAssign/plusAssign (reimplemented)
 * Text.CodePointIterator._prev/_pos/_cnt
 * SegmentBlock.limitAt (noprob)
 * NativeMemoryManager.release (fixed)
