@@ -46,5 +46,8 @@ class NativeMemoryManagerTest {
         manager.allocate()
         manager.release()
         assertFailsWith<IllegalStateException> { manager.allocate() }
+
+        // Indempotent release
+        manager.release()
     }
 }

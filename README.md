@@ -26,7 +26,7 @@ org.angproj.io.buf:
 * BinaryBuffer.constructor (fixed)
 * Text.textListOf/plusAssign/plusAssign
 * Text.CodePointIterator._prev/_pos/_cnt
-* SegmentBlock.limitAt
-* NativeMemoryManager.release
+* SegmentBlock.limitAt (noprob)
+* NativeMemoryManager.release (fixed)
 * AbstractBuffer.copyInto (fixed)
 * AbstractBuffer._isRevOrder/byteSwapping/setEndian
